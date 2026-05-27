@@ -1,0 +1,11 @@
+{
+  "generated_at_utc": "2026-05-27T16:36:26Z",
+  "cwd": "<workspace>/roi-snips",
+  "shell": "/bin/zsh",
+  "python": "<workspace>/roi-snips/.venv/bin/python",
+  "validation_script_exists": true,
+  "orders_allowed": false,
+  "broker_account_inspection_allowed": false,
+  "broker_orders_inspection_allowed": false,
+  "broker_positions_inspection_allowed": false
+}

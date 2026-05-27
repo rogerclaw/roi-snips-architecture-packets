@@ -1,0 +1,150 @@
+ROI SNIPS SHELL-CAPABLE SHADOW VALIDATION HARDENING
+===================================================
+Generated: 2026-05-27 09:42 PT
+Prepared for: Charles
+Scope: Implement the action items from the 2026-05-27 morning failure audit.
+
+
+EXECUTIVE SUMMARY
+-----------------
+
+The audit's implementation items are now handled for the next morning proof path:
+
+- The old OpenClaw LLM-cron handoff is not treated as a valid runner.
+- A shell-capable local crontab path now exists.
+- The scheduled command uses the durable end-to-end shadow validator, not the narrow stream-only wrapper.
+- The shell wrapper writes a canary JSON before attempting validation.
+- The validator remains no-order and brokerless.
+- A short manual shell-capable proof completed successfully.
+
+The only remaining unproven item is the next actual scheduled 06:35 PT weekday run after installation. The crontab block was installed after the 2026-05-27 06:35 PT window, so the scheduled acceptance proof cannot be claimed until the next weekday 06:35 PT run completes and writes its dispatch/validation artifacts.
+
+
+IMPLEMENTED CHANGES
+-------------------
+
+1. Added shell-capable wrapper:
+
+`scripts/run_shell_capable_shadow_validation.sh`
+
+Behavior:
+
+- changes into the Roi Snips repo root
+- creates `reports/live_monitor/shell_capable_shadow/`
+- writes a timestamped canary JSON before validation
+- confirms the validation script exists
+- records that orders and broker state inspection are not allowed
+- exports no-order / brokerless shadow environment variables
+- runs `scripts/run_next_open_shadow_validation.py`
+- writes a timestamped validation log
+
+2. Installed local crontab block:
+
+```
+# ROI_SNIPS_SHELL_SHADOW_VALIDATION_BEGIN
+35 6 * * 1-5 cd <workspace>/roi-snips && scripts/run_shell_capable_shadow_validation.sh --stream-max-seconds 900 --stream-timeout 1200 >> reports/live_monitor/shell_capable_shadow/cron_dispatch.log 2>&1
+# ROI_SNIPS_SHELL_SHADOW_VALIDATION_END
+```
+
+3. Kept the validator brokerless:
+
+`scripts/run_next_open_shadow_validation.py` now skips broker-readiness and opening-bell-readiness checks when running in brokerless shadow mode. It records:
+
+- `broker_readiness_skipped_for_brokerless_shadow`
+- `opening_bell_readiness_skipped_for_brokerless_shadow`
+
+4. Added/kept tests:
+
+- `tests/test_no_order_validation.py`
+- `tests/test_post_audit_fix_directive.py`
+
+
+MANUAL SHELL-CAPABLE PROOF
+--------------------------
+
+Command:
+
+`scripts/run_shell_capable_shadow_validation.sh --stream-max-seconds 60 --stream-timeout 180`
+
+Result:
+
+- exit code: 0
+- canary written: `reports/live_monitor/shell_capable_shadow/canary_20260527T163626Z.json`
+- validation log written: `reports/live_monitor/shell_capable_shadow/validation_20260527T163626Z.log`
+- summary path: `reports/live_monitor/next_open_shadow_validation_2026-05-27.json`
+- status: OK
+- shadow_mode: OPENING_STREAM_SHADOW
+- orders_allowed: false
+- orders_submitted: false
+- broker_account_inspected: false
+- broker_orders_inspected: false
+- broker_positions_inspected: false
+- stream_required: true
+
+Stream result:
+
+- output_dir: `reports/live_monitor/runs/opening_stream_2026-05-27_163743`
+- max_seconds: 60.0
+- stream_captured: true
+- raw_quote_count: 3,992
+- raw_trade_count: 5,358
+- decision_count: 9,350
+- proposal_count: 0
+- fired_symbols: []
+- stopped_by_timer: true
+- market_data_connected: true
+
+Step names:
+
+- `research_skip_deep_mini`
+- `premarket_pipeline`
+- `broker_readiness_skipped_for_brokerless_shadow`
+- `opening_bell_readiness_skipped_for_brokerless_shadow`
+- `opening_stream_shadow`
+
+Zero-proposal explanation:
+
+The proof ran after the opening-burst window. INFQ, NVDA, and TSLA were kept as second-leg watch / wait states because `opening_burst_window_closed` and `continuation_handoff_required` predicates applied.
+
+
+TEST VERIFICATION
+-----------------
+
+Command:
+
+`bash -n scripts/run_shell_capable_shadow_validation.sh scripts/run_next_open_shadow_validation.py && PYTHONPATH=. .venv/bin/pytest tests/test_no_order_validation.py tests/test_post_audit_fix_directive.py -q`
+
+Result:
+
+`7 passed in 2.88s`
+
+
+CURRENT ACCEPTANCE STATUS
+-------------------------
+
+Implemented:
+
+- shell-capable wrapper
+- canary artifact
+- crontab schedule
+- durable end-to-end validator command
+- brokerless/no-order validation proof
+- focused regression tests
+- local proof artifacts
+
+Still waiting:
+
+- the next actual 06:35 PT weekday crontab run after install
+
+Do not call the scheduled morning path fully proven until these scheduled artifacts exist from a real 06:35 PT cron invocation:
+
+- `reports/live_monitor/shell_capable_shadow/cron_dispatch.log`
+- newest `reports/live_monitor/shell_capable_shadow/canary_*.json`
+- newest `reports/live_monitor/shell_capable_shadow/validation_*.log`
+- `reports/live_monitor/next_open_shadow_validation_<trade-date>.json`
+
+
+BOTTOM LINE
+-----------
+
+The audit action items are implemented locally and manually proven from a shell-capable execution surface. The next scheduled-run acceptance proof is pending the next weekday 06:35 PT crontab fire.

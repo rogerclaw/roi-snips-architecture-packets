@@ -1,0 +1,6 @@
+# Sanitized crontab block installed locally on 2026-05-27.
+# Local absolute path is redacted in this packet.
+
+# ROI_SNIPS_SHELL_SHADOW_VALIDATION_BEGIN
+35 6 * * 1-5 cd <workspace>/roi-snips && scripts/run_shell_capable_shadow_validation.sh --stream-max-seconds 900 --stream-timeout 1200 >> reports/live_monitor/shell_capable_shadow/cron_dispatch.log 2>&1
+# ROI_SNIPS_SHELL_SHADOW_VALIDATION_END

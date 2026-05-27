@@ -1,0 +1,93 @@
+{
+  "all_steps_ok_or_shadow_allowed": true,
+  "broker_account_inspected": false,
+  "broker_orders_inspected": false,
+  "broker_positions_inspected": false,
+  "failure_class": null,
+  "generated_at_utc": "2026-05-27T16:38:44.086168+00:00",
+  "mode": "next_open_no_order_shadow_validation",
+  "orders_allowed": false,
+  "orders_submitted": false,
+  "shadow_mode": "OPENING_STREAM_SHADOW",
+  "status": "OK",
+  "steps": [
+    {
+      "finished_at_utc": "2026-05-27T16:37:42.391911+00:00",
+      "name": "research_skip_deep_mini",
+      "returncode": 0,
+      "started_at_utc": "2026-05-27T16:36:26.794436+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"generated_at_utc\": \"2026-05-27T16:37:42.298106+00:00\",\n  \"tickers\": [\n    \"NVDA\",\n    \"AAPL\",\n    \"TSLA\",\n    \"SMCI\",\n    \"AMZN\",\n    \"META\",\n    \"AMD\",\n    \"INFQ\"\n  ],\n  \"summary\": {\n    \"raw_events_count\": 60,\n    \"raw_events_by_source\": {\n      \"exchange_scout\": 16,\n      \"external_movers_scout\": 8,\n      \"ir_scout\": 4,\n      \"government_scout\": 6,\n      \"theme_basket_scout\": 1,\n      \"sec_edgar\": 25\n    },\n    \"candidate_clusters_count\": 34,\n    \"shortlisted_count\": 9,\n    \"eliminated_count\": 0,\n    \"elimination_reasons\": {},\n    \"discovery_events_count\": 32,\n    \"evidence_events_count\": 28,\n    \"discovered_symbols_count\": 8,\n    \"raw_candidate_count\": 9,\n    \"raw_candidate_sources\": [\n      \"exchange_scout\",\n      \"external_movers_scout\",\n      \"government_scout\",\n      \"ir_scout\",\n      \"sec_edgar\",\n      \"theme_basket_scout\"\n    ],\n    \"raw_candidate_buckets\": [\n      \"fresh_official_catalyst_names\",\n      \"government_contract_policy_names\",\n      \"mna_strategic_review_names\",\n      \"structured_news_catalyst_names\"\n    ],\n    \"target_raw_candidates_min\": 50,\n    \"target_raw_candidates_max\": 150,\n    \"preserved_top_raw_candidates\": 9,\n    \"broad_ai_discovery_candidate_count\": 9,\n    \"research_ranked_count\": 9,\n    \"execution_eligible_count\": 9,\n    \"execution_blocked_count\": 0,\n    \"candidate_research_packets_count\": 8,\n    \"execution_gate_skipped\": false,\n    \"source_lane_status_count\": 16\n  },\n  \"mode\": \"research_v2\",\n  \"artifacts\": {\n    \"discovery_events\": \"<workspace>/roi-snips/runs/2026-05-27/raw/discovery_events.jsonl\",\n    \"raw_runner_candidates\": \"<workspace>/roi-snips/runs/2026-05-27/raw/raw_runner_candidates.json\",\n    \"top_raw_candidates\": \"<workspace>/roi-snips/runs/2026-05-27/raw/top_raw_candidates.json\",\n    \"first_seen_candidates\": \"<workspace>/roi-snips/runs/2026-05-27/normalized/first_seen_candidates.json\",\n    \"broad_ai_discovery_candidates\": \"<workspace>/roi-snips/runs/2026-05-27/raw/broad_ai_discovery_candidates.json\",\n    \"broad_ai_discovery_sources\": \"<workspace>/roi-snips/runs/2026-05-27/raw/broad_ai_discovery_sources.jsonl\",\n    \"discovered_symbols\": \"<workspace>/roi-snips/runs/2026-05-27/normalized/discovered_symbols.json\",\n    \"research_ranked_candidates\": \"<workspace>/roi-snips/runs/2026-05-27/normalized/research_ranked_candidates.json\",\n    \"execution_eligible_candidates\": \"<workspace>/roi-snips/runs/2026-05-27/normalized/execution_eligible_candidates.json\",\n    \"candidate_research_packets\": \"<workspace>/roi-snips/runs/2026-05-27/normalized/candidate_research_packets.json\",\n    \"daily_best_pick_packet\": \"<workspace>/roi-snips/runs/2026-05-27/normalized/daily_best_pick_packet.json\",\n    \"source_lane_status\": \"<workspace>/roi-snips/runs/2026-05-27/normalized/source_lane_status.json\",\n    \"deep_mini_input\": null,\n    \"deep_mini_run\": null\n  }\n}\n",
+      "timeout_seconds": 180
+    },
+    {
+      "finished_at_utc": "2026-05-27T16:37:43.161722+00:00",
+      "name": "premarket_pipeline",
+      "returncode": 0,
+      "started_at_utc": "2026-05-27T16:37:42.391997+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "{\"ok\": true, \"status\": \"ok\", \"json\": \"<workspace>/roi-snips/reports/morning/json/2026-05-27.json\", \"md\": \"<workspace>/roi-snips/reports/morning/md/2026-05-27.md\"}\n",
+      "timeout_seconds": 120
+    },
+    {
+      "finished_at_utc": "2026-05-27T16:37:43.161744+00:00",
+      "name": "broker_readiness_skipped_for_brokerless_shadow",
+      "returncode": 0,
+      "started_at_utc": "2026-05-27T16:37:43.161744+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "{\"status\": \"skipped\", \"reason\": \"no_order_market_data_validation_must_not_query_broker_state\"}",
+      "timeout_seconds": 0
+    },
+    {
+      "finished_at_utc": "2026-05-27T16:37:43.161773+00:00",
+      "name": "opening_bell_readiness_skipped_for_brokerless_shadow",
+      "returncode": 0,
+      "started_at_utc": "2026-05-27T16:37:43.161773+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "{\"status\": \"skipped\", \"reason\": \"readiness_only_path_inspects_broker_state\"}",
+      "timeout_seconds": 0
+    },
+    {
+      "finished_at_utc": "2026-05-27T16:38:44.064280+00:00",
+      "name": "opening_stream_shadow",
+      "returncode": 0,
+      "started_at_utc": "2026-05-27T16:37:43.161783+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "ow\": \"fallback_or_closed\"}, \"best_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"last_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"mode_coverage\": [\"fallback_or_closed\"], \"windows_monitored\": [\"fallback_or_closed\"], \"discarded_or_kept\": \"kept_as_second_leg_watch\"}, \"NVDA\": {\"decision_count\": 6689, \"decisions_count\": 6689, \"proposal_count\": 0, \"best_action\": \"WAIT_FOR_SECOND_LEG\", \"best_window\": \"fallback_or_closed\", \"max_scores\": {}, \"top_failed_predicates\": [{\"predicate\": \"opening_burst_window_closed\", \"count\": 6689}, {\"predicate\": \"continuation_handoff_required\", \"count\": 6689}], \"top_passed_predicates\": [], \"lifecycle_state\": \"SECOND_LEG_WATCH\", \"next_action\": \"WAIT_FOR_SECOND_LEG\", \"action_counts\": {\"WAIT\": 6689}, \"first_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"best_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"last_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"mode_coverage\": [\"fallback_or_closed\"], \"windows_monitored\": [\"fallback_or_closed\"], \"discarded_or_kept\": \"kept_as_second_leg_watch\"}, \"TSLA\": {\"decision_count\": 2215, \"decisions_count\": 2215, \"proposal_count\": 0, \"best_action\": \"WAIT_FOR_SECOND_LEG\", \"best_window\": \"fallback_or_closed\", \"max_scores\": {}, \"top_failed_predicates\": [{\"predicate\": \"opening_burst_window_closed\", \"count\": 2215}, {\"predicate\": \"continuation_handoff_required\", \"count\": 2215}], \"top_passed_predicates\": [], \"lifecycle_state\": \"SECOND_LEG_WATCH\", \"next_action\": \"WAIT_FOR_SECOND_LEG\", \"action_counts\": {\"WAIT\": 2215}, \"first_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"best_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"last_decision\": {\"action\": \"WAIT\", \"failed_predicates\": [\"opening_burst_window_closed\", \"continuation_handoff_required\"], \"reason\": \"opening_burst_window_closed_handoff_to_continuation\", \"window\": \"fallback_or_closed\"}, \"mode_coverage\": [\"fallback_or_closed\"], \"windows_monitored\": [\"fallback_or_closed\"], \"discarded_or_kept\": \"kept_as_second_leg_watch\"}}, \"mode_coverage\": {\"opening_burst_ran\": true, \"continuation_monitor_started\": true, \"orb_vwap_monitor_started\": true, \"second_leg_monitor_started\": true, \"stream_captured\": true, \"handoff_completed\": true}, \"zero_proposal_reason\": \"INFQ: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; NVDA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; TSLA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required\", \"no_proposal_root_cause\": \"INFQ: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; NVDA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; TSLA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required\", \"windows_monitored\": [\"fallback_or_closed\"]}\n",
+      "timeout_seconds": 180
+    }
+  ],
+  "stream": {
+    "blocked_proposal_count": 0,
+    "decision_count": 9350,
+    "decisions_count": 9350,
+    "fired_symbols": [],
+    "max_seconds": 60.0,
+    "ok": true,
+    "orders_submitted": false,
+    "output_dir": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_163743",
+    "proposal_count": 0,
+    "proposal_line_count": 0,
+    "raw_quote_count": 3992,
+    "raw_trade_count": 5358,
+    "reason": null,
+    "stopped_by_timer": true,
+    "stream_capture_completed": true,
+    "stream_capture_started": true,
+    "stream_captured": true,
+    "stream_status": {
+      "last_error": null,
+      "market_data_connected": true,
+      "trade_updates_connected": false
+    },
+    "summary_path": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_163743/final_summary.json"
+  },
+  "stream_required": true,
+  "summary_path": "<workspace>/roi-snips/reports/live_monitor/next_open_shadow_validation_2026-05-27.json",
+  "trade_date": "2026-05-27"
+}
