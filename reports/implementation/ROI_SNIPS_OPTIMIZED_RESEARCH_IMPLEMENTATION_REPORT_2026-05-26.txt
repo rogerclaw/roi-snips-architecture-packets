@@ -1,0 +1,223 @@
+ROI SNIPS OPTIMIZED RESEARCH IMPLEMENTATION REPORT
+==================================================
+Generated: 2026-05-26 20:20 PT
+Runbook version: 2026-05-27
+Status: PARTIAL
+
+Executive truth
+---------------
+Source code, focused tests, full regression tests, and local artifact proof were implemented for the optimized research runbook.
+
+This is not marked DONE_WITH_ARTIFACT_PROOF because the fresh real-market no-order validation for this exact implementation is still scheduled for 2026-05-27 06:35 PT / 13:35 UTC. It was not manually started early. Live arming is not recommended until that real-market no-order validation completes and is inspected.
+
+No broker account/order/position inspection, order preview, order placement, order cancellation/replacement, guard arming, or guard-file mutation was performed during this implementation pass.
+
+Files changed or created
+------------------------
+Core research/source implementation:
+- src/research/first_seen.py
+- src/research/raw_discovery.py
+- src/research/query_families.py
+- src/research/social_velocity.py
+- src/research/candidate_packets.py
+- src/research/scouts/raw_runner_scout.py
+- src/research/scouts/premarket_gapper_scout.py
+- src/research/scouts/relative_volume_scout.py
+- src/research/scouts/theme_sympathy_scout.py
+- src/workflows/research_pipeline.py
+- src/workflows/broad_ai_discovery.py
+- src/workflows/premarket_pipeline.py
+- src/workflows/continuation_replay.py
+- src/workflows/opening_stream_supervisor.py
+
+Operational scripts/config/docs:
+- scripts/replay_captured_continuation.sh
+- scripts/run_next_open_shadow_validation.py
+- scripts/run_opening_stream_shadow.sh
+- scripts/supervise_opening_bell_live_monitor.sh
+- config/workflow.yaml
+- docs/search_query_families.md
+- docs/prompts/BROAD_PRO_STYLE_DISCOVERY_PROMPT.md
+- docs/prompts/BROAD_DISCOVERY_ESCALATION_PROMPT.md
+- docs/prompts/SHORTLIST_DEEP_RESEARCH_PROMPT.md
+
+Focused tests added:
+- tests/test_first_seen_tracking.py
+- tests/test_raw_runner_discovery.py
+- tests/test_broad_ai_discovery_contract.py
+- tests/test_source_lane_status.py
+- tests/test_candidate_packet_schema.py
+- tests/test_lifecycle_classification.py
+- tests/test_anti_chase.py
+- tests/test_backup_pool_generation.py
+- tests/test_query_families.py
+- tests/test_grok_x_narrative.py
+- tests/test_deep_research_routing.py
+- tests/test_morning_packet_fields.py
+- tests/test_opening_orchestration.py
+- tests/test_captured_tape_continuation_replay.py
+- tests/test_volume_burst_recalibration.py
+- tests/test_no_order_validation.py
+- tests/test_final_summary_zero_proposal.py
+
+Implemented behavior
+--------------------
+1. First-seen tracking now records ticker, first seen time/source/source URL/catalyst, first price/gap/volume/dollar volume, current price/gap, move since first seen, minutes to selection, and stage.
+2. Broad raw runner discovery now preserves pre-filter candidates by buckets such as premarket movers, structured catalysts, government/contract/policy names, FDA/biotech, M&A/strategic review, social velocity, and prior-day/second-leg style setups.
+3. Broad Pro-style discovery has a contract module and artifacts before strict filtering: candidates JSON, sources JSONL, and prompt contract. It cannot directly become executable_primary.
+4. Source lane status is mandatory in research artifacts and morning packet output, with all required lanes represented.
+5. Candidate packets now expose first-seen, source quality, lifecycle/anti-chase, entry viability, research quality, hyper score, policy/theme score, same-style eligibility, mega-cap fallback flag, and current buyability summary.
+6. Premarket packet output now separates research_leader from executable_primary and includes watch_only, second_leg_watch, no_trade_extended, anti_chase_state, opportunity_lifecycle_state, entry_viability_score, buy_now_allowed, why_not_buy_now, buy triggers, backup diagnostics, source lane status, raw candidate counts, and broad discovery status.
+7. Same-style backup diagnostics demote mega-cap defaults when non-mega-cap volatile backups exist and explain pool failures when they do not.
+8. Query families are documented and generated for broad discovery plus ticker enrichment.
+9. Grok/X narrative acceleration is represented as social velocity metadata; social-only candidates remain non-executable unless structured/official evidence or deterministic tape later validates them.
+10. Governed deep research remains a bounded support layer; invalid mode config fails clearly and deep output does not override execution gates.
+11. Opening stream summary now includes stream/continuation heartbeat fields, candidate state by symbol, no_proposal_root_cause, zero_proposal_reason, windows monitored, and explicit no-broker-inspection flags.
+12. The opening supervisor shell orchestration now starts continuation monitoring in parallel at/after 09:35 ET instead of waiting until a 900-second stream exits.
+13. Captured-tape replay tooling exists and writes continuation_replay_summary.json plus continuation_decisions.jsonl.
+14. No-order validation wrappers force brokerless no-order env flags and expose broker inspection status as false.
+
+New schemas and artifact fields
+-------------------------------
+First-seen records:
+- ticker
+- first_seen_at_utc
+- first_seen_source
+- first_seen_source_url
+- first_seen_catalyst
+- first_seen_price
+- first_seen_gap_pct
+- first_seen_premarket_volume
+- first_seen_premarket_dollar_volume
+- current_price
+- current_gap_pct
+- move_since_first_seen_pct
+- first_seen_to_selection_minutes
+- first_seen_stage
+
+Morning packet additions:
+- source_lane_status_path
+- source_lane_status
+- raw_candidate_count
+- enriched_candidate_count
+- research_leader
+- executable_primary
+- anti_chase_state
+- opportunity_lifecycle_state
+- entry_viability_score
+- second_leg_watch
+- no_trade_extended
+- same_style_backup_status
+- backup_pool_diagnostics
+- top_raw_candidates
+- first_seen_candidates
+- broad_ai_discovery_candidates
+- deep_research_route
+- deep_research_status
+- current_action
+- buy_now_allowed
+- why_not_buy_now
+- buy_triggers
+- monitoring_plan_through_11_et
+
+Opening/no-order summary additions:
+- status
+- broker_account_inspected=false
+- broker_orders_inspected=false
+- broker_positions_inspected=false
+- stream_capture_started_at
+- stream_capture_heartbeat_at
+- continuation_monitor_started_at
+- continuation_monitor_heartbeat_at
+- last_decision_at
+- candidate_state_by_symbol
+- no_proposal_root_cause
+- windows_monitored
+
+Local artifact proof
+--------------------
+Synthetic runbook proof manifest:
+- runs/2026-05-26-runbook-proof/meta/run_manifest.json
+- Summary: raw_candidate_count=4, source_lane_status_count=16, candidate_research_packets_count=2.
+
+First-seen tracking proof:
+- runs/2026-05-26-runbook-proof/normalized/first_seen_candidates.json
+
+Source-lane status proof:
+- runs/2026-05-26-runbook-proof/normalized/source_lane_status.json
+- runs/2026-05-26-runbook-proof/source_lane_status.json
+
+Broad AI discovery proof:
+- runs/2026-05-26-runbook-proof/raw/broad_ai_discovery_candidates.json
+- runs/2026-05-26-runbook-proof/raw/broad_ai_discovery_sources.jsonl
+
+Raw candidate preservation proof:
+- runs/2026-05-26-runbook-proof/raw/raw_runner_candidates.json
+- runs/2026-05-26-runbook-proof/raw/top_raw_candidates.json
+
+Candidate packet proof:
+- runs/2026-05-26-runbook-proof/normalized/candidate_research_packets.json
+
+Morning report regenerated proof:
+- reports/morning/json/2026-05-26_runbook_proof.json
+- reports/morning/md/2026-05-26_runbook_proof.md
+- Proof fields: buy_now_allowed=false, why_not_buy_now="Research leader is extended; requires second-leg reset/reclaim confirmation.", raw_candidate_count=4, enriched_candidate_count=2, deep_research_status=not_run.
+
+Same-style backup proof:
+- reports/morning/json/2026-05-26_runbook_proof.json
+- same_style_non_megacap_backups=[MRAM, ABEO, BBAI]
+- mega_cap_backups_used=[]
+
+Captured-tape replay proof:
+- reports/live_monitor/runs/runbook_stream_replay_2026-05-26/final_summary.json
+- Stream replay summary: status=BUY_NOW, raw_quote_count=3, raw_trade_count=2, decision_count=5, proposal_count=1, orders_submitted=false.
+- reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/continuation_replay_summary.json
+- Continuation replay summary: target_symbol=INFQ, raw_quote_count=3, raw_trade_count=2, decision_count=5, proposal_count=0, no_trade_reason=setup_not_confirmed. This is valid proof of exact no-trade predicates for that continuation replay fixture, not a live proof.
+
+Stream + continuation orchestration proof
+-----------------------------------------
+Source proof:
+- scripts/supervise_opening_bell_live_monitor.sh now launches `scripts/run_opening_bell_live_monitor.sh --loop-only` through a `CONTINUATION_PID` background process before `src.workflows.opening_stream_supervisor` runs.
+- The helper computes `continuation_monitor_start_et = "09:35:00"` and sleeps only until that ET time.
+
+Unit proof:
+- tests/test_opening_orchestration.py checks that continuation is launched before the stream command and that final summaries contain continuation heartbeat fields.
+
+Test results
+------------
+Focused runbook suite:
+Command:
+PYTHONPATH=. .venv/bin/pytest tests/test_first_seen_tracking.py tests/test_raw_runner_discovery.py tests/test_broad_ai_discovery_contract.py tests/test_source_lane_status.py tests/test_candidate_packet_schema.py tests/test_lifecycle_classification.py tests/test_anti_chase.py tests/test_backup_pool_generation.py tests/test_query_families.py tests/test_grok_x_narrative.py tests/test_deep_research_routing.py tests/test_morning_packet_fields.py tests/test_opening_orchestration.py tests/test_captured_tape_continuation_replay.py tests/test_volume_burst_recalibration.py tests/test_no_order_validation.py tests/test_final_summary_zero_proposal.py -q
+Result: 21 passed in 0.12s.
+
+Full suite:
+Command:
+PYTHONPATH=. .venv/bin/pytest tests -q
+Result: 174 passed, 1 warning in 4.11s.
+Warning: existing websockets.legacy deprecation warning.
+
+Remaining gaps
+--------------
+1. Fresh real-market no-order validation for this exact implementation has not run yet. The one-shot job remains scheduled for 2026-05-27 06:35 PT / 13:35 UTC.
+2. The local proof run is synthetic and source/test/artifact proof only. It is not market proof.
+3. Continuation replay fixture produced exact no-trade predicates, not a caught 09:46-style continuation buy. This satisfies the "catch or explain exactly why not" branch for the local replay, but a real captured INFQ-style move still needs to be replayed when available.
+4. Broad Pro-style discovery artifact is deterministic-seeded unless/when a configured search/AI route is explicitly run; it records failure/status rather than falsely claiming premium deep research.
+5. Roi Snips remains untracked in the workspace-level git repository. It should not be pushed wholesale because the workspace contains private memory, logs, env material, and operational data.
+
+Live arming recommendation
+--------------------------
+Live arming recommended: no.
+
+Reason:
+The implementation source/tests/local artifacts are in place, but live arming should remain off until the scheduled real-market no-order validation completes and shows brokerless market-data capture, decision generation, continuation monitoring, no broker inspection, and orders_submitted=false under this updated code path.
+
+Final status vocabulary
+-----------------------
+Is source code patched? yes.
+Are focused and full tests passing? yes.
+Is there fresh local artifact proof? yes.
+Is there replay proof? yes, local/synthetic.
+Is there real-market no-order proof for this exact implementation? not yet.
+Is live arming recommended? no.
+
+Overall status: PARTIAL until the scheduled real-market no-order validation completes.

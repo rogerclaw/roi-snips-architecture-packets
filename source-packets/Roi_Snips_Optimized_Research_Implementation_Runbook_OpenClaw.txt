@@ -1,0 +1,1328 @@
+ROI SNIPS OPTIMIZED RESEARCH IMPLEMENTATION RUNBOOK FOR OPENCLAW
+================================================================
+Version: 2026-05-27
+Prepared for: Charles
+Target agent: OpenClaw / Roi Snips implementation agent
+Primary objective: make Roi Snips find the next INFQ-style runner earlier, separate research quality from current buyability, and keep viable runners alive through opening-bell and second-leg continuation logic.
+
+IMPORTANT INTERPRETATION
+------------------------
+If the user says "Open law," interpret that as OpenClaw unless explicitly corrected.
+
+This is an implementation runbook. It is not a market opinion, not a generic risk memo, and not a request to make Roi Snips conservative. The goal is to improve Roi Snips so it finds volatile, asymmetric, non-blue-chip, catalyst-driven stocks and produces auditable trade packets and no-order validation artifacts.
+
+This runbook does not authorize live orders by itself. It tells the agent what to implement and how to prove the implementation. Live arming remains a separate operator decision.
+
+
+1. CORE MISSION
+===============
+
+Roi Snips must behave like a fast, cunning catalyst hunter and tape-aware trading system.
+
+It must not behave like:
+- a safe blue-chip stock picker
+- a generic watchlist generator
+- a passive news summarizer
+- a single-model LLM stock picker
+- a bot that picks the same prior winner after the move is mostly gone
+- a system that watches the first minute, fails to buy, and then goes dead before the real second-leg move
+
+The desired behavior is:
+
+1. Find the weird runner early.
+2. Validate the catalyst with official/structured evidence.
+3. Track whether the current entry is still fresh or already extended.
+4. Mark one research_leader.
+5. Mark executable_primary only if current price/tape/entry quality is valid.
+6. If extended but still valid, classify as SECOND_LEG_WATCH.
+7. Keep monitoring through 11:00 ET for ORB, VWAP reclaim, premarket-high reclaim, and second-leg continuation.
+8. Generate same-style volatile backups instead of mega-cap filler.
+9. Preserve full artifacts so every decision can be audited.
+10. Let deterministic code, not an LLM, own execution decisions.
+
+
+2. NON-NEGOTIABLE DESIGN PRINCIPLES
+===================================
+
+2.1 Research and execution are different
+----------------------------------------
+
+The system must maintain separate fields:
+
+- research_leader
+- executable_primary
+- watch_only
+- second_leg_watch
+- no_trade_extended
+- anti_chase_state
+- opportunity_lifecycle_state
+- entry_viability_score
+
+The best research idea is not automatically a buy.
+
+Example:
+
+INFQ can be the research_leader because the catalyst is strong, the theme is hot, and premarket volume is real. But if INFQ is already up 40%+ and near earlier targets, it may be SECOND_LEG_WATCH or NO_TRADE_EXTENDED until a clean reset/reclaim/continuation appears.
+
+2.2 Broad discovery must happen before strict filtering
+-------------------------------------------------------
+
+Do not let deterministic filters kill weird volatile names before they are enriched.
+
+Required discovery order:
+
+1. Raw deterministic discovery.
+2. Broad Pro-style AI-assisted discovery.
+3. Evidence packet construction.
+4. Source-lane status audit.
+5. Market/tape overlay.
+6. Social velocity overlay.
+7. Same-style backup generation.
+8. Research leader vs executable primary split.
+9. Optional governed deep-research shortlist synthesis.
+10. Final packet.
+11. Opening/second-leg monitoring.
+
+2.3 No lazy no-trade
+--------------------
+
+No-trade is allowed, but not lazily.
+
+No-trade is valid only after the system has attempted:
+
+- top premarket mover scan
+- high relative-volume scan
+- high premarket dollar-volume scan
+- official catalyst scan
+- structured news scan
+- broad Pro-style AI discovery pass
+- same-style backup pool construction
+- source_lane_status artifact generation
+- top rejected candidate explanations
+
+2.4 No mega-cap fallback unless exceptional
+-------------------------------------------
+
+Mega-cap/default tickers include:
+
+AAPL, AMZN, AMD, GOOG, GOOGL, META, MSFT, NFLX, NVDA, PLTR, QQQ, SMCI, SPY, TSLA
+
+These must not appear as A-tier or primary backups unless:
+
+- no viable same-style volatile backups exist, or
+- the mega-cap has an exceptional same-day catalyst and exceptional tape.
+
+If a mega-cap backup is used, the report must explicitly say:
+
+- why same-style backups were unavailable
+- which source lanes failed or produced no candidates
+- why the mega-cap backup is still useful
+
+2.5 Browser lanes are evidence tools, not market-data or execution tools
+------------------------------------------------------------------------
+
+Browser lanes, Playwright, Stagehand, Crawl4AI, and Firecrawl are useful for source inspection and extraction. They must not be the primary quote, bar, tape, or order source.
+
+Primary market/tape truth remains Alpaca SIP quote/trade/bar data or the configured official market-data vendor.
+
+2.6 Deep research is powerful but not a last-second execution tool
+------------------------------------------------------------------
+
+Governed deep research can help synthesize candidates and explain evidence. It must not decide live order placement.
+
+Deep research must never override:
+
+- missing/stale data checks
+- one-position rule
+- open-order checks
+- cash/settled cash checks
+- kill switch
+- disable-new-entries guard
+- spread/tape invalidation
+- exit-manager requirement
+
+2.7 High risk is allowed; broken plumbing is not
+------------------------------------------------
+
+The system may prefer volatile, speculative, small/mid/micro-cap names.
+
+But it must still hard-block mechanical failures:
+
+- missing live market data
+- stale quotes
+- missing bid/ask
+- active halt/no quote
+- broker/account failure
+- broker state mismatch
+- duplicate order
+- open position already exists
+- open bracket/order already exists
+- insufficient cash/settled cash
+- kill switch active
+- disable entries active
+- no LIVE_ARMED state for live submission
+- exit manager unavailable
+
+Everything else is a score, size, entry-mode, or exit-urgency adjustment.
+
+
+3. CURRENT GAP SUMMARY TO FIX
+=============================
+
+The latest audit/review history indicates these still need proof or improvement:
+
+1. Source code has many right pieces, but artifact proof is incomplete.
+2. Morning JSON was stale and did not prove research_leader/executable_primary/anti_chase_state/source_lane_status.
+3. source_lane_status generation exists in code, but the run artifact was missing.
+4. Backup breadth remains weak; prior outputs used mega-cap/default filler.
+5. Captured-tape continuation replay has not proven the 09:46-style move is catchable.
+6. Opening stream and continuation monitor orchestration must be concurrent or precisely handed off at 09:35.
+7. Broad Pro-style AI discovery must run before strict filtering, not only after deterministic shortlist creation.
+8. First-seen tracking must be implemented so Roi knows whether it found a runner early or late.
+9. Same prior winner / stale winner detection must prevent blindly picking yesterday's runner after the trade has already paid.
+10. Final reports must explain why no proposal happened, not just say no proposal_count.
+
+
+4. IMPLEMENTATION PHASES
+========================
+
+PHASE 0: Read-only audit before touching anything
+-------------------------------------------------
+
+Before patching, perform a read-only audit and write a short implementation-start note.
+
+Commands:
+
+- pwd
+- git status --short
+- find src scripts config configs tests -type f | sort
+- ls -R reports/morning reports/live_monitor/runs runs 2>/dev/null | tail -200
+
+Do not place orders.
+Do not preview orders.
+Do not cancel orders.
+Do not modify guard files.
+Do not clear or create LIVE_ARMED.
+Do not touch DISABLE_NEW_ENTRIES or KILL_SWITCH.
+
+Record:
+
+- repo path
+- current branch/commit if available
+- current modified/untracked state
+- current guard files
+- whether live workers are running
+
+
+PHASE 1: Implement first-seen tracking
+--------------------------------------
+
+Problem:
+Roi can find a stock after it already made the easy move, then still treat it like a fresh buy.
+
+Desired behavior:
+Every candidate must record when Roi first saw it and what the trade looked like then.
+
+Create or patch:
+
+- src/research/first_seen.py
+- src/research/models.py
+- src/research/storage.py
+- src/workflows/research_pipeline.py
+- src/workflows/premarket_pipeline.py
+- tests/test_first_seen_tracking.py
+
+Required fields:
+
+- ticker
+- first_seen_at_utc
+- first_seen_source
+- first_seen_source_url
+- first_seen_catalyst
+- first_seen_price
+- first_seen_gap_pct
+- first_seen_premarket_volume
+- first_seen_premarket_dollar_volume
+- current_price
+- current_gap_pct
+- move_since_first_seen_pct
+- first_seen_to_selection_minutes
+- first_seen_stage
+
+first_seen_stage enum:
+
+- EARLY_SEED
+- PREMARKET_BUILDING
+- ALREADY_MOVING
+- LATE_DISCOVERY
+- STALE_PRIOR_WINNER
+
+Implementation notes:
+
+- Store first-seen records under runs/<date>/normalized/first_seen_candidates.json.
+- If a ticker appears again later, do not overwrite the first seen record unless the previous record is malformed.
+- Add a daily persistent cache for the trading day.
+- Include first-seen data in candidate packets and morning report.
+
+Acceptance tests:
+
+1. First discovery of ABCD at $4.00 stores first_seen_price=4.00.
+2. Later discovery at $6.00 keeps first_seen_price=4.00 and calculates move_since_first_seen_pct=50%.
+3. Candidate discovered only after a +40% gap is marked ALREADY_MOVING or LATE_DISCOVERY.
+4. Prior-day winner without a new catalyst is marked STALE_PRIOR_WINNER.
+
+
+PHASE 2: Add broad raw runner discovery before strict filtering
+---------------------------------------------------------------
+
+Problem:
+If deterministic filters narrow the universe too early, Roi misses weird runners.
+
+Desired behavior:
+Roi must collect 50-150 raw candidates before strict filtering.
+
+Patch or create:
+
+- src/research/universe.py
+- src/research/scouts/external_source_scouts.py
+- src/research/scouts/raw_runner_scout.py
+- src/research/scouts/premarket_gapper_scout.py
+- src/research/scouts/relative_volume_scout.py
+- src/research/scouts/theme_sympathy_scout.py
+- src/workflows/research_pipeline.py
+- tests/test_raw_runner_discovery.py
+
+Required raw discovery buckets:
+
+1. top premarket gainers
+2. highest premarket dollar-volume gainers
+3. high relative-volume names
+4. fresh official catalyst names
+5. structured news catalyst names
+6. small/mid/micro-cap gappers
+7. same-theme laggards
+8. sector sympathy movers
+9. FDA/biotech names
+10. government/contract/policy names
+11. merger/acquisition/strategic review names
+12. retail/social velocity names
+13. prior-day runners with new catalyst or second-leg setup
+
+Raw candidate schema:
+
+{
+  "ticker": "ABCD",
+  "company": "Example Corp",
+  "source_lane": "FMP movers | Benzinga | SEC EDGAR | Grok/X | Reddit | StockTwits | ...",
+  "first_seen_at_utc": "...",
+  "raw_reason": "premarket gapper / FDA catalyst / social velocity / etc",
+  "raw_catalyst": "...",
+  "raw_source_url": "...",
+  "price": 0,
+  "gap_pct": 0,
+  "premarket_volume": 0,
+  "premarket_dollar_volume": 0,
+  "pre_filter_flags": []
+}
+
+Acceptance tests:
+
+1. Raw discovery can return more candidates than final shortlist.
+2. A volatile candidate is not eliminated solely for being volatile.
+3. A low-float or sub-$5 candidate remains eligible for enrichment, unless data is mechanically broken.
+4. The pipeline records raw_candidate_count and raw_candidate_sources.
+5. Top 20 raw candidates are preserved in artifacts even if later rejected.
+
+
+PHASE 3: Add broad Pro-style AI discovery before strict filtering
+-----------------------------------------------------------------
+
+Problem:
+The current plan uses deep research mainly after a bounded shortlist. That misses the ChatGPT Pro-style behavior that found INFQ.
+
+Desired behavior:
+Add a broad AI-assisted discovery pass before strict filtering. It does not pick the final stock. It generates candidates for evidence enrichment.
+
+Patch or create:
+
+- tools or scripts wrapper for broad AI discovery if not already present
+- src/workflows/broad_ai_discovery.py
+- src/workflows/research_pipeline.py
+- docs/prompts/BROAD_PRO_STYLE_DISCOVERY_PROMPT.md
+- tests/test_broad_ai_discovery_contract.py
+
+Allowed routes:
+
+- normal web/search model route
+- Grok/X narrative route
+- Brave/Tavily/Firecrawl extraction route if configured
+- governed deep-research runner only when justified or explicitly requested
+
+Do not use deep research as the default last-second scan. Heavy deep research must stop before 09:20 ET unless operator explicitly requests research-only output.
+
+Broad discovery prompt:
+
+----- BEGIN PROMPT -----
+You are Roi Snips' Broad Pro-Style Candidate Discovery module.
+
+Date: {trading_date}
+Market: U.S. equities and ETFs.
+Objective: find 30-75 possible explosive short-term long candidates for today.
+
+Do not choose the final stock.
+Do not produce a safe mega-cap watchlist.
+Bias toward volatile small/mid/micro-cap names, newly public names, undercovered direct beneficiaries, government/policy/theme winners, FDA/biotech names, contract award names, merger/strategic-review names, earnings/guidance surprise names, retail/social velocity names, and high-RVOL premarket movers.
+
+For each candidate return:
+- ticker
+- company
+- catalyst summary
+- catalyst type
+- source URLs
+- timestamp/freshness
+- why it could move today
+- whether it may already be too late
+- whether it is a same-theme laggard or direct beneficiary
+- whether it appears high-risk/high-upside
+
+Separate official, structured, and social evidence.
+Return strict JSON.
+----- END PROMPT -----
+
+Contract:
+
+The broad discovery output must be saved to:
+
+- runs/<date>/raw/broad_ai_discovery_candidates.json
+- runs/<date>/raw/broad_ai_discovery_sources.jsonl
+
+Acceptance tests:
+
+1. Broad AI discovery can add candidates not found by deterministic scouts.
+2. Broad AI discovery candidates are enriched before filtering.
+3. Broad AI discovery output cannot directly become executable_primary without evidence/tape gating.
+4. If broad AI discovery fails, the pipeline reports failure and continues with deterministic candidates, but does not claim AI discovery succeeded.
+
+
+PHASE 4: Make source_lane_status mandatory
+------------------------------------------
+
+Problem:
+Code may define source-lane status, but artifacts have not always proven it.
+
+Desired behavior:
+Every serious morning run must emit a source_lane_status artifact and embed it in the morning report.
+
+Patch:
+
+- src/research/source_lane_status.py
+- src/workflows/research_pipeline.py
+- src/workflows/premarket_pipeline.py
+- reports/morning JSON renderer
+- reports/morning Markdown renderer
+- tests/test_source_lane_status.py
+
+Required artifact paths:
+
+- runs/<date>/normalized/source_lane_status.json
+- runs/<date>/source_lane_status.json
+- reports/morning/json/<date>.json must include source_lane_status
+- reports/morning/md/<date>.md must include a readable Source Lane Status section
+
+Required lanes:
+
+- Alpaca SIP
+- Alpaca News
+- Benzinga
+- SEC EDGAR
+- Company IR
+- FMP movers
+- StockTwits
+- TradingView-style screener
+- Grok/X
+- Reddit
+- Tavily/Brave/Exa
+- Firecrawl/Crawl4AI
+- openFDA
+- ClinicalTrials.gov
+- SAM.gov/USAspending
+- Nasdaq halt feed
+
+Each lane row must include:
+
+- lane_name
+- configured
+- ran
+- produced_candidates_count
+- produced_useful_evidence_count
+- useful_for_primary
+- affected_primary_selection
+- affected_backup_list
+- errors
+- missing_credentials
+- fallback_used
+
+Failure behavior:
+
+- Missing source_lane_status.json = DEGRADE research packet.
+- Missing three or more high-value lanes = report warning.
+- Missing all mover lanes = no executable_primary unless manually overridden by validated sources.
+
+Acceptance tests:
+
+1. source_lane_status.json is emitted even when no candidates exist.
+2. Missing StockTwits credentials are shown as missing_credentials, not silently omitted.
+3. If FMP movers runs and produces candidates, affected_backup_list can be true.
+4. Morning JSON includes source_lane_status.
+5. Morning Markdown includes readable source-lane status.
+
+
+PHASE 5: Build evidence packets with first-seen and lifecycle fields
+--------------------------------------------------------------------
+
+Patch:
+
+- src/research/candidate_packets.py
+- src/research/models.py
+- src/workflows/research_pipeline.py
+- src/workflows/premarket_pipeline.py
+- tests/test_candidate_packet_schema.py
+
+Each candidate packet must include:
+
+- ticker
+- company
+- catalyst_type
+- catalyst_summary
+- official_sources
+- structured_sources
+- social_sources
+- source_lane_status_refs
+- first_seen_at_utc
+- first_seen_price
+- first_seen_gap_pct
+- current_price
+- current_gap_pct
+- move_since_first_seen_pct
+- first_seen_stage
+- catalyst_freshness_score
+- source_quality_score
+- direct_beneficiary_score
+- theme_wave_score
+- social_attention_velocity
+- premarket_repricing_score
+- anti_chase_state
+- opportunity_lifecycle_state
+- entry_viability_score
+- research_quality_score
+- hyper_trade_score
+- policy_theme_runner_score
+- same_style_backup_eligible
+- mega_cap_default_flag
+- why_asymmetric
+- why_wrong
+- current_buyability_summary
+
+Acceptance tests:
+
+1. Candidate packet distinguishes research_quality_score from entry_viability_score.
+2. Candidate can have high research quality and low entry viability.
+3. Candidate can be second_leg_watch even if executable_primary is null.
+4. Candidate with old stale SEC filing and no fresh catalyst is downgraded.
+
+
+PHASE 6: Strengthen lifecycle and anti-chase classification
+-----------------------------------------------------------
+
+Patch:
+
+- src/research/lifecycle.py
+- src/research/market_overlay.py
+- src/workflows/premarket_pipeline.py
+- src/strategy/second_leg_continuation.py
+- tests/test_lifecycle_classification.py
+- tests/test_anti_chase.py
+
+Lifecycle states must include:
+
+- EARLY_CATALYST_DISCOVERY
+- PREMARKET_BUILDING
+- OPENING_DRIVE_ACTIVE
+- EXTENDED_CHASE
+- SECOND_LEG_WATCH
+- SECOND_LEG_RESET
+- OPENING_CONTINUATION_ACTIVE
+- SECOND_LEG_CONTINUATION_ACTIVE
+- EXHAUSTED_OR_DISTRIBUTING
+- STALE_PRIOR_WINNER
+- NO_TRADE_EXTENDED
+
+Classification rules:
+
+EARLY_CATALYST_DISCOVERY:
+- catalyst found before material price move
+- first_seen_gap_pct modest
+- volume beginning to build
+
+PREMARKET_BUILDING:
+- catalyst validated
+- premarket volume/dollar volume rising
+- gap not so extended that entry is chase-only
+
+OPENING_DRIVE_ACTIVE:
+- first 5s/10s/30s/60s tape confirms drive
+
+EXTENDED_CHASE:
+- price far above buy zone and near/above initial targets
+- no reset yet
+
+SECOND_LEG_WATCH:
+- strong research leader
+- extended or first burst failed
+- catalyst intact
+- needs reset/reclaim/continuation
+
+SECOND_LEG_RESET:
+- stock has pulled back or based
+- holds VWAP/support/local low
+- volume no longer dumping
+
+OPENING_CONTINUATION_ACTIVE:
+- post-09:35 ORB/VWAP/premarket-high reclaim confirms continuation
+
+EXHAUSTED_OR_DISTRIBUTING:
+- loses VWAP/support on heavy volume
+- repeated failed reclaims
+- bid collapses or spread explodes
+
+STALE_PRIOR_WINNER:
+- was a prior-day/earlier winner
+- no fresh catalyst or no second-leg setup
+
+NO_TRADE_EXTENDED:
+- too extended, no reset, no continuation confirmation
+
+Acceptance tests:
+
+1. +40% validated premarket runner becomes SECOND_LEG_WATCH, not automatic buy.
+2. +40% unvalidated runner becomes NO_TRADE_EXTENDED.
+3. Prior winner with no new catalyst becomes STALE_PRIOR_WINNER.
+4. Candidate that bases then reclaims VWAP on expanding volume becomes OPENING_CONTINUATION_ACTIVE.
+5. Candidate that loses VWAP and fails two reclaims becomes EXHAUSTED_OR_DISTRIBUTING.
+
+
+PHASE 7: Generate same-style backup pools
+-----------------------------------------
+
+Problem:
+Roi has used NVDA/AMZN/AAPL-style filler backups. That is not aligned with the desired high-volatility strategy.
+
+Patch:
+
+- src/research/universe.py
+- src/research/ranking.py
+- src/workflows/premarket_pipeline.py
+- src/research/scouts/theme_sympathy_scout.py
+- src/research/scouts/premarket_gapper_scout.py
+- tests/test_backup_pool_generation.py
+
+Required backup categories:
+
+- same-theme direct beneficiaries
+- same-theme laggards
+- sector sympathy names
+- top premarket gappers
+- high RVOL names
+- small/mid/micro-cap catalyst names
+- social attention acceleration names
+- fresh structured-news runners
+
+same_style_backup_status schema:
+
+{
+  "leader": "INFQ",
+  "same_style_non_megacap_backups": ["..."],
+  "same_theme_laggards": ["..."],
+  "sector_sympathy_candidates": ["..."],
+  "top_premarket_gappers": ["..."],
+  "high_rvol_candidates": ["..."],
+  "social_velocity_candidates": ["..."],
+  "mega_cap_default_backups": ["..."],
+  "same_style_backup_pool_ok": true,
+  "reason": null,
+  "backup_pool_diagnostics": {
+    "same_style_candidates_considered": [],
+    "same_style_candidates_selected": [],
+    "mega_cap_backups_used": [],
+    "reason_mega_cap_backup_used": null,
+    "source_lane_failures_affecting_backups": []
+  }
+}
+
+Acceptance tests:
+
+1. If primary is a policy/theme runner, backups include at least 3 non-mega-cap candidates or a clear source-lane failure.
+2. Mega-cap backups are demoted when viable same-style backups exist.
+3. Same-theme laggards can appear even if their current gap is smaller.
+4. Backup diagnostics explain why a backup was included or rejected.
+
+
+PHASE 8: Implement broad query families for search/browser/crawl lanes
+---------------------------------------------------------------------
+
+Patch:
+
+- docs/search_query_families.md
+- src/research/query_families.py
+- src/workflows/broad_ai_discovery.py
+- relevant scouts/adapters
+- tests/test_query_families.py
+
+Required query families:
+
+General premarket:
+- premarket movers unusual volume today small cap
+- highest premarket volume gainers today
+- stocks up premarket catalyst today
+- small cap stock up premarket why today
+- high relative volume stocks premarket today
+
+Government/policy/contract:
+- small cap government contract award stock today
+- stock government funding award premarket today
+- CHIPS Act funding stock premarket
+- Department of Commerce funding stock ticker today
+- SAM.gov award public company stock today
+
+Biotech/FDA:
+- FDA approval stock premarket today
+- medical device clearance stock today
+- biotech trial results stock up premarket
+- clinical trial data stock premarket today
+
+M&A/strategic review:
+- merger acquisition stock up premarket today
+- strategic alternatives stock premarket today
+- takeover rumor stock today confirmed
+
+Product/partnership:
+- product launch stock up premarket today
+- partnership announcement stock premarket today
+- contract win stock premarket today
+
+Ticker-specific enrichment:
+- {ticker} stock why up today
+- {ticker} press release today
+- {ticker} 8-K today
+- {ticker} investor event today
+- {ticker} StockTwits trending
+- {ticker} Reddit today
+- ${ticker} X today catalyst
+
+Output:
+
+- Save queries issued.
+- Save source URLs returned.
+- Save extraction status.
+- Save which query family found the candidate.
+
+Acceptance tests:
+
+1. Query family generation covers all catalyst classes.
+2. Query output is deduped by URL and ticker.
+3. Query families can be used for both broad discovery and ticker enrichment.
+
+
+PHASE 9: Upgrade Grok/X into narrative acceleration detector
+------------------------------------------------------------
+
+Patch:
+
+- src/adapters/grok_search.py
+- src/research/scouts/social_scout.py
+- src/research/social_velocity.py
+- tests/test_grok_x_narrative.py
+
+Grok/X output fields:
+
+- ticker
+- cashtag_mentions
+- x_attention_velocity
+- narrative_summary
+- key_threads
+- influencer_concentration
+- market_moving_hype_score
+- pump_language_score
+- rumor_vs_catalyst_flag
+- source_urls
+- source_timestamps
+
+Rules:
+
+- Grok/X can discover.
+- Grok/X cannot validate a catalyst alone.
+- Social-only names remain non-executable until structured/official evidence or tape confirmation validates them.
+- Social + premarket volume + opening/second-leg tape can support SOCIAL_TAPE_ROCKET or continuation mode.
+
+Acceptance tests:
+
+1. Grok-only candidate is not executable_primary.
+2. Grok candidate with structured news and tape can be eligible.
+3. Pump-language score penalizes unsupported hype.
+4. Key threads and URLs are persisted.
+
+
+PHASE 10: Optimize governed deep-research usage
+------------------------------------------------
+
+Patch:
+
+- src/workflows/deep_mini_bridge.py
+- docs/prompts/SHORTLIST_DEEP_RESEARCH_PROMPT.md
+- docs/prompts/BROAD_DISCOVERY_ESCALATION_PROMPT.md
+- tests/test_deep_research_routing.py
+
+Use deep research in two possible places:
+
+A. Broad discovery escalation:
+- only if deterministic/search lanes are thin or user explicitly asks
+- goal is candidate generation, not final trade decision
+
+B. Shortlist synthesis:
+- after evidence packets and market overlays exist
+- goal is choose/compare research_leader, not execution authority
+
+Deep runner rules:
+
+- Must call architect first.
+- Use no_escalation, deep_mini, or deep according to governance.
+- Log route, request ID, response ID, status, failure reason.
+- If it fails, report exact failure and do not claim deep research was used.
+
+Shortlist prompt must ask:
+
+- which candidate has the strongest catalyst
+- which candidate is most asymmetric
+- which candidate is too extended
+- which candidate should be research_leader
+- which candidate is executable_primary if any
+- which candidates belong in second_leg_watch
+- which backups are same-style and why
+
+Acceptance tests:
+
+1. Invalid deep mode fails before market open with clear error.
+2. failed deep research cannot be reported as successful.
+3. deep output cannot override execution gates.
+4. source IDs/log paths are present when deep research runs.
+
+
+PHASE 11: Make final packet explicit and auditable
+--------------------------------------------------
+
+Patch:
+
+- src/workflows/premarket_pipeline.py
+- reports/morning JSON renderer
+- reports/morning Markdown renderer
+- tests/test_morning_packet_fields.py
+
+Required final packet fields:
+
+- generated_at_utc
+- trading_date
+- market_session
+- source_lane_status_path
+- source_lane_status
+- raw_candidate_count
+- enriched_candidate_count
+- research_leader
+- executable_primary
+- anti_chase_state
+- opportunity_lifecycle_state
+- entry_viability_score
+- second_leg_watch
+- no_trade_extended
+- same_style_backup_status
+- backup_pool_diagnostics
+- top_rejected_candidates
+- why_rejected
+- best_pick_packet
+- candidate_research_packets
+- deep_research_route
+- deep_research_status
+- current_action
+- buy_now_allowed
+- why_not_buy_now
+- buy_triggers
+- monitoring_plan_through_11_et
+
+Example JSON shape:
+
+{
+  "research_leader": "INFQ",
+  "executable_primary": null,
+  "anti_chase_state": "SECOND_LEG_WATCH",
+  "opportunity_lifecycle_state": "SECOND_LEG_WATCH",
+  "entry_viability_score": 42,
+  "buy_now_allowed": false,
+  "why_not_buy_now": "Already extended above clean entry; requires second-leg reset/reclaim.",
+  "buy_triggers": [
+    "VWAP reclaim on expanding volume",
+    "ORB break above local high",
+    "Premarket-high reclaim with spread stable"
+  ],
+  "same_style_backups": ["..."],
+  "mega_cap_backups_used": false,
+  "monitoring_plan_through_11_et": true
+}
+
+Acceptance tests:
+
+1. Morning JSON includes all required fields.
+2. Morning Markdown explains research_leader vs executable_primary in human-readable form.
+3. If buy_now_allowed=false, why_not_buy_now is non-empty.
+4. If same_style backups fail, report says exactly why.
+
+
+PHASE 12: Fix stream + continuation orchestration
+-------------------------------------------------
+
+Problem:
+A system that runs stream capture first and starts continuation only after a 900-second stream is too late.
+
+Desired behavior:
+Opening stream capture and broker-aware continuation monitoring must be concurrent, or continuation must start exactly at 09:35 ET with heartbeat proof while stream capture continues.
+
+Patch:
+
+- scripts/supervise_opening_bell_live_monitor.sh
+- scripts/run_opening_stream_shadow.sh
+- scripts/run_opening_bell_live_monitor.sh
+- src/workflows/opening_stream_supervisor.py
+- src/workflows/live_monitor.py
+- tests/test_opening_orchestration.py
+
+Correct orchestration options:
+
+Option A: concurrent processes
+- Start stream capture at 09:29:30.
+- Start continuation monitor at 09:35:00.
+- Both write heartbeats.
+- Both stop at configured cutoff or when position is opened/invalidated.
+
+Option B: integrated process
+- opening_stream_supervisor handles first burst and second-leg monitoring in one process.
+- It must continue strategy evaluation through 11:00 ET.
+
+Do not use:
+- stream for 900 seconds, then continuation monitor after stream exits.
+
+Required heartbeat fields:
+
+- stream_capture_started_at
+- stream_capture_heartbeat_at
+- continuation_monitor_started_at
+- continuation_monitor_heartbeat_at
+- last_decision_at
+- candidate_state_by_symbol
+- raw_quote_count
+- raw_trade_count
+- decision_count
+- proposal_count
+- orders_submitted
+
+Acceptance tests:
+
+1. No-order validation proves raw_quote_count > 0, raw_trade_count > 0, decision_count > 0.
+2. continuation_monitor_started_at is between 09:34:55 and 09:35:05 ET.
+3. continuation heartbeat exists after 09:35.
+4. Final summary shows opening_burst_ran=true and continuation_monitor_started=true.
+5. orders_submitted=false in no-order mode.
+6. stream_skipped is SHADOW_INVALID, not success.
+
+
+PHASE 13: Captured-tape continuation replay
+--------------------------------------------
+
+Problem:
+Synthetic fixtures are useful but not enough. Roi must prove the captured INFQ-style continuation tape is catchable or explain why not.
+
+Patch or create:
+
+- scripts/replay_captured_continuation.sh
+- src/workflows/continuation_replay.py
+- tests/test_captured_tape_continuation_replay.py
+
+Input:
+
+- reports/live_monitor/runs/<run_id>/raw_quotes.jsonl
+- reports/live_monitor/runs/<run_id>/raw_trades.jsonl
+- reports/live_monitor/runs/<run_id>/decisions.jsonl
+- candidate packet for target ticker
+
+Required output:
+
+- reports/live_monitor/runs/<replay_id>/continuation_replay_summary.json
+- reports/live_monitor/runs/<replay_id>/continuation_decisions.jsonl
+
+Summary fields:
+
+- target_symbol
+- replay_window_start
+- replay_window_end
+- raw_quote_count
+- raw_trade_count
+- decision_count
+- best_decision
+- first_buy_now_at
+- proposal_count
+- no_trade_reason
+- top_failed_predicates
+- top_passed_predicates
+- lifecycle_transitions
+- whether_09_46_style_move_caught
+
+Acceptance tests:
+
+1. Replay 09:35-09:50 captured tape.
+2. System emits BUY_NOW if predicates pass, or exact no-trade reason if not.
+3. Generic outside_opening_burst_window is not accepted after 09:35.
+4. The replay includes lifecycle transitions from SECOND_LEG_WATCH to OPENING_CONTINUATION_ACTIVE or NO_TRADE_EXTENDED.
+
+
+PHASE 14: Improve volume-burst scoring for high premarket-volume runners
+------------------------------------------------------------------------
+
+Problem:
+High premarket-volume runners can fail volume_burst because baseline is wrong.
+
+Patch:
+
+- src/features/opening_tape.py
+- src/strategy/opening_burst_hyper_long.py
+- src/strategy/second_leg_continuation.py
+- tests/test_volume_burst_recalibration.py
+
+Required volume metrics:
+
+- absolute_dollar_volume_score
+- volume_burst_ratio
+- opening_vs_premarket_rate_score
+- acceleration_vs_previous_window_score
+- continuation_volume_expansion_score
+- volume_quality_after_reset_score
+- dollar_volume_per_minute
+- trade_count_velocity
+
+Rules:
+
+- High premarket volume should not make first minute look weak by comparing against the entire premarket total.
+- Use per-minute premarket baseline.
+- For second-leg continuation, compare current minute to prior 3-5 regular-session minutes.
+- A quiet first minute should not discard the candidate; it should transition to SECOND_LEG_WATCH if catalyst remains intact.
+
+Acceptance tests:
+
+1. High premarket-volume runner with quiet first minute becomes SECOND_LEG_WATCH.
+2. Later volume expansion activates continuation logic.
+3. A true fade remains NO_TRADE or EXHAUSTED_OR_DISTRIBUTING.
+
+
+PHASE 15: Strengthen order-safe no-order validation
+---------------------------------------------------
+
+Patch:
+
+- scripts/run_next_open_shadow_validation.py
+- scripts/run_no_order_continuation_validation.sh
+- scripts/run_opening_stream_shadow.sh
+- tests/test_no_order_validation.py
+
+No-order validation must:
+
+- not inspect broker account state
+- not inspect broker order state
+- not inspect broker position state
+- not preview orders
+- not place orders
+- not cancel orders
+- not mutate guard files
+- still capture stream data
+- still run candidate state logic
+- still run proposal-generation logic in shadow mode if needed, without broker submission
+
+Required output:
+
+{
+  "orders_allowed": false,
+  "orders_submitted": false,
+  "broker_account_inspected": false,
+  "broker_orders_inspected": false,
+  "broker_positions_inspected": false,
+  "stream_capture_started": true,
+  "stream_capture_completed": true,
+  "continuation_monitor_started": true,
+  "raw_quote_count": 0,
+  "raw_trade_count": 0,
+  "decision_count": 0,
+  "status": "OK | SHADOW_INVALID | INTERNAL_FAILURE"
+}
+
+Acceptance tests:
+
+1. stream_skipped + stream_required=true returns SHADOW_INVALID.
+2. no-order mode with broker inspection attempted returns INTERNAL_FAILURE.
+3. no-order mode with valid stream and decisions returns OK.
+4. no-order mode cannot submit orders even if BUY_NOW shadow signal occurs.
+
+
+PHASE 16: Improve final_summary zero-proposal explanation
+---------------------------------------------------------
+
+Patch:
+
+- src/workflows/opening_stream_supervisor.py
+- src/workflows/live_monitor.py
+- reports/live_monitor summary generation
+- tests/test_final_summary_zero_proposal.py
+
+If proposal_count=0, final_summary must include:
+
+- per-symbol top failed predicates
+- max scores
+- first decision
+- best decision
+- last decision
+- mode coverage
+- windows monitored
+- continuation_monitor_started
+- second_leg_monitor_started
+- discarded_or_kept
+- no_proposal_root_cause
+
+Do not accept:
+
+- proposal_count=0 with no explanation
+- ok=true hiding no decisions
+- outside_opening_burst_window as final explanation after 09:35
+
+Acceptance tests:
+
+1. A no-proposal run explains exactly why no proposal happened.
+2. A run with zero decisions is not OK.
+3. After 09:35, no proposal summary references continuation/ORB/VWAP predicates, not only opening burst.
+
+
+PHASE 17: Testing commands
+==========================
+
+Run full test suite:
+
+PYTHONPATH=. .venv/bin/pytest tests
+
+Run focused suite:
+
+PYTHONPATH=. .venv/bin/pytest \
+  tests/test_first_seen_tracking.py \
+  tests/test_raw_runner_discovery.py \
+  tests/test_broad_ai_discovery_contract.py \
+  tests/test_source_lane_status.py \
+  tests/test_candidate_packet_schema.py \
+  tests/test_lifecycle_classification.py \
+  tests/test_anti_chase.py \
+  tests/test_backup_pool_generation.py \
+  tests/test_query_families.py \
+  tests/test_grok_x_narrative.py \
+  tests/test_deep_research_routing.py \
+  tests/test_morning_packet_fields.py \
+  tests/test_opening_orchestration.py \
+  tests/test_captured_tape_continuation_replay.py \
+  tests/test_volume_burst_recalibration.py \
+  tests/test_no_order_validation.py \
+  tests/test_final_summary_zero_proposal.py
+
+If some files do not exist yet, create them.
+
+Do not skip missing tests by changing the command. Missing tests are implementation gaps.
+
+
+PHASE 18: Required implementation report
+========================================
+
+After implementing, create:
+
+reports/implementation/ROI_SNIPS_OPTIMIZED_RESEARCH_IMPLEMENTATION_REPORT_<date>.txt
+
+The report must include:
+
+1. Files changed/created.
+2. Summary of implemented behavior.
+3. New schemas and fields.
+4. Source-lane status proof.
+5. First-seen tracking proof.
+6. Morning report regenerated proof.
+7. Same-style backup pool proof.
+8. Broad AI discovery proof.
+9. Lifecycle/anti-chase proof.
+10. Captured-tape continuation replay proof.
+11. Stream + continuation orchestration proof.
+12. Test commands and results.
+13. Remaining gaps.
+14. Whether the next run should remain no-order validation or can be considered for live arming.
+
+Do not claim DONE unless all artifact proof exists.
+
+Status vocabulary:
+
+- DONE_SOURCE_ONLY
+- DONE_WITH_ARTIFACT_PROOF
+- PARTIAL
+- NOT_DONE
+- BROKEN
+
+The implementation report must explicitly state:
+
+- Is source code patched?
+- Is there fresh artifact proof?
+- Is there replay proof?
+- Is there real-market no-order proof?
+- Is live arming recommended? yes/no
+
+Default answer should be:
+
+Live arming is not recommended unless real-market no-order validation has passed.
+
+
+5. CONFIG PATCH GUIDANCE
+========================
+
+Add or confirm these config keys.
+
+config/workflow.yaml or equivalent:
+
+research:
+  raw_discovery:
+    enabled: true
+    target_raw_candidates_min: 50
+    target_raw_candidates_max: 150
+    preserve_top_raw_candidates: 25
+  broad_ai_discovery:
+    enabled: true
+    run_before_strict_filtering: true
+    target_candidates_min: 30
+    target_candidates_max: 75
+    final_pick_allowed: false
+  first_seen_tracking:
+    enabled: true
+    artifact_path: runs/{date}/normalized/first_seen_candidates.json
+  source_lane_status:
+    required: true
+    artifact_path: runs/{date}/normalized/source_lane_status.json
+  same_style_backups:
+    enabled: true
+    min_non_megacap_backups: 3
+    allow_mega_cap_fallback_only_if_no_same_style: true
+  no_trade_standard:
+    require_raw_discovery: true
+    require_source_lane_status: true
+    require_same_style_backup_attempt: true
+    require_rejection_reasons: true
+
+market:
+  first_seen_price_tracking: true
+  move_since_first_seen_tracking: true
+
+execution_state:
+  split_research_and_execution: true
+  require_executable_primary_separate_from_research_leader: true
+  allow_second_leg_watch: true
+  allow_no_trade_extended: true
+
+opening_monitor:
+  opening_stream_start_et: "09:29:30"
+  continuation_monitor_start_et: "09:35:00"
+  continuation_monitor_end_et: "11:00:00"
+  require_concurrent_or_precise_handoff: true
+  stream_skipped_is_failure_when_required: true
+
+
+6. EXACT OPENCLAW IMPLEMENTATION PROMPT
+=======================================
+
+Use this prompt with the OpenClaw/Roi Snips agent, attaching this runbook.
+
+----- BEGIN AGENT PROMPT -----
+You are the Roi Snips implementation agent.
+
+Read the attached ROI SNIPS OPTIMIZED RESEARCH IMPLEMENTATION RUNBOOK FOR OPENCLAW and implement it exactly.
+
+This is not a review task. This is a build task.
+
+Core mission:
+Make Roi Snips find the next INFQ-style volatile runner earlier, separate research quality from current buyability, generate same-style volatile backups, and keep valid names alive through second-leg continuation monitoring until 11:00 ET.
+
+Do not make Roi conservative.
+Do not add human approval.
+Do not make mega-cap backups the default.
+Do not let best_pick mean buy_now.
+Do not let deep research override deterministic gates.
+Do not place, preview, cancel, or replace orders during this implementation pass.
+Do not alter LIVE_ARMED, DISABLE_NEW_ENTRIES, or KILL_SWITCH.
+
+Implement all phases:
+
+1. first-seen tracking
+2. broad raw runner discovery before filtering
+3. broad Pro-style AI discovery before strict filtering
+4. mandatory source_lane_status artifacts
+5. enriched candidate packets with first-seen/lifecycle/entry-viability
+6. lifecycle and anti-chase states
+7. same-style backup pools
+8. search/query families
+9. Grok/X narrative acceleration output
+10. governed deep-research usage for broad escalation and shortlist synthesis
+11. explicit final packet fields
+12. concurrent or precise-handoff opening stream + continuation monitoring
+13. captured-tape continuation replay
+14. volume-burst recalibration
+15. no-order validation integrity
+16. final_summary zero-proposal explanation
+17. complete tests
+18. implementation report
+
+Required output:
+- implementation report path
+- list of files changed/created
+- test commands and results
+- artifact proof paths
+- captured-tape replay proof
+- real-market no-order proof if available
+- whether live arming is recommended
+
+Do not claim DONE unless source code, tests, and artifact proof all exist.
+----- END AGENT PROMPT -----
+
+
+7. FINAL ACCEPTANCE CRITERIA
+============================
+
+This runbook is complete only when all are true:
+
+1. Morning JSON contains research_leader, executable_primary, anti_chase_state, opportunity_lifecycle_state, entry_viability_score, second_leg_watch, no_trade_extended, same_style_backup_status, source_lane_status.
+2. source_lane_status.json exists for the run.
+3. first_seen_candidates.json exists for the run.
+4. broad_ai_discovery_candidates.json exists or explicit no_escalation/failure reason exists.
+5. Top raw candidates are preserved.
+6. Same-style backups are generated or failure explained.
+7. Mega-cap filler backups are not used unless justified.
+8. A +40% validated premarket runner is not automatic buy; it becomes SECOND_LEG_WATCH unless continuation confirms.
+9. Stream capture and continuation monitor run concurrently or continuation starts exactly at 09:35.
+10. No-order validation proves raw quotes/trades/decisions and orders_submitted=false.
+11. Captured-tape continuation replay catches a valid 09:46-style move or gives exact no-trade predicates.
+12. proposal_count=0 summaries explain why.
+13. Full tests pass.
+14. Implementation report exists.
+15. Live arming remains not recommended until no-order validation proof passes.
+
+END OF RUNBOOK

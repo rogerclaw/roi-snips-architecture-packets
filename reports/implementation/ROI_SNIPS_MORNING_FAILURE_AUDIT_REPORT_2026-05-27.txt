@@ -1,0 +1,489 @@
+ROI SNIPS MORNING FAILURE AUDIT REPORT
+======================================
+Generated: 2026-05-27 08:17 PT
+Prepared for: Charles
+Scope: Why I said Roi Snips was "good to go" on 2026-05-26, what actually happened on 2026-05-27, what was fixed, and what proof exists now.
+
+
+EXECUTIVE SUMMARY
+-----------------
+
+You were right to call this out. My "we're all set to go in the morning" answer on 2026-05-26 was not sufficiently proven.
+
+The core implementation work for the Roi Snips optimized research runbook was patched and locally tested on 2026-05-26. But the actual morning handoff was not truly production-ready because I relied on a scheduled OpenClaw cron job that could not run shell commands in its spawned Roi Snips session.
+
+The morning job fired at the right time, but it did not run the validation command. It returned:
+
+BLOCKED: I do not have a shell/exec tool available in this turn, so I could not run:
+cd <workspace>/roi-snips && scripts/run_no_order_continuation_validation.sh
+
+That means my readiness statement was wrong in the operational sense. I checked script presence, no-order flags, duplicate-stream guard, and scheduling, but I did not verify the actual scheduled execution surface had shell/exec access. A scheduled command that cannot execute is not "ready."
+
+After your message on 2026-05-27, I ran the validation manually from a shell-capable session and found two additional issues:
+
+1. The narrow scheduled wrapper could start safely, but it had no same-day stream symbols because no fresh same-day morning candidate packet existed at that point. It returned `no_stream_symbols` and produced no final stream summary.
+2. The broader end-to-end shadow validation wrapper could build the research and premarket packet and stream data, but its readiness steps still queried broker readiness even though the wrapper advertised brokerless/no-order validation. I patched that immediately so future brokerless validations skip broker account/order/position readiness checks.
+
+Current state after fix:
+
+- End-to-end no-order market-data validation now passes.
+- It built a same-day research packet.
+- It streamed live Alpaca SIP market data.
+- It inspected no broker account, orders, or positions after the patch.
+- It submitted no orders.
+- It produced fresh proof artifacts.
+- The full test suite passes: 175 passed, 1 existing websockets.legacy warning.
+
+Live arming recommendation remains: NO. The system now has a clean no-order validation path, but the morning readiness failure shows the scheduling/session handoff must be hardened before any live operation is trusted.
+
+
+WHAT I SAID VS WHAT WAS TRUE
+----------------------------
+
+What I told you on 2026-05-26 around 18:05 PT:
+
+- I said we were set up for the morning.
+- I had scheduled one-shot OpenClaw cron job `39263300-c944-4311-9074-f106e70ac7e3`.
+- The job was scheduled for 2026-05-27 06:35 PT / 13:35 UTC.
+- It was supposed to run only the brokerless no-order validation wrapper.
+- It explicitly forbade broker account/order/position inspection, guard arming, and live/paper orders.
+
+What was actually true:
+
+- The code implementation was patched and local tests passed.
+- The scheduled job existed and fired.
+- But the scheduled job's spawned Roi Snips session did not have shell/exec access.
+- Therefore it could not run `scripts/run_no_order_continuation_validation.sh`.
+- No 2026-05-27 live stream validation summary was produced by the scheduled job.
+- So the operational morning path was not actually ready.
+
+
+ROOT CAUSE
+----------
+
+Primary root cause:
+
+I treated a scheduled OpenClaw cron handoff as execution-ready without verifying that the spawned cron session had the tool capability needed to run the command.
+
+The cron record proves the job fired:
+
+- Job ID: `39263300-c944-4311-9074-f106e70ac7e3`
+- Run time: 2026-05-27 06:35 PT / 13:35 UTC
+- Run status: `ok` at the cron-delivery layer
+- Delivered summary: `BLOCKED`
+- Actual blocker: no shell/exec tool in that turn
+- Session key: `agent:roi-snips:cron:39263300-c944-4311-9074-f106e70ac7e3:run:498e93a9-19ab-4ed5-b0f9-5542c60401d9`
+
+The cron infrastructure did deliver a result, but the result was not the validation. It was only a blocked message.
+
+Secondary root cause:
+
+The scheduled command was too narrow:
+
+`scripts/run_no_order_continuation_validation.sh`
+
+That wrapper assumes a valid same-day morning candidate packet already exists. On the manual replacement run, it started safely but reported:
+
+- `shadow_preflight_continue`
+- `broker_preflight_skipped_for_no_order_market_data_validation`
+- `no_stream_symbols`
+
+It also created an empty run directory:
+
+`reports/live_monitor/runs/opening_stream_2026-05-27_145815/`
+
+No `final_summary.json` was produced there because there were no symbols to stream.
+
+Correct morning validation should use the end-to-end wrapper that builds research and premarket artifacts first:
+
+`scripts/run_next_open_shadow_validation.py`
+
+Tertiary root cause:
+
+The end-to-end wrapper had a serious guardrail inconsistency. It forced no-order environment variables, but still ran:
+
+- `scripts/check_live_readiness.sh`
+- `scripts/check_opening_bell_readiness.sh`
+
+Those readiness checks queried broker readiness state. That contradicted the intended brokerless validation contract.
+
+I patched this in:
+
+- `scripts/run_next_open_shadow_validation.py`
+- `tests/test_no_order_validation.py`
+
+After the patch, brokerless shadow mode records these explicit skipped steps:
+
+- `broker_readiness_skipped_for_brokerless_shadow`
+- `opening_bell_readiness_skipped_for_brokerless_shadow`
+
+
+TIMELINE
+--------
+
+2026-05-26 18:05 PT
+
+- You asked if Roi Snips was all set for the morning.
+- I ran non-broker readiness checks only.
+- I confirmed no existing opening stream process was running.
+- I confirmed the duplicate-stream guard existed.
+- I confirmed no-order flags were present.
+- I found no active crontab path and the old broad 6am catalyst job disabled.
+- I scheduled OpenClaw cron job `39263300-c944-4311-9074-f106e70ac7e3` for 2026-05-27 06:35 PT.
+- I should have said: "The code and schedule are in place, but the cron execution surface still needs proof."
+- Instead, I implied we were good to go.
+
+2026-05-26 20:27 PT
+
+- You attached the optimized research implementation runbook and said "Implement this."
+- I implemented the source/test/local-artifact pass.
+- Focused runbook suite passed: 21 passed.
+- Full suite passed at that time: 174 passed, 1 existing warning.
+- I created `reports/implementation/ROI_SNIPS_OPTIMIZED_RESEARCH_IMPLEMENTATION_REPORT_2026-05-26.txt`.
+- Status was correctly marked PARTIAL because real-market no-order validation was still scheduled for the next morning.
+
+2026-05-27 06:35 PT
+
+- The one-shot OpenClaw cron fired.
+- It did not run the command.
+- It returned `BLOCKED` because the spawned Roi Snips cron session lacked shell/exec access.
+- No market-data stream validation occurred.
+
+2026-05-27 06:43-07:47 PT
+
+- Follow-up inspection confirmed the cron failure.
+- No 2026-05-27 `opening_stream_*` final summary existed.
+- The latest prior good stream proof remained from 2026-05-26, not from the updated 2026-05-27 implementation path.
+
+2026-05-27 07:56 PT
+
+- You asked what happened and requested this full TXT audit.
+- I inspected the actual cron record, Roi Snips active ledger, implementation report, run artifacts, and current validation state.
+
+2026-05-27 07:58 PT
+
+- I manually ran `scripts/run_no_order_continuation_validation.sh` from a shell-capable session.
+- It stayed in no-order/broker-preflight-skipped mode.
+- It failed to produce market-data validation because there were no stream symbols.
+- Evidence: `no_stream_symbols`.
+
+2026-05-27 08:01-08:06 PT
+
+- I ran the stronger end-to-end shadow validator:
+  `scripts/run_next_open_shadow_validation.py --stream-max-seconds 180 --stream-timeout 360`
+- It generated same-day research and premarket artifacts.
+- It streamed live data for `META`, `NVDA`, and `TSLA`.
+- It produced:
+  - 14,378 quotes
+  - 31,673 trades
+  - 46,051 decisions
+  - 0 proposals
+  - 0 submitted orders
+- However, during this run I found the readiness-wrapper bug: it had inspected broker readiness despite the intended brokerless contract.
+
+2026-05-27 08:09 PT
+
+- I patched the end-to-end shadow validator so brokerless mode skips broker-readiness and opening-bell-readiness steps that inspect broker state.
+- Added a regression test.
+- Focused tests passed: 9 passed.
+- Full suite passed: 175 passed, 1 existing warning.
+
+2026-05-27 08:10-08:13 PT
+
+- I reran the end-to-end shadow validator after the patch:
+  `scripts/run_next_open_shadow_validation.py --stream-max-seconds 60 --stream-timeout 180`
+- This is the cleanest current proof.
+- It built same-day research and premarket artifacts.
+- It explicitly skipped broker readiness checks.
+- It streamed live data for `INFQ`, `NVDA`, and `TSLA`.
+- It produced:
+  - 5,812 quotes
+  - 13,096 trades
+  - 18,908 decisions
+  - 0 proposals
+  - 0 order results
+  - 0 submitted orders
+  - broker_account_inspected=false
+  - broker_orders_inspected=false
+  - broker_positions_inspected=false
+
+
+WHAT WAS IMPLEMENTED FROM THE RUNBOOK
+-------------------------------------
+
+The 2026-05-26 implementation pass added or wired:
+
+- first-seen tracking
+- broad raw runner discovery
+- broad AI discovery contract
+- query families
+- social/Grok velocity metadata
+- same-style backup diagnostics
+- explicit morning packet fields
+- source-lane status artifacts
+- captured-tape continuation replay
+- no-order/brokerless validation fields
+- zero-proposal root-cause fields
+- concurrent/precise 09:35 ET continuation orchestration
+
+The original implementation report is:
+
+`roi-snips/reports/implementation/ROI_SNIPS_OPTIMIZED_RESEARCH_IMPLEMENTATION_REPORT_2026-05-26.txt`
+
+That report was accurate to call the state PARTIAL, because same-day real-market no-order validation had not yet completed.
+
+
+WHAT WAS FIXED AFTER THE FAILURE
+--------------------------------
+
+Patch 1: brokerless validation now skips broker readiness checks.
+
+Changed:
+
+- `scripts/run_next_open_shadow_validation.py`
+- `tests/test_no_order_validation.py`
+
+Behavior now:
+
+- In brokerless shadow mode, the validator does not run broker-readiness steps.
+- It records explicit skipped steps instead of quietly querying broker state.
+- The stream proof still runs with no-order flags.
+
+Patch result:
+
+- Focused tests: 9 passed in 0.04s.
+- Full tests: 175 passed, 1 existing warning in 5.63s.
+
+
+CURRENT VALIDATION PROOF
+------------------------
+
+End-to-end validation summary:
+
+`roi-snips/reports/live_monitor/next_open_shadow_validation_2026-05-27.json`
+
+Result:
+
+- status: OK
+- shadow_mode: OPENING_STREAM_SHADOW
+- stream_required: true
+- orders_allowed: false
+- orders_submitted: false
+- broker_account_inspected: false
+- broker_orders_inspected: false
+- broker_positions_inspected: false
+
+Step names:
+
+- `research_skip_deep_mini`
+- `premarket_pipeline`
+- `broker_readiness_skipped_for_brokerless_shadow`
+- `opening_bell_readiness_skipped_for_brokerless_shadow`
+- `opening_stream_shadow`
+
+Fresh stream summary:
+
+`roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_151215/final_summary.json`
+
+Result:
+
+- ok: true
+- status: OK
+- mode: shadow_no_order_submission
+- symbols streamed: INFQ, NVDA, TSLA
+- max_seconds: 60.0
+- orders_allowed: false
+- orders_submitted: false
+- broker_account_inspected: false
+- broker_orders_inspected: false
+- broker_positions_inspected: false
+- stream_captured: true
+- raw_quote_count: 5,812
+- raw_trade_count: 13,096
+- decision_count: 18,908
+- proposal_count: 0
+- order_result_count: 0
+- stopped_by_timer: true
+- market_data_connected: true
+
+Mode coverage:
+
+- opening_burst_ran: true
+- continuation_monitor_started: true
+- orb_vwap_monitor_started: true
+- second_leg_monitor_started: true
+- stream_captured: true
+- handoff_completed: true
+
+Zero-proposal explanation:
+
+INFQ, NVDA, and TSLA were all classified as `WAIT_FOR_SECOND_LEG` because the validation ran after the opening-burst window had closed and the continuation handoff condition applied.
+
+
+SAME-DAY RESEARCH PACKET PROOF
+------------------------------
+
+Same-day premarket report:
+
+`roi-snips/reports/morning/json/2026-05-27.json`
+
+Key facts:
+
+- research_leader: INFQ
+- executable_primary: INFQ
+- buy_now_allowed: true at packet generation time
+- raw_candidate_count: 9
+- enriched_candidate_count: 8
+- source_lane_status_count: 16
+- symbols_considered: NVDA, TSLA, AAPL, SMCI, AMZN, AMD, META, INFQ
+
+INFQ packet details:
+
+- catalyst_type: government_contract
+- claim_summary: INFQ 10-Q filing
+- validation_status: primary_and_structured_confirmed
+- official_confirmation_count: 2
+- structured_confirmation_count: 3
+- last_price at packet: 15.26
+- gap_pct at packet: -3.9043
+- premarket_volume: 1,483,650
+- premarket_dollar_volume: 24,082,122.36
+- spread_pct: 0.1966
+- execution_gate_pass: true
+- execution_readiness_score: 100.0
+- anti_chase_state: PREMARKET_BUILDING
+- opportunity_lifecycle_state: EARLY_CATALYST_DISCOVERY
+
+Important caveat:
+
+The later stream run happened after the opening burst window, so the stream correctly did not propose a buy and classified the names as second-leg watch.
+
+
+TEST RESULTS
+------------
+
+Focused tests after the brokerless-wrapper patch:
+
+Command:
+`PYTHONPATH=. .venv/bin/pytest tests/test_no_order_validation.py tests/test_opening_bell_readiness.py -q`
+
+Result:
+`9 passed in 0.04s`
+
+Full test suite:
+
+Command:
+`PYTHONPATH=. .venv/bin/pytest tests -q`
+
+Result:
+`175 passed, 1 warning in 5.63s`
+
+Warning:
+
+Existing `websockets.legacy` deprecation warning. It is not new from this patch.
+
+
+WHAT I GOT WRONG
+----------------
+
+1. I conflated "scheduled" with "execution-proven."
+
+The job existed. That was not enough.
+
+2. I did not verify the cron session had shell/exec capability.
+
+That was the direct morning failure.
+
+3. I scheduled the narrow stream wrapper instead of the end-to-end validation wrapper.
+
+The narrow wrapper requires a same-day candidate packet to already exist. It was not durable enough as the morning proof command.
+
+4. I accepted a brokerless-validation label before auditing every sub-step for broker access.
+
+The end-to-end wrapper claimed no-order/no-broker validation at the top level, but readiness sub-steps still queried broker state. I found and patched this during the incident response.
+
+5. I did not send the audit report before continuing to patch and validate.
+
+You asked for the attached brief. I kept executing useful repairs, but the report itself should have been delivered sooner.
+
+
+WHAT IS SAFE NOW
+----------------
+
+Safe/proven:
+
+- Code implementation from the runbook exists.
+- Same-day research packet generation works.
+- Same-day premarket report generation works.
+- Brokerless stream validation works.
+- The validation wrapper now skips broker-readiness checks in brokerless mode.
+- Live SIP market data can be streamed and converted into decisions.
+- No-order validation produced zero proposals and zero submitted orders.
+- Full tests pass.
+
+Not safe / not recommended:
+
+- Live arming is not recommended.
+- The OpenClaw cron/session execution surface is not proven for shell-command validation.
+- The original cron job should not be treated as a valid operational runner.
+- Any future morning automation must be scheduled through a shell-capable runner or preflighted with a tiny canary command.
+
+
+ACTION ITEMS
+------------
+
+Immediate fix already done:
+
+- Patched brokerless validation wrapper to skip broker readiness checks.
+- Added regression coverage.
+- Re-ran tests.
+- Re-ran brokerless stream validation successfully.
+
+Required next hardening before another morning claim:
+
+1. Replace the old scheduled command with the end-to-end shadow validator:
+   `scripts/run_next_open_shadow_validation.py --stream-max-seconds <N> --stream-timeout <N+buffer>`
+
+2. Run it only from a shell-capable execution surface.
+
+3. Add a cron canary before market validation:
+   - run `pwd`
+   - run `python --version`
+   - verify `scripts/run_next_open_shadow_validation.py --skip-stream` can execute
+   - only then schedule a stream validation
+
+4. Treat cron-layer `status=ok` as delivery-only, not validation success.
+
+5. Require a produced JSON summary with:
+   - `status=OK`
+   - `orders_allowed=false`
+   - `orders_submitted=false`
+   - `broker_account_inspected=false`
+   - `broker_orders_inspected=false`
+   - `broker_positions_inspected=false`
+   - `stream_captured=true`
+   - quote/trade/decision counts greater than zero
+
+
+BOTTOM LINE
+-----------
+
+You were not actually all set this morning. The source implementation existed, but the scheduled execution path was broken.
+
+The direct cause was that the OpenClaw cron-spawned Roi Snips session had no shell/exec tool, so it could not run the validation script.
+
+The second problem was that the scheduled script was the wrong narrow wrapper for a durable morning proof; it needed a same-day packet already present.
+
+The third problem was that the broader wrapper had a brokerless-contract bug, which I patched.
+
+Current best evidence after repair:
+
+- `next_open_shadow_validation_2026-05-27.json` is OK.
+- Fresh stream proof exists at `opening_stream_2026-05-27_151215/final_summary.json`.
+- It streamed INFQ/NVDA/TSLA.
+- It captured 5,812 quotes, 13,096 trades, and 18,908 decisions.
+- It submitted zero orders.
+- It inspected no broker account/order/position state after the patch.
+- Full tests pass.
+
+I should not have said "we're all set" without a proven execution surface. The correct statement yesterday would have been: "The code and scheduled job are in place, but the scheduled session itself still needs a canary/proof run before I can call it ready."

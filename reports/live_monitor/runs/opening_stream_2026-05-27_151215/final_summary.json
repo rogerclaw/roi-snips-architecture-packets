@@ -1,0 +1,415 @@
+{
+  "blocked_proposal_count": 0,
+  "blocked_proposals": [],
+  "broker_account_inspected": false,
+  "broker_orders_inspected": false,
+  "broker_positions_inspected": false,
+  "candidate_state_by_symbol": {
+    "INFQ": {
+      "action_counts": {
+        "WAIT": 531
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "best_window": "fallback_or_closed",
+      "decision_count": 531,
+      "decisions_count": 531,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {},
+      "mode_coverage": [
+        "fallback_or_closed"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 531,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 531,
+          "predicate": "continuation_handoff_required"
+        }
+      ],
+      "top_passed_predicates": [],
+      "windows_monitored": [
+        "fallback_or_closed"
+      ]
+    },
+    "NVDA": {
+      "action_counts": {
+        "WAIT": 12315
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "best_window": "fallback_or_closed",
+      "decision_count": 12315,
+      "decisions_count": 12315,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {},
+      "mode_coverage": [
+        "fallback_or_closed"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 12315,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 12315,
+          "predicate": "continuation_handoff_required"
+        }
+      ],
+      "top_passed_predicates": [],
+      "windows_monitored": [
+        "fallback_or_closed"
+      ]
+    },
+    "TSLA": {
+      "action_counts": {
+        "WAIT": 6062
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "best_window": "fallback_or_closed",
+      "decision_count": 6062,
+      "decisions_count": 6062,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {},
+      "mode_coverage": [
+        "fallback_or_closed"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 6062,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 6062,
+          "predicate": "continuation_handoff_required"
+        }
+      ],
+      "top_passed_predicates": [],
+      "windows_monitored": [
+        "fallback_or_closed"
+      ]
+    }
+  },
+  "continuation_monitor_heartbeat_at": "2026-05-27T15:13:18.483598+00:00",
+  "continuation_monitor_start_et": "09:35:00",
+  "continuation_monitor_started_at": "2026-05-27T15:13:18.483597+00:00",
+  "decision_count": 18908,
+  "decisions": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_151215/decisions.jsonl",
+  "decisions_count": 18908,
+  "fast_cancel_ready": true,
+  "fired_symbols": [],
+  "last_decision_at": "2026-05-27T15:13:08.869042+00:00",
+  "max_seconds": 60.0,
+  "mode": "shadow_no_order_submission",
+  "mode_coverage": {
+    "continuation_monitor_started": true,
+    "handoff_completed": true,
+    "opening_burst_ran": true,
+    "orb_vwap_monitor_started": true,
+    "second_leg_monitor_started": true,
+    "stream_captured": true
+  },
+  "no_proposal_root_cause": "INFQ: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; NVDA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; TSLA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required",
+  "ok": true,
+  "opening_exit_manager_ready": true,
+  "order_result_count": 0,
+  "order_results": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_151215/order_results.jsonl",
+  "order_results_tail": [],
+  "orders_allowed": false,
+  "orders_submitted": false,
+  "output_dir": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_151215",
+  "per_symbol_decision_summary": {
+    "INFQ": {
+      "action_counts": {
+        "WAIT": 531
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "best_window": "fallback_or_closed",
+      "decision_count": 531,
+      "decisions_count": 531,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {},
+      "mode_coverage": [
+        "fallback_or_closed"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 531,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 531,
+          "predicate": "continuation_handoff_required"
+        }
+      ],
+      "top_passed_predicates": [],
+      "windows_monitored": [
+        "fallback_or_closed"
+      ]
+    },
+    "NVDA": {
+      "action_counts": {
+        "WAIT": 12315
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "best_window": "fallback_or_closed",
+      "decision_count": 12315,
+      "decisions_count": 12315,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {},
+      "mode_coverage": [
+        "fallback_or_closed"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 12315,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 12315,
+          "predicate": "continuation_handoff_required"
+        }
+      ],
+      "top_passed_predicates": [],
+      "windows_monitored": [
+        "fallback_or_closed"
+      ]
+    },
+    "TSLA": {
+      "action_counts": {
+        "WAIT": 6062
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "best_window": "fallback_or_closed",
+      "decision_count": 6062,
+      "decisions_count": 6062,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {},
+      "mode_coverage": [
+        "fallback_or_closed"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 6062,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 6062,
+          "predicate": "continuation_handoff_required"
+        }
+      ],
+      "top_passed_predicates": [],
+      "windows_monitored": [
+        "fallback_or_closed"
+      ]
+    }
+  },
+  "proposal_count": 0,
+  "proposals": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_151215/proposals.jsonl",
+  "raw_quote_count": 5812,
+  "raw_quotes": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_151215/raw_quotes.jsonl",
+  "raw_trade_count": 13096,
+  "raw_trades": "<workspace>/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-27_151215/raw_trades.jsonl",
+  "reason": null,
+  "status": "OK",
+  "stopped_by_timer": true,
+  "stream_capture_completed": true,
+  "stream_capture_heartbeat_at": "2026-05-27T15:13:18.483591+00:00",
+  "stream_capture_started": true,
+  "stream_capture_started_at": "2026-05-27T15:12:15.823118+00:00",
+  "stream_captured": true,
+  "stream_status": {
+    "last_error": null,
+    "market_data_connected": true,
+    "trade_updates_connected": false
+  },
+  "symbols": [
+    "INFQ",
+    "NVDA",
+    "TSLA"
+  ],
+  "windows_monitored": [
+    "fallback_or_closed"
+  ],
+  "zero_proposal_reason": "INFQ: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; NVDA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required; TSLA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required"
+}
