@@ -1,0 +1,904 @@
+{
+  "generated_at_utc": "2026-05-27T03:26:21.130857+00:00",
+  "trading_date": "2026-05-26-runbook-proof",
+  "status": "degraded",
+  "market_session": {
+    "ok": true,
+    "is_open": false,
+    "same_day_session_ahead": false,
+    "next_open": null
+  },
+  "source_lane_status_path": "<roi-snips>/runs/2026-05-26-runbook-proof/normalized/source_lane_status.json",
+  "symbols_considered": [
+    "MRAM",
+    "BBAI",
+    "ABEO",
+    "INFQ"
+  ],
+  "sources": {
+    "runbook_proof": {
+      "ok": true,
+      "count": 1,
+      "reason": "synthetic local artifact proof"
+    }
+  },
+  "watchlist": {
+    "A": [],
+    "B": [],
+    "C": []
+  },
+  "research_ranked": [],
+  "execution_watchlist": [],
+  "best_pick_candidate": null,
+  "research_leader": {
+    "symbol": "INFQ"
+  },
+  "executable_primary": null,
+  "watch_only": [],
+  "second_leg_watch": [
+    {
+      "symbol": "INFQ",
+      "anti_chase_state": "SECOND_LEG_WATCH",
+      "gap_pct": 55.0,
+      "hyper_trade_score": 8.7
+    }
+  ],
+  "no_trade_extended": [],
+  "anti_chase_state": "SECOND_LEG_WATCH",
+  "opportunity_lifecycle_state": "SECOND_LEG_WATCH",
+  "entry_viability_score": 42,
+  "same_style_backup_status": {
+    "leader": "INFQ",
+    "same_style_non_megacap_backups": [
+      "MRAM",
+      "ABEO",
+      "BBAI"
+    ],
+    "megacap_default_backups": [],
+    "same_style_backup_pool_ok": true,
+    "reason": null,
+    "backup_pool_diagnostics": {
+      "same_style_candidates_selected": [
+        "MRAM",
+        "ABEO",
+        "BBAI"
+      ],
+      "mega_cap_backups_used": [],
+      "reason_mega_cap_backup_used": null,
+      "source_lane_failures_affecting_backups": []
+    }
+  },
+  "backup_pool_diagnostics": {
+    "same_style_candidates_selected": [
+      "MRAM",
+      "ABEO",
+      "BBAI"
+    ],
+    "mega_cap_backups_used": [],
+    "reason_mega_cap_backup_used": null,
+    "source_lane_failures_affecting_backups": []
+  },
+  "source_lane_status": [
+    {
+      "lane_name": "Alpaca SIP",
+      "configured": true,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Alpaca News",
+      "configured": true,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Benzinga",
+      "configured": true,
+      "ran": true,
+      "produced_candidates_count": 1,
+      "produced_candidates": 1,
+      "candidate_count": 1,
+      "produced_useful_evidence_count": 1,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": true,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "SEC EDGAR",
+      "configured": true,
+      "ran": true,
+      "produced_candidates_count": 1,
+      "produced_candidates": 1,
+      "candidate_count": 1,
+      "produced_useful_evidence_count": 1,
+      "useful_for_primary": true,
+      "affected_primary_selection": true,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Company IR",
+      "configured": true,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "FMP movers",
+      "configured": false,
+      "ran": true,
+      "produced_candidates_count": 1,
+      "produced_candidates": 1,
+      "candidate_count": 1,
+      "produced_useful_evidence_count": 1,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": true,
+      "errors": [],
+      "missing_credentials": [
+        "FMP_API_KEY"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "StockTwits",
+      "configured": false,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [
+        "STOCKTWITS_ACCESS_TOKEN",
+        "STOCKTWITS_BEARER_TOKEN"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "TradingView-style screener",
+      "configured": false,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [
+        "ROI_SNIPS_ENABLE_TRADINGVIEW_SCREENER"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Grok/X",
+      "configured": false,
+      "ran": true,
+      "produced_candidates_count": 1,
+      "produced_candidates": 1,
+      "candidate_count": 1,
+      "produced_useful_evidence_count": 1,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": true,
+      "errors": [],
+      "missing_credentials": [
+        "XAI_API_KEY",
+        "GROK_API_KEY"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Reddit",
+      "configured": true,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Tavily/Brave/Exa",
+      "configured": false,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [
+        "TAVILY_API_KEY",
+        "BRAVE_API_KEY",
+        "EXA_API_KEY"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Firecrawl/Crawl4AI",
+      "configured": false,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [
+        "FIRECRAWL_API_KEY"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "openFDA",
+      "configured": false,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [
+        "OPENFDA_API_KEY"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "ClinicalTrials.gov",
+      "configured": true,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "SAM.gov/USAspending",
+      "configured": false,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [
+        "SAM_GOV_API_KEY",
+        "USASPENDING_API_KEY"
+      ],
+      "fallback_used": false
+    },
+    {
+      "lane_name": "Nasdaq halt feed",
+      "configured": true,
+      "ran": false,
+      "produced_candidates_count": 0,
+      "produced_candidates": 0,
+      "candidate_count": 0,
+      "produced_useful_evidence_count": 0,
+      "useful_for_primary": false,
+      "affected_primary_selection": false,
+      "affected_backup_list": false,
+      "errors": [],
+      "missing_credentials": [],
+      "fallback_used": false
+    }
+  ],
+  "raw_candidate_count": 4,
+  "top_raw_candidates": [
+    {
+      "ticker": "MRAM",
+      "company": "Everspin",
+      "source_lane": "benzinga",
+      "first_seen_at_utc": "2026-05-26T12:05:00+00:00",
+      "raw_reason": "government_contract_policy_names",
+      "raw_catalyst": "MRAM wins contract",
+      "raw_source_url": "https://example.com/mram-news",
+      "price": 6.0,
+      "gap_pct": 16.0,
+      "premarket_volume": 300000,
+      "premarket_dollar_volume": 1800000,
+      "pre_filter_flags": [
+        "structured_catalyst"
+      ],
+      "raw_buckets": [
+        "government_contract_policy_names"
+      ],
+      "source_urls": [
+        "https://example.com/mram-news"
+      ],
+      "source_lanes": [
+        "benzinga"
+      ],
+      "raw_touch_count": 1
+    },
+    {
+      "ticker": "BBAI",
+      "company": "BigBear.ai",
+      "source_lane": "external_movers_scout",
+      "first_seen_at_utc": "2026-05-26T12:07:30+00:00",
+      "raw_reason": "structured_news_catalyst_names",
+      "raw_catalyst": "BBAI unusual volume on defense AI sympathy",
+      "raw_source_url": "https://example.com/bbai-mover",
+      "price": 3.5,
+      "gap_pct": 11.0,
+      "premarket_volume": 500000,
+      "premarket_dollar_volume": 1750000,
+      "pre_filter_flags": [
+        "structured_catalyst"
+      ],
+      "raw_buckets": [
+        "structured_news_catalyst_names"
+      ],
+      "source_urls": [
+        "https://example.com/bbai-mover"
+      ],
+      "source_lanes": [
+        "external_movers_scout"
+      ],
+      "raw_touch_count": 1
+    },
+    {
+      "ticker": "ABEO",
+      "company": "Abeona",
+      "source_lane": "grok_x",
+      "first_seen_at_utc": "2026-05-26T12:06:30+00:00",
+      "raw_reason": "retail_social_velocity_names",
+      "raw_catalyst": "ABEO retail attention accelerating",
+      "raw_source_url": "https://x.com/example/abeo",
+      "price": 5.0,
+      "gap_pct": 22.0,
+      "premarket_volume": 250000,
+      "premarket_dollar_volume": 1250000,
+      "pre_filter_flags": [
+        "social_velocity"
+      ],
+      "raw_buckets": [
+        "retail_social_velocity_names"
+      ],
+      "source_urls": [
+        "https://x.com/example/abeo"
+      ],
+      "source_lanes": [
+        "grok_x"
+      ],
+      "raw_touch_count": 1
+    },
+    {
+      "ticker": "INFQ",
+      "company": "Inflection Quantum",
+      "source_lane": "sec_edgar",
+      "first_seen_at_utc": "2026-05-26T12:02:00+00:00",
+      "raw_reason": "government_contract_policy_names",
+      "raw_catalyst": "INFQ receives federal funding award",
+      "raw_source_url": "https://sec.gov/example/infq",
+      "price": 4.0,
+      "gap_pct": 8.0,
+      "premarket_volume": 200000,
+      "premarket_dollar_volume": 800000,
+      "pre_filter_flags": [
+        "official_catalyst"
+      ],
+      "raw_buckets": [
+        "government_contract_policy_names"
+      ],
+      "source_urls": [
+        "https://sec.gov/example/infq"
+      ],
+      "source_lanes": [
+        "sec_edgar"
+      ],
+      "raw_touch_count": 1
+    }
+  ],
+  "first_seen_candidates": [
+    {
+      "current_gap_pct": 22.0,
+      "current_price": 5.0,
+      "first_seen_at_utc": "2026-05-26T12:06:30+00:00",
+      "first_seen_catalyst": "ABEO retail attention accelerating",
+      "first_seen_gap_pct": 22.0,
+      "first_seen_premarket_dollar_volume": 1250000.0,
+      "first_seen_premarket_volume": 250000,
+      "first_seen_price": 5.0,
+      "first_seen_source": "grok_x",
+      "first_seen_source_url": "https://x.com/example/abeo",
+      "first_seen_stage": "ALREADY_MOVING",
+      "first_seen_to_selection_minutes": 919.852,
+      "move_since_first_seen_pct": 0.0,
+      "ticker": "ABEO"
+    },
+    {
+      "current_gap_pct": 11.0,
+      "current_price": 3.5,
+      "first_seen_at_utc": "2026-05-26T12:07:30+00:00",
+      "first_seen_catalyst": "BBAI unusual volume on defense AI sympathy",
+      "first_seen_gap_pct": 11.0,
+      "first_seen_premarket_dollar_volume": 1750000.0,
+      "first_seen_premarket_volume": 500000,
+      "first_seen_price": 3.5,
+      "first_seen_source": "external_movers_scout",
+      "first_seen_source_url": "https://example.com/bbai-mover",
+      "first_seen_stage": "PREMARKET_BUILDING",
+      "first_seen_to_selection_minutes": 918.852,
+      "move_since_first_seen_pct": 0.0,
+      "ticker": "BBAI"
+    },
+    {
+      "current_gap_pct": 8.0,
+      "current_price": 4.0,
+      "first_seen_at_utc": "2026-05-26T12:02:00+00:00",
+      "first_seen_catalyst": "INFQ receives federal funding award",
+      "first_seen_gap_pct": 8.0,
+      "first_seen_premarket_dollar_volume": 800000.0,
+      "first_seen_premarket_volume": 200000,
+      "first_seen_price": 4.0,
+      "first_seen_source": "sec_edgar",
+      "first_seen_source_url": "https://sec.gov/example/infq",
+      "first_seen_stage": "PREMARKET_BUILDING",
+      "first_seen_to_selection_minutes": 924.352,
+      "move_since_first_seen_pct": 0.0,
+      "ticker": "INFQ"
+    },
+    {
+      "current_gap_pct": 16.0,
+      "current_price": 6.0,
+      "first_seen_at_utc": "2026-05-26T12:05:00+00:00",
+      "first_seen_catalyst": "MRAM wins contract",
+      "first_seen_gap_pct": 16.0,
+      "first_seen_premarket_dollar_volume": 1800000.0,
+      "first_seen_premarket_volume": 300000,
+      "first_seen_price": 6.0,
+      "first_seen_source": "benzinga",
+      "first_seen_source_url": "https://example.com/mram-news",
+      "first_seen_stage": "PREMARKET_BUILDING",
+      "first_seen_to_selection_minutes": 921.352,
+      "move_since_first_seen_pct": 0.0,
+      "ticker": "MRAM"
+    }
+  ],
+  "broad_ai_discovery_candidates": [
+    {
+      "ticker": "MRAM",
+      "company": "Everspin",
+      "catalyst_summary": "MRAM wins contract",
+      "catalyst_type": "government_contract_policy_names",
+      "source_urls": [
+        "https://example.com/mram-news"
+      ],
+      "timestamp_freshness": "2026-05-26T12:05:00+00:00",
+      "why_it_could_move_today": "MRAM wins contract",
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "high_risk_high_upside": true,
+      "evidence_split": {
+        "official": false,
+        "structured": true,
+        "social": false
+      },
+      "discovery_status": "deterministic_seeded",
+      "failure_reason": null
+    },
+    {
+      "ticker": "BBAI",
+      "company": "BigBear.ai",
+      "catalyst_summary": "BBAI unusual volume on defense AI sympathy",
+      "catalyst_type": "structured_news_catalyst_names",
+      "source_urls": [
+        "https://example.com/bbai-mover"
+      ],
+      "timestamp_freshness": "2026-05-26T12:07:30+00:00",
+      "why_it_could_move_today": "BBAI unusual volume on defense AI sympathy",
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "high_risk_high_upside": true,
+      "evidence_split": {
+        "official": false,
+        "structured": true,
+        "social": false
+      },
+      "discovery_status": "deterministic_seeded",
+      "failure_reason": null
+    },
+    {
+      "ticker": "ABEO",
+      "company": "Abeona",
+      "catalyst_summary": "ABEO retail attention accelerating",
+      "catalyst_type": "retail_social_velocity_names",
+      "source_urls": [
+        "https://x.com/example/abeo"
+      ],
+      "timestamp_freshness": "2026-05-26T12:06:30+00:00",
+      "why_it_could_move_today": "ABEO retail attention accelerating",
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "high_risk_high_upside": true,
+      "evidence_split": {
+        "official": false,
+        "structured": false,
+        "social": true
+      },
+      "discovery_status": "deterministic_seeded",
+      "failure_reason": null
+    },
+    {
+      "ticker": "INFQ",
+      "company": "Inflection Quantum",
+      "catalyst_summary": "INFQ receives federal funding award",
+      "catalyst_type": "government_contract_policy_names",
+      "source_urls": [
+        "https://sec.gov/example/infq"
+      ],
+      "timestamp_freshness": "2026-05-26T12:02:00+00:00",
+      "why_it_could_move_today": "INFQ receives federal funding award",
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "high_risk_high_upside": true,
+      "evidence_split": {
+        "official": true,
+        "structured": false,
+        "social": false
+      },
+      "discovery_status": "deterministic_seeded",
+      "failure_reason": null
+    }
+  ],
+  "enriched_candidate_count": 2,
+  "deep_research_route": null,
+  "deep_research_status": "not_run",
+  "current_action": "WATCH_OR_NO_TRADE",
+  "buy_now_allowed": false,
+  "why_not_buy_now": "Research leader is extended; requires second-leg reset/reclaim confirmation.",
+  "buy_triggers": [
+    "VWAP reclaim on expanding volume",
+    "ORB break above local high",
+    "Premarket-high reclaim with spread stable"
+  ],
+  "monitoring_plan_through_11_et": true,
+  "best_pick_packet": {
+    "source_mode": "internal_fallback",
+    "route_chosen": null,
+    "best_pick": null,
+    "research_leader": "INFQ"
+  },
+  "candidate_research_packets": [
+    {
+      "ticker": "INFQ",
+      "company_name": "Inflection Quantum",
+      "headline_thesis": "INFQ receives federal funding award",
+      "catalyst_summary": "INFQ receives federal funding award",
+      "catalyst_type": "government_contract",
+      "official_sources": [
+        "https://sec.gov/example/infq"
+      ],
+      "structured_sources": [],
+      "social_sources": [],
+      "source_lane_status_refs": [],
+      "first_seen_at_utc": "2026-05-26T12:02:00+00:00",
+      "first_seen_price": 4.0,
+      "first_seen_gap_pct": 8.0,
+      "current_price": 6.2,
+      "current_gap_pct": 55.0,
+      "move_since_first_seen_pct": 55.0,
+      "first_seen_stage": "LATE_DISCOVERY",
+      "catalyst_freshness_score": 9,
+      "direct_beneficiary_score": 7.7,
+      "theme_wave_score": 5.842,
+      "social_attention_velocity": null,
+      "premarket_repricing_score": 55.0,
+      "anti_chase_state": "SECOND_LEG_WATCH",
+      "opportunity_lifecycle_state": "SECOND_LEG_WATCH",
+      "entry_viability_score": 42,
+      "research_quality_score": 9.2,
+      "hyper_trade_score": 8.7,
+      "policy_theme_runner_score": 5.842,
+      "same_style_backup_eligible": true,
+      "mega_cap_default_flag": false,
+      "current_buyability_summary": {
+        "anti_chase_state": "SECOND_LEG_WATCH",
+        "entry_viability_score": 42,
+        "gate_passed": false
+      },
+      "validation_status": "primary_confirmed",
+      "source_confidence": "medium_high",
+      "timeline": {
+        "first_seen_at": "2026-05-26T12:02:00+00:00",
+        "latest_update_at": null,
+        "evidence_count": 1
+      },
+      "evidence_table": [
+        {
+          "source_name": "sec_edgar",
+          "source_tier": null,
+          "source_url": "https://sec.gov/example/infq",
+          "published_at": "2026-05-26T12:00:00+00:00",
+          "discovered_at": "2026-05-26T12:02:00+00:00",
+          "catalyst_type": "government_contract",
+          "headline": "INFQ receives federal funding award",
+          "official_flag": true,
+          "structured_flag": false,
+          "social_flag": false,
+          "credibility_score_initial": null,
+          "notes": []
+        }
+      ],
+      "market_snapshot": {
+        "observed_at": null,
+        "prior_close": null,
+        "last_premarket_price": 6.2,
+        "gap_pct": 55.0,
+        "premarket_volume": null,
+        "premarket_dollar_volume": 10000000,
+        "average_20d_dollar_volume": null,
+        "estimated_spread_pct": null,
+        "market_cap": null,
+        "price_band": null
+      },
+      "infq_archetype": {
+        "policy_theme_runner_score": 5.842,
+        "infq_archetype_score": 5.842,
+        "components": {
+          "government_policy_score": 7.0,
+          "sector_theme_score": 5.0,
+          "direct_beneficiary_score": 7.7,
+          "undercovered_ticker_score": 7.0,
+          "high_beta_theme_score": 10.0,
+          "premarket_repricing_score": 10.0,
+          "structured_validation_score": 2.0,
+          "social_retail_score": 0.0,
+          "same_day_event_score": 0.0,
+          "stale_prior_winner_penalty": 0.0,
+          "mega_cap_sympathy_penalty": 0.0,
+          "indirect_sector_mention_penalty": 0.0,
+          "exhausted_chase_penalty": 2.5,
+          "dilution_or_supply_penalty": 0.0
+        },
+        "tags": [
+          "DIRECT_POLICY_THEME_BENEFICIARY",
+          "POLICY_THEME_RUNNER_ARCHETYPE"
+        ]
+      },
+      "sec_materiality": [
+        {
+          "sec_materiality_score_0_10": 4.0,
+          "filing_staleness_days": 0.643,
+          "catalyst_specificity_score_0_10": 2.0,
+          "dilution_risk_score_0_10": 0.0,
+          "warrant_supply_zone_detected": false,
+          "offering_or_atm_detected": false,
+          "generic_sec_filing_penalty": 0.0,
+          "materiality_label": "low_materiality"
+        }
+      ],
+      "scorecard": {
+        "research_priority_score": 9.2,
+        "hyper_trade_score": 8.7,
+        "catalyst_strength_score": null,
+        "freshness_score": 9,
+        "attention_acceleration_score": null,
+        "crowding_score": null,
+        "asymmetry_score": null,
+        "story_stage": null,
+        "lane_tags": [
+          "INFQ_STYLE_GOVERNMENT_SECTOR_WAVE",
+          "VERIFIED_CATALYST_RUNNER"
+        ],
+        "notes": []
+      },
+      "mega_cap_fallback_audit": {},
+      "why_asymmetric": [
+        "Fresh same-day or near-same-day catalyst.",
+        "Government funding/contract catalysts can create a simple high-beta narrative.",
+        "Premarket dollar volume is large enough to show real tape confirmation."
+      ],
+      "why_it_may_be_wrong": [
+        "Spread estimate is missing.",
+        "Large premarket gap may already price in the catalyst."
+      ],
+      "invalidation_checklist": [
+        "Primary/structured evidence contradicts or weakens the headline thesis.",
+        "Price loses VWAP/opening range and cannot reclaim quickly.",
+        "Volume fades while spread widens.",
+        "Related sector basket reverses hard."
+      ],
+      "deterministic_trade_gate_status": {
+        "passed": false,
+        "execution_readiness_score": null,
+        "blockers": [],
+        "warnings": []
+      }
+    },
+    {
+      "ticker": "MRAM",
+      "company_name": "Everspin",
+      "headline_thesis": "MRAM wins contract",
+      "catalyst_summary": "MRAM wins contract",
+      "catalyst_type": "contract_win",
+      "official_sources": [],
+      "structured_sources": [
+        "https://example.com/mram-news"
+      ],
+      "social_sources": [],
+      "source_lane_status_refs": [],
+      "first_seen_at_utc": null,
+      "first_seen_price": null,
+      "first_seen_gap_pct": null,
+      "current_price": 6.4,
+      "current_gap_pct": 16.0,
+      "move_since_first_seen_pct": null,
+      "first_seen_stage": null,
+      "catalyst_freshness_score": 8,
+      "direct_beneficiary_score": 3.2,
+      "theme_wave_score": 3.672,
+      "social_attention_velocity": null,
+      "premarket_repricing_score": 16.0,
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "opportunity_lifecycle_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72,
+      "research_quality_score": 8.1,
+      "hyper_trade_score": 4.2,
+      "policy_theme_runner_score": 3.672,
+      "same_style_backup_eligible": true,
+      "mega_cap_default_flag": false,
+      "current_buyability_summary": {
+        "anti_chase_state": "PREMARKET_BUILDING",
+        "entry_viability_score": 72,
+        "gate_passed": false
+      },
+      "validation_status": "structured_confirmed",
+      "source_confidence": "medium",
+      "timeline": {
+        "first_seen_at": null,
+        "latest_update_at": null,
+        "evidence_count": 1
+      },
+      "evidence_table": [
+        {
+          "source_name": "benzinga",
+          "source_tier": null,
+          "source_url": "https://example.com/mram-news",
+          "published_at": "2026-05-26T12:04:00+00:00",
+          "discovered_at": "2026-05-26T12:05:00+00:00",
+          "catalyst_type": "contract_win",
+          "headline": "MRAM wins contract",
+          "official_flag": false,
+          "structured_flag": true,
+          "social_flag": false,
+          "credibility_score_initial": null,
+          "notes": []
+        }
+      ],
+      "market_snapshot": {
+        "observed_at": null,
+        "prior_close": null,
+        "last_premarket_price": 6.4,
+        "gap_pct": 16.0,
+        "premarket_volume": null,
+        "premarket_dollar_volume": 2000000,
+        "average_20d_dollar_volume": null,
+        "estimated_spread_pct": null,
+        "market_cap": null,
+        "price_band": null
+      },
+      "infq_archetype": {
+        "policy_theme_runner_score": 3.672,
+        "infq_archetype_score": 3.672,
+        "components": {
+          "government_policy_score": 4.0,
+          "sector_theme_score": 2.0,
+          "direct_beneficiary_score": 3.2,
+          "undercovered_ticker_score": 7.0,
+          "high_beta_theme_score": 6.0,
+          "premarket_repricing_score": 6.4,
+          "structured_validation_score": 2.0,
+          "social_retail_score": 0.0,
+          "same_day_event_score": 0.0,
+          "stale_prior_winner_penalty": 0.0,
+          "mega_cap_sympathy_penalty": 0.0,
+          "indirect_sector_mention_penalty": 0.0,
+          "exhausted_chase_penalty": 0.0,
+          "dilution_or_supply_penalty": 0.0
+        },
+        "tags": []
+      },
+      "sec_materiality": [],
+      "scorecard": {
+        "research_priority_score": 8.1,
+        "hyper_trade_score": 4.2,
+        "catalyst_strength_score": null,
+        "freshness_score": 8,
+        "attention_acceleration_score": null,
+        "crowding_score": null,
+        "asymmetry_score": null,
+        "story_stage": null,
+        "lane_tags": [
+          "VERIFIED_CATALYST_RUNNER"
+        ],
+        "notes": []
+      },
+      "mega_cap_fallback_audit": {},
+      "why_asymmetric": [
+        "Fresh same-day or near-same-day catalyst.",
+        "Premarket dollar volume is large enough to show real tape confirmation."
+      ],
+      "why_it_may_be_wrong": [
+        "Spread estimate is missing."
+      ],
+      "invalidation_checklist": [
+        "Primary/structured evidence contradicts or weakens the headline thesis.",
+        "Price loses VWAP/opening range and cannot reclaim quickly.",
+        "Volume fades while spread widens.",
+        "Related sector basket reverses hard."
+      ],
+      "deterministic_trade_gate_status": {
+        "passed": false,
+        "execution_readiness_score": null,
+        "blockers": [],
+        "warnings": []
+      }
+    }
+  ],
+  "no_trade_list": [
+    {
+      "symbol": "INFQ",
+      "reason": "SECOND_LEG_WATCH until continuation confirms"
+    }
+  ]
+}

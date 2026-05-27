@@ -12,6 +12,8 @@ Generated: 2026-05-27 08:26 PT
   - Full incident audit for the failed 2026-05-27 morning validation handoff.
 - `reports/implementation/ROI_SNIPS_OPTIMIZED_RESEARCH_IMPLEMENTATION_REPORT_2026-05-26.txt`
   - Implementation report for the optimized research runbook pass.
+- `ops/progress/ACTIVE.md`
+  - Sanitized current implementation ledger, including the remaining scheduled-proof caveat.
 - `source-packets/Roi_Snips_Optimized_Research_Implementation_Runbook_OpenClaw.txt`
   - Source runbook that drove the implementation.
 - `scripts/run_next_open_shadow_validation.py`
@@ -38,6 +40,22 @@ Generated: 2026-05-27 08:26 PT
   - Same-day research packet used for validation.
 - `reports/morning/md/2026-05-27.md`
   - Markdown rendering of the same-day research packet.
+- `reports/morning/json/2026-05-26_runbook_proof.json`
+  - Local runbook-proof morning packet generated during the implementation pass.
+- `reports/morning/md/2026-05-26_runbook_proof.md`
+  - Markdown rendering of the local runbook-proof morning packet.
+- `runs/2026-05-26-runbook-proof/meta/run_manifest.json`
+  - Runbook-proof artifact manifest.
+- `runs/2026-05-26-runbook-proof/normalized/source_lane_status.json`
+  - Source-lane status proof artifact.
+- `runs/2026-05-26-runbook-proof/normalized/daily_best_pick_packet.json`
+  - Final best-pick packet proof artifact.
+- `reports/live_monitor/runs/runbook_stream_replay_2026-05-26/final_summary.json`
+  - Captured-tape stream replay proof summary.
+- `reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/final_summary.json`
+  - Continuation replay proof summary.
+- `reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/continuation_replay_summary.json`
+  - Continuation replay detail summary.
 
 ## Sanitization Boundary
 
@@ -48,6 +66,7 @@ This repo intentionally excludes:
 - Broker/account/order/position raw payloads beyond the post-patch validation summary.
 - STR, personal messages, calendar, email, and unrelated operational data.
 - Local logs and caches.
+- Raw JSONL tape dumps; only compact proof summaries are included.
 
 ## Current Validation Snapshot
 

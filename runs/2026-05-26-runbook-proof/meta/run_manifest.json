@@ -1,0 +1,30 @@
+{
+  "artifacts": {
+    "broad_ai_discovery_candidates": "<roi-snips>/runs/2026-05-26-runbook-proof/raw/broad_ai_discovery_candidates.json",
+    "candidate_research_packets": "<roi-snips>/runs/2026-05-26-runbook-proof/normalized/candidate_research_packets.json",
+    "first_seen_candidates": "<roi-snips>/runs/2026-05-26-runbook-proof/normalized/first_seen_candidates.json",
+    "raw_runner_candidates": "<roi-snips>/runs/2026-05-26-runbook-proof/raw/raw_runner_candidates.json",
+    "source_lane_status": "<roi-snips>/runs/2026-05-26-runbook-proof/normalized/source_lane_status.json"
+  },
+  "generated_at_utc": "2026-05-27T03:26:21.130857+00:00",
+  "mode": "runbook_proof",
+  "summary": {
+    "candidate_research_packets_count": 2,
+    "preserved_top_raw_candidates": 4,
+    "raw_candidate_buckets": [
+      "government_contract_policy_names",
+      "retail_social_velocity_names",
+      "structured_news_catalyst_names"
+    ],
+    "raw_candidate_count": 4,
+    "raw_candidate_sources": [
+      "benzinga",
+      "external_movers_scout",
+      "grok_x",
+      "sec_edgar"
+    ],
+    "source_lane_status_count": 16,
+    "target_raw_candidates_max": 150,
+    "target_raw_candidates_min": 50
+  }
+}

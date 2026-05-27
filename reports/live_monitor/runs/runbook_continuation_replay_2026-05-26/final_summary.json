@@ -1,0 +1,374 @@
+{
+  "decision_count": 5,
+  "decision_log": "<roi-snips>/reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/decisions.jsonl",
+  "decisions": [
+    {
+      "action": "WAIT",
+      "failed_predicates": [
+        "observe_first_print_until_09_30_05"
+      ],
+      "reason": "first_print_observe_window",
+      "window": "observe"
+    },
+    {
+      "action": "WAIT",
+      "failed_predicates": [
+        "observe_first_print_until_09_30_05"
+      ],
+      "reason": "first_print_observe_window",
+      "window": "observe"
+    },
+    {
+      "action": "WAIT",
+      "actuals": {
+        "absolute_dollar_volume_score": 0.0667,
+        "acceleration_vs_previous_window_score": 0.0,
+        "chase_risk_score": 0.14,
+        "continuation_volume_expansion_score": 0.0,
+        "hyper_trade_score": 8.8,
+        "infq_archetype_score": 0.0,
+        "opening_drive_score": 3.356,
+        "opening_strategy_score": 0.0,
+        "opening_vs_premarket_rate_score": 0.0,
+        "raw_hyper_trade_score": 8.8,
+        "rug_pull_score": 0.0,
+        "tape_state": "FIRST_PRINT_SEEN",
+        "upper_wick_fade_score": 0.0,
+        "volume_burst_score": 1.6667,
+        "volume_quality_after_reset_score": 0.0434
+      },
+      "failed_predicates": [
+        "opening_drive_score_ok",
+        "volume_burst_ok"
+      ],
+      "passed_predicates": [
+        "hyper_trade_score_ok",
+        "rug_pull_risk_ok",
+        "upper_wick_risk_ok",
+        "chase_risk_ok",
+        "open_break_reclaim_or_micro_vwap_hold"
+      ],
+      "reason": "setup_not_confirmed",
+      "thresholds": {
+        "max_chase_risk_score": 6.0,
+        "max_rug_pull_score": 3.0,
+        "max_upper_wick_fade_score": 4.0,
+        "min_hyper_trade_score": 8.0,
+        "min_opening_drive_score": 8.5,
+        "min_volume_burst_score": 8.0
+      },
+      "window": "first_10s"
+    },
+    {
+      "action": "WAIT",
+      "actuals": {
+        "absolute_dollar_volume_score": 0.2011,
+        "acceleration_vs_previous_window_score": 8.0559,
+        "chase_risk_score": 1.12,
+        "continuation_volume_expansion_score": 0.0,
+        "hyper_trade_score": 8.8,
+        "infq_archetype_score": 0.0,
+        "opening_drive_score": 6.801,
+        "opening_strategy_score": 0.0,
+        "opening_vs_premarket_rate_score": 0.0,
+        "raw_hyper_trade_score": 8.8,
+        "rug_pull_score": 0.0,
+        "tape_state": "DRIVE_CONFIRMING",
+        "upper_wick_fade_score": 0.0,
+        "volume_burst_score": 8.0559,
+        "volume_quality_after_reset_score": 0.1307
+      },
+      "failed_predicates": [
+        "opening_drive_score_ok"
+      ],
+      "passed_predicates": [
+        "hyper_trade_score_ok",
+        "volume_burst_ok",
+        "rug_pull_risk_ok",
+        "upper_wick_risk_ok",
+        "chase_risk_ok",
+        "open_break_reclaim_or_micro_vwap_hold"
+      ],
+      "reason": "setup_not_confirmed",
+      "thresholds": {
+        "max_chase_risk_score": 6.0,
+        "max_rug_pull_score": 3.0,
+        "max_upper_wick_fade_score": 4.0,
+        "min_hyper_trade_score": 8.0,
+        "min_opening_drive_score": 8.5,
+        "min_volume_burst_score": 8.0
+      },
+      "window": "first_10s"
+    },
+    {
+      "action": "WAIT",
+      "actuals": {
+        "absolute_dollar_volume_score": 0.2011,
+        "acceleration_vs_previous_window_score": 8.0559,
+        "chase_risk_score": 1.12,
+        "continuation_volume_expansion_score": 0.0,
+        "hyper_trade_score": 8.8,
+        "infq_archetype_score": 0.0,
+        "opening_drive_score": 7.671,
+        "opening_strategy_score": 0.0,
+        "opening_vs_premarket_rate_score": 0.0,
+        "raw_hyper_trade_score": 8.8,
+        "rug_pull_score": 0.0,
+        "tape_state": "DRIVE_CONFIRMING",
+        "upper_wick_fade_score": 0.0,
+        "volume_burst_score": 8.0559,
+        "volume_quality_after_reset_score": 0.1307
+      },
+      "failed_predicates": [
+        "opening_drive_score_ok"
+      ],
+      "passed_predicates": [
+        "hyper_trade_score_ok",
+        "volume_burst_ok",
+        "rug_pull_risk_ok",
+        "upper_wick_risk_ok",
+        "chase_risk_ok",
+        "open_break_reclaim_or_micro_vwap_hold"
+      ],
+      "reason": "setup_not_confirmed",
+      "thresholds": {
+        "max_chase_risk_score": 6.0,
+        "max_rug_pull_score": 4.0,
+        "max_upper_wick_fade_score": 5.0,
+        "min_hyper_trade_score": 7.5,
+        "min_opening_drive_score": 7.8,
+        "min_volume_burst_score": 7.0
+      },
+      "window": "first_30s"
+    }
+  ],
+  "decisions_count": 5,
+  "decisions_path": "<roi-snips>/reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/decisions.jsonl",
+  "features": "<roi-snips>/reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/opening_tape_features.jsonl",
+  "final_decision": {
+    "action": "WAIT",
+    "actuals": {
+      "absolute_dollar_volume_score": 0.2011,
+      "acceleration_vs_previous_window_score": 8.0559,
+      "chase_risk_score": 1.12,
+      "continuation_volume_expansion_score": 0.0,
+      "hyper_trade_score": 8.8,
+      "infq_archetype_score": 0.0,
+      "opening_drive_score": 7.671,
+      "opening_strategy_score": 0.0,
+      "opening_vs_premarket_rate_score": 0.0,
+      "raw_hyper_trade_score": 8.8,
+      "rug_pull_score": 0.0,
+      "tape_state": "DRIVE_CONFIRMING",
+      "upper_wick_fade_score": 0.0,
+      "volume_burst_score": 8.0559,
+      "volume_quality_after_reset_score": 0.1307
+    },
+    "failed_predicates": [
+      "opening_drive_score_ok"
+    ],
+    "passed_predicates": [
+      "hyper_trade_score_ok",
+      "volume_burst_ok",
+      "rug_pull_risk_ok",
+      "upper_wick_risk_ok",
+      "chase_risk_ok",
+      "open_break_reclaim_or_micro_vwap_hold"
+    ],
+    "reason": "setup_not_confirmed",
+    "thresholds": {
+      "max_chase_risk_score": 6.0,
+      "max_rug_pull_score": 4.0,
+      "max_upper_wick_fade_score": 5.0,
+      "min_hyper_trade_score": 7.5,
+      "min_opening_drive_score": 7.8,
+      "min_volume_burst_score": 7.0
+    },
+    "window": "first_30s"
+  },
+  "mode_coverage": {
+    "continuation_monitor_started": true,
+    "opening_burst_ran": true,
+    "second_leg_monitor_started": true,
+    "windows_monitored": [
+      "first_10s",
+      "first_30s",
+      "observe"
+    ]
+  },
+  "ok": true,
+  "orders": "<roi-snips>/reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/orders.jsonl",
+  "orders_submitted": false,
+  "output_dir": "<roi-snips>/reports/live_monitor/runs/runbook_continuation_replay_2026-05-26",
+  "per_symbol_decision_summary": {
+    "INFQ": {
+      "action_counts": {
+        "WAIT": 5
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "WAIT",
+        "actuals": {
+          "absolute_dollar_volume_score": 0.2011,
+          "acceleration_vs_previous_window_score": 8.0559,
+          "chase_risk_score": 1.12,
+          "continuation_volume_expansion_score": 0.0,
+          "hyper_trade_score": 8.8,
+          "infq_archetype_score": 0.0,
+          "opening_drive_score": 7.671,
+          "opening_strategy_score": 0.0,
+          "opening_vs_premarket_rate_score": 0.0,
+          "raw_hyper_trade_score": 8.8,
+          "rug_pull_score": 0.0,
+          "tape_state": "DRIVE_CONFIRMING",
+          "upper_wick_fade_score": 0.0,
+          "volume_burst_score": 8.0559,
+          "volume_quality_after_reset_score": 0.1307
+        },
+        "failed_predicates": [
+          "opening_drive_score_ok"
+        ],
+        "passed_predicates": [
+          "hyper_trade_score_ok",
+          "volume_burst_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok",
+          "chase_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 4.0,
+          "max_upper_wick_fade_score": 5.0,
+          "min_hyper_trade_score": 7.5,
+          "min_opening_drive_score": 7.8,
+          "min_volume_burst_score": 7.0
+        },
+        "window": "first_30s"
+      },
+      "best_window": "first_30s",
+      "decision_count": 5,
+      "decisions_count": 5,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "observe_first_print_until_09_30_05"
+        ],
+        "reason": "first_print_observe_window",
+        "window": "observe"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "actuals": {
+          "absolute_dollar_volume_score": 0.2011,
+          "acceleration_vs_previous_window_score": 8.0559,
+          "chase_risk_score": 1.12,
+          "continuation_volume_expansion_score": 0.0,
+          "hyper_trade_score": 8.8,
+          "infq_archetype_score": 0.0,
+          "opening_drive_score": 7.671,
+          "opening_strategy_score": 0.0,
+          "opening_vs_premarket_rate_score": 0.0,
+          "raw_hyper_trade_score": 8.8,
+          "rug_pull_score": 0.0,
+          "tape_state": "DRIVE_CONFIRMING",
+          "upper_wick_fade_score": 0.0,
+          "volume_burst_score": 8.0559,
+          "volume_quality_after_reset_score": 0.1307
+        },
+        "failed_predicates": [
+          "opening_drive_score_ok"
+        ],
+        "passed_predicates": [
+          "hyper_trade_score_ok",
+          "volume_burst_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok",
+          "chase_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 4.0,
+          "max_upper_wick_fade_score": 5.0,
+          "min_hyper_trade_score": 7.5,
+          "min_opening_drive_score": 7.8,
+          "min_volume_burst_score": 7.0
+        },
+        "window": "first_30s"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {
+        "hyper_trade_score": 8.8,
+        "infq_archetype_score": 0.0,
+        "opening_drive_score": 7.671,
+        "opening_strategy_score": 0.0,
+        "volume_burst_score": 8.0559
+      },
+      "mode_coverage": [
+        "first_10s",
+        "first_30s",
+        "observe"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 3,
+          "predicate": "opening_drive_score_ok"
+        },
+        {
+          "count": 2,
+          "predicate": "observe_first_print_until_09_30_05"
+        },
+        {
+          "count": 1,
+          "predicate": "volume_burst_ok"
+        }
+      ],
+      "top_passed_predicates": [
+        {
+          "count": 3,
+          "predicate": "hyper_trade_score_ok"
+        },
+        {
+          "count": 3,
+          "predicate": "rug_pull_risk_ok"
+        },
+        {
+          "count": 3,
+          "predicate": "upper_wick_risk_ok"
+        },
+        {
+          "count": 3,
+          "predicate": "chase_risk_ok"
+        },
+        {
+          "count": 3,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 2,
+          "predicate": "volume_burst_ok"
+        }
+      ],
+      "windows_monitored": [
+        "first_10s",
+        "first_30s",
+        "observe"
+      ]
+    }
+  },
+  "proposal_count": 0,
+  "raw_quote_count": 3,
+  "raw_quotes": "<roi-snips>/reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/raw_quotes.jsonl",
+  "raw_trade_count": 2,
+  "raw_trades": "<roi-snips>/reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/raw_trades.jsonl",
+  "status": "WAIT",
+  "stream_capture_completed": true,
+  "stream_capture_started": true,
+  "symbol": "INFQ"
+}

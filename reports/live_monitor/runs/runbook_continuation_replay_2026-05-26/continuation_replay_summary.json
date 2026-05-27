@@ -1,0 +1,99 @@
+{
+  "best_decision": {
+    "action": "WAIT",
+    "actuals": {
+      "absolute_dollar_volume_score": 0.2011,
+      "acceleration_vs_previous_window_score": 8.0559,
+      "chase_risk_score": 1.12,
+      "continuation_volume_expansion_score": 0.0,
+      "hyper_trade_score": 8.8,
+      "infq_archetype_score": 0.0,
+      "opening_drive_score": 7.671,
+      "opening_strategy_score": 0.0,
+      "opening_vs_premarket_rate_score": 0.0,
+      "raw_hyper_trade_score": 8.8,
+      "rug_pull_score": 0.0,
+      "tape_state": "DRIVE_CONFIRMING",
+      "upper_wick_fade_score": 0.0,
+      "volume_burst_score": 8.0559,
+      "volume_quality_after_reset_score": 0.1307
+    },
+    "failed_predicates": [
+      "opening_drive_score_ok"
+    ],
+    "passed_predicates": [
+      "hyper_trade_score_ok",
+      "volume_burst_ok",
+      "rug_pull_risk_ok",
+      "upper_wick_risk_ok",
+      "chase_risk_ok",
+      "open_break_reclaim_or_micro_vwap_hold"
+    ],
+    "reason": "setup_not_confirmed",
+    "thresholds": {
+      "max_chase_risk_score": 6.0,
+      "max_rug_pull_score": 4.0,
+      "max_upper_wick_fade_score": 5.0,
+      "min_hyper_trade_score": 7.5,
+      "min_opening_drive_score": 7.8,
+      "min_volume_burst_score": 7.0
+    },
+    "window": "first_30s"
+  },
+  "decision_count": 5,
+  "first_buy_now_at": null,
+  "generated_at_utc": "2026-05-27T03:26:21.138113+00:00",
+  "lifecycle_transitions": [
+    "SECOND_LEG_WATCH",
+    "SECOND_LEG_WATCH"
+  ],
+  "no_trade_reason": "setup_not_confirmed",
+  "proposal_count": 0,
+  "raw_quote_count": 3,
+  "raw_trade_count": 2,
+  "replay_window_end": "2026-05-26T13:30:16+00:00",
+  "replay_window_start": "2026-05-26T13:30:01+00:00",
+  "source_run_dir": "<roi-snips>/reports/live_monitor/runs/runbook_stream_replay_2026-05-26",
+  "target_symbol": "INFQ",
+  "top_failed_predicates": [
+    {
+      "count": 3,
+      "predicate": "opening_drive_score_ok"
+    },
+    {
+      "count": 2,
+      "predicate": "observe_first_print_until_09_30_05"
+    },
+    {
+      "count": 1,
+      "predicate": "volume_burst_ok"
+    }
+  ],
+  "top_passed_predicates": [
+    {
+      "count": 3,
+      "predicate": "hyper_trade_score_ok"
+    },
+    {
+      "count": 3,
+      "predicate": "rug_pull_risk_ok"
+    },
+    {
+      "count": 3,
+      "predicate": "upper_wick_risk_ok"
+    },
+    {
+      "count": 3,
+      "predicate": "chase_risk_ok"
+    },
+    {
+      "count": 3,
+      "predicate": "open_break_reclaim_or_micro_vwap_hold"
+    },
+    {
+      "count": 2,
+      "predicate": "volume_burst_ok"
+    }
+  ],
+  "whether_09_46_style_move_caught": false
+}
