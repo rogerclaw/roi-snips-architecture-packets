@@ -1,0 +1,224 @@
+{
+  "candidate_count": 9,
+  "candidates": [
+    {
+      "catalyst_summary": "NVDA exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": true,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "https://finance.yahoo.com/quote/NVDA",
+        "https://www.benzinga.com/news/26/05/52861339/boost-run-signs-36-month-nvidia-b300-gpu-server-rental-agreement-with-thinking-machines-lab-for-5-00",
+        "https://www.benzinga.com/news/26/05/52849059/cadence-and-samsung-foundry-expand-multi-year-2nm-ai-chip-partnership-with-nvidia-nvlink-c2c-ip-and",
+        "https://www.benzinga.com/news/26/05/52869041/chinas-bytedance-developing-new-ai-chips-like-those-from-nvidia-partner-groq-the-information",
+        "https://www.benzinga.com/crypto/cryptocurrency/26/05/52849101/trump-says-he-saved-crypto-but-did-bitcoin-ethereum-xrp-actually-benefit",
+        "https://www.benzinga.com/news/26/05/52848398/microsoft-partner-iren-borrows-3-6-billion-for-nvidia-chips-bloomberg-news",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/nvda-20260520.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm"
+      ],
+      "ticker": "NVDA",
+      "timestamp_freshness": "2026-05-29T13:16:37.344590+00:00",
+      "why_it_could_move_today": "NVDA exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today"
+    },
+    {
+      "catalyst_summary": "SMCI exchange mover candidate | Dell, Super Micro Computer, Unusual Machines, Virgin Galactic And Costco: Why These 5 Stocks Are On Investors' Radars Today",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": true,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/markets/equities/26/05/52862775/dell-super-micro-computer-unusual-machines-virgin-galactic-and-costco-why-these-5-stocks-are-on-investors-radars-today",
+        "https://finance.yahoo.com/quote/SMCI",
+        "https://www.benzinga.com/trading-ideas/movers/26/05/52848261/agilent-unusual-machines-best-buy-and-other-big-stocks-moving-higher-on-thursday",
+        "https://www.benzinga.com/news/26/05/52837072/supermicro-issues-statement-regarding-recent-collaboration-with-the-taiwanese-authorities-to-prevent",
+        "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000015/smci-20260512.htm"
+      ],
+      "ticker": "SMCI",
+      "timestamp_freshness": "2026-05-29T13:16:39.128187+00:00",
+      "why_it_could_move_today": "SMCI exchange mover candidate | Dell, Super Micro Computer, Unusual Machines, Virgin Galactic And Costco: Why These 5 Stocks Are On Investors' Radars Today"
+    },
+    {
+      "catalyst_summary": "AMZN exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": true,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "https://finance.yahoo.com/quote/AMZN",
+        "https://www.benzinga.com/news/26/05/52852087/anthropic-raises-65b-in-series-h-funding-at-965b-post-money-valuation-series-h-funding-led-by-altime",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000110465926065717/tm2614288d1_8k.htm"
+      ],
+      "ticker": "AMZN",
+      "timestamp_freshness": "2026-05-29T13:16:35.570910+00:00",
+      "why_it_could_move_today": "AMZN exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today"
+    },
+    {
+      "catalyst_summary": "AAPL exchange mover candidate | Triple Manias Take A Hit As US And Iran Exchange Strikes But Cooler PCE May Reignite Momentum",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": true,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/Opinion/26/05/52853789/triple-manias-take-a-hit-as-us-and-iran-exchange-strikes-but-cooler-pce-may-reignite-momentum",
+        "https://finance.yahoo.com/quote/AAPL",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000011/aapl-20260430.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000114036126015711/ef20071035_8k.htm"
+      ],
+      "ticker": "AAPL",
+      "timestamp_freshness": "2026-05-29T13:16:33.868718+00:00",
+      "why_it_could_move_today": "AAPL exchange mover candidate | Triple Manias Take A Hit As US And Iran Exchange Strikes But Cooler PCE May Reignite Momentum"
+    },
+    {
+      "catalyst_summary": "TSLA exchange mover candidate | Tesla Reclaims No. 1 Position In Global Battery EV Race",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": true,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/analyst-stock-ratings/analyst-color/26/05/52865320/tesla-reclaims-no-1-position-in-global-battery-ev-race",
+        "https://finance.yahoo.com/quote/TSLA",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026551/tsla-20260422.htm"
+      ],
+      "ticker": "TSLA",
+      "timestamp_freshness": "2026-05-29T13:16:39.997672+00:00",
+      "why_it_could_move_today": "TSLA exchange mover candidate | Tesla Reclaims No. 1 Position In Global Battery EV Race"
+    },
+    {
+      "catalyst_summary": "AMD exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": false,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "https://finance.yahoo.com/quote/AMD",
+        "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices"
+      ],
+      "ticker": "AMD",
+      "timestamp_freshness": "2026-05-29T13:16:34.755031+00:00",
+      "why_it_could_move_today": "AMD exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today"
+    },
+    {
+      "catalyst_summary": "PLTR exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": false,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "https://finance.yahoo.com/quote/PLTR"
+      ],
+      "ticker": "PLTR",
+      "timestamp_freshness": "2026-05-29T13:16:38.251206+00:00",
+      "why_it_could_move_today": "PLTR exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today"
+    },
+    {
+      "catalyst_summary": "META exchange mover candidate | Triple Manias Take A Hit As US And Iran Exchange Strikes But Cooler PCE May Reignite Momentum",
+      "catalyst_type": "structured_news_catalyst_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": false,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/Opinion/26/05/52853789/triple-manias-take-a-hit-as-us-and-iran-exchange-strikes-but-cooler-pce-may-reignite-momentum",
+        "https://finance.yahoo.com/quote/META"
+      ],
+      "ticker": "META",
+      "timestamp_freshness": "2026-05-29T13:16:36.468581+00:00",
+      "why_it_could_move_today": "META exchange mover candidate | Triple Manias Take A Hit As US And Iran Exchange Strikes But Cooler PCE May Reignite Momentum"
+    },
+    {
+      "catalyst_summary": "INFQ sector-theme basket candidate: quantum_computing",
+      "catalyst_type": "government_contract_policy_names",
+      "company": null,
+      "discovery_status": "deterministic_seeded",
+      "evidence_split": {
+        "official": false,
+        "social": false,
+        "structured": true
+      },
+      "failure_reason": null,
+      "high_risk_high_upside": true,
+      "may_already_be_too_late": null,
+      "same_theme_laggard_or_direct_beneficiary": "unknown_until_enrichment",
+      "source_urls": [
+        "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices"
+      ],
+      "ticker": "INFQ",
+      "timestamp_freshness": "2026-05-29T13:17:03.302599+00:00",
+      "why_it_could_move_today": "INFQ sector-theme basket candidate: quantum_computing"
+    }
+  ],
+  "deep_mini_stage": "broad_pro_style_discovery",
+  "notes": "Deep-mini broad discovery completed or was represented by the governed deep-mini run output.",
+  "status": "completed"
+}

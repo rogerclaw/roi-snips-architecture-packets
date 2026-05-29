@@ -1,0 +1,10 @@
+{
+  "full": {
+    "cmd": "PYTHONPATH=. .venv/bin/pytest tests -q",
+    "result": "261 passed, 1 warning in 4.46s"
+  },
+  "targeted": {
+    "cmd": "PYTHONPATH=. .venv/bin/pytest tests/test_deep_mini_prompt_contracts.py tests/test_deep_mini_final_packet_schema.py tests/test_deep_mini_required_for_live.py tests/test_no_live_trade_without_deep_mini.py tests/test_deep_mini_not_skipped_in_live_wrapper.py tests/test_research_war_room.py tests/test_source_breadth_gate.py tests/test_backup_pool_failure_blocks_blue_chip_fill.py tests/test_stale_prior_winner.py tests/test_strategy_router.py tests/test_opening_burst_engine.py tests/test_second_leg_continuation.py tests/test_artifact_gate.py -q",
+    "result": "44 passed in 0.12s"
+  }
+}

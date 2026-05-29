@@ -1,0 +1,981 @@
+{
+  "blocked_proposal_count": 0,
+  "blocked_proposals": [],
+  "broker_account_inspected": false,
+  "broker_orders_inspected": false,
+  "broker_positions_inspected": false,
+  "candidate_state_by_symbol": {
+    "AMZN": {
+      "action_counts": {
+        "NO_TRADE": 16014,
+        "WAIT": 63421
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "NO_TRADE",
+        "actuals": {
+          "absolute_dollar_volume_score": 3.6793,
+          "acceleration_vs_previous_window_score": 10.0,
+          "chase_risk_score": 0.5,
+          "continuation_volume_expansion_score": 0.0,
+          "hyper_trade_score": 3.157,
+          "infq_archetype_score": 3.157,
+          "opening_drive_score": 9.075,
+          "opening_strategy_score": 3.157,
+          "opening_vs_premarket_rate_score": 10.0,
+          "raw_hyper_trade_score": 0.524,
+          "rug_pull_score": 0.004,
+          "tape_state": "DRIVE_CONFIRMED",
+          "upper_wick_fade_score": 3.443,
+          "volume_burst_score": 10.0,
+          "volume_quality_after_reset_score": 6.5
+        },
+        "failed_predicates": [
+          "hyper_trade_score_ok"
+        ],
+        "passed_predicates": [
+          "opening_drive_score_ok",
+          "volume_burst_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok",
+          "chase_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 5.0,
+          "max_upper_wick_fade_score": 5.0,
+          "min_hyper_trade_score": 7.0,
+          "min_opening_drive_score": 7.2,
+          "min_volume_burst_score": 6.5
+        },
+        "window": "rescue_or_reclaim"
+      },
+      "best_window": "rescue_or_reclaim",
+      "decision_count": 79435,
+      "decisions_count": 79435,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {
+        "hyper_trade_score": 3.157,
+        "infq_archetype_score": 3.157,
+        "opening_drive_score": 9.075,
+        "opening_strategy_score": 3.157,
+        "volume_burst_score": 10.0
+      },
+      "mode_coverage": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 43026,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 43026,
+          "predicate": "continuation_handoff_required"
+        },
+        {
+          "count": 27395,
+          "predicate": "hyper_trade_score_ok"
+        },
+        {
+          "count": 8364,
+          "predicate": "observe_first_print_until_09_30_05"
+        },
+        {
+          "count": 6436,
+          "predicate": "opening_drive_score_ok"
+        },
+        {
+          "count": 519,
+          "predicate": "bid_collapse"
+        },
+        {
+          "count": 519,
+          "predicate": "drive_failed"
+        },
+        {
+          "count": 266,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        }
+      ],
+      "top_passed_predicates": [
+        {
+          "count": 27395,
+          "predicate": "volume_burst_ok"
+        },
+        {
+          "count": 27395,
+          "predicate": "rug_pull_risk_ok"
+        },
+        {
+          "count": 27395,
+          "predicate": "upper_wick_risk_ok"
+        },
+        {
+          "count": 27395,
+          "predicate": "chase_risk_ok"
+        },
+        {
+          "count": 27129,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 20959,
+          "predicate": "opening_drive_score_ok"
+        }
+      ],
+      "windows_monitored": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ]
+    },
+    "INFQ": {
+      "action_counts": {
+        "NO_TRADE": 9768,
+        "WAIT": 20354
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "NO_TRADE",
+        "actuals": {
+          "absolute_dollar_volume_score": 5.2903,
+          "acceleration_vs_previous_window_score": 10.0,
+          "chase_risk_score": 0.0,
+          "continuation_volume_expansion_score": 0.5772,
+          "hyper_trade_score": 4.428,
+          "infq_archetype_score": 4.428,
+          "opening_drive_score": 4.099,
+          "opening_strategy_score": 4.428,
+          "opening_vs_premarket_rate_score": 10.0,
+          "raw_hyper_trade_score": 2.783,
+          "rug_pull_score": 5.377,
+          "tape_state": "FIRST_PRINT_SEEN",
+          "upper_wick_fade_score": 6.0,
+          "volume_burst_score": 10.0,
+          "volume_quality_after_reset_score": 6.702
+        },
+        "failed_predicates": [
+          "hyper_trade_score_ok",
+          "opening_drive_score_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "passed_predicates": [
+          "volume_burst_ok",
+          "chase_risk_ok"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 5.0,
+          "max_upper_wick_fade_score": 5.0,
+          "min_hyper_trade_score": 7.0,
+          "min_opening_drive_score": 7.2,
+          "min_volume_burst_score": 6.5
+        },
+        "window": "first_60s"
+      },
+      "best_window": "first_60s",
+      "decision_count": 30122,
+      "decisions_count": 30122,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {
+        "hyper_trade_score": 4.428,
+        "infq_archetype_score": 4.428,
+        "opening_drive_score": 4.099,
+        "opening_strategy_score": 4.428,
+        "volume_burst_score": 10.0
+      },
+      "mode_coverage": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 18585,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 18585,
+          "predicate": "continuation_handoff_required"
+        },
+        {
+          "count": 8993,
+          "predicate": "hyper_trade_score_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "opening_drive_score_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "rug_pull_risk_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "upper_wick_risk_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 1769,
+          "predicate": "observe_first_print_until_09_30_05"
+        }
+      ],
+      "top_passed_predicates": [
+        {
+          "count": 8993,
+          "predicate": "volume_burst_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "chase_risk_ok"
+        }
+      ],
+      "windows_monitored": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ]
+    },
+    "NVDA": {
+      "action_counts": {
+        "NO_TRADE": 90910,
+        "WAIT": 178817
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "NO_TRADE",
+        "actuals": {
+          "absolute_dollar_volume_score": 10.0,
+          "acceleration_vs_previous_window_score": 10.0,
+          "chase_risk_score": 0.115,
+          "continuation_volume_expansion_score": 0.0,
+          "hyper_trade_score": 3.994,
+          "infq_archetype_score": 3.994,
+          "opening_drive_score": 7.492,
+          "opening_strategy_score": 3.994,
+          "opening_vs_premarket_rate_score": 10.0,
+          "raw_hyper_trade_score": 0.524,
+          "rug_pull_score": 4.175,
+          "tape_state": "DRIVE_CONFIRMING",
+          "upper_wick_fade_score": 9.373,
+          "volume_burst_score": 10.0,
+          "volume_quality_after_reset_score": 6.5
+        },
+        "failed_predicates": [
+          "hyper_trade_score_ok",
+          "opening_drive_score_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok"
+        ],
+        "passed_predicates": [
+          "volume_burst_ok",
+          "chase_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 3.0,
+          "max_upper_wick_fade_score": 4.0,
+          "min_hyper_trade_score": 8.0,
+          "min_opening_drive_score": 8.5,
+          "min_volume_burst_score": 8.0
+        },
+        "window": "first_10s"
+      },
+      "best_window": "first_10s",
+      "decision_count": 269727,
+      "decisions_count": 269727,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {
+        "hyper_trade_score": 3.994,
+        "infq_archetype_score": 3.994,
+        "opening_drive_score": 7.492,
+        "opening_strategy_score": 3.994,
+        "volume_burst_score": 10.0
+      },
+      "mode_coverage": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 152995,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 152995,
+          "predicate": "continuation_handoff_required"
+        },
+        {
+          "count": 86302,
+          "predicate": "hyper_trade_score_ok"
+        },
+        {
+          "count": 86302,
+          "predicate": "upper_wick_risk_ok"
+        },
+        {
+          "count": 85763,
+          "predicate": "opening_drive_score_ok"
+        },
+        {
+          "count": 72344,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 25822,
+          "predicate": "observe_first_print_until_09_30_05"
+        },
+        {
+          "count": 22757,
+          "predicate": "rug_pull_risk_ok"
+        }
+      ],
+      "top_passed_predicates": [
+        {
+          "count": 86302,
+          "predicate": "volume_burst_ok"
+        },
+        {
+          "count": 86302,
+          "predicate": "chase_risk_ok"
+        },
+        {
+          "count": 63545,
+          "predicate": "rug_pull_risk_ok"
+        },
+        {
+          "count": 13958,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 539,
+          "predicate": "opening_drive_score_ok"
+        }
+      ],
+      "windows_monitored": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ]
+    }
+  },
+  "continuation_monitor_heartbeat_at": "2026-05-29T13:43:37.038737+00:00",
+  "continuation_monitor_start_et": "09:35:00",
+  "continuation_monitor_started_at": "2026-05-29T13:43:37.038734+00:00",
+  "decision_count": 379284,
+  "decisions": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-29_132800/decisions.jsonl",
+  "decisions_count": 379284,
+  "fast_cancel_ready": true,
+  "fired_symbols": [],
+  "last_decision_at": "2026-05-29T13:43:06.953468+00:00",
+  "max_seconds": 900.0,
+  "mode": "live_order_submission",
+  "mode_coverage": {
+    "continuation_monitor_started": true,
+    "handoff_completed": true,
+    "opening_burst_ran": true,
+    "orb_vwap_monitor_started": true,
+    "second_leg_monitor_started": true,
+    "stream_captured": true
+  },
+  "no_proposal_root_cause": "AMZN: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required, hyper_trade_score_ok; INFQ: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required, hyper_trade_score_ok; NVDA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required, hyper_trade_score_ok",
+  "ok": true,
+  "opening_exit_manager_ready": true,
+  "order_result_count": 0,
+  "order_results": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-29_132800/order_results.jsonl",
+  "order_results_tail": [],
+  "orders_allowed": true,
+  "orders_submitted": false,
+  "output_dir": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-29_132800",
+  "per_symbol_decision_summary": {
+    "AMZN": {
+      "action_counts": {
+        "NO_TRADE": 16014,
+        "WAIT": 63421
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "NO_TRADE",
+        "actuals": {
+          "absolute_dollar_volume_score": 3.6793,
+          "acceleration_vs_previous_window_score": 10.0,
+          "chase_risk_score": 0.5,
+          "continuation_volume_expansion_score": 0.0,
+          "hyper_trade_score": 3.157,
+          "infq_archetype_score": 3.157,
+          "opening_drive_score": 9.075,
+          "opening_strategy_score": 3.157,
+          "opening_vs_premarket_rate_score": 10.0,
+          "raw_hyper_trade_score": 0.524,
+          "rug_pull_score": 0.004,
+          "tape_state": "DRIVE_CONFIRMED",
+          "upper_wick_fade_score": 3.443,
+          "volume_burst_score": 10.0,
+          "volume_quality_after_reset_score": 6.5
+        },
+        "failed_predicates": [
+          "hyper_trade_score_ok"
+        ],
+        "passed_predicates": [
+          "opening_drive_score_ok",
+          "volume_burst_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok",
+          "chase_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 5.0,
+          "max_upper_wick_fade_score": 5.0,
+          "min_hyper_trade_score": 7.0,
+          "min_opening_drive_score": 7.2,
+          "min_volume_burst_score": 6.5
+        },
+        "window": "rescue_or_reclaim"
+      },
+      "best_window": "rescue_or_reclaim",
+      "decision_count": 79435,
+      "decisions_count": 79435,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {
+        "hyper_trade_score": 3.157,
+        "infq_archetype_score": 3.157,
+        "opening_drive_score": 9.075,
+        "opening_strategy_score": 3.157,
+        "volume_burst_score": 10.0
+      },
+      "mode_coverage": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 43026,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 43026,
+          "predicate": "continuation_handoff_required"
+        },
+        {
+          "count": 27395,
+          "predicate": "hyper_trade_score_ok"
+        },
+        {
+          "count": 8364,
+          "predicate": "observe_first_print_until_09_30_05"
+        },
+        {
+          "count": 6436,
+          "predicate": "opening_drive_score_ok"
+        },
+        {
+          "count": 519,
+          "predicate": "bid_collapse"
+        },
+        {
+          "count": 519,
+          "predicate": "drive_failed"
+        },
+        {
+          "count": 266,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        }
+      ],
+      "top_passed_predicates": [
+        {
+          "count": 27395,
+          "predicate": "volume_burst_ok"
+        },
+        {
+          "count": 27395,
+          "predicate": "rug_pull_risk_ok"
+        },
+        {
+          "count": 27395,
+          "predicate": "upper_wick_risk_ok"
+        },
+        {
+          "count": 27395,
+          "predicate": "chase_risk_ok"
+        },
+        {
+          "count": 27129,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 20959,
+          "predicate": "opening_drive_score_ok"
+        }
+      ],
+      "windows_monitored": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ]
+    },
+    "INFQ": {
+      "action_counts": {
+        "NO_TRADE": 9768,
+        "WAIT": 20354
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "NO_TRADE",
+        "actuals": {
+          "absolute_dollar_volume_score": 5.2903,
+          "acceleration_vs_previous_window_score": 10.0,
+          "chase_risk_score": 0.0,
+          "continuation_volume_expansion_score": 0.5772,
+          "hyper_trade_score": 4.428,
+          "infq_archetype_score": 4.428,
+          "opening_drive_score": 4.099,
+          "opening_strategy_score": 4.428,
+          "opening_vs_premarket_rate_score": 10.0,
+          "raw_hyper_trade_score": 2.783,
+          "rug_pull_score": 5.377,
+          "tape_state": "FIRST_PRINT_SEEN",
+          "upper_wick_fade_score": 6.0,
+          "volume_burst_score": 10.0,
+          "volume_quality_after_reset_score": 6.702
+        },
+        "failed_predicates": [
+          "hyper_trade_score_ok",
+          "opening_drive_score_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "passed_predicates": [
+          "volume_burst_ok",
+          "chase_risk_ok"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 5.0,
+          "max_upper_wick_fade_score": 5.0,
+          "min_hyper_trade_score": 7.0,
+          "min_opening_drive_score": 7.2,
+          "min_volume_burst_score": 6.5
+        },
+        "window": "first_60s"
+      },
+      "best_window": "first_60s",
+      "decision_count": 30122,
+      "decisions_count": 30122,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {
+        "hyper_trade_score": 4.428,
+        "infq_archetype_score": 4.428,
+        "opening_drive_score": 4.099,
+        "opening_strategy_score": 4.428,
+        "volume_burst_score": 10.0
+      },
+      "mode_coverage": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 18585,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 18585,
+          "predicate": "continuation_handoff_required"
+        },
+        {
+          "count": 8993,
+          "predicate": "hyper_trade_score_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "opening_drive_score_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "rug_pull_risk_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "upper_wick_risk_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 1769,
+          "predicate": "observe_first_print_until_09_30_05"
+        }
+      ],
+      "top_passed_predicates": [
+        {
+          "count": 8993,
+          "predicate": "volume_burst_ok"
+        },
+        {
+          "count": 8993,
+          "predicate": "chase_risk_ok"
+        }
+      ],
+      "windows_monitored": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ]
+    },
+    "NVDA": {
+      "action_counts": {
+        "NO_TRADE": 90910,
+        "WAIT": 178817
+      },
+      "best_action": "WAIT_FOR_SECOND_LEG",
+      "best_decision": {
+        "action": "NO_TRADE",
+        "actuals": {
+          "absolute_dollar_volume_score": 10.0,
+          "acceleration_vs_previous_window_score": 10.0,
+          "chase_risk_score": 0.115,
+          "continuation_volume_expansion_score": 0.0,
+          "hyper_trade_score": 3.994,
+          "infq_archetype_score": 3.994,
+          "opening_drive_score": 7.492,
+          "opening_strategy_score": 3.994,
+          "opening_vs_premarket_rate_score": 10.0,
+          "raw_hyper_trade_score": 0.524,
+          "rug_pull_score": 4.175,
+          "tape_state": "DRIVE_CONFIRMING",
+          "upper_wick_fade_score": 9.373,
+          "volume_burst_score": 10.0,
+          "volume_quality_after_reset_score": 6.5
+        },
+        "failed_predicates": [
+          "hyper_trade_score_ok",
+          "opening_drive_score_ok",
+          "rug_pull_risk_ok",
+          "upper_wick_risk_ok"
+        ],
+        "passed_predicates": [
+          "volume_burst_ok",
+          "chase_risk_ok",
+          "open_break_reclaim_or_micro_vwap_hold"
+        ],
+        "reason": "setup_not_confirmed",
+        "thresholds": {
+          "max_chase_risk_score": 6.0,
+          "max_rug_pull_score": 3.0,
+          "max_upper_wick_fade_score": 4.0,
+          "min_hyper_trade_score": 8.0,
+          "min_opening_drive_score": 8.5,
+          "min_volume_burst_score": 8.0
+        },
+        "window": "first_10s"
+      },
+      "best_window": "first_10s",
+      "decision_count": 269727,
+      "decisions_count": 269727,
+      "discarded_or_kept": "kept_as_second_leg_watch",
+      "first_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "last_decision": {
+        "action": "WAIT",
+        "failed_predicates": [
+          "opening_burst_window_closed",
+          "continuation_handoff_required"
+        ],
+        "reason": "opening_burst_window_closed_handoff_to_continuation",
+        "window": "fallback_or_closed"
+      },
+      "lifecycle_state": "SECOND_LEG_WATCH",
+      "max_scores": {
+        "hyper_trade_score": 3.994,
+        "infq_archetype_score": 3.994,
+        "opening_drive_score": 7.492,
+        "opening_strategy_score": 3.994,
+        "volume_burst_score": 10.0
+      },
+      "mode_coverage": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ],
+      "next_action": "WAIT_FOR_SECOND_LEG",
+      "proposal_count": 0,
+      "top_failed_predicates": [
+        {
+          "count": 152995,
+          "predicate": "opening_burst_window_closed"
+        },
+        {
+          "count": 152995,
+          "predicate": "continuation_handoff_required"
+        },
+        {
+          "count": 86302,
+          "predicate": "hyper_trade_score_ok"
+        },
+        {
+          "count": 86302,
+          "predicate": "upper_wick_risk_ok"
+        },
+        {
+          "count": 85763,
+          "predicate": "opening_drive_score_ok"
+        },
+        {
+          "count": 72344,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 25822,
+          "predicate": "observe_first_print_until_09_30_05"
+        },
+        {
+          "count": 22757,
+          "predicate": "rug_pull_risk_ok"
+        }
+      ],
+      "top_passed_predicates": [
+        {
+          "count": 86302,
+          "predicate": "volume_burst_ok"
+        },
+        {
+          "count": 86302,
+          "predicate": "chase_risk_ok"
+        },
+        {
+          "count": 63545,
+          "predicate": "rug_pull_risk_ok"
+        },
+        {
+          "count": 13958,
+          "predicate": "open_break_reclaim_or_micro_vwap_hold"
+        },
+        {
+          "count": 539,
+          "predicate": "opening_drive_score_ok"
+        }
+      ],
+      "windows_monitored": [
+        "continuation",
+        "fallback_or_closed",
+        "first_10s",
+        "first_30s",
+        "first_60s",
+        "observe",
+        "rescue_or_reclaim"
+      ]
+    }
+  },
+  "proposal_count": 0,
+  "proposals": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-29_132800/proposals.jsonl",
+  "raw_quote_count": 164572,
+  "raw_quotes": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-29_132800/raw_quotes.jsonl",
+  "raw_trade_count": 214712,
+  "raw_trades": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/opening_stream_2026-05-29_132800/raw_trades.jsonl",
+  "reason": null,
+  "status": "OK",
+  "stopped_by_timer": true,
+  "stream_capture_completed": true,
+  "stream_capture_heartbeat_at": "2026-05-29T13:43:37.038699+00:00",
+  "stream_capture_started": true,
+  "stream_capture_started_at": "2026-05-29T13:28:08.924553+00:00",
+  "stream_captured": true,
+  "stream_status": {
+    "last_error": null,
+    "market_data_connected": true,
+    "trade_updates_connected": false
+  },
+  "symbols": [
+    "AMZN",
+    "INFQ",
+    "NVDA"
+  ],
+  "windows_monitored": [
+    "continuation",
+    "fallback_or_closed",
+    "first_10s",
+    "first_30s",
+    "first_60s",
+    "observe",
+    "rescue_or_reclaim"
+  ],
+  "zero_proposal_reason": "AMZN: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required, hyper_trade_score_ok; INFQ: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required, hyper_trade_score_ok; NVDA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required, hyper_trade_score_ok"
+}

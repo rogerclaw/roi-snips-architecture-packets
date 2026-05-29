@@ -1,0 +1,82 @@
+{
+  "blockers": [
+    "same_day_morning_packet_missing",
+    "deep_mini_required_for_live_research_not_completed",
+    "candidate_specific_market_data_not_proven_without_same_day_candidates",
+    "disable_new_entries_active"
+  ],
+  "broker_account_order_position_state_inspected_this_jog": false,
+  "broker_live_readiness_rerun_this_jog": false,
+  "candidate_specific_market_data_ready": false,
+  "conditional_arming_performed": false,
+  "date": "2026-05-29",
+  "deep_mini_artifacts": {
+    "complete": false,
+    "dir": "runs/2026-05-29/deep_mini",
+    "missing": [
+      "runs/2026-05-29/deep_mini/broad_discovery_input.md",
+      "runs/2026-05-29/deep_mini/broad_discovery_summary.json",
+      "runs/2026-05-29/deep_mini/broad_discovery_raw_output.txt",
+      "runs/2026-05-29/deep_mini/shortlist_input.md",
+      "runs/2026-05-29/deep_mini/shortlist_synthesis_summary.json",
+      "runs/2026-05-29/deep_mini/shortlist_raw_output.txt",
+      "runs/2026-05-29/deep_mini/red_team_summary.json",
+      "runs/2026-05-29/deep_mini/final_packet.json"
+    ]
+  },
+  "deep_mini_code_fix_verified_locally": true,
+  "deep_mini_focused_tests": "9 passed in 0.06s",
+  "deep_mini_required_for_live": true,
+  "focused_clean_rebuild_live_tests": "59 passed in 0.13s",
+  "full_test_suite": "247 passed, 1 warning in 4.18s",
+  "generated_at_utc": "2026-05-29T04:56:51.369453+00:00",
+  "guard_files": {
+    "disable_new_entries_file_present": true,
+    "kill_switch_file_present": false,
+    "live_armed_file_present": true
+  },
+  "live_autonomous_trading_enabled_for_tomorrow": false,
+  "live_order_env_enabled_in_this_shell": false,
+  "market_data_candidate_specific_ready": false,
+  "notes": [
+    "Brokerless/no-order proof and synthetic/smoke proof are not treated as live readiness.",
+    "OpenClaw cron delivery was not treated as shell execution proof; scheduler canary shell execution artifact was checked.",
+    "No manual live order action was performed.",
+    "NO_GO can be revisited only after the 2026-05-29 governed deep-mini run and morning packet exist, then candidate-specific market-data and opening readiness are green."
+  ],
+  "orders_canceled_now": false,
+  "orders_previewed_now": false,
+  "orders_replaced_now": false,
+  "orders_submitted_now": false,
+  "raw_candidate_count": 0,
+  "reason_broker_readiness_not_rerun": "Earlier gates failed before broker/account/order/position inspection was necessary or authorized for this jog.",
+  "research_quality_passed": false,
+  "same_day_morning_packet": {
+    "json_exists": false,
+    "json_path": "reports/morning/json/2026-05-29.json",
+    "md_exists": false,
+    "md_path": "reports/morning/md/2026-05-29.md"
+  },
+  "same_style_backup_pool_ok": false,
+  "scheduled_commands": [
+    "45 4 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && SMOKE_SKIP_DEEP_MINI_NOT_FOR_LIVE_SELECTION=true scripts/roi_snips_morning_canary.sh >> reports/live_monitor/live_trade_ready/canary_cron.log 2>&1",
+    "0 5 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=false ROI_SNIPS_ALLOW_PAPER_ORDER_SUBMISSION=false .venv/bin/python -m src.workflows.research_pipeline --discovery-only >> reports/live_monitor/live_trade_ready/source_discovery_cron.log 2>&1",
+    "10 5 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=1800 ROI_SNIPS_DEEP_MINI_POLL_SECONDS=15 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1",
+    "45 5 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=1500 ROI_SNIPS_DEEP_MINI_POLL_SECONDS=15 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1",
+    "10 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=900 ROI_SNIPS_DEEP_MINI_POLL_SECONDS=15 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1",
+    "20 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true scripts/check_opening_bell_readiness.sh >> reports/live_monitor/live_trade_ready/freeze_readiness_cron.log 2>&1",
+    "28 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true scripts/run_live_opening_trade_ready.sh >> reports/live_monitor/live_trade_ready/opening_cron.log 2>&1",
+    "45 12 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && scripts/run_live_force_flat.sh >> reports/live_monitor/live_trade_ready/force_flat_cron.log 2>&1"
+  ],
+  "scheduler_canary": {
+    "broker_access_attempted": false,
+    "orders_allowed": false,
+    "orders_submitted": false,
+    "path": "reports/readiness/canary_2026-05-29.json",
+    "shell_capable": true,
+    "shell_invoked": true,
+    "status": "PASS",
+    "validation_executed": true
+  },
+  "verdict": "NO_GO"
+}

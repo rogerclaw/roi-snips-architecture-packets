@@ -1,0 +1,11 @@
+{
+  "entry_conditions_required": [
+    "deterministic tape and risk gates must still pass"
+  ],
+  "fatal_flaws": [],
+  "nonfatal_risks": [],
+  "reason": "No fatal deep-mini research flaw recorded; deterministic execution remains authoritative.",
+  "red_team_status": "PASS_ONLY_WITH_TAPE",
+  "should_block_live_trade": false,
+  "should_demote": false
+}

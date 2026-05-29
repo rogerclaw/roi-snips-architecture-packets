@@ -1,0 +1,437 @@
+You are doing a governed deep-mini research pass for Roi Snips.
+
+Objective:
+Identify the single best long-only U.S. stock or ETF opportunity from a dynamically discovered shortlist for an entry between 09:30 and 11:00 ET, including opening-drive candidates in the first five minutes, and a same-day or 1-3 day hold horizon.
+
+Primary question:
+Which shortlist candidate has the strongest combination of fresh catalyst, evidence quality, attention acceleration, realistic tradeability, and asymmetric near-term upside without already being obviously crowded or fully spent?
+
+Decision to be made:
+Choose one decisive best pick from the supplied shortlist for tomorrow's live 09:30-11:00 ET trade window, plus ranked backups and clear no-trade/invalidation reasons. This research may influence selection only; deterministic broker/risk/tape guards still control execution.
+
+Charles stock-picking mandate:
+Charles is looking to make a stock investment today just after market open, with the intention of selling the same day or within a couple of days. Conduct exhaustive, high-depth research across all relevant resources available, including financial news, company press releases, SEC filings, earnings materials, analyst commentary, trading blogs, market newsletters, Reddit threads, StockTwits, X/Grok sentiment, stock forums, Motley Fool-style market commentary, and any other credible or high-signal sources. Treat this as if Charles is consulting one of the best stock pickers in the world for a high-conviction short-term trade.
+
+Do not produce a generic watchlist. Identify the single best short-term stock opportunity for today based on the strongest combination of catalyst, sentiment, technical setup, and probability of a sharp near-term move. This means one decisive stock, not a broad list. Do deep research, think carefully, and synthesize both institutional-quality signals and retail sentiment.
+
+Focus on volatile stocks with credible potential for a major short-term revaluation due to a concrete catalyst. This may include FDA approvals, medical device clearance, trial data, product launches, mergers, acquisitions, strategic reviews, partnerships, licensing deals, government contracts, contract awards, CHIPS/DoD/DOE/NASA/SAM.gov/USAspending catalysts, earnings surprises, guidance revisions, legal/regulatory developments, short squeeze potential, unusual volume, sector momentum, social attention acceleration, analyst upgrades, same-day investor events, or other material triggers.
+
+Charles is completely fine with high risk for this small investment and can tolerate maximum risk. Prioritize asymmetric upside and high-conviction setups over safer, lower-volatility names. Charles cares more about explosive short-term potential than stability.
+
+Do not ignore hype if hype is clearly becoming a market-moving force, but do not treat hype as source validation. Hype plus catalyst plus premarket volume plus live tape may validate a momentum trade.
+
+Weigh:
+- current news flow and catalyst strength
+- official, structured, and social evidence
+- sentiment across retail and professional channels
+- premarket or early-session trading behavior
+- unusual volume, momentum, float, and short-interest if available
+- technical levels such as support, resistance, breakout levels, gap fills, VWAP, premarket high/low, and likely liquidity zones
+- whether the move is already overcrowded or still early
+- what could invalidate the trade quickly
+- what exact strategy fits the setup: opening burst, gap-and-go, premarket-high reclaim, VWAP reclaim, ORB break, second-leg continuation, event-timed catalyst reaction, or no trade
+
+Final output must choose one best idea or explicitly no-trade. It must include:
+1. single best stock to buy today, or no-trade
+2. ticker and company
+3. exact reason it could move sharply in the next hours or days
+4. underlying catalyst and why the market may not have fully priced it in
+5. evidence reviewed, split into official / structured / social / market-data evidence
+6. sentiment and discussion trend
+7. premarket or current tape behavior
+8. suggested limit buy price, buy range, or wait condition
+9. realistic same-day upside target
+10. realistic 1-3 day upside target
+11. downside level or clear thesis-break threshold
+12. monitoring timeframes after entry
+13. specific sell triggers, including profit-taking and danger signals
+14. chosen strategy
+15. same-style volatile backups
+16. why backups lost
+17. why mega-cap defaults were rejected
+18. stale prior-winner check
+19. source breadth status
+20. confidence
+21. must-not-trade conditions
+
+Hard restrictions:
+- Do not default to NVDA, AMD, AAPL, AMZN, META, TSLA, MSFT, GOOGL, PLTR, SPY, or QQQ unless the catalyst and tape are truly exceptional.
+- Do not recycle INFQ or any stale prior winner unless there is a fresh catalyst today or live-tape continuation confirmation.
+- If the only choices are stale prior winners or mega-cap filler, return NO_TRADE_RESEARCH_INCOMPLETE.
+- If deep-mini output is missing, timed out, failed, or unparsed, deterministic fallback cannot be executable for live.
+
+Sub-questions to answer:
+- Which candidate has the freshest and hardest catalyst?
+- Which candidate has the strongest official/structured evidence stack?
+- Which candidate still appears early rather than exhausted or over-owned?
+- Which candidate offers the best realistic same-day or 1-3 day upside versus invalidation risk?
+
+Known context:
+- Roi Snips is long-only U.S. equities/ETFs only
+- No shorting, no options, no margin
+- One open position max
+- Entries only 09:30-11:00 ET
+- Opening-drive entries are allowed 09:30-09:34:59 ET only when sampled sub-minute or first-minute structure, plus spread and chase guards, pass
+- Legacy continuation entries still use ORB_BREAK and VWAP_RECLAIM after 09:35 ET
+- Flat by 15:45 ET if used intraday
+- Prefer volatile small/mid-cap or lesser-known catalyst names over conservative mega-cap defaults unless a large-cap catalyst is unusually strong
+- Favor fresh hard catalysts, attention acceleration, unusual volume, float scarcity, and still-early stories
+- Penalize crowded or purely social-only stories unless hard evidence confirms the move
+- Treat this as research and selection support, not an order request
+
+Assumptions to verify:
+- The catalyst is real, current, and materially relevant to the issuer
+- The move is not only recycled attention from a stale prior winner
+- The candidate is not merely a generic mega-cap safety fallback
+- The market has not already fully priced or exhausted the move before the open
+- Reported news, filings, social attention, and market-data context match the same ticker/security
+
+Scope boundaries:
+- Work only from the shortlisted U.S. stock/ETF candidates and the supplied context
+- Synthesize catalyst quality, evidence strength, likely crowding, execution risk, and near-term upside
+- Produce one decisive best pick plus ranked backups
+
+Out of scope:
+- Do not widen the universe beyond the provided shortlist
+- Do not propose shorts, options, margin trades, or non-U.S. instruments
+- Do not assume live order placement or override deterministic execution guards
+
+Source priorities:
+1. Official/company/SEC/earnings evidence already reflected in the shortlist
+2. Structured news / market-data confirmation already reflected in the shortlist
+3. Social or attention-acceleration signals only as supporting evidence
+
+Search plan:
+- For each shortlisted ticker, verify the latest official/company/SEC source behind the claimed catalyst
+- Cross-check structured news for timing, materiality, and whether the catalyst is already broadly repeated
+- Check social/retail attention only to judge acceleration, crowding, and danger signals
+- Compare candidates directly on catalyst freshness, asymmetry, crowding, and execution risk
+- Do not spend time discovering unrelated tickers outside the shortlist
+
+Required deliverable:
+Return:
+1. Executive summary
+2. Best pick
+3. Ranked backups
+4. Why the best pick wins over the others
+5. Key invalidation / no-trade risks
+
+For each final candidate include:
+- ticker and company name
+- underlying catalyst and why it could move sharply in the next hours or days
+- why the move may still be early vs already crowded
+- evidence reviewed, including official/structured/sentiment hints from the shortlist
+- suggested buy zone or entry framework
+- realistic upside target for same-day and 1-3 day horizons
+- downside / thesis-break level
+- monitoring timeframe, profit-taking triggers, danger signals, and execution risk
+
+Evidence requirements:
+- Prefer primary sources, official filings/releases, exchange or broker market-data context, and named structured news over unattributed chatter
+- Distinguish confirmed facts from inference
+- Cite or name the source class for each material claim
+- Flag contradictory evidence, dilution/offering risk, halt risk, stale catalyst risk, and excessive spread/liquidity risk
+
+Decision criteria:
+- Freshness and strength of catalyst
+- Quality of evidence over hype
+- Attention acceleration and asymmetric upside
+- Opening-bell continuation readiness when the move is real
+- Whether the setup still looks early rather than exhausted
+- Execution practicality for a retail-style trader with basic tools
+
+Stopping condition:
+Stop when you can confidently choose one best idea and rank the backups from the supplied shortlist/context without needing to widen the universe.
+
+Budget discipline note:
+This is a bounded deep-mini shortlist synthesis, not an unconstrained universe hunt. Stay focused on the provided shortlist and context.
+
+Current context JSON:
+{
+  "candidate_symbols": [
+    "NVDA",
+    "AAPL",
+    "AMZN",
+    "SMCI",
+    "TSLA",
+    "AMD",
+    "META",
+    "INFQ"
+  ],
+  "execution_eligible_count": 9,
+  "execution_eligible_tickers": [
+    "INFQ",
+    "NVDA",
+    "AMZN",
+    "AMD",
+    "PLTR",
+    "SMCI",
+    "TSLA",
+    "META"
+  ]
+}
+
+Shortlist JSON:
+[
+  {
+    "asymmetry_score": 6.365,
+    "attention_acceleration_score": 1.325,
+    "catalyst_strength_score": 5.0,
+    "catalyst_type": "government_contract",
+    "claim_summary": "Grok/X attention for INFQ",
+    "company_name": null,
+    "crowding_score": 1.45,
+    "execution_gate": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "freshness_score": 10.0,
+    "official_confirmation_count": 2,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/2007825/000119312526224350/d89415d8k.htm",
+      "https://www.sec.gov/Archives/edgar/data/2007825/000119312526227206/d131935d10q.htm"
+    ],
+    "overlay": {
+      "estimated_spread_pct": 0.1665,
+      "execution_blockers": [],
+      "execution_readiness_score": 100.0,
+      "execution_warnings": [],
+      "gap_pct": -1.7984,
+      "last_premarket_price": 18.02,
+      "premarket_dollar_volume": 25587558.22
+    },
+    "research_priority_score": 4.177,
+    "scorecard_notes": [
+      "evidence_diversity=2.5",
+      "hard_catalyst_bonus=1.2",
+      "legacy_research_priority=3.323",
+      "legacy_research_priority=5.069",
+      "legacy_research_priority=5.087",
+      "legacy_research_priority=5.502",
+      "legacy_research_priority=5.879",
+      "legacy_research_priority=7.138"
+    ],
+    "social_confirmation_count": 1,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "story_stage": "early",
+    "structured_confirmation_count": 2,
+    "structured_sources": [
+      "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices",
+      "https://www.benzinga.com/news/26/05/52851654/reported-earlier-infleqtion-expands-uk-quantum-operations-with-new-oxford-innovation-centre-to-boost"
+    ],
+    "ticker": "INFQ",
+    "validation_status": "primary_and_structured_confirmed"
+  },
+  {
+    "asymmetry_score": 6.39,
+    "attention_acceleration_score": 1.45,
+    "catalyst_strength_score": 5.0,
+    "catalyst_type": "government_contract",
+    "claim_summary": "Grok/X attention for NVDA",
+    "company_name": null,
+    "crowding_score": 1.492,
+    "execution_gate": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "freshness_score": 10.0,
+    "official_confirmation_count": 3,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm",
+      "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/nvda-20260520.htm",
+      "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm"
+    ],
+    "overlay": {
+      "estimated_spread_pct": 0.0093,
+      "execution_blockers": [],
+      "execution_readiness_score": 100.0,
+      "execution_warnings": [],
+      "gap_pct": -0.2353,
+      "last_premarket_price": 214.7935,
+      "premarket_dollar_volume": 605099707.0
+    },
+    "research_priority_score": 1.604,
+    "scorecard_notes": [
+      "evidence_diversity=2.5",
+      "hard_catalyst_bonus=0.55",
+      "hard_catalyst_bonus=1.2",
+      "legacy_research_priority=1.983",
+      "legacy_research_priority=2.252",
+      "legacy_research_priority=3.985",
+      "legacy_research_priority=4.373",
+      "legacy_research_priority=4.402"
+    ],
+    "social_confirmation_count": 1,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "story_stage": "early",
+    "structured_confirmation_count": 7,
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/NVDA",
+      "https://www.benzinga.com/crypto/cryptocurrency/26/05/52849101/trump-says-he-saved-crypto-but-did-bitcoin-ethereum-xrp-actually-benefit",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+      "https://www.benzinga.com/news/26/05/52848398/microsoft-partner-iren-borrows-3-6-billion-for-nvidia-chips-bloomberg-news"
+    ],
+    "ticker": "NVDA",
+    "validation_status": "primary_and_structured_confirmed"
+  },
+  {
+    "asymmetry_score": 6.365,
+    "attention_acceleration_score": 1.325,
+    "catalyst_strength_score": 5.0,
+    "catalyst_type": "government_contract",
+    "claim_summary": "Grok/X attention for AMZN",
+    "company_name": null,
+    "crowding_score": 1.492,
+    "execution_gate": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "freshness_score": 10.0,
+    "official_confirmation_count": 1,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/1018724/000110465926065717/tm2614288d1_8k.htm"
+    ],
+    "overlay": {
+      "estimated_spread_pct": 0.0589,
+      "execution_blockers": [],
+      "execution_readiness_score": 100.0,
+      "execution_warnings": [],
+      "gap_pct": 0.1105,
+      "last_premarket_price": 271.85,
+      "premarket_dollar_volume": 155483422.94
+    },
+    "research_priority_score": 1.604,
+    "scorecard_notes": [
+      "evidence_diversity=2.5",
+      "hard_catalyst_bonus=1.2",
+      "legacy_research_priority=2.223",
+      "legacy_research_priority=3.985",
+      "legacy_research_priority=4.256",
+      "legacy_research_priority=4.489",
+      "legacy_research_priority=4.779",
+      "legacy_research_priority=6.038"
+    ],
+    "social_confirmation_count": 1,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "story_stage": "early",
+    "structured_confirmation_count": 3,
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/AMZN",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+      "https://www.benzinga.com/news/26/05/52852087/anthropic-raises-65b-in-series-h-funding-at-965b-post-money-valuation-series-h-funding-led-by-altime"
+    ],
+    "ticker": "AMZN",
+    "validation_status": "primary_and_structured_confirmed"
+  },
+  {
+    "asymmetry_score": 6.365,
+    "attention_acceleration_score": 1.325,
+    "catalyst_strength_score": 5.0,
+    "catalyst_type": "government_contract",
+    "claim_summary": "Grok/X attention for AMD",
+    "company_name": null,
+    "crowding_score": 1.492,
+    "execution_gate": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "freshness_score": 10.0,
+    "official_confirmation_count": 0,
+    "official_sources": [],
+    "overlay": {
+      "estimated_spread_pct": 0.077,
+      "execution_blockers": [],
+      "execution_readiness_score": 100.0,
+      "execution_warnings": [],
+      "gap_pct": -0.3605,
+      "last_premarket_price": 519.6,
+      "premarket_dollar_volume": 332267797.84
+    },
+    "research_priority_score": 1.581,
+    "scorecard_notes": [
+      "evidence_diversity=2.5",
+      "hard_catalyst_bonus=1.2",
+      "legacy_research_priority=2.223",
+      "legacy_research_priority=3.985",
+      "legacy_research_priority=4.489",
+      "legacy_research_priority=6.07",
+      "megacap_fallback_audit=demoted_nonexceptional",
+      "megacap_penalty_applied"
+    ],
+    "social_confirmation_count": 1,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "story_stage": "early",
+    "structured_confirmation_count": 3,
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/AMD",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+      "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices"
+    ],
+    "ticker": "AMD",
+    "validation_status": "structured_confirmed"
+  },
+  {
+    "asymmetry_score": 6.17,
+    "attention_acceleration_score": 0.35,
+    "catalyst_strength_score": 3.35,
+    "catalyst_type": "earnings_or_guidance",
+    "claim_summary": "PLTR external mover candidate",
+    "company_name": null,
+    "crowding_score": 1.492,
+    "execution_gate": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "freshness_score": 10.0,
+    "official_confirmation_count": 0,
+    "official_sources": [],
+    "overlay": {
+      "estimated_spread_pct": 0.0203,
+      "execution_blockers": [],
+      "execution_readiness_score": 100.0,
+      "execution_warnings": [],
+      "gap_pct": 2.2287,
+      "last_premarket_price": 147.7,
+      "premarket_dollar_volume": 389943295.14
+    },
+    "research_priority_score": 0.907,
+    "scorecard_notes": [
+      "evidence_diversity=2.5",
+      "legacy_research_priority=3.985",
+      "legacy_research_priority=4.409",
+      "megacap_fallback_audit=demoted_nonexceptional",
+      "megacap_penalty_applied",
+      "primary_score=hyper_trade_score",
+      "story_stage=early",
+      "structured_confirmations=1"
+    ],
+    "social_confirmation_count": 0,
+    "social_sources": [],
+    "story_stage": "early",
+    "structured_confirmation_count": 2,
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/PLTR",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday"
+    ],
+    "ticker": "PLTR",
+    "validation_status": "structured_confirmed"
+  }
+]

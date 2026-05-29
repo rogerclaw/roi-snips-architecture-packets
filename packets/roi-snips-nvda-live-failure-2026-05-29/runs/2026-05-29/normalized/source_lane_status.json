@@ -1,0 +1,263 @@
+[
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Alpaca SIP",
+    "missing_credentials": [],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": true,
+    "affected_primary_selection": true,
+    "candidate_count": 16,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Alpaca News",
+    "missing_credentials": [],
+    "produced_candidates": 16,
+    "produced_candidates_count": 16,
+    "produced_useful_evidence_count": 16,
+    "ran": true,
+    "useful_for_primary": true
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": true,
+    "candidate_count": 1,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Benzinga",
+    "missing_credentials": [],
+    "produced_candidates": 1,
+    "produced_candidates_count": 1,
+    "produced_useful_evidence_count": 1,
+    "ran": true,
+    "useful_for_primary": true
+  },
+  {
+    "affected_backup_list": true,
+    "affected_primary_selection": true,
+    "candidate_count": 22,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "SEC EDGAR",
+    "missing_credentials": [],
+    "produced_candidates": 22,
+    "produced_candidates_count": 22,
+    "produced_useful_evidence_count": 22,
+    "ran": true,
+    "useful_for_primary": true
+  },
+  {
+    "affected_backup_list": true,
+    "affected_primary_selection": false,
+    "candidate_count": 10,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Company IR",
+    "missing_credentials": [],
+    "produced_candidates": 10,
+    "produced_candidates_count": 10,
+    "produced_useful_evidence_count": 10,
+    "ran": true,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": true,
+    "affected_primary_selection": false,
+    "candidate_count": 8,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "FMP movers",
+    "missing_credentials": [
+      "FMP_API_KEY"
+    ],
+    "produced_candidates": 8,
+    "produced_candidates_count": 8,
+    "produced_useful_evidence_count": 8,
+    "ran": true,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "StockTwits",
+    "missing_credentials": [
+      "STOCKTWITS_ACCESS_TOKEN",
+      "STOCKTWITS_BEARER_TOKEN"
+    ],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "TradingView-style screener",
+    "missing_credentials": [
+      "ROI_SNIPS_ENABLE_TRADINGVIEW_SCREENER"
+    ],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": true,
+    "affected_primary_selection": true,
+    "candidate_count": 6,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Grok/X",
+    "missing_credentials": [
+      "XAI_API_KEY",
+      "GROK_API_KEY"
+    ],
+    "produced_candidates": 6,
+    "produced_candidates_count": 6,
+    "produced_useful_evidence_count": 6,
+    "ran": true,
+    "useful_for_primary": true
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Reddit",
+    "missing_credentials": [],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Tavily/Brave/Exa",
+    "missing_credentials": [
+      "TAVILY_API_KEY",
+      "BRAVE_API_KEY",
+      "EXA_API_KEY"
+    ],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Firecrawl/Crawl4AI",
+    "missing_credentials": [
+      "FIRECRAWL_API_KEY"
+    ],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "openFDA",
+    "missing_credentials": [
+      "OPENFDA_API_KEY"
+    ],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "ClinicalTrials.gov",
+    "missing_credentials": [],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  },
+  {
+    "affected_backup_list": true,
+    "affected_primary_selection": true,
+    "candidate_count": 11,
+    "configured": false,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "SAM.gov/USAspending",
+    "missing_credentials": [
+      "SAM_GOV_API_KEY",
+      "USASPENDING_API_KEY"
+    ],
+    "produced_candidates": 11,
+    "produced_candidates_count": 11,
+    "produced_useful_evidence_count": 11,
+    "ran": true,
+    "useful_for_primary": true
+  },
+  {
+    "affected_backup_list": false,
+    "affected_primary_selection": false,
+    "candidate_count": 0,
+    "configured": true,
+    "errors": [],
+    "fallback_used": false,
+    "lane_name": "Nasdaq halt feed",
+    "missing_credentials": [],
+    "produced_candidates": 0,
+    "produced_candidates_count": 0,
+    "produced_useful_evidence_count": 0,
+    "ran": false,
+    "useful_for_primary": false
+  }
+]

@@ -1,0 +1,2106 @@
+[
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "Grok/X attention for INFQ",
+    "catalyst_type": "government_contract",
+    "company_name": null,
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": -1.7984,
+    "current_price": 18.02,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 3.2,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "earnings_or_material_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:07.133483+00:00",
+        "headline": "INFQ 8-K filing",
+        "notes": [
+          "form=8-K",
+          "accession=0001193125-26-224350"
+        ],
+        "official_flag": true,
+        "published_at": "2026-05-14",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2007825/000119312526224350/d89415d8k.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "filing_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:07.133433+00:00",
+        "headline": "INFQ 10-Q filing",
+        "notes": [
+          "form=10-Q",
+          "accession=0001193125-26-227206"
+        ],
+        "official_flag": true,
+        "published_at": "2026-05-15",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2007825/000119312526227206/d131935d10q.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "government_contract",
+        "credibility_score_initial": 6.8,
+        "discovered_at": "2026-05-29T13:17:16.008236+00:00",
+        "headline": "Reported Earlier: Infleqtion Expands UK Quantum Operations With New Oxford Innovation Centre To Boost Quantum R&D, Manufacturing And Talent Recruitment",
+        "notes": [
+          "source=benzinga",
+          "scout=government_scout",
+          "freshness_hours=19.204"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T18:05:00Z",
+        "social_flag": false,
+        "source_name": "government_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/news/26/05/52851654/reported-earlier-infleqtion-expands-uk-quantum-operations-with-new-oxford-innovation-centre-to-boost",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "sector_theme_wave",
+        "credibility_score_initial": 7.0,
+        "discovered_at": "2026-05-29T13:17:03.302599+00:00",
+        "headline": "INFQ sector-theme basket candidate: quantum_computing",
+        "notes": [
+          "theme=quantum_computing",
+          "theme_strength=9.7",
+          "sector_basket=INFQ,QBTS,RGTI,QUBT,IONQ,IBM,GFS",
+          "lesser_known_candidate=true"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-29T13:17:03.302441+00:00",
+        "social_flag": false,
+        "source_name": "theme_basket_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "social_acceleration",
+        "credibility_score_initial": 2.15,
+        "discovered_at": "2026-05-29T13:17:31.225763+00:00",
+        "headline": "Grok/X attention for INFQ",
+        "notes": [
+          "mentions=1",
+          "source=grok_x_search",
+          "auth_mode=openclaw_grok_web_search",
+          "citation=https://x.com/MikeLongTerm/status/2056708296409555044",
+          "citation=https://x.com/Sean_Daly_",
+          "citation=https://x.com/adorablepic_",
+          "citation=https://x.com/amitisinvesting/status/2059439824868610058",
+          "citation=https://x.com/marketsday/status/2059615784062861715"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": true,
+        "source_name": "grok_x_search",
+        "source_tier": 2,
+        "source_url": "https://x.com/MikeLongTerm/status/2056708296409555044",
+        "structured_flag": false
+      }
+    ],
+    "first_seen_at_utc": "2026-05-14",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "Grok/X attention for INFQ",
+    "hyper_trade_score": 2.783,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 3.2,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 7.0,
+        "high_beta_theme_score": 2.45,
+        "indirect_sector_mention_penalty": 3.5,
+        "mega_cap_sympathy_penalty": 0.0,
+        "premarket_repricing_score": 0.719,
+        "same_day_event_score": 7.0,
+        "sector_theme_score": 5.0,
+        "social_retail_score": 2.325,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 9.0,
+        "undercovered_ticker_score": 7.0
+      },
+      "infq_archetype_score": 4.428,
+      "policy_theme_runner_score": 4.428,
+      "tags": []
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 144887023.0,
+      "estimated_spread_pct": 0.1665,
+      "gap_pct": -1.7984,
+      "last_premarket_price": 18.02,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:32.703536+00:00",
+      "premarket_dollar_volume": 25587558.22,
+      "premarket_volume": 1398978,
+      "price_band": "5_to_20",
+      "prior_close": 18.35
+    },
+    "mega_cap_default_flag": false,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": false,
+      "exceptional_catalyst_required": false,
+      "is_common_mega_cap_fallback": false,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "not_mega_cap",
+      "requires_small_mid_cap_comparison": false
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/2007825/000119312526224350/d89415d8k.htm",
+      "https://www.sec.gov/Archives/edgar/data/2007825/000119312526227206/d131935d10q.htm"
+    ],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 4.428,
+    "premarket_repricing_score": -1.7984,
+    "research_quality_score": 4.177,
+    "same_style_backup_eligible": true,
+    "scorecard": {
+      "asymmetry_score": 6.365,
+      "attention_acceleration_score": 1.325,
+      "catalyst_strength_score": 5.0,
+      "crowding_score": 1.45,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 2.783,
+      "lane_tags": [
+        "MOVER_FIRST_EXPLAIN_LATER",
+        "VERIFIED_CATALYST_RUNNER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "hard_catalyst_bonus=1.2",
+        "legacy_research_priority=3.323",
+        "legacy_research_priority=5.069",
+        "legacy_research_priority=5.087",
+        "legacy_research_priority=5.502",
+        "legacy_research_priority=5.879",
+        "legacy_research_priority=7.138",
+        "official_confirmations=1",
+        "primary_score=hyper_trade_score",
+        "social_confirmations=1",
+        "social_only_penalty_applied",
+        "story_stage=early",
+        "structured_confirmations=1",
+        "validation_status=primary_confirmed",
+        "validation_status=social_discovery_only",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 4.177,
+      "story_stage": "early"
+    },
+    "sec_materiality": [
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 15.262,
+        "generic_sec_filing_penalty": 4.5,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 1.0,
+        "warrant_supply_zone_detected": false
+      },
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 14.262,
+        "generic_sec_filing_penalty": 6.0,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 0.0,
+        "warrant_supply_zone_detected": false
+      }
+    ],
+    "social_attention_velocity": 1.325,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "source_confidence": "high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices",
+      "https://www.benzinga.com/news/26/05/52851654/reported-earlier-infleqtion-expands-uk-quantum-operations-with-new-oxford-innovation-centre-to-boost"
+    ],
+    "theme_wave_score": 4.428,
+    "ticker": "INFQ",
+    "timeline": {
+      "evidence_count": 5,
+      "first_seen_at": "2026-05-14",
+      "latest_update_at": "2026-05-29T13:17:31.225763+00:00"
+    },
+    "validation_status": "primary_and_structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Government funding/contract catalysts can create a simple high-beta narrative.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  },
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "Grok/X attention for NVDA",
+    "catalyst_type": "government_contract",
+    "company_name": null,
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": -0.2353,
+    "current_price": 214.7935,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 6.5,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "earnings_or_material_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:05.490641+00:00",
+        "headline": "NVDA 8-K filing",
+        "notes": [
+          "form=8-K",
+          "accession=0001045810-26-000028"
+        ],
+        "official_flag": true,
+        "published_at": "2026-05-08",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "filing_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:05.490624+00:00",
+        "headline": "NVDA 10-Q filing",
+        "notes": [
+          "form=10-Q",
+          "accession=0001045810-26-000052"
+        ],
+        "official_flag": true,
+        "published_at": "2026-05-20",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "earnings_or_material_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:05.490633+00:00",
+        "headline": "NVDA 8-K filing",
+        "notes": [
+          "form=8-K",
+          "accession=0001045810-26-000051"
+        ],
+        "official_flag": true,
+        "published_at": "2026-05-20",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/nvda-20260520.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "government_contract",
+        "credibility_score_initial": 6.8,
+        "discovered_at": "2026-05-29T13:17:02.891355+00:00",
+        "headline": "'Microsoft Partner IREN Borrows $3.6 Billion For NVIDIA Chips' - Bloomberg News",
+        "notes": [
+          "source=benzinga",
+          "scout=government_scout",
+          "freshness_hours=20.508"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T16:46:33Z",
+        "social_flag": false,
+        "source_name": "government_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/news/26/05/52848398/microsoft-partner-iren-borrows-3-6-billion-for-nvidia-chips-bloomberg-news",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "earnings_or_guidance",
+        "credibility_score_initial": 8.4,
+        "discovered_at": "2026-05-29T13:16:37.344590+00:00",
+        "headline": "NVDA exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+        "notes": [
+          "benzinga_hits=0",
+          "alpaca_news_hits=22",
+          "gap_pct=-0.2555",
+          "premarket_dollar_volume=601630795.22",
+          "execution_readiness_score=100.0",
+          "spread_pct=0.0047"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T16:58:11Z",
+        "social_flag": false,
+        "source_name": "exchange_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "product_or_partnership",
+        "credibility_score_initial": 6.6,
+        "discovered_at": "2026-05-29T13:17:01.909621+00:00",
+        "headline": "Cadence And Samsung Foundry Expand Multi-Year 2nm AI Chip Partnership With NVIDIA NVLink-C2C IP And GPU-Accelerated Design Flows",
+        "notes": [
+          "source=benzinga",
+          "scout=ir_scout",
+          "freshness_hours=20.236"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T17:02:52Z",
+        "social_flag": false,
+        "source_name": "ir_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/news/26/05/52849059/cadence-and-samsung-foundry-expand-multi-year-2nm-ai-chip-partnership-with-nvidia-nvlink-c2c-ip-and",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "government_contract",
+        "credibility_score_initial": 7.2,
+        "discovered_at": "2026-05-29T13:17:02.891311+00:00",
+        "headline": "Trump Says He 'Saved' Crypto, But Did Bitcoin, Ethereum, XRP Actually Benefit?",
+        "notes": [
+          "source=benzinga",
+          "scout=government_scout",
+          "freshness_hours=20.209"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T17:04:30Z",
+        "social_flag": false,
+        "source_name": "government_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/crypto/cryptocurrency/26/05/52849101/trump-says-he-saved-crypto-but-did-bitcoin-ethereum-xrp-actually-benefit",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "product_or_partnership",
+        "credibility_score_initial": 6.6,
+        "discovered_at": "2026-05-29T13:17:01.909465+00:00",
+        "headline": "Boost Run Signs 36-Month NVIDIA B300 GPU Server Rental Agreement With Thinking Machines Lab For 5,000 GPUs Across Data Center Infrastructure; Combined Total Contract Value ~$471.7M",
+        "notes": [
+          "source=benzinga",
+          "scout=ir_scout",
+          "freshness_hours=15.701"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T21:34:59Z",
+        "social_flag": false,
+        "source_name": "ir_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/news/26/05/52861339/boost-run-signs-36-month-nvidia-b300-gpu-server-rental-agreement-with-thinking-machines-lab-for-5-00",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "government_contract",
+        "credibility_score_initial": 6.8,
+        "discovered_at": "2026-05-29T13:17:02.891057+00:00",
+        "headline": "'China's ByteDance Developing New AI Chips Like Those from Nvidia Partner Groq' - The Information",
+        "notes": [
+          "source=benzinga",
+          "scout=government_scout",
+          "freshness_hours=0.134"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-29T13:09:01Z",
+        "social_flag": false,
+        "source_name": "government_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/news/26/05/52869041/chinas-bytedance-developing-new-ai-chips-like-those-from-nvidia-partner-groq-the-information",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 6.1,
+        "discovered_at": "2026-05-29T13:16:40.210330+00:00",
+        "headline": "NVDA external mover candidate",
+        "notes": [
+          "scout=external_movers_scout",
+          "fmp_present=False",
+          "tradingview_present=False",
+          "stocktwits_messages=0",
+          "stocktwits_bullish=0",
+          "stocktwits_bearish=0",
+          "degraded=missing_fmp_api_key",
+          "degraded=tradingview_screener_disabled",
+          "degraded=AAPL:stocktwits_http_error",
+          "degraded=AMD:stocktwits_http_error",
+          "degraded=AMZN:stocktwits_http_error"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": false,
+        "source_name": "external_movers_scout",
+        "source_tier": 1,
+        "source_url": "https://finance.yahoo.com/quote/NVDA",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "social_acceleration",
+        "credibility_score_initial": 2.3,
+        "discovered_at": "2026-05-29T13:17:31.225635+00:00",
+        "headline": "Grok/X attention for NVDA",
+        "notes": [
+          "mentions=2",
+          "source=grok_x_search",
+          "auth_mode=openclaw_grok_web_search",
+          "citation=https://x.com/MikeLongTerm/status/2056708296409555044",
+          "citation=https://x.com/Sean_Daly_",
+          "citation=https://x.com/adorablepic_",
+          "citation=https://x.com/amitisinvesting/status/2059439824868610058",
+          "citation=https://x.com/marketsday/status/2059615784062861715"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": true,
+        "source_name": "grok_x_search",
+        "source_tier": 2,
+        "source_url": "https://x.com/MikeLongTerm/status/2056708296409555044",
+        "structured_flag": false
+      }
+    ],
+    "first_seen_at_utc": "2026-05-08",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "Grok/X attention for NVDA",
+    "hyper_trade_score": 0.524,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 6.5,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 7.0,
+        "high_beta_theme_score": 2.064,
+        "indirect_sector_mention_penalty": 0.0,
+        "mega_cap_sympathy_penalty": 6.5,
+        "premarket_repricing_score": 0.102,
+        "same_day_event_score": 7.0,
+        "sector_theme_score": 5.0,
+        "social_retail_score": 2.45,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 10.0,
+        "undercovered_ticker_score": 2.0
+      },
+      "infq_archetype_score": 3.994,
+      "policy_theme_runner_score": 3.994,
+      "tags": [
+        "DIRECT_POLICY_THEME_BENEFICIARY",
+        "MEGACAP_SYMPATHY_DEMOTED"
+      ]
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 29220323926.87,
+      "estimated_spread_pct": 0.0093,
+      "gap_pct": -0.2353,
+      "last_premarket_price": 214.7935,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:33.578271+00:00",
+      "premarket_dollar_volume": 605099707.0,
+      "premarket_volume": 2814402,
+      "price_band": "100_plus",
+      "prior_close": 215.3
+    },
+    "mega_cap_default_flag": true,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": true,
+      "exceptional_catalyst_required": true,
+      "is_common_mega_cap_fallback": true,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "generic_or_nonexceptional_mega_cap_fallback",
+      "requires_small_mid_cap_comparison": true
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm",
+      "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/nvda-20260520.htm",
+      "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm"
+    ],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 3.994,
+    "premarket_repricing_score": -0.2353,
+    "research_quality_score": 1.604,
+    "same_style_backup_eligible": false,
+    "scorecard": {
+      "asymmetry_score": 6.39,
+      "attention_acceleration_score": 1.45,
+      "catalyst_strength_score": 5.0,
+      "crowding_score": 1.492,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 0.524,
+      "lane_tags": [
+        "DIRECT_POLICY_THEME_BENEFICIARY",
+        "MEGACAP_SYMPATHY_DEMOTED",
+        "MOVER_FIRST_EXPLAIN_LATER",
+        "VERIFIED_CATALYST_RUNNER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "hard_catalyst_bonus=0.55",
+        "hard_catalyst_bonus=1.2",
+        "legacy_research_priority=1.983",
+        "legacy_research_priority=2.252",
+        "legacy_research_priority=3.985",
+        "legacy_research_priority=4.373",
+        "legacy_research_priority=4.402",
+        "legacy_research_priority=4.489",
+        "legacy_research_priority=5.362",
+        "legacy_research_priority=6.038",
+        "megacap_fallback_audit=demoted_nonexceptional",
+        "megacap_penalty_applied",
+        "official_confirmations=1",
+        "official_confirmations=2",
+        "primary_score=hyper_trade_score",
+        "social_confirmations=1",
+        "social_only_penalty_applied",
+        "story_stage=early",
+        "story_stage=late",
+        "structured_confirmations=1",
+        "validation_status=primary_confirmed",
+        "validation_status=social_discovery_only",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 1.604,
+      "story_stage": "early"
+    },
+    "sec_materiality": [
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 21.262,
+        "generic_sec_filing_penalty": 4.5,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 1.0,
+        "warrant_supply_zone_detected": false
+      },
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 9.262,
+        "generic_sec_filing_penalty": 6.0,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 0.0,
+        "warrant_supply_zone_detected": false
+      },
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 9.262,
+        "generic_sec_filing_penalty": 4.5,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 1.0,
+        "warrant_supply_zone_detected": false
+      }
+    ],
+    "social_attention_velocity": 1.45,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "source_confidence": "high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/NVDA",
+      "https://www.benzinga.com/crypto/cryptocurrency/26/05/52849101/trump-says-he-saved-crypto-but-did-bitcoin-ethereum-xrp-actually-benefit",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+      "https://www.benzinga.com/news/26/05/52848398/microsoft-partner-iren-borrows-3-6-billion-for-nvidia-chips-bloomberg-news",
+      "https://www.benzinga.com/news/26/05/52849059/cadence-and-samsung-foundry-expand-multi-year-2nm-ai-chip-partnership-with-nvidia-nvlink-c2c-ip-and",
+      "https://www.benzinga.com/news/26/05/52861339/boost-run-signs-36-month-nvidia-b300-gpu-server-rental-agreement-with-thinking-machines-lab-for-5-00",
+      "https://www.benzinga.com/news/26/05/52869041/chinas-bytedance-developing-new-ai-chips-like-those-from-nvidia-partner-groq-the-information"
+    ],
+    "theme_wave_score": 3.994,
+    "ticker": "NVDA",
+    "timeline": {
+      "evidence_count": 11,
+      "first_seen_at": "2026-05-08",
+      "latest_update_at": "2026-05-29T13:17:31.225635+00:00"
+    },
+    "validation_status": "primary_and_structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Government funding/contract catalysts can create a simple high-beta narrative.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  },
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "Grok/X attention for AMZN",
+    "catalyst_type": "government_contract",
+    "company_name": null,
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": 0.1105,
+    "current_price": 271.85,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 2.0,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "earnings_or_material_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:05.490615+00:00",
+        "headline": "AMZN 8-K filing",
+        "notes": [
+          "form=8-K",
+          "accession=0001104659-26-065717"
+        ],
+        "official_flag": true,
+        "published_at": "2026-05-22",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926065717/tm2614288d1_8k.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "earnings_or_guidance",
+        "credibility_score_initial": 8.4,
+        "discovered_at": "2026-05-29T13:16:35.570910+00:00",
+        "headline": "AMZN exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+        "notes": [
+          "benzinga_hits=0",
+          "alpaca_news_hits=16",
+          "gap_pct=0.081",
+          "premarket_dollar_volume=154707338.64",
+          "execution_readiness_score=100.0",
+          "spread_pct=0.0589"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T16:58:11Z",
+        "social_flag": false,
+        "source_name": "exchange_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "government_contract",
+        "credibility_score_initial": 6.8,
+        "discovered_at": "2026-05-29T13:17:02.891257+00:00",
+        "headline": "Anthropic Raises $65B in Series H funding At $965B Post-Money Valuation; Series H Funding LED By Altimeter Capital, Dragoneer, Greenoaks, And Sequoia Capital; Round Was Co-Led By Capital Group, Coatue, D1 Capital Partners, GIC, ICONIQ, And XN; Funding Also Includes $15B Of Previously Committed Investments From Hyperscalers, Including $5B From Amazon; Run-Rate Revenue Crossed $47B Earlier This Month",
+        "notes": [
+          "source=benzinga",
+          "scout=government_scout",
+          "freshness_hours=19.017"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T18:16:00Z",
+        "social_flag": false,
+        "source_name": "government_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/news/26/05/52852087/anthropic-raises-65b-in-series-h-funding-at-965b-post-money-valuation-series-h-funding-led-by-altime",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 6.1,
+        "discovered_at": "2026-05-29T13:16:40.137966+00:00",
+        "headline": "AMZN external mover candidate",
+        "notes": [
+          "scout=external_movers_scout",
+          "fmp_present=False",
+          "tradingview_present=False",
+          "stocktwits_messages=0",
+          "stocktwits_bullish=0",
+          "stocktwits_bearish=0",
+          "degraded=missing_fmp_api_key",
+          "degraded=tradingview_screener_disabled",
+          "degraded=AAPL:stocktwits_http_error",
+          "degraded=AMD:stocktwits_http_error",
+          "degraded=AMZN:stocktwits_http_error"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": false,
+        "source_name": "external_movers_scout",
+        "source_tier": 1,
+        "source_url": "https://finance.yahoo.com/quote/AMZN",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "social_acceleration",
+        "credibility_score_initial": 2.15,
+        "discovered_at": "2026-05-29T13:17:31.225746+00:00",
+        "headline": "Grok/X attention for AMZN",
+        "notes": [
+          "mentions=1",
+          "source=grok_x_search",
+          "auth_mode=openclaw_grok_web_search",
+          "citation=https://x.com/MikeLongTerm/status/2056708296409555044",
+          "citation=https://x.com/Sean_Daly_",
+          "citation=https://x.com/adorablepic_",
+          "citation=https://x.com/amitisinvesting/status/2059439824868610058",
+          "citation=https://x.com/marketsday/status/2059615784062861715"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": true,
+        "source_name": "grok_x_search",
+        "source_tier": 2,
+        "source_url": "https://x.com/MikeLongTerm/status/2056708296409555044",
+        "structured_flag": false
+      }
+    ],
+    "first_seen_at_utc": "2026-05-22",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "Grok/X attention for AMZN",
+    "hyper_trade_score": 0.524,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 2.0,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 7.0,
+        "high_beta_theme_score": 2.028,
+        "indirect_sector_mention_penalty": 0.0,
+        "mega_cap_sympathy_penalty": 6.5,
+        "premarket_repricing_score": 0.044,
+        "same_day_event_score": 7.0,
+        "sector_theme_score": 5.0,
+        "social_retail_score": 2.325,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 9.0,
+        "undercovered_ticker_score": 2.0
+      },
+      "infq_archetype_score": 3.157,
+      "policy_theme_runner_score": 3.157,
+      "tags": [
+        "MEGACAP_SYMPATHY_DEMOTED"
+      ]
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 10970945265.54,
+      "estimated_spread_pct": 0.0589,
+      "gap_pct": 0.1105,
+      "last_premarket_price": 271.85,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:34.465588+00:00",
+      "premarket_dollar_volume": 155483422.94,
+      "premarket_volume": 572645,
+      "price_band": "100_plus",
+      "prior_close": 271.55
+    },
+    "mega_cap_default_flag": true,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": true,
+      "exceptional_catalyst_required": true,
+      "is_common_mega_cap_fallback": true,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "generic_or_nonexceptional_mega_cap_fallback",
+      "requires_small_mid_cap_comparison": true
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/1018724/000110465926065717/tm2614288d1_8k.htm"
+    ],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 3.157,
+    "premarket_repricing_score": 0.1105,
+    "research_quality_score": 1.604,
+    "same_style_backup_eligible": false,
+    "scorecard": {
+      "asymmetry_score": 6.365,
+      "attention_acceleration_score": 1.325,
+      "catalyst_strength_score": 5.0,
+      "crowding_score": 1.492,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 0.524,
+      "lane_tags": [
+        "MEGACAP_SYMPATHY_DEMOTED",
+        "MOVER_FIRST_EXPLAIN_LATER",
+        "VERIFIED_CATALYST_RUNNER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "hard_catalyst_bonus=1.2",
+        "legacy_research_priority=2.223",
+        "legacy_research_priority=3.985",
+        "legacy_research_priority=4.256",
+        "legacy_research_priority=4.489",
+        "legacy_research_priority=4.779",
+        "legacy_research_priority=6.038",
+        "megacap_fallback_audit=demoted_nonexceptional",
+        "megacap_penalty_applied",
+        "official_confirmations=1",
+        "primary_score=hyper_trade_score",
+        "social_confirmations=1",
+        "social_only_penalty_applied",
+        "story_stage=early",
+        "structured_confirmations=1",
+        "validation_status=primary_confirmed",
+        "validation_status=social_discovery_only",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 1.604,
+      "story_stage": "early"
+    },
+    "sec_materiality": [
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 7.262,
+        "generic_sec_filing_penalty": 4.5,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 1.0,
+        "warrant_supply_zone_detected": false
+      }
+    ],
+    "social_attention_velocity": 1.325,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "source_confidence": "high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/AMZN",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+      "https://www.benzinga.com/news/26/05/52852087/anthropic-raises-65b-in-series-h-funding-at-965b-post-money-valuation-series-h-funding-led-by-altime"
+    ],
+    "theme_wave_score": 3.157,
+    "ticker": "AMZN",
+    "timeline": {
+      "evidence_count": 5,
+      "first_seen_at": "2026-05-22",
+      "latest_update_at": "2026-05-29T13:17:31.225746+00:00"
+    },
+    "validation_status": "primary_and_structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Government funding/contract catalysts can create a simple high-beta narrative.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  },
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "Grok/X attention for AMD",
+    "catalyst_type": "government_contract",
+    "company_name": null,
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": -0.3605,
+    "current_price": 519.6,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 2.0,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "earnings_or_guidance",
+        "credibility_score_initial": 8.4,
+        "discovered_at": "2026-05-29T13:16:34.755031+00:00",
+        "headline": "AMD exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+        "notes": [
+          "benzinga_hits=0",
+          "alpaca_news_hits=8",
+          "gap_pct=-0.3126",
+          "premarket_dollar_volume=330994777.84",
+          "execution_readiness_score=100.0",
+          "spread_pct=0.0943"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T16:58:11Z",
+        "social_flag": false,
+        "source_name": "exchange_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "government_contract",
+        "credibility_score_initial": 7.2,
+        "discovered_at": "2026-05-29T13:17:02.891188+00:00",
+        "headline": "Intel Takes On AMD With New Chips For Portable Gaming Devices",
+        "notes": [
+          "source=benzinga",
+          "scout=government_scout",
+          "freshness_hours=1.751"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-29T11:31:59Z",
+        "social_flag": false,
+        "source_name": "government_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 6.1,
+        "discovered_at": "2026-05-29T13:16:40.097361+00:00",
+        "headline": "AMD external mover candidate",
+        "notes": [
+          "scout=external_movers_scout",
+          "fmp_present=False",
+          "tradingview_present=False",
+          "stocktwits_messages=0",
+          "stocktwits_bullish=0",
+          "stocktwits_bearish=0",
+          "degraded=missing_fmp_api_key",
+          "degraded=tradingview_screener_disabled",
+          "degraded=AAPL:stocktwits_http_error",
+          "degraded=AMD:stocktwits_http_error"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": false,
+        "source_name": "external_movers_scout",
+        "source_tier": 1,
+        "source_url": "https://finance.yahoo.com/quote/AMD",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "social_acceleration",
+        "credibility_score_initial": 2.15,
+        "discovered_at": "2026-05-29T13:17:31.225755+00:00",
+        "headline": "Grok/X attention for AMD",
+        "notes": [
+          "mentions=1",
+          "source=grok_x_search",
+          "auth_mode=openclaw_grok_web_search",
+          "citation=https://x.com/MikeLongTerm/status/2056708296409555044",
+          "citation=https://x.com/Sean_Daly_",
+          "citation=https://x.com/adorablepic_",
+          "citation=https://x.com/amitisinvesting/status/2059439824868610058",
+          "citation=https://x.com/marketsday/status/2059615784062861715"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": true,
+        "source_name": "grok_x_search",
+        "source_tier": 2,
+        "source_url": "https://x.com/MikeLongTerm/status/2056708296409555044",
+        "structured_flag": false
+      }
+    ],
+    "first_seen_at_utc": "2026-05-28T16:58:11Z",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "Grok/X attention for AMD",
+    "hyper_trade_score": 0.475,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 2.0,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 7.0,
+        "high_beta_theme_score": 2.09,
+        "indirect_sector_mention_penalty": 0.0,
+        "mega_cap_sympathy_penalty": 6.5,
+        "premarket_repricing_score": 0.144,
+        "same_day_event_score": 7.0,
+        "sector_theme_score": 5.0,
+        "social_retail_score": 2.325,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 7.0,
+        "undercovered_ticker_score": 2.0
+      },
+      "infq_archetype_score": 2.973,
+      "policy_theme_runner_score": 2.973,
+      "tags": [
+        "MEGACAP_SYMPATHY_DEMOTED"
+      ]
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 10857027625.74,
+      "estimated_spread_pct": 0.077,
+      "gap_pct": -0.3605,
+      "last_premarket_price": 519.6,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:35.307597+00:00",
+      "premarket_dollar_volume": 332267797.84,
+      "premarket_volume": 637162,
+      "price_band": "100_plus",
+      "prior_close": 521.48
+    },
+    "mega_cap_default_flag": true,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": true,
+      "exceptional_catalyst_required": true,
+      "is_common_mega_cap_fallback": true,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "generic_or_nonexceptional_mega_cap_fallback",
+      "requires_small_mid_cap_comparison": true
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 2.973,
+    "premarket_repricing_score": -0.3605,
+    "research_quality_score": 1.581,
+    "same_style_backup_eligible": false,
+    "scorecard": {
+      "asymmetry_score": 6.365,
+      "attention_acceleration_score": 1.325,
+      "catalyst_strength_score": 5.0,
+      "crowding_score": 1.492,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 0.475,
+      "lane_tags": [
+        "MEGACAP_SYMPATHY_DEMOTED",
+        "MOVER_FIRST_EXPLAIN_LATER",
+        "VERIFIED_CATALYST_RUNNER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "hard_catalyst_bonus=1.2",
+        "legacy_research_priority=2.223",
+        "legacy_research_priority=3.985",
+        "legacy_research_priority=4.489",
+        "legacy_research_priority=6.07",
+        "megacap_fallback_audit=demoted_nonexceptional",
+        "megacap_penalty_applied",
+        "primary_score=hyper_trade_score",
+        "social_confirmations=1",
+        "social_only_penalty_applied",
+        "story_stage=early",
+        "structured_confirmations=1",
+        "validation_status=social_discovery_only",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 1.581,
+      "story_stage": "early"
+    },
+    "sec_materiality": [],
+    "social_attention_velocity": 1.325,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "source_confidence": "medium_high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/AMD",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+      "https://www.benzinga.com/markets/tech/26/05/52867033/intel-takes-on-amd-with-new-chips-for-portable-gaming-devices"
+    ],
+    "theme_wave_score": 2.973,
+    "ticker": "AMD",
+    "timeline": {
+      "evidence_count": 4,
+      "first_seen_at": "2026-05-28T16:58:11Z",
+      "latest_update_at": "2026-05-29T13:17:31.225755+00:00"
+    },
+    "validation_status": "structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Government funding/contract catalysts can create a simple high-beta narrative.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  },
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "PLTR external mover candidate",
+    "catalyst_type": "earnings_or_guidance",
+    "company_name": null,
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": 2.2287,
+    "current_price": 147.7,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 2.0,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "earnings_or_guidance",
+        "credibility_score_initial": 7.3999999999999995,
+        "discovered_at": "2026-05-29T13:16:38.251206+00:00",
+        "headline": "PLTR exchange mover candidate | S&P 500 Hits Record Highs, Snowflake Jumps 37% On AI Boom: Stock Market Today",
+        "notes": [
+          "benzinga_hits=0",
+          "alpaca_news_hits=1",
+          "gap_pct=2.1456",
+          "premarket_dollar_volume=386852837.08",
+          "execution_readiness_score=100.0",
+          "spread_pct=0.0745"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T16:58:11Z",
+        "social_flag": false,
+        "source_name": "exchange_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 6.1,
+        "discovered_at": "2026-05-29T13:16:40.245579+00:00",
+        "headline": "PLTR external mover candidate",
+        "notes": [
+          "scout=external_movers_scout",
+          "fmp_present=False",
+          "tradingview_present=False",
+          "stocktwits_messages=0",
+          "stocktwits_bullish=0",
+          "stocktwits_bearish=0",
+          "degraded=missing_fmp_api_key",
+          "degraded=tradingview_screener_disabled",
+          "degraded=AAPL:stocktwits_http_error",
+          "degraded=AMD:stocktwits_http_error",
+          "degraded=AMZN:stocktwits_http_error"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": false,
+        "source_name": "external_movers_scout",
+        "source_tier": 1,
+        "source_url": "https://finance.yahoo.com/quote/PLTR",
+        "structured_flag": true
+      }
+    ],
+    "first_seen_at_utc": "2026-05-28T16:58:11Z",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "PLTR external mover candidate",
+    "hyper_trade_score": 0.265,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 2.0,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 0.0,
+        "high_beta_theme_score": 2.557,
+        "indirect_sector_mention_penalty": 0.0,
+        "mega_cap_sympathy_penalty": 6.5,
+        "premarket_repricing_score": 0.891,
+        "same_day_event_score": 7.0,
+        "sector_theme_score": 5.0,
+        "social_retail_score": 0.35,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 5.0,
+        "undercovered_ticker_score": 2.0
+      },
+      "infq_archetype_score": 1.656,
+      "policy_theme_runner_score": 1.656,
+      "tags": [
+        "MEGACAP_SYMPATHY_DEMOTED"
+      ]
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 6840703823.5,
+      "estimated_spread_pct": 0.0203,
+      "gap_pct": 2.2287,
+      "last_premarket_price": 147.7,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:36.168788+00:00",
+      "premarket_dollar_volume": 389943295.14,
+      "premarket_volume": 2660259,
+      "price_band": "100_plus",
+      "prior_close": 144.48
+    },
+    "mega_cap_default_flag": true,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": true,
+      "exceptional_catalyst_required": true,
+      "is_common_mega_cap_fallback": true,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "generic_or_nonexceptional_mega_cap_fallback",
+      "requires_small_mid_cap_comparison": true
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 1.656,
+    "premarket_repricing_score": 2.2287,
+    "research_quality_score": 0.907,
+    "same_style_backup_eligible": false,
+    "scorecard": {
+      "asymmetry_score": 6.17,
+      "attention_acceleration_score": 0.35,
+      "catalyst_strength_score": 3.35,
+      "crowding_score": 1.492,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 0.265,
+      "lane_tags": [
+        "MEGACAP_SYMPATHY_DEMOTED",
+        "MOVER_FIRST_EXPLAIN_LATER",
+        "VERIFIED_CATALYST_RUNNER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "legacy_research_priority=3.985",
+        "legacy_research_priority=4.409",
+        "megacap_fallback_audit=demoted_nonexceptional",
+        "megacap_penalty_applied",
+        "primary_score=hyper_trade_score",
+        "story_stage=early",
+        "structured_confirmations=1",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 0.907,
+      "story_stage": "early"
+    },
+    "sec_materiality": [],
+    "social_attention_velocity": 0.35,
+    "social_sources": [],
+    "source_confidence": "medium_high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/PLTR",
+      "https://www.benzinga.com/markets/equities/26/05/52848870/sp-500-nasdaq-records-us-iran-truce-snowflake-surge-markets-thursday"
+    ],
+    "theme_wave_score": 1.656,
+    "ticker": "PLTR",
+    "timeline": {
+      "evidence_count": 2,
+      "first_seen_at": "2026-05-28T16:58:11Z",
+      "latest_update_at": "2026-05-29T13:16:40.245579+00:00"
+    },
+    "validation_status": "structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  },
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "Grok/X attention for SMCI",
+    "catalyst_type": "product_or_partnership",
+    "company_name": null,
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": 0.7778,
+    "current_price": 45.35,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 6.5,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "earnings_or_material_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:05.490648+00:00",
+        "headline": "SMCI 8-K filing",
+        "notes": [
+          "form=8-K",
+          "accession=0001375365-26-000015"
+        ],
+        "official_flag": true,
+        "published_at": "2026-05-18",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000015/smci-20260512.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "product_or_partnership",
+        "credibility_score_initial": 6.6,
+        "discovered_at": "2026-05-29T13:17:01.909677+00:00",
+        "headline": "Supermicro Issues Statement Regarding Recent Collaboration With The Taiwanese Authorities To Prevent Illicit Diversion Of Its Server Technology",
+        "notes": [
+          "source=benzinga",
+          "scout=ir_scout",
+          "freshness_hours=24.081"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T13:12:09Z",
+        "social_flag": false,
+        "source_name": "ir_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/news/26/05/52837072/supermicro-issues-statement-regarding-recent-collaboration-with-the-taiwanese-authorities-to-prevent",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "product_or_partnership",
+        "credibility_score_initial": 7.0,
+        "discovered_at": "2026-05-29T13:17:01.909650+00:00",
+        "headline": "Agilent, Unusual Machines, Best Buy And Other Big Stocks Moving Higher On Thursday",
+        "notes": [
+          "source=benzinga",
+          "scout=ir_scout",
+          "freshness_hours=20.572"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T16:42:41Z",
+        "social_flag": false,
+        "source_name": "ir_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/trading-ideas/movers/26/05/52848261/agilent-unusual-machines-best-buy-and-other-big-stocks-moving-higher-on-thursday",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 8.4,
+        "discovered_at": "2026-05-29T13:16:39.128187+00:00",
+        "headline": "SMCI exchange mover candidate | Dell, Super Micro Computer, Unusual Machines, Virgin Galactic And Costco: Why These 5 Stocks Are On Investors' Radars Today",
+        "notes": [
+          "benzinga_hits=0",
+          "alpaca_news_hits=4",
+          "gap_pct=1.0087",
+          "premarket_dollar_volume=198551976.91",
+          "execution_readiness_score=100.0",
+          "spread_pct=0.374"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-29T01:26:18Z",
+        "social_flag": false,
+        "source_name": "exchange_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/markets/equities/26/05/52862775/dell-super-micro-computer-unusual-machines-virgin-galactic-and-costco-why-these-5-stocks-are-on-investors-radars-today",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 6.1,
+        "discovered_at": "2026-05-29T13:16:40.283483+00:00",
+        "headline": "SMCI external mover candidate",
+        "notes": [
+          "scout=external_movers_scout",
+          "fmp_present=False",
+          "tradingview_present=False",
+          "stocktwits_messages=0",
+          "stocktwits_bullish=0",
+          "stocktwits_bearish=0",
+          "degraded=missing_fmp_api_key",
+          "degraded=tradingview_screener_disabled",
+          "degraded=AAPL:stocktwits_http_error",
+          "degraded=AMD:stocktwits_http_error",
+          "degraded=AMZN:stocktwits_http_error"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": false,
+        "source_name": "external_movers_scout",
+        "source_tier": 1,
+        "source_url": "https://finance.yahoo.com/quote/SMCI",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "social_acceleration",
+        "credibility_score_initial": 2.15,
+        "discovered_at": "2026-05-29T13:17:31.225775+00:00",
+        "headline": "Grok/X attention for SMCI",
+        "notes": [
+          "mentions=1",
+          "source=grok_x_search",
+          "auth_mode=openclaw_grok_web_search",
+          "citation=https://x.com/MikeLongTerm/status/2056708296409555044",
+          "citation=https://x.com/Sean_Daly_",
+          "citation=https://x.com/adorablepic_",
+          "citation=https://x.com/amitisinvesting/status/2059439824868610058",
+          "citation=https://x.com/marketsday/status/2059615784062861715"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": true,
+        "source_name": "grok_x_search",
+        "source_tier": 2,
+        "source_url": "https://x.com/MikeLongTerm/status/2056708296409555044",
+        "structured_flag": false
+      }
+    ],
+    "first_seen_at_utc": "2026-05-18",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "Grok/X attention for SMCI",
+    "hyper_trade_score": 0.211,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 6.5,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 0.0,
+        "high_beta_theme_score": 2.252,
+        "indirect_sector_mention_penalty": 0.0,
+        "mega_cap_sympathy_penalty": 6.5,
+        "premarket_repricing_score": 0.403,
+        "same_day_event_score": 7.0,
+        "sector_theme_score": 5.0,
+        "social_retail_score": 2.325,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 10.0,
+        "undercovered_ticker_score": 2.0
+      },
+      "infq_archetype_score": 2.915,
+      "policy_theme_runner_score": 2.915,
+      "tags": [
+        "DIRECT_POLICY_THEME_BENEFICIARY",
+        "MEGACAP_SYMPATHY_DEMOTED"
+      ]
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 802635962.04,
+      "estimated_spread_pct": 0.1764,
+      "gap_pct": 0.7778,
+      "last_premarket_price": 45.35,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:37.021993+00:00",
+      "premarket_dollar_volume": 199226825.79,
+      "premarket_volume": 4393861,
+      "price_band": "20_to_100",
+      "prior_close": 45.0
+    },
+    "mega_cap_default_flag": true,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": true,
+      "exceptional_catalyst_required": true,
+      "is_common_mega_cap_fallback": true,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "generic_or_nonexceptional_mega_cap_fallback",
+      "requires_small_mid_cap_comparison": true
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000015/smci-20260512.htm"
+    ],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 2.915,
+    "premarket_repricing_score": 0.7778,
+    "research_quality_score": 0.859,
+    "same_style_backup_eligible": false,
+    "scorecard": {
+      "asymmetry_score": 6.365,
+      "attention_acceleration_score": 1.325,
+      "catalyst_strength_score": 3.5,
+      "crowding_score": 1.45,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 0.211,
+      "lane_tags": [
+        "DIRECT_POLICY_THEME_BENEFICIARY",
+        "MEGACAP_SYMPATHY_DEMOTED",
+        "MOVER_FIRST_EXPLAIN_LATER",
+        "VERIFIED_CATALYST_RUNNER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "legacy_research_priority=2.223",
+        "legacy_research_priority=3.985",
+        "legacy_research_priority=4.119",
+        "legacy_research_priority=4.288",
+        "legacy_research_priority=4.373",
+        "legacy_research_priority=4.779",
+        "megacap_fallback_audit=demoted_nonexceptional",
+        "megacap_penalty_applied",
+        "official_confirmations=1",
+        "primary_score=hyper_trade_score",
+        "social_confirmations=1",
+        "social_only_penalty_applied",
+        "story_stage=early",
+        "structured_confirmations=1",
+        "validation_status=primary_confirmed",
+        "validation_status=social_discovery_only",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 0.859,
+      "story_stage": "early"
+    },
+    "sec_materiality": [
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 11.262,
+        "generic_sec_filing_penalty": 4.5,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 1.0,
+        "warrant_supply_zone_detected": false
+      }
+    ],
+    "social_attention_velocity": 1.325,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "source_confidence": "high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/SMCI",
+      "https://www.benzinga.com/markets/equities/26/05/52862775/dell-super-micro-computer-unusual-machines-virgin-galactic-and-costco-why-these-5-stocks-are-on-investors-radars-today",
+      "https://www.benzinga.com/news/26/05/52837072/supermicro-issues-statement-regarding-recent-collaboration-with-the-taiwanese-authorities-to-prevent",
+      "https://www.benzinga.com/trading-ideas/movers/26/05/52848261/agilent-unusual-machines-best-buy-and-other-big-stocks-moving-higher-on-thursday"
+    ],
+    "theme_wave_score": 2.915,
+    "ticker": "SMCI",
+    "timeline": {
+      "evidence_count": 6,
+      "first_seen_at": "2026-05-18",
+      "latest_update_at": "2026-05-29T13:17:31.225775+00:00"
+    },
+    "validation_status": "primary_and_structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  },
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "Grok/X attention for TSLA",
+    "catalyst_type": "earnings_or_material_update",
+    "company_name": "TSLA",
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": -0.2129,
+    "current_price": 440.6,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 2.0,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "earnings_or_material_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:05.490663+00:00",
+        "headline": "TSLA 8-K filing",
+        "notes": [
+          "form=8-K",
+          "accession=0001628280-26-026551"
+        ],
+        "official_flag": true,
+        "published_at": "2026-04-22",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026551/tsla-20260422.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "filing_update",
+        "credibility_score_initial": 9.0,
+        "discovered_at": "2026-05-29T13:17:05.490655+00:00",
+        "headline": "TSLA 10-Q filing",
+        "notes": [
+          "form=10-Q",
+          "accession=0001628280-26-026673"
+        ],
+        "official_flag": true,
+        "published_at": "2026-04-23",
+        "social_flag": false,
+        "source_name": "sec_edgar",
+        "source_tier": 0,
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm",
+        "structured_flag": false
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 8.2,
+        "discovered_at": "2026-05-29T13:16:39.997672+00:00",
+        "headline": "TSLA exchange mover candidate | Tesla Reclaims No. 1 Position In Global Battery EV Race",
+        "notes": [
+          "benzinga_hits=0",
+          "alpaca_news_hits=9",
+          "gap_pct=-0.2469",
+          "premarket_dollar_volume=337771063.41",
+          "execution_readiness_score=100.0",
+          "spread_pct=0.0227"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-29T09:46:28Z",
+        "social_flag": false,
+        "source_name": "exchange_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/analyst-stock-ratings/analyst-color/26/05/52865320/tesla-reclaims-no-1-position-in-global-battery-ev-race",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 6.1,
+        "discovered_at": "2026-05-29T13:16:40.319484+00:00",
+        "headline": "TSLA external mover candidate",
+        "notes": [
+          "scout=external_movers_scout",
+          "fmp_present=False",
+          "tradingview_present=False",
+          "stocktwits_messages=0",
+          "stocktwits_bullish=0",
+          "stocktwits_bearish=0",
+          "degraded=missing_fmp_api_key",
+          "degraded=tradingview_screener_disabled",
+          "degraded=AAPL:stocktwits_http_error",
+          "degraded=AMD:stocktwits_http_error",
+          "degraded=AMZN:stocktwits_http_error"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": false,
+        "source_name": "external_movers_scout",
+        "source_tier": 1,
+        "source_url": "https://finance.yahoo.com/quote/TSLA",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "social_acceleration",
+        "credibility_score_initial": 2.3,
+        "discovered_at": "2026-05-29T13:17:31.225733+00:00",
+        "headline": "Grok/X attention for TSLA",
+        "notes": [
+          "mentions=2",
+          "source=grok_x_search",
+          "auth_mode=openclaw_grok_web_search",
+          "citation=https://x.com/MikeLongTerm/status/2056708296409555044",
+          "citation=https://x.com/Sean_Daly_",
+          "citation=https://x.com/adorablepic_",
+          "citation=https://x.com/amitisinvesting/status/2059439824868610058",
+          "citation=https://x.com/marketsday/status/2059615784062861715"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": true,
+        "source_name": "grok_x_search",
+        "source_tier": 2,
+        "source_url": "https://x.com/MikeLongTerm/status/2056708296409555044",
+        "structured_flag": false
+      }
+    ],
+    "first_seen_at_utc": "2026-04-22",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "Grok/X attention for TSLA",
+    "hyper_trade_score": 0.0,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 2.0,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 0.0,
+        "high_beta_theme_score": 2.062,
+        "indirect_sector_mention_penalty": 0.0,
+        "mega_cap_sympathy_penalty": 6.5,
+        "premarket_repricing_score": 0.099,
+        "same_day_event_score": 7.0,
+        "sector_theme_score": 5.0,
+        "social_retail_score": 2.45,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 9.0,
+        "undercovered_ticker_score": 2.0
+      },
+      "infq_archetype_score": 2.053,
+      "policy_theme_runner_score": 2.053,
+      "tags": [
+        "MEGACAP_SYMPATHY_DEMOTED"
+      ]
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 26053918719.4,
+      "estimated_spread_pct": 0.0182,
+      "gap_pct": -0.2129,
+      "last_premarket_price": 440.6,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:37.904697+00:00",
+      "premarket_dollar_volume": 338922530.41,
+      "premarket_volume": 770272,
+      "price_band": "100_plus",
+      "prior_close": 441.54
+    },
+    "mega_cap_default_flag": true,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": true,
+      "exceptional_catalyst_required": true,
+      "is_common_mega_cap_fallback": true,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "generic_or_nonexceptional_mega_cap_fallback",
+      "requires_small_mid_cap_comparison": true
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [
+      "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026551/tsla-20260422.htm",
+      "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm"
+    ],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 2.053,
+    "premarket_repricing_score": -0.2129,
+    "research_quality_score": 0.693,
+    "same_style_backup_eligible": false,
+    "scorecard": {
+      "asymmetry_score": 6.39,
+      "attention_acceleration_score": 1.45,
+      "catalyst_strength_score": 3.5,
+      "crowding_score": 1.45,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 0.0,
+      "lane_tags": [
+        "MEGACAP_SYMPATHY_DEMOTED",
+        "MOVER_FIRST_EXPLAIN_LATER",
+        "VERIFIED_CATALYST_RUNNER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "legacy_research_priority=2.252",
+        "legacy_research_priority=3.985",
+        "legacy_research_priority=4.103",
+        "legacy_research_priority=4.402",
+        "legacy_research_priority=4.779",
+        "megacap_fallback_audit=demoted_nonexceptional",
+        "megacap_penalty_applied",
+        "official_confirmations=1",
+        "primary_score=hyper_trade_score",
+        "social_confirmations=1",
+        "social_only_penalty_applied",
+        "story_stage=early",
+        "structured_confirmations=1",
+        "validation_status=primary_confirmed",
+        "validation_status=social_discovery_only",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 0.693,
+      "story_stage": "early"
+    },
+    "sec_materiality": [
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 37.262,
+        "generic_sec_filing_penalty": 4.5,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 1.0,
+        "warrant_supply_zone_detected": false
+      },
+      {
+        "catalyst_specificity_score_0_10": 0.0,
+        "dilution_risk_score_0_10": 0.0,
+        "filing_staleness_days": 36.262,
+        "generic_sec_filing_penalty": 6.0,
+        "materiality_label": "generic_or_stale_filing",
+        "offering_or_atm_detected": false,
+        "sec_materiality_score_0_10": 0.0,
+        "warrant_supply_zone_detected": false
+      }
+    ],
+    "social_attention_velocity": 1.45,
+    "social_sources": [
+      "https://x.com/MikeLongTerm/status/2056708296409555044"
+    ],
+    "source_confidence": "high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/TSLA",
+      "https://www.benzinga.com/analyst-stock-ratings/analyst-color/26/05/52865320/tesla-reclaims-no-1-position-in-global-battery-ev-race"
+    ],
+    "theme_wave_score": 2.053,
+    "ticker": "TSLA",
+    "timeline": {
+      "evidence_count": 5,
+      "first_seen_at": "2026-04-22",
+      "latest_update_at": "2026-05-29T13:17:31.225733+00:00"
+    },
+    "validation_status": "primary_and_structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  },
+  {
+    "anti_chase_state": "PREMARKET_BUILDING",
+    "catalyst_freshness_score": 10.0,
+    "catalyst_summary": "META external mover candidate",
+    "catalyst_type": "exchange_mover",
+    "company_name": null,
+    "current_buyability_summary": {
+      "anti_chase_state": "PREMARKET_BUILDING",
+      "entry_viability_score": 72.0,
+      "gate_passed": true
+    },
+    "current_gap_pct": -0.2745,
+    "current_price": 632.22,
+    "deterministic_trade_gate_status": {
+      "blockers": [],
+      "execution_readiness_score": 100.0,
+      "passed": true,
+      "warnings": []
+    },
+    "direct_beneficiary_score": 2.0,
+    "entry_viability_score": 72.0,
+    "evidence_table": [
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 8.2,
+        "discovered_at": "2026-05-29T13:16:36.468581+00:00",
+        "headline": "META exchange mover candidate | Triple Manias Take A Hit As US And Iran Exchange Strikes But Cooler PCE May Reignite Momentum",
+        "notes": [
+          "benzinga_hits=0",
+          "alpaca_news_hits=5",
+          "gap_pct=-0.2303",
+          "premarket_dollar_volume=98977519.57",
+          "execution_readiness_score=100.0",
+          "spread_pct=0.0506"
+        ],
+        "official_flag": false,
+        "published_at": "2026-05-28T19:00:44Z",
+        "social_flag": false,
+        "source_name": "exchange_scout",
+        "source_tier": 1,
+        "source_url": "https://www.benzinga.com/Opinion/26/05/52853789/triple-manias-take-a-hit-as-us-and-iran-exchange-strikes-but-cooler-pce-may-reignite-momentum",
+        "structured_flag": true
+      },
+      {
+        "catalyst_type": "exchange_mover",
+        "credibility_score_initial": 6.1,
+        "discovered_at": "2026-05-29T13:16:40.174028+00:00",
+        "headline": "META external mover candidate",
+        "notes": [
+          "scout=external_movers_scout",
+          "fmp_present=False",
+          "tradingview_present=False",
+          "stocktwits_messages=0",
+          "stocktwits_bullish=0",
+          "stocktwits_bearish=0",
+          "degraded=missing_fmp_api_key",
+          "degraded=tradingview_screener_disabled",
+          "degraded=AAPL:stocktwits_http_error",
+          "degraded=AMD:stocktwits_http_error",
+          "degraded=AMZN:stocktwits_http_error"
+        ],
+        "official_flag": false,
+        "published_at": null,
+        "social_flag": false,
+        "source_name": "external_movers_scout",
+        "source_tier": 1,
+        "source_url": "https://finance.yahoo.com/quote/META",
+        "structured_flag": true
+      }
+    ],
+    "first_seen_at_utc": "2026-05-28T19:00:44Z",
+    "first_seen_gap_pct": null,
+    "first_seen_price": null,
+    "first_seen_stage": null,
+    "headline_thesis": "META external mover candidate",
+    "hyper_trade_score": 0.0,
+    "infq_archetype": {
+      "components": {
+        "dilution_or_supply_penalty": 0.0,
+        "direct_beneficiary_score": 2.0,
+        "exhausted_chase_penalty": 0.0,
+        "government_policy_score": 0.0,
+        "high_beta_theme_score": 2.069,
+        "indirect_sector_mention_penalty": 0.0,
+        "mega_cap_sympathy_penalty": 6.5,
+        "premarket_repricing_score": 0.11,
+        "same_day_event_score": 0.0,
+        "sector_theme_score": 2.0,
+        "social_retail_score": 0.0,
+        "stale_prior_winner_penalty": 0.0,
+        "structured_validation_score": 5.0,
+        "undercovered_ticker_score": 2.0
+      },
+      "infq_archetype_score": 0.868,
+      "policy_theme_runner_score": 0.868,
+      "tags": [
+        "MEGACAP_SYMPATHY_DEMOTED"
+      ]
+    },
+    "invalidation_checklist": [
+      "Primary/structured evidence contradicts or weakens the headline thesis.",
+      "Price loses VWAP/opening range and cannot reclaim quickly.",
+      "Volume fades while spread widens.",
+      "Related sector basket reverses hard."
+    ],
+    "market_snapshot": {
+      "average_20d_dollar_volume": 9519358726.66,
+      "estimated_spread_pct": 0.0506,
+      "gap_pct": -0.2745,
+      "last_premarket_price": 632.22,
+      "market_cap": null,
+      "observed_at": "2026-05-29T13:17:38.775482+00:00",
+      "premarket_dollar_volume": 99119769.07,
+      "premarket_volume": 156719,
+      "price_band": "100_plus",
+      "prior_close": 633.96
+    },
+    "mega_cap_default_flag": true,
+    "mega_cap_fallback_audit": {
+      "demote_unless_exceptional": true,
+      "exceptional_catalyst_required": true,
+      "is_common_mega_cap_fallback": true,
+      "passed_exceptional_catalyst_test": false,
+      "reason": "generic_or_nonexceptional_mega_cap_fallback",
+      "requires_small_mid_cap_comparison": true
+    },
+    "move_since_first_seen_pct": null,
+    "official_sources": [],
+    "opportunity_lifecycle_state": "EARLY_CATALYST_DISCOVERY",
+    "policy_theme_runner_score": 0.868,
+    "premarket_repricing_score": -0.2745,
+    "research_quality_score": 0.58,
+    "same_style_backup_eligible": false,
+    "scorecard": {
+      "asymmetry_score": 6.1,
+      "attention_acceleration_score": 0.0,
+      "catalyst_strength_score": 2.25,
+      "crowding_score": 1.45,
+      "freshness_score": 10.0,
+      "hyper_trade_score": 0.0,
+      "lane_tags": [
+        "MEGACAP_SYMPATHY_DEMOTED",
+        "MOVER_FIRST_EXPLAIN_LATER"
+      ],
+      "notes": [
+        "evidence_diversity=2.5",
+        "legacy_research_priority=3.985",
+        "legacy_research_priority=4.097",
+        "megacap_fallback_audit=demoted_nonexceptional",
+        "megacap_penalty_applied",
+        "primary_score=hyper_trade_score",
+        "story_stage=early",
+        "structured_confirmations=1",
+        "validation_status=structured_confirmed"
+      ],
+      "research_priority_score": 0.58,
+      "story_stage": "early"
+    },
+    "sec_materiality": [],
+    "social_attention_velocity": 0.0,
+    "social_sources": [],
+    "source_confidence": "medium_high",
+    "source_lane_status_refs": [],
+    "structured_sources": [
+      "https://finance.yahoo.com/quote/META",
+      "https://www.benzinga.com/Opinion/26/05/52853789/triple-manias-take-a-hit-as-us-and-iran-exchange-strikes-but-cooler-pce-may-reignite-momentum"
+    ],
+    "theme_wave_score": 0.868,
+    "ticker": "META",
+    "timeline": {
+      "evidence_count": 2,
+      "first_seen_at": "2026-05-28T19:00:44Z",
+      "latest_update_at": "2026-05-29T13:16:40.174028+00:00"
+    },
+    "validation_status": "structured_confirmed",
+    "why_asymmetric": [
+      "Fresh same-day or near-same-day catalyst.",
+      "Premarket dollar volume is large enough to show real tape confirmation."
+    ],
+    "why_it_may_be_wrong": [
+      "Catalyst can fail if price loses VWAP/opening range or sector momentum reverses."
+    ]
+  }
+]

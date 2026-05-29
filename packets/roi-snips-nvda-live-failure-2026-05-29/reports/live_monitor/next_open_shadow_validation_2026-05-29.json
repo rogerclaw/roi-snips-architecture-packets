@@ -1,0 +1,64 @@
+{
+  "all_steps_ok_or_shadow_allowed": true,
+  "broker_account_inspected": false,
+  "broker_orders_inspected": false,
+  "broker_positions_inspected": false,
+  "failure_class": null,
+  "generated_at_utc": "2026-05-29T11:45:38.415300+00:00",
+  "mode": "next_open_no_order_shadow_validation",
+  "orders_allowed": false,
+  "orders_submitted": false,
+  "shadow_mode": "PRE_OPEN_READINESS_ONLY",
+  "status": "OK",
+  "steps": [
+    {
+      "finished_at_utc": "2026-05-29T11:45:36.976393+00:00",
+      "name": "research_skip_deep_mini_smoke_not_for_live_selection",
+      "returncode": 0,
+      "started_at_utc": "2026-05-29T11:45:00.878524+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "9,\n    \"raw_candidate_sources\": [\n      \"exchange_scout\",\n      \"external_movers_scout\",\n      \"government_scout\",\n      \"ir_scout\",\n      \"sec_edgar\",\n      \"theme_basket_scout\"\n    ],\n    \"raw_candidate_buckets\": [\n      \"fresh_official_catalyst_names\",\n      \"government_contract_policy_names\",\n      \"structured_news_catalyst_names\"\n    ],\n    \"target_raw_candidates_min\": 100,\n    \"target_raw_candidates_max\": 250,\n    \"acceptable_raw_candidates_min\": 50,\n    \"degraded_raw_candidates_min\": 25,\n    \"severely_degraded_raw_candidates_min\": 10,\n    \"preserved_top_raw_candidates\": 9,\n    \"broad_ai_discovery_candidate_count\": 9,\n    \"research_ranked_count\": 9,\n    \"execution_eligible_count\": 9,\n    \"execution_blocked_count\": 0,\n    \"candidate_research_packets_count\": 8,\n    \"execution_gate_skipped\": false,\n    \"source_lane_status_count\": 16\n  },\n  \"mode\": \"research_v2\",\n  \"artifacts\": {\n    \"discovery_events\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/raw/discovery_events.jsonl\",\n    \"raw_runner_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/raw/raw_runner_candidates.json\",\n    \"top_raw_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/raw/top_raw_candidates.json\",\n    \"first_seen_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/normalized/first_seen_candidates.json\",\n    \"broad_ai_discovery_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/raw/broad_ai_discovery_candidates.json\",\n    \"broad_ai_discovery_sources\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/raw/broad_ai_discovery_sources.jsonl\",\n    \"discovered_symbols\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/normalized/discovered_symbols.json\",\n    \"research_ranked_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/normalized/research_ranked_candidates.json\",\n    \"execution_eligible_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/normalized/execution_eligible_candidates.json\",\n    \"candidate_research_packets\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/normalized/candidate_research_packets.json\",\n    \"daily_best_pick_packet\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/normalized/daily_best_pick_packet.json\",\n    \"source_lane_status\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/normalized/source_lane_status.json\",\n    \"deep_mini_input\": null,\n    \"deep_mini_run\": null,\n    \"deep_mini_required_for_live_research\": true,\n    \"deep_mini_artifacts\": {\n      \"required\": true,\n      \"paths\": {\n        \"broad_discovery_input.md\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/broad_discovery_input.md\",\n        \"broad_discovery_summary.json\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/broad_discovery_summary.json\",\n        \"broad_discovery_raw_output.txt\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/broad_discovery_raw_output.txt\",\n        \"shortlist_input.md\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/shortlist_input.md\",\n        \"shortlist_synthesis_summary.json\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/shortlist_synthesis_summary.json\",\n        \"shortlist_raw_output.txt\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/shortlist_raw_output.txt\",\n        \"red_team_summary.json\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/red_team_summary.json\",\n        \"final_packet.json\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-29/deep_mini/final_packet.json\"\n      },\n      \"missing\": [],\n      \"broad_status\": \"failed\",\n      \"shortlist_status\": \"failed\",\n      \"red_team_status\": \"FAIL_NO_TRADE\",\n      \"final_status\": \"NO_TRADE_RESEARCH_INCOMPLETE\",\n      \"completed\": false\n    }\n  }\n}\n",
+      "timeout_seconds": 180
+    },
+    {
+      "finished_at_utc": "2026-05-29T11:45:38.414970+00:00",
+      "name": "premarket_pipeline",
+      "returncode": 0,
+      "started_at_utc": "2026-05-29T11:45:36.976504+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "{\"ok\": true, \"status\": \"NO_TRADE_RESEARCH_INCOMPLETE\", \"json\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/json/2026-05-29.json\", \"md\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/md/2026-05-29.md\"}\n",
+      "timeout_seconds": 120
+    },
+    {
+      "finished_at_utc": "2026-05-29T11:45:38.415011+00:00",
+      "name": "broker_readiness_skipped_for_brokerless_shadow",
+      "returncode": 0,
+      "started_at_utc": "2026-05-29T11:45:38.415011+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "{\"status\": \"skipped\", \"reason\": \"no_order_market_data_validation_must_not_query_broker_state\"}",
+      "timeout_seconds": 0
+    },
+    {
+      "finished_at_utc": "2026-05-29T11:45:38.415054+00:00",
+      "name": "opening_bell_readiness_skipped_for_brokerless_shadow",
+      "returncode": 0,
+      "started_at_utc": "2026-05-29T11:45:38.415054+00:00",
+      "status": "ok",
+      "stderr_tail": "",
+      "stdout_tail": "{\"status\": \"skipped\", \"reason\": \"readiness_only_path_inspects_broker_state\"}",
+      "timeout_seconds": 0
+    }
+  ],
+  "stream": {
+    "ok": false,
+    "reason": "stream_skipped",
+    "stream_capture_completed": false,
+    "stream_capture_started": false,
+    "stream_captured": false
+  },
+  "stream_required": false,
+  "trade_date": "2026-05-29"
+}

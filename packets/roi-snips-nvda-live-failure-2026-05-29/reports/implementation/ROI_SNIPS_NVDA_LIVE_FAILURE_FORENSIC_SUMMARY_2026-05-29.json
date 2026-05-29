@@ -1,0 +1,31 @@
+{
+  "current_open_position": true,
+  "date": "2026-05-29",
+  "deep_mini_completed": true,
+  "deep_mini_ran": true,
+  "deep_mini_required_for_live": true,
+  "deep_mini_skipped_by_wrapper": false,
+  "deterministic_fallback_became_executable": true,
+  "deterministic_fallback_used": true,
+  "go_artifact_existed_before_order": true,
+  "live_armed_before_order": true,
+  "nvda_exceptional_test_passed": false,
+  "nvda_was_mega_cap_fallback": true,
+  "order_filled": true,
+  "order_submitted": true,
+  "primary_prevention": "Make live order submission require a GREEN candidate-specific GO artifact for the exact ticker/strategy being submitted, and block mega-cap default backups when same_style_backup_pool_ok is false unless an explicit exceptional-mega-cap gate passes.",
+  "ready_for_live_true_before_order": false,
+  "root_cause": "Final live arming allowed pre-open standby GO while readiness_status remained RED, then the live monitor executed any A/B watchlist candidate. The premarket packet explicitly recorded same_style_backup_pool_failed and mega-cap default backups including NVDA, but that backup degradation was not a hard execution blocker and the live monitor did not restrict submission to the deep-mini primary INFQ or require a GREEN candidate-specific artifact for NVDA.",
+  "same_style_backup_pool_ok": false,
+  "selected_by": "execution_router",
+  "selected_ticker": "NVDA",
+  "source_breadth_status": "DEGRADED_LOW_RAW_CANDIDATE_COUNT",
+  "top_blockers_before_next_live": [
+    "Disable pre_open_standby_override as an arming path while readiness_status is RED.",
+    "Make artifact gate ticker-specific: selected ticker must be the deep-mini primary or must have its own explicit GO artifact.",
+    "Block mega-cap default backups from executable watchlists when same-style backup discovery fails.",
+    "Require same-style backup pool failure to mark final packet NO_TRADE or research_degraded_non_executable.",
+    "Add live-monitor submission guard that re-checks deep-mini/go-no-go artifact and candidate-specific readiness immediately before OrderRouter.submit_order."
+  ],
+  "verdict": "FAILURE_CONFIRMED"
+}

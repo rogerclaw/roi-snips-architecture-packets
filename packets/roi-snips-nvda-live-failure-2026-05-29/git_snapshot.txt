@@ -1,0 +1,71 @@
+{
+  "cmd": "pwd",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": "/Users/rogerclaw/.openclaw/workspace/roi-snips\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git status --short",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": " M ../USER.md\n?? ../.clawpatch-strops/\n?? ../[REDACTED_ENV_PATH]\n?? ../.firecrawl/\n?? ../.openclaw/\n?? ../[REDACTED_ENV_PATH]\n?? ../[REDACTED_ENV_PATH]nclaw-token-align-20260517T174248Z\n?? ../[REDACTED_ENV_PATH]\n?? ../.tmp/\n?? ../.tmp_onsite_issue_note.html\n?? ../.tmp_patch_gonzaga_neighbors.applescript\n?? ../.tmp_patch_gonzaga_note.applescript\n?? ../.tmp_str_action_plan_2026-05-08.html\n?? ../.tmp_str_action_plan_2026-05-08.json\n?? ../.tmp_str_action_plan_2026-05-08.txt\n?? ../.tmp_str_action_plan_2026-05-09.html\n?? ../.tmp_str_action_plan_2026-05-09.json\n?? ../.tmp_str_action_plan_2026-05-09.txt\n?? ../.tmp_str_action_plan_2026-05-10.html\n?? ../.tmp_str_action_plan_2026-05-10.json\n?? ../.tmp_str_action_plan_2026-05-10.txt\n?? ../.tmp_str_action_plan_2026-05-11.html\n?? ../.tmp_str_action_plan_2026-05-11.json\n?? ../.tmp_str_action_plan_2026-05-11.txt\n?? ../.tmp_str_action_plan_2026-05-12.html\n?? ../.tmp_str_action_plan_2026-05-12.json\n?? ../.tmp_str_action_plan_2026-05-12.txt\n?? ../.tmp_str_action_plan_2026-05-13.html\n?? ../.tmp_str_action_plan_2026-05-13.json\n?? ../.tmp_str_action_plan_2026-05-13.txt\n?? ../.tmp_str_action_plan_2026-05-14.html\n?? ../.tmp_str_action_plan_2026-05-14.json\n?? ../.tmp_str_action_plan_2026-05-14.txt\n?? ../.tmp_str_action_plan_2026-05-15.html\n?? ../.tmp_str_action_plan_2026-05-15.json\n?? ../.tmp_str_action_plan_2026-05-15.txt\n?? ../.tmp_str_action_plan_2026-05-18.html\n?? ../.tmp_str_action_plan_2026-05-18.json\n?? ../.tmp_str_action_plan_2026-05-18.txt\n?? ../.tmp_str_action_plan_2026-05-19.html\n?? ../.tmp_str_action_plan_2026-05-19.json\n?? ../.tmp_str_action_plan_2026-05-19.txt\n?? ../.tmp_str_action_plan_2026-05-20.html\n?? ../.tmp_str_action_plan_2026-05-20.json\n?? ../.tmp_str_action_plan_2026-05-20.txt\n?? ../.tmp_str_action_plan_2026-05-21.html\n?? ../.tmp_str_action_plan_2026-05-21.json\n?? ../.tmp_str_action_plan_2026-05-21.txt\n?? ../.tmp_str_action_plan_2026-05-22.html\n?? ../.tmp_str_action_plan_2026-05-22.json\n?? ../.tmp_str_action_plan_2026-05-22.txt\n?? ../.tmp_str_action_plan_2026-05-23.html\n?? ../.tmp_str_action_plan_2026-05-23.json\n?? ../.tmp_str_action_plan_2026-05-23.txt\n?? ../.tmp_str_action_plan_2026-05-24.html\n?? ../.tmp_str_action_plan_2026-05-24.json\n?? ../.tmp_str_action_plan_2026-05-24.txt\n?? ../.tmp_str_action_plan_2026-05-25.html\n?? ../.tmp_str_action_plan_2026-05-25.json\n?? ../.tmp_str_action_plan_2026-05-25.txt\n?? ../.tmp_str_action_plan_2026-05-26.html\n?? ../.tmp_str_action_plan_2026-05-26.json\n?? ../.tmp_str_action_plan_2026-05-26.txt\n?? ../.tmp_str_action_plan_2026-05-27.html\n?? ../.tmp_str_action_plan_2026-05-27.json\n?? ../.tmp_str_action_plan_2026-05-27.txt\n?? ../.tmp_str_action_plan_2026-05-28.html\n?? ../.tmp_str_action_plan_2026-05-28.json\n?? ../.tmp_str_action_plan_2026-05-28.txt\n?? ../.tmp_str_action_plan_2026-05-29.html\n?? ../.tmp_str_action_plan_2026-05-29.json\n?? ../.tmp_str_action_plan_2026-05-29.txt\n?? ../.venv312/\n?? ../AGENTS.md\n?? ../CHATGPT_PRO_PROPERTY_ARCHIVE_RESEARCH_PROMPT.md\n?? ../CURRENT_RESERVATIONS_REBUILD_PLAN.md\n?? ../CURRENT_STATE_AUDIT_2026-04-04.md\n?? ../DREAMS.md\n?? ../Dockerfile\n?? ../GOG_EMAIL_NOTES.md\n?? ../HEARTBEAT.md\n?? ../HOSPITABLE_API_REFERENCE_INDEX.md\n?? ../MEMORY.md\n?? ../MEMORY.md.pre-reliability-fix-20260505-151620.bak\n?? ../PROPERTY_NOTES_AUTOMATION_SOP.md\n?? ../PROPERTY_NOTES_FULL_ROLLOUT_PLAN.md\n?? ../Q_TRAVEL_ACCEPTANCE_CHECKLIST.md\n?? ../Q_TRAVEL_AUDIT_LOG.md\n?? ../Q_TRAVEL_CHANGELOG.md\n?? ../Q_TRAVEL_MASTER_PLAN.md\n?? ../Q_TRAVEL_PROGRESS_LEDGER.md\n?? ../Q_TRAVEL_ROLLOUT_PLAN.md\n?? ../README.md\n?? ../SAB1.md\n?? ../SAB_MODEL_POLICY.md\n?? ../SESSION_COMPACTION_SNAPSHOT.md\n?? ../SOUL.md\n?? ../STROPS_CONTROL/\n?? ../STR_ARCHITECTURE_BASELINE.md\n?? ../STR_BROWSER_AUTH.md\n?? ../STR_BROWSER_HARDENING.md\n?? ../STR_CALENDAR_IMPLEMENTATION_PLAN.md\n?? ../STR_CALENDAR_PROGRESS_LOG.md\n?? ../STR_CURRENT_WEBHOOK_FULL_HANDOFF_2026-03-12.md\n?? ../STR_EFFICIENCY_ENFORCEMENT_PLAN_2026-04-07.md\n?? ../STR_EXECUTION_SOP.md\n?? ../STR_MARCH_PROMPT_RENDERER_CONTRACT.md\n?? ../STR_PROPERTY_ARCHIVE_ROLLOUT_PLAN.md\n?? ../STR_PROPERTY_INFORMATION/\n?? ../STR_PROPERTY_ISSUE_ARCHIVE/\n?? ../STR_PROPERTY_ISSUE_DEEP_MINI_PROMPT.md\n?? ../STR_PROPERTY_NOTES_SOP.md\n?? ../STR_QUEUE_DRAIN_REINTRODUCTION_PLAN.md\n?? ../STR_RESERVATION_CALENDAR_OPERATING_SOP.md\n?? ../STR_STATUS.md\n?? ../STR_TRIAGE_AUDIT_WORKSHEET.md\n?? ../STR_WEBHOOK_LIVE_UPDATE_SOP.md\n?? ../TAILSCALE_BROWSER_ACCESS_NOTE.md\n?? ../TOOLS.md\n?? ../TRAVEL_READY_STR_OPERATING_MODEL_2026-03-12.md\n?? ../__pycache__/\n?? ../adapters/\n?? ../agent-main/\n?? ../april_day_by_day_rollout.py\n?? ../archives/\n?? ../bin/\n?? ../booking_calendar.sqlite\n?? ../bounded_rerender_sweep.py\n?? ../browser-lanes/\n?? ../browser-stack/\n?? ../bruteforce_fill_current_from_ci_co.py\n?? ../calendar_day_by_day_audit.py\n?? ../calendar_deprecated.py\n?? ../calendar_desired_state_rebuild.py\n?? ../calendar_duplicate_audit.py\n?? ../calendar_police.py\n?? ../calendar_preflight.py\n?? ../calendar_reconcile_apply_safe.py\n?? ../calendar_reconcile_plan.py\n?? ../calendar_reconciler.py\n?? ../calendar_runtime_smoke.py\n?? ../calendar_semantic_dedupe.py\n?? ../calendar_validity_sweep.py\n?? ../calendar_writer.py\n?? ../capabilities/\n?? ../cheap/\n?? ../chief-of-staff/\n?? ../cleanup_cancelled_calendar_artifacts.py\n?? ../command-center/\n?? ../config/\n?? ../consistency_rerender_sweep.py\n?? ../current-str-browser\n?? ../current_board_lib.py\n?? ../current_overlay_audit.py\n?? ../current_reservation_daily_invariant.py\n?? ../current_reservation_rollover.py\n?? ../current_reservations_rerender.py\n?? ../data/\n?? ../day_rollout.py\n?? ../db.py\n?? ../dedupe_calendar_by_source_key.py\n?? ../disaster_recovery/\n?? ../docs/\n?? ../emergency_current_cleanup_via_reconciler.py\n?? ../emergency_current_repair.py\n?? ../eval_str_triage.py\n?? ../export-str-ops-browser-state.sh\n?? ../extractor.py\n?? ../fly.toml\n?? ../google_oauth_client.json\n?? ../historical_calendar_cleanup.py\n?? ../hospitable.py\n?? ../hospitable_team_ics.py\n?? ../inspect_calendar_reservation.py\n?? ../launch-chatgpt-browser.sh\n?? ../launch-personal-agent-browser.sh\n?? ../launch-str-ops-browser.sh\n?? ../launch-travel-browser.sh\n?? ../local_worker.py\n?? ../logs/\n?? ../main.py\n?? ../mb_rosecrans_multistage_notes.py\n?? ../memory/.dreams/\n?? ../memory/2026-03-10.md\n?? ../memory/2026-03-11.md\n?? ../memory/2026-03-12.md\n?? ../memory/2026-03-13.md\n?? ../memory/2026-03-15.md\n?? ../memory/2026-03-17.md\n?? ../memory/2026-04-04.md\n?? ../memory/2026-04-05-validity-sweep.md\n?? ../memory/2026-04-05.md\n?? ../memory/2026-04-06.md\n?? ../memory/2026-04-07-operator-visibility.md\n?? ../memory/2026-04-07-qmd-cleanup.md\n?? ../memory/2026-04-07.md\n?? ../memory/2026-04-08-calendar-duplicates.md\n?? ../memory/2026-04-08-memory-handoff.md\n?? ../memory/2026-04-08-qmd-cleanup.md\n?? ../memory/2026-04-08.md\n?? ../memory/2026-04-09-heartbeat-status.md\n?? ../memory/2026-04-09-identity-chat.md\n?? ../memory/2026-04-09-john-persona.md\n?? ../memory/2026-04-09.md\n?? ../memory/2026-04-10-heartbeat-alert.md\n?? ../memory/2026-04-10-str-audit.md\n?? ../memory/2026-04-10.md\n?? ../memory/2026-04-11.md\n?? ../memory/2026-04-12.md\n?? ../memory/2026-04-13.md\n?? ../memory/2026-04-14-check-in.md\n?? ../memory/2026-04-14-gateway-cleanup.md\n?? ../memory/2026-04-14.md\n?? ../memory/2026-04-15-roi-snips-catalyst-hunter-foundation.md\n?? ../memory/2026-04-15.md\n?? ../memory/2026-04-16.md\n?? ../memory/2026-04-17.md\n?? ../memory/2026-04-18.md\n?? ../memory/2026-04-19.md\n?? ../memory/2026-04-20.md\n?? ../memory/2026-04-21.md\n?? ../memory/2026-04-22.md\n?? ../memory/2026-04-23.md\n?? ../memory/2026-04-24.md\n?? ../memory/2026-04-25.md\n?? ../memory/2026-04-26.md\n?? ../memory/2026-04-27.md\n?? ../memory/2026-04-28.md\n?? ../memory/2026-04-29.md\n?? ../memory/2026-04-30.md\n?? ../memory/2026-04-30.md.pre-heartbeat-repair-2115\n?? ../memory/2026-05-01.md\n?? ../memory/2026-05-01.md.bak_heartbeat_20260501_0945\n?? ../memory/2026-05-02.md\n?? ../memory/2026-05-03.md\n?? ../memory/2026-05-04.md\n?? ../memory/2026-05-05.md\n?? ../memory/2026-05-06.md\n?? ../memory/2026-05-07.md\n?? ../memory/2026-05-08.md\n?? ../memory/2026-05-09.md\n?? ../memory/2026-05-11.md\n?? ../memory/2026-05-13.md\n?? ../memory/2026-05-14.md\n?? ../memory/2026-05-15.md\n?? ../memory/2026-05-16.md\n?? ../memory/2026-05-17.md\n?? ../memory/2026-05-18.md\n?? ../memory/2026-05-19.md\n?? ../memory/2026-05-20.md\n?? ../memory/2026-05-21.md\n?? ../memory/2026-05-22.md\n?? ../memory/2026-05-26.md\n?? ../memory/2026-05-27.md\n?? ../memory/2026-05-28.md\n?? ../memory/2026-05-29.md\n?? ../memory/dreaming/\n?? ../memory/runbooks/\n?? ../memory_qmd_healthcheck.sh\n?? ../memory_qmd_hygiene_review.sh\n?? ../ops/\n?? ../ops_window_rerender_10.py\n?? ../owner_stay.py\n?? ../pilot_property_archive_batch.py\n?? ../plan_current_board_then_apply.py\n?? ../policy/\n?? ../ports/\n?? ../property_notes_generate_single.py\n?? ../property_notes_mapping.json\n?? ../property_notes_prepare_evidence.py\n?? ../property_notes_rollout_checkpoint.py\n?? ../property_notes_rollout_runner.py\n?? ../property_notes_rollout_state.json\n?? ../property_notes_sync.py\n?? ../property_notes_sync_state.json\n?? ../pytest.ini\n?? ../q_travel/\n?? ../q_travel_spec.txt\n?? ../queue_drain_once.py\n?? ../rebuild_current_month_from_ci_co.py\n?? ../rebuild_current_today.py\n?? ../rebuild_current_today_combined.py\n?? ../rebuild_current_today_from_property_calendar.py\n?? ../rebuild_current_today_permanent.py\n?? ../rebuild_current_today_uniform.py\n?? ../rebuild_march.py\n?? ../reconcile_identity_map.py\n?? ../refresh-chatgpt-browser-auth.sh\n?? ../refresh-str-ops-browser-auth.sh\n?? ../render_property_notes_for_apple.py\n?? ../renderer.py\n?? ../repair_single_reservation_calendar.py\n?? ../requirements.txt\n?? ../research/\n?? ../reservation_backfill_sweep.py\n?? ../reservation_identity.py\n?? ../reservation_ops_window_refresh.py\n?? ../reservation_validity.py\n?? ../restore-str-ops-browser-state.sh\n?? ../revert_simple_key_duplicates.py\n?? ./\n?? ../run_consistency_rerender.sh\n?? ../run_ops_rollout_batch.sh\n?? ../run_property_notes_sync.sh\n?? ../run_str_60day_rollout.sh\n?? ../run_str_morning_briefing.py\n?? ../run_str_triage_eval.sh\n?? ../runbooks/\n?? ../save-str-ops-browser-state.sh\n?? ../scripts/\n?? ../shared_env.py\n?? ../skills/\n?? ../str-calendar-architecture-note-2026-04-05.md\n?? ../str_60day_rollout.py\n?? ../str_api_apply_window.py\n?? ../str_api_day_reconciler.py\n?? ../str_daily_action_plan.py\n?? ../str_daily_cycle.sh\n?? ../str_db_day_reconciler.py\n?? ../str_health_audit.sh\n?? ../str_historical_crossref.py\n?? ../str_hospitable_day_pull.py\n?? ../str_hospitable_property_calendar_day.py\n?? ../str_hourly_backfill.sh\n?? ../str_queue_canary.py\n?? ../str_task_routing.py\n?? ../str_triage_eval_worker.py\n?? ../str_triage_remediation_prompt.txt\n?? ../strops_mapping_review_for_charles.md\n?? ../strops_personal_messages_candidate_review.md\n?? ../strops_property_contact_mapping.json\n?? ../templates/\n?? ../test-chatgpt-browser.sh\n?? ../test-str-ops-browser.sh\n?? ../tests/\n?? ../tmp/\n?? ../tools/\n?? ../verify_canonical_path.sh\n?? ../webhook_health_audit.py\n?? ../webhook_proof_report.py\n?? ../wipe_month_calendars.py\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git log -n 10 --oneline",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": "874f604 Bootstrap Strops identity and Charles profile\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git rev-parse HEAD",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": "874f60418ce1f30a110d7aadf7c87e89ecb3aa0b\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git diff --stat",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": " USER.md | 4 ++++\n 1 file changed, 4 insertions(+)\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git diff --name-only",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": "USER.md\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git -C /Users/rogerclaw/.openclaw/github/roi-snips rev-parse HEAD && git -C /Users/rogerclaw/.openclaw/github/roi-snips log -n 10 --oneline",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": "35a0016b28cd05d6dea07ad26562969ba2552ba0\n35a0016 Record bedtime live autonomy check\n635aa33 Record live readiness reaudit closeout\ned7145f Harden live readiness trade-date overrides\n03c5677 Add conditional live arming gate\n08ce5c2 Record final arming audit export SHA\nd03b824 Add final live arming go no-go audit\ne7500cc Record deep-mini mandate closeout\n01f3389 Embed deep-mini shortlist mandate\nc6c6bd6 Record deep-mini prompt hardening report SHA\n589546b Harden deep-mini shortlist prompt mandate\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git ls-remote https://github.com/rogerclaw/roi-snips.git refs/heads/main",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": "35a0016b28cd05d6dea07ad26562969ba2552ba0\trefs/heads/main\n",
+  "stderr": ""
+}
+
+{
+  "cmd": "git ls-remote https://github.com/rogerclaw/roi-snips-architecture-packets.git refs/heads/main",
+  "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+  "returncode": 0,
+  "stdout": "72cf045e99306d1381ab2a7af9ef1badae5e33fb\trefs/heads/main\n",
+  "stderr": ""
+}

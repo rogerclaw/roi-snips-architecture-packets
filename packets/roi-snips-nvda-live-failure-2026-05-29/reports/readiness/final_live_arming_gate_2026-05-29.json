@@ -1,0 +1,804 @@
+{
+  "action": "armed_live_standby",
+  "armed_live": true,
+  "blockers": [
+    "AMZN:no_immediately_available_entry_mode",
+    "INFQ:no_immediately_available_entry_mode",
+    "NVDA:no_immediately_available_entry_mode"
+  ],
+  "candidate_specific_readiness": {
+    "blockers": [
+      "INFQ:no_immediately_available_entry_mode",
+      "NVDA:no_immediately_available_entry_mode",
+      "AMZN:no_immediately_available_entry_mode"
+    ],
+    "candidates": [
+      {
+        "ask": 17.92,
+        "bars_count": 240,
+        "bars_ok": true,
+        "bid": 17.85,
+        "blockers": [
+          "no_immediately_available_entry_mode"
+        ],
+        "last": 17.86,
+        "mode_availability": {
+          "attempted_modes": [
+            {
+              "actuals": {
+                "break_above_reference_bps": -474.667,
+                "close_in_range_pct": 0.0,
+                "elapsed_seconds": 0.0,
+                "last": 17.86,
+                "premarket_high": 18.75,
+                "push_from_first_sample_pct": 0.0,
+                "samples": 0,
+                "spread_bps": 39.1937
+              },
+              "failed_predicates": [
+                "in_subminute_window",
+                "enough_quote_samples",
+                "enough_elapsed_seconds",
+                "close_in_range_ok",
+                "push_from_first_sample_ok",
+                "break_above_reference_ok",
+                "spread_ok"
+              ],
+              "mode": "SUBMINUTE_OPENING_DRIVE_LONG",
+              "passed_predicates": [],
+              "thresholds": {
+                "min_break_above_reference_bps": 5.0,
+                "min_close_in_range_pct": 0.75,
+                "min_elapsed_seconds": 10.0,
+                "min_push_from_first_sample_pct": 0.15,
+                "min_quote_samples": 3
+              }
+            },
+            {
+              "actuals": {
+                "close_in_range_pct": 0.5,
+                "first_dollar_volume": 0.0,
+                "first_volume": 0.0,
+                "last": 17.86,
+                "premarket_high": 18.75,
+                "regular_bars": 0,
+                "spread_bps": 39.1937
+              },
+              "failed_predicates": [
+                "in_opening_drive_window",
+                "enough_regular_bars",
+                "first_minute_volume_ok",
+                "first_minute_dollar_volume_ok",
+                "close_in_range_ok",
+                "spread_ok",
+                "above_reference_ok"
+              ],
+              "mode": "OPENING_DRIVE_LONG",
+              "passed_predicates": [],
+              "thresholds": {
+                "max_spread_bps": 35.0,
+                "min_first_minute_dollar_volume": 750000.0,
+                "min_first_minute_volume": 150000.0,
+                "min_regular_bars": 1
+              }
+            },
+            {
+              "actuals": {
+                "phase": "ENTRY_WINDOW",
+                "regular_bars": 0
+              },
+              "failed_predicates": [
+                "enough_regular_bars_for_fallback"
+              ],
+              "mode": "SECOND_LEG_CONTINUATION_LONG",
+              "passed_predicates": [],
+              "thresholds": {
+                "min_regular_bars": 6
+              }
+            }
+          ]
+        },
+        "quote_age_ms": 1232,
+        "quote_ok": true,
+        "spread_bps": 39.1937,
+        "symbol": "INFQ"
+      },
+      {
+        "ask": 215.07,
+        "bars_count": 240,
+        "bars_ok": true,
+        "bid": 214.99,
+        "blockers": [
+          "no_immediately_available_entry_mode"
+        ],
+        "last": 215.07,
+        "mode_availability": {
+          "attempted_modes": [
+            {
+              "actuals": {
+                "break_above_reference_bps": -20.417,
+                "close_in_range_pct": 0.0,
+                "elapsed_seconds": 0.0,
+                "last": 215.07,
+                "premarket_high": 215.51,
+                "push_from_first_sample_pct": 0.0,
+                "samples": 0,
+                "spread_bps": 3.7197
+              },
+              "failed_predicates": [
+                "in_subminute_window",
+                "enough_quote_samples",
+                "enough_elapsed_seconds",
+                "close_in_range_ok",
+                "push_from_first_sample_ok",
+                "break_above_reference_ok"
+              ],
+              "mode": "SUBMINUTE_OPENING_DRIVE_LONG",
+              "passed_predicates": [
+                "spread_ok"
+              ],
+              "thresholds": {
+                "min_break_above_reference_bps": 5.0,
+                "min_close_in_range_pct": 0.75,
+                "min_elapsed_seconds": 10.0,
+                "min_push_from_first_sample_pct": 0.15,
+                "min_quote_samples": 3
+              }
+            },
+            {
+              "actuals": {
+                "close_in_range_pct": 0.5,
+                "first_dollar_volume": 0.0,
+                "first_volume": 0.0,
+                "last": 215.07,
+                "premarket_high": 215.51,
+                "regular_bars": 0,
+                "spread_bps": 3.7197
+              },
+              "failed_predicates": [
+                "in_opening_drive_window",
+                "enough_regular_bars",
+                "first_minute_volume_ok",
+                "first_minute_dollar_volume_ok",
+                "close_in_range_ok",
+                "above_reference_ok"
+              ],
+              "mode": "OPENING_DRIVE_LONG",
+              "passed_predicates": [
+                "spread_ok"
+              ],
+              "thresholds": {
+                "max_spread_bps": 35.0,
+                "min_first_minute_dollar_volume": 750000.0,
+                "min_first_minute_volume": 150000.0,
+                "min_regular_bars": 1
+              }
+            },
+            {
+              "actuals": {
+                "phase": "ENTRY_WINDOW",
+                "regular_bars": 0
+              },
+              "failed_predicates": [
+                "enough_regular_bars_for_fallback"
+              ],
+              "mode": "SECOND_LEG_CONTINUATION_LONG",
+              "passed_predicates": [],
+              "thresholds": {
+                "min_regular_bars": 6
+              }
+            }
+          ]
+        },
+        "quote_age_ms": 766,
+        "quote_ok": true,
+        "spread_bps": 3.7197,
+        "symbol": "NVDA"
+      },
+      {
+        "ask": 271.49,
+        "bars_count": 240,
+        "bars_ok": true,
+        "bid": 271.25,
+        "blockers": [
+          "no_immediately_available_entry_mode"
+        ],
+        "last": 271.25,
+        "mode_availability": {
+          "attempted_modes": [
+            {
+              "actuals": {
+                "break_above_reference_bps": -75.554,
+                "close_in_range_pct": 0.0,
+                "elapsed_seconds": 0.0,
+                "last": 271.25,
+                "premarket_high": 273.315,
+                "push_from_first_sample_pct": 0.0,
+                "samples": 0,
+                "spread_bps": 8.8479
+              },
+              "failed_predicates": [
+                "in_subminute_window",
+                "enough_quote_samples",
+                "enough_elapsed_seconds",
+                "close_in_range_ok",
+                "push_from_first_sample_ok",
+                "break_above_reference_ok"
+              ],
+              "mode": "SUBMINUTE_OPENING_DRIVE_LONG",
+              "passed_predicates": [
+                "spread_ok"
+              ],
+              "thresholds": {
+                "min_break_above_reference_bps": 5.0,
+                "min_close_in_range_pct": 0.75,
+                "min_elapsed_seconds": 10.0,
+                "min_push_from_first_sample_pct": 0.15,
+                "min_quote_samples": 3
+              }
+            },
+            {
+              "actuals": {
+                "close_in_range_pct": 0.5,
+                "first_dollar_volume": 0.0,
+                "first_volume": 0.0,
+                "last": 271.25,
+                "premarket_high": 273.315,
+                "regular_bars": 0,
+                "spread_bps": 8.8479
+              },
+              "failed_predicates": [
+                "in_opening_drive_window",
+                "enough_regular_bars",
+                "first_minute_volume_ok",
+                "first_minute_dollar_volume_ok",
+                "close_in_range_ok",
+                "above_reference_ok"
+              ],
+              "mode": "OPENING_DRIVE_LONG",
+              "passed_predicates": [
+                "spread_ok"
+              ],
+              "thresholds": {
+                "max_spread_bps": 35.0,
+                "min_first_minute_dollar_volume": 750000.0,
+                "min_first_minute_volume": 150000.0,
+                "min_regular_bars": 1
+              }
+            },
+            {
+              "actuals": {
+                "phase": "ENTRY_WINDOW",
+                "regular_bars": 0
+              },
+              "failed_predicates": [
+                "enough_regular_bars_for_fallback"
+              ],
+              "mode": "SECOND_LEG_CONTINUATION_LONG",
+              "passed_predicates": [],
+              "thresholds": {
+                "min_regular_bars": 6
+              }
+            }
+          ]
+        },
+        "quote_age_ms": 7484,
+        "quote_ok": true,
+        "spread_bps": 8.8479,
+        "symbol": "AMZN"
+      }
+    ],
+    "ok": false
+  },
+  "execute": true,
+  "generated_at_utc": "2026-05-29T13:25:37.554680+00:00",
+  "guards_after": {
+    "disable_entries": false,
+    "force_flat": false,
+    "in_entry_window": false,
+    "kill_switch": false,
+    "live_armed": true
+  },
+  "ignored_arm_guard_blockers": [
+    "disable_entries_active",
+    "live_armed_missing"
+  ],
+  "live_order_env_enabled": true,
+  "orders_previewed_now": false,
+  "orders_submitted_now": false,
+  "paper_order_env_enabled": false,
+  "pre_open_standby_override": true,
+  "primary_candidate": "INFQ",
+  "readiness": {
+    "candidate_specific_readiness": {
+      "blockers": [
+        "INFQ:no_immediately_available_entry_mode",
+        "NVDA:no_immediately_available_entry_mode",
+        "AMZN:no_immediately_available_entry_mode"
+      ],
+      "candidates": [
+        {
+          "ask": 17.92,
+          "bars_count": 240,
+          "bars_ok": true,
+          "bid": 17.85,
+          "blockers": [
+            "no_immediately_available_entry_mode"
+          ],
+          "last": 17.86,
+          "mode_availability": {
+            "attempted_modes": [
+              {
+                "actuals": {
+                  "break_above_reference_bps": -474.667,
+                  "close_in_range_pct": 0.0,
+                  "elapsed_seconds": 0.0,
+                  "last": 17.86,
+                  "premarket_high": 18.75,
+                  "push_from_first_sample_pct": 0.0,
+                  "samples": 0,
+                  "spread_bps": 39.1937
+                },
+                "failed_predicates": [
+                  "in_subminute_window",
+                  "enough_quote_samples",
+                  "enough_elapsed_seconds",
+                  "close_in_range_ok",
+                  "push_from_first_sample_ok",
+                  "break_above_reference_ok",
+                  "spread_ok"
+                ],
+                "mode": "SUBMINUTE_OPENING_DRIVE_LONG",
+                "passed_predicates": [],
+                "thresholds": {
+                  "min_break_above_reference_bps": 5.0,
+                  "min_close_in_range_pct": 0.75,
+                  "min_elapsed_seconds": 10.0,
+                  "min_push_from_first_sample_pct": 0.15,
+                  "min_quote_samples": 3
+                }
+              },
+              {
+                "actuals": {
+                  "close_in_range_pct": 0.5,
+                  "first_dollar_volume": 0.0,
+                  "first_volume": 0.0,
+                  "last": 17.86,
+                  "premarket_high": 18.75,
+                  "regular_bars": 0,
+                  "spread_bps": 39.1937
+                },
+                "failed_predicates": [
+                  "in_opening_drive_window",
+                  "enough_regular_bars",
+                  "first_minute_volume_ok",
+                  "first_minute_dollar_volume_ok",
+                  "close_in_range_ok",
+                  "spread_ok",
+                  "above_reference_ok"
+                ],
+                "mode": "OPENING_DRIVE_LONG",
+                "passed_predicates": [],
+                "thresholds": {
+                  "max_spread_bps": 35.0,
+                  "min_first_minute_dollar_volume": 750000.0,
+                  "min_first_minute_volume": 150000.0,
+                  "min_regular_bars": 1
+                }
+              },
+              {
+                "actuals": {
+                  "phase": "ENTRY_WINDOW",
+                  "regular_bars": 0
+                },
+                "failed_predicates": [
+                  "enough_regular_bars_for_fallback"
+                ],
+                "mode": "SECOND_LEG_CONTINUATION_LONG",
+                "passed_predicates": [],
+                "thresholds": {
+                  "min_regular_bars": 6
+                }
+              }
+            ]
+          },
+          "quote_age_ms": 1232,
+          "quote_ok": true,
+          "spread_bps": 39.1937,
+          "symbol": "INFQ"
+        },
+        {
+          "ask": 215.07,
+          "bars_count": 240,
+          "bars_ok": true,
+          "bid": 214.99,
+          "blockers": [
+            "no_immediately_available_entry_mode"
+          ],
+          "last": 215.07,
+          "mode_availability": {
+            "attempted_modes": [
+              {
+                "actuals": {
+                  "break_above_reference_bps": -20.417,
+                  "close_in_range_pct": 0.0,
+                  "elapsed_seconds": 0.0,
+                  "last": 215.07,
+                  "premarket_high": 215.51,
+                  "push_from_first_sample_pct": 0.0,
+                  "samples": 0,
+                  "spread_bps": 3.7197
+                },
+                "failed_predicates": [
+                  "in_subminute_window",
+                  "enough_quote_samples",
+                  "enough_elapsed_seconds",
+                  "close_in_range_ok",
+                  "push_from_first_sample_ok",
+                  "break_above_reference_ok"
+                ],
+                "mode": "SUBMINUTE_OPENING_DRIVE_LONG",
+                "passed_predicates": [
+                  "spread_ok"
+                ],
+                "thresholds": {
+                  "min_break_above_reference_bps": 5.0,
+                  "min_close_in_range_pct": 0.75,
+                  "min_elapsed_seconds": 10.0,
+                  "min_push_from_first_sample_pct": 0.15,
+                  "min_quote_samples": 3
+                }
+              },
+              {
+                "actuals": {
+                  "close_in_range_pct": 0.5,
+                  "first_dollar_volume": 0.0,
+                  "first_volume": 0.0,
+                  "last": 215.07,
+                  "premarket_high": 215.51,
+                  "regular_bars": 0,
+                  "spread_bps": 3.7197
+                },
+                "failed_predicates": [
+                  "in_opening_drive_window",
+                  "enough_regular_bars",
+                  "first_minute_volume_ok",
+                  "first_minute_dollar_volume_ok",
+                  "close_in_range_ok",
+                  "above_reference_ok"
+                ],
+                "mode": "OPENING_DRIVE_LONG",
+                "passed_predicates": [
+                  "spread_ok"
+                ],
+                "thresholds": {
+                  "max_spread_bps": 35.0,
+                  "min_first_minute_dollar_volume": 750000.0,
+                  "min_first_minute_volume": 150000.0,
+                  "min_regular_bars": 1
+                }
+              },
+              {
+                "actuals": {
+                  "phase": "ENTRY_WINDOW",
+                  "regular_bars": 0
+                },
+                "failed_predicates": [
+                  "enough_regular_bars_for_fallback"
+                ],
+                "mode": "SECOND_LEG_CONTINUATION_LONG",
+                "passed_predicates": [],
+                "thresholds": {
+                  "min_regular_bars": 6
+                }
+              }
+            ]
+          },
+          "quote_age_ms": 766,
+          "quote_ok": true,
+          "spread_bps": 3.7197,
+          "symbol": "NVDA"
+        },
+        {
+          "ask": 271.49,
+          "bars_count": 240,
+          "bars_ok": true,
+          "bid": 271.25,
+          "blockers": [
+            "no_immediately_available_entry_mode"
+          ],
+          "last": 271.25,
+          "mode_availability": {
+            "attempted_modes": [
+              {
+                "actuals": {
+                  "break_above_reference_bps": -75.554,
+                  "close_in_range_pct": 0.0,
+                  "elapsed_seconds": 0.0,
+                  "last": 271.25,
+                  "premarket_high": 273.315,
+                  "push_from_first_sample_pct": 0.0,
+                  "samples": 0,
+                  "spread_bps": 8.8479
+                },
+                "failed_predicates": [
+                  "in_subminute_window",
+                  "enough_quote_samples",
+                  "enough_elapsed_seconds",
+                  "close_in_range_ok",
+                  "push_from_first_sample_ok",
+                  "break_above_reference_ok"
+                ],
+                "mode": "SUBMINUTE_OPENING_DRIVE_LONG",
+                "passed_predicates": [
+                  "spread_ok"
+                ],
+                "thresholds": {
+                  "min_break_above_reference_bps": 5.0,
+                  "min_close_in_range_pct": 0.75,
+                  "min_elapsed_seconds": 10.0,
+                  "min_push_from_first_sample_pct": 0.15,
+                  "min_quote_samples": 3
+                }
+              },
+              {
+                "actuals": {
+                  "close_in_range_pct": 0.5,
+                  "first_dollar_volume": 0.0,
+                  "first_volume": 0.0,
+                  "last": 271.25,
+                  "premarket_high": 273.315,
+                  "regular_bars": 0,
+                  "spread_bps": 8.8479
+                },
+                "failed_predicates": [
+                  "in_opening_drive_window",
+                  "enough_regular_bars",
+                  "first_minute_volume_ok",
+                  "first_minute_dollar_volume_ok",
+                  "close_in_range_ok",
+                  "above_reference_ok"
+                ],
+                "mode": "OPENING_DRIVE_LONG",
+                "passed_predicates": [
+                  "spread_ok"
+                ],
+                "thresholds": {
+                  "max_spread_bps": 35.0,
+                  "min_first_minute_dollar_volume": 750000.0,
+                  "min_first_minute_volume": 150000.0,
+                  "min_regular_bars": 1
+                }
+              },
+              {
+                "actuals": {
+                  "phase": "ENTRY_WINDOW",
+                  "regular_bars": 0
+                },
+                "failed_predicates": [
+                  "enough_regular_bars_for_fallback"
+                ],
+                "mode": "SECOND_LEG_CONTINUATION_LONG",
+                "passed_predicates": [],
+                "thresholds": {
+                  "min_regular_bars": 6
+                }
+              }
+            ]
+          },
+          "quote_age_ms": 7484,
+          "quote_ok": true,
+          "spread_bps": 8.8479,
+          "symbol": "AMZN"
+        }
+      ],
+      "ok": false
+    },
+    "ignored_arm_guard_blockers": [
+      "disable_entries_active",
+      "live_armed_missing"
+    ],
+    "message": "hard block / no live order",
+    "opening_bell_blockers": [
+      "AMZN:no_immediately_available_entry_mode",
+      "INFQ:no_immediately_available_entry_mode",
+      "NVDA:no_immediately_available_entry_mode"
+    ],
+    "opening_bell_enabled": true,
+    "primary_candidate": "INFQ",
+    "readiness": {
+      "broker_health": {
+        "account": {
+          "account": {
+            "account_blocked": false,
+            "account_number": "[REDACTED]",
+            "buying_power": "946.09",
+            "cash": "946.09",
+            "daytrade_count": 1,
+            "equity": "946.09",
+            "multiplier": "1",
+            "non_marginable_buying_power": "946.09",
+            "pattern_day_trader": false,
+            "raw": {
+              "account_blocked": false,
+              "account_number": "[REDACTED]",
+              "accrued_fees": "0",
+              "buying_power": "946.09",
+              "cash": "946.09",
+              "created_at": "2026-04-22 14:08:15.698071+00:00",
+              "crypto_status": "ACTIVE",
+              "currency": "USD",
+              "daytrade_count": 1,
+              "daytrading_buying_power": "0",
+              "equity": "946.09",
+              "id": "id_c597761c5d8a",
+              "initial_margin": "0",
+              "last_equity": "946.09",
+              "last_maintenance_margin": "0",
+              "long_market_value": "0",
+              "maintenance_margin": "0",
+              "multiplier": "1",
+              "non_marginable_buying_power": "946.09",
+              "options_approved_level": null,
+              "options_buying_power": null,
+              "options_trading_level": null,
+              "pattern_day_trader": false,
+              "pending_transfer_in": null,
+              "pending_transfer_out": null,
+              "portfolio_value": "946.09",
+              "regt_buying_power": "946.09",
+              "short_market_value": "0",
+              "shorting_enabled": false,
+              "sma": "946.09",
+              "status": "ACTIVE",
+              "trade_suspended_by_user": false,
+              "trading_blocked": false,
+              "transfers_blocked": false
+            },
+            "trading_blocked": false
+          },
+          "ok": true
+        },
+        "ok": true,
+        "open_orders": {
+          "ok": true,
+          "orders": []
+        }
+      },
+      "broker_provider": "alpaca",
+      "broker_runtime": {
+        "base_url": "https://api.alpaca.markets",
+        "configured": true,
+        "environment": "live",
+        "paper": false,
+        "provider": "alpaca"
+      },
+      "execution_blockers": [
+        "live_armed_missing",
+        "disable_entries_active"
+      ],
+      "full_execution_ready": false,
+      "market_data_health": {
+        "bars": {
+          "bars": [
+            {
+              "close": 755.55,
+              "high": 755.65,
+              "low": 755.55,
+              "open": 755.63,
+              "raw": {
+                "close": 755.55,
+                "high": 755.65,
+                "low": 755.55,
+                "open": 755.63,
+                "symbol": "SPY",
+                "timestamp": "2026-05-29 13:23:00+00:00",
+                "trade_count": 89.0,
+                "volume": 4819.0,
+                "vwap": 755.611192
+              },
+              "timestamp": "2026-05-29 13:23:00+00:00",
+              "trade_count": 89.0,
+              "volume": 4819.0,
+              "vwap": 755.611192
+            },
+            {
+              "close": 755.66,
+              "high": 755.67,
+              "low": 755.57,
+              "open": 755.59,
+              "raw": {
+                "close": 755.66,
+                "high": 755.67,
+                "low": 755.57,
+                "open": 755.59,
+                "symbol": "SPY",
+                "timestamp": "2026-05-29 13:24:00+00:00",
+                "trade_count": 102.0,
+                "volume": 5771.0,
+                "vwap": 755.606911
+              },
+              "timestamp": "2026-05-29 13:24:00+00:00",
+              "trade_count": 102.0,
+              "volume": 5771.0,
+              "vwap": 755.606911
+            }
+          ],
+          "feed": "sip",
+          "ok": true
+        },
+        "feed": "sip",
+        "ok": true,
+        "quote": {
+          "feed": "sip",
+          "ok": true,
+          "quote": {
+            "ask": 755.76,
+            "ask_size": 480.0,
+            "bid": 755.75,
+            "bid_size": 120.0,
+            "last": 755.74,
+            "prev_close": 718.66,
+            "raw_quote": {
+              "ask_exchange": "P",
+              "ask_price": 755.76,
+              "ask_size": 480.0,
+              "bid_exchange": "P",
+              "bid_price": 755.75,
+              "bid_size": 120.0,
+              "conditions": [
+                "R"
+              ],
+              "symbol": "SPY",
+              "tape": "B",
+              "timestamp": "2026-05-29 13:25:33.803056+00:00"
+            },
+            "raw_trade": {
+              "conditions": [
+                " ",
+                "T"
+              ],
+              "exchange": "P",
+              "id": "id_bd5cadb7ebd4",
+              "price": 755.74,
+              "size": 480.0,
+              "symbol": "SPY",
+              "tape": "B",
+              "timestamp": "2026-05-29 13:25:28.909557+00:00"
+            },
+            "spread_bps": 0.1323,
+            "timestamp": "2026-05-29 13:25:33.803056+00:00"
+          }
+        },
+        "requested_feed": "sip"
+      },
+      "market_data_provider": "alpaca",
+      "market_data_runtime": {
+        "allow_iex_fallback": true,
+        "configured": true,
+        "data_base_url": "https://data.alpaca.markets",
+        "feed": "sip",
+        "provider": "alpaca_market_data"
+      },
+      "ok": false,
+      "position_state": {
+        "ok": true,
+        "positions": [],
+        "positive_position_count": 0
+      },
+      "probe_symbol": "SPY",
+      "runtime_guards": {
+        "disable_entries": true,
+        "force_flat": false,
+        "in_entry_window": false,
+        "kill_switch": false,
+        "live_armed": false
+      },
+      "session_phase": "PRE_ENTRY"
+    },
+    "status": "RED"
+  },
+  "readiness_status": "RED",
+  "trade_date": "2026-05-29",
+  "verdict": "GO"
+}

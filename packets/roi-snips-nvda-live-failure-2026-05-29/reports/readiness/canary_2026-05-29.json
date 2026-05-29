@@ -1,0 +1,27 @@
+{
+  "broker_access_attempted": false,
+  "can_execute_validation_script": true,
+  "can_write_reports": true,
+  "can_write_runs": true,
+  "failure_reasons": [],
+  "generated_at_utc": "2026-05-29T11:45:38.428750+00:00",
+  "human_summary": "Scheduler canary passed with brokerless no-order validation proof.",
+  "import_smoke_ok": true,
+  "no_order_env_forced_false": true,
+  "orders_allowed": false,
+  "orders_submitted": false,
+  "proof_path": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/readiness/canary_2026-05-29.json",
+  "python_ok": true,
+  "python_version": "Python 3.14.3",
+  "repo_root_ok": true,
+  "shell_capable": true,
+  "shell_invoked": true,
+  "status": "PASS",
+  "validation_executed": true,
+  "validation_result": {
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": "tatus\\\": \\\"failed\\\",\\n      \\\"shortlist_status\\\": \\\"failed\\\",\\n      \\\"red_team_status\\\": \\\"FAIL_NO_TRADE\\\",\\n      \\\"final_status\\\": \\\"NO_TRADE_RESEARCH_INCOMPLETE\\\",\\n      \\\"completed\\\": false\\n    }\\n  }\\n}\\n\",\n      \"timeout_seconds\": 180\n    },\n    {\n      \"finished_at_utc\": \"2026-05-29T11:45:38.414970+00:00\",\n      \"name\": \"premarket_pipeline\",\n      \"returncode\": 0,\n      \"started_at_utc\": \"2026-05-29T11:45:36.976504+00:00\",\n      \"status\": \"ok\",\n      \"stderr_tail\": \"\",\n      \"stdout_tail\": \"{\\\"ok\\\": true, \\\"status\\\": \\\"NO_TRADE_RESEARCH_INCOMPLETE\\\", \\\"json\\\": \\\"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/json/2026-05-29.json\\\", \\\"md\\\": \\\"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/md/2026-05-29.md\\\"}\\n\",\n      \"timeout_seconds\": 120\n    },\n    {\n      \"finished_at_utc\": \"2026-05-29T11:45:38.415011+00:00\",\n      \"name\": \"broker_readiness_skipped_for_brokerless_shadow\",\n      \"returncode\": 0,\n      \"started_at_utc\": \"2026-05-29T11:45:38.415011+00:00\",\n      \"status\": \"ok\",\n      \"stderr_tail\": \"\",\n      \"stdout_tail\": \"{\\\"status\\\": \\\"skipped\\\", \\\"reason\\\": \\\"no_order_market_data_validation_must_not_query_broker_state\\\"}\",\n      \"timeout_seconds\": 0\n    },\n    {\n      \"finished_at_utc\": \"2026-05-29T11:45:38.415054+00:00\",\n      \"name\": \"opening_bell_readiness_skipped_for_brokerless_shadow\",\n      \"returncode\": 0,\n      \"started_at_utc\": \"2026-05-29T11:45:38.415054+00:00\",\n      \"status\": \"ok\",\n      \"stderr_tail\": \"\",\n      \"stdout_tail\": \"{\\\"status\\\": \\\"skipped\\\", \\\"reason\\\": \\\"readiness_only_path_inspects_broker_state\\\"}\",\n      \"timeout_seconds\": 0\n    }\n  ],\n  \"stream\": {\n    \"ok\": false,\n    \"reason\": \"stream_skipped\",\n    \"stream_capture_completed\": false,\n    \"stream_capture_started\": false,\n    \"stream_captured\": false\n  },\n  \"stream_required\": false,\n  \"summary_path\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/next_open_shadow_validation_2026-05-29.json\",\n  \"trade_date\": \"2026-05-29\"\n}\n"
+  },
+  "venv_ok": true
+}

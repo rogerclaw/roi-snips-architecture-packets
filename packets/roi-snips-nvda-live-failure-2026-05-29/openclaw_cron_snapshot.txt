@@ -1,0 +1,416 @@
+     "kind": "cron",
+        "expr": "0 18 * * *",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Daily Amazon email routing review for Janice.\n\nGoal:\n- Review the Amazon-related Gmail mailbox currently used for Amazon order emails: `cc@coho.la` via the bounded `janice-gmail` wrapper.\n- This is a read-only review workflow. Do not write to Zoho or any accounting ledger.\n\nFast-path rules to avoid timeout/incomplete turns:\n1. First read `/Users/rogerclaw/.openclaw/agents/janice/state/amazon_email_routing_review_state.json`.\n2. Search Gmail metadata only first: `JANICE_GMAIL_ACCOUNT=cc@coho.la ./bin/janice-gmail messages-search --max 25 \"from:(amazon.com OR amazon.com) newer_than:2d (order OR shipped OR delivered OR invoice OR receipt OR Amazon)\"` from `/Users/rogerclaw/.openclaw/agents/janice`.\n3. Drop message ids already in `reported_message_ids` before fetching bodies.\n4. Process at most 6 new candidate messages per run. Prefer subject/date/from snippets and fetch full bodies only for the few messages needed to decide routing.\n5. Do not fetch repeated shipment/delivery updates for message ids already checkpointed unless the subject clearly indicates a new completed purchase.\n6. If runtime feels tight, stop fetching, write a partial report/state, and final-answer with what was completed. Never end after a tool call without final text.\n\nExecution requirements:\n1. Use `JANICE_GMAIL_ACCOUNT=cc@coho.la ./bin/janice-gmail ...` from the Janice workspace.\n2. Inspect Amazon order / shipment / invoice / receipt emails that are new since the last successful review.\n3. Use `/Users/rogerclaw/.openclaw/agents/janice/state/amazon_email_routing_review_state.json` as the durable checkpoint/state file. If it does not exist, create it. Use it to avoid re-reporting the same Gmail message ids.\n4. Prefer Amazon email evidence first for attribution.\n5. If attribution is still ambiguous and Charles's location would materially help, use only the approved helper:\n   `/Users/rogerclaw/.openclaw/workspace/bin/openclaw-charles-location current`\n   or the matching `history` form. If you use location, mention freshness/accuracy in the note and do not expose raw coordinates.\n6. For each newly found Amazon purchase email, route it to exactly one of:\n   - customer\n   - property\n   - hold\n7. Save a durable report to `/Users/rogerclaw/.openclaw/agents/janice/exports/reports/amazon_email_routing_review_<UTCSTAMP>.md` every run, even if there are no new reportable items.\n8. Update `/Users/rogerclaw/.openclaw/agents/janice/state/amazon_email_routing_review_state.json` with at least:\n   - `last_success_utc`\n   - `reported_message_ids`\n   - `last_report_path`\n9. If there are no new Amazon order/invoice/shipment/receipt emails to report, final-answer exactly `NO_REPLY` after the report/state write.\n10. If there are new items, send Charles one concise Telegram message with the `message` tool, then final-answer exactly `SENT`. For each item include Gmail date, subject/order clue, route target, evidence, and confidence.\n11. Do not rely on cron fallback delivery for user-visible output. The cron job delivery mode is intentionally `none` so raw agent/tool failures are not pushed to Charles.\n\nBehavior constraints:\n- Stay read-only except for local state/report files.\n- Do not spawn subagents.\n- Do not ask Charles for approval cards or shell approval.\n- Keep any Telegram note concise and operational.\n- Always produce final assistant text: `NO_REPLY`, `SENT`, or a concise internal failure note. Do not expose shell/tool failure text to Charles unless it needs direct human action.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 900
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "telegram",
+        "to": "8262254077",
+        "accountId": "janice"
+      },
+      "state": {}
+    },
+    {
+      "id": "a2cb362e-7e42-4d51-8a70-fd08a11c634d",
+      "name": "Daily mileage ledger update",
+      "enabled": true,
+      "createdAtMs": 1778539507003,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 23 * * *",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run /Users/rogerclaw/.openclaw/workspace/bin/strops-mileage-update for today's date. Verify it exits successfully. If it fails, write the error and next recovery step to /Users/rogerclaw/.openclaw/workspace/ops/mileage_tracker/last_error.md and final-answer with FAILURE plus the next recovery step. On success, final-answer exactly INTERNAL_MILEAGE_UPDATE_OK. Delivery mode is none, so this success marker is for cron/runtime health only and should not be user-visible.",
+        "model": "cheap",
+        "thinking": "low",
+        "timeoutSeconds": 300,
+        "lightContext": true,
+        "toolsAllow": [
+          "exec",
+          "read",
+          "write"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {}
+    },
+    {
+      "id": "a3d52f01-8183-474c-bc2a-fe2c049eef9e",
+      "name": "Memory Dreaming Promotion",
+      "description": "[managed-by=memory-core.short-term-promotion] Promote weighted short-term recalls into MEMORY.md (limit=10, minScore=0.800, minRecallCount=3, minUniqueQueries=3, recencyHalfLifeDays=14, maxAgeDays=30).",
+      "enabled": true,
+      "createdAtMs": 1778877649057,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "__openclaw_memory_core_short_term_promotion_dream__",
+        "lightContext": true
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {}
+    }
+  ]
+}
+### /Users/rogerclaw/.openclaw/cron/jobs-state.json
+{
+  "version": 1,
+  "jobs": {
+    "fcd0a62d-5011-43e3-9116-aa5e965f2f0d": {
+      "updatedAtMs": 1773363238167,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":1800000,\"anchorMs\":1773205588450}}",
+      "state": {
+        "lastRunAtMs": 1773362183943,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 10863,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
+      }
+    },
+    "2bc95dfb-ccc4-456b-9757-8433d53cf642": {
+      "updatedAtMs": 1775882018914,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":1800000,\"anchorMs\":1773335282161}}",
+      "state": {
+        "lastRunAtMs": 1775881034180,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 21541,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    "99d59f8f-beca-447f-b136-3a4d2388ef92": {
+      "updatedAtMs": 1780063343142,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":true,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 7 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1780063200014,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 143128,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "nextRunAtMs": 1780149600000,
+        "lastFailureNotificationDeliveryStatus": "not-requested"
+      }
+    },
+    "a5d94e1c-9ceb-4063-966b-1032a2bdf03e": {
+      "updatedAtMs": 1778206959180,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 7 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1776693600010,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 297666,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 3,
+        "lastDelivered": false,
+        "lastDeliveryError": "⚠️ Agent couldn't generate a response. Note: some tool actions may have already been executed — please verify before retrying.",
+        "lastError": "⚠️ Agent couldn't generate a response. Note: some tool actions may have already been executed — please verify before retrying."
+      }
+    },
+    "775985ab-843b-4f2a-9742-2a28e2a02a97": {
+      "updatedAtMs": 1777516760200,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":21600000,\"anchorMs\":1773421116792}}",
+      "state": {
+        "lastRunAtMs": 1777503522086,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 136650,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      }
+    },
+    "d9416df5-7e84-40d6-a43b-f98d41747a4e": {
+      "updatedAtMs": 1777516760023,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":7200000,\"anchorMs\":1773421285319}}",
+      "state": {
+        "lastRunAtMs": 1777511424964,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 36398,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 3,
+        "consecutiveSkipped": 0,
+        "lastError": "⚠️ Agent couldn't generate a response. Note: some tool actions may have already been executed — please verify before retrying."
+      }
+    },
+    "d9a88ac9-bc40-4ddc-a653-063fee1ddc2c": {
+      "updatedAtMs": 1777516760288,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"30 6 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1777469425405,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 26059,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 2,
+        "lastError": "⚠️ Agent couldn't generate a response. Note: some tool actions may have already been executed — please verify before retrying.",
+        "consecutiveSkipped": 0
+      }
+    },
+    "7e62728d-0872-4234-9b0a-7a7e74fdb72c": {
+      "updatedAtMs": 1778206958262,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":21600000,\"anchorMs\":1773595148587}}",
+      "state": {
+        "lastRunAtMs": 1775848749887,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 82105,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    "fe66ceeb-fc16-4acb-ae3e-c65561fe4f6d": {
+      "updatedAtMs": 1773730650060,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":5400000,\"anchorMs\":1773694731275}}",
+      "state": {
+        "lastRunAtMs": 1773727131321,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 9750,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 5,
+        "lastErrorReason": "rate_limit",
+        "lastError": "⚠️ API rate limit reached. Please try again later."
+      }
+    },
+    "3ec183b3-508d-435a-988b-b0bb11bff19e": {
+      "updatedAtMs": 1773730665706,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":14400000,\"anchorMs\":1773694735959}}",
+      "state": {
+        "lastRunAtMs": 1773723535976,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 9359,
+        "lastErrorReason": "rate_limit",
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 2,
+        "lastError": "⚠️ API rate limit reached. Please try again later."
+      }
+    },
+    "d9fde275-7761-45b6-af2c-e917d6e3b24c": {
+      "updatedAtMs": 1777306055692,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 9 * * 1\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1777305600009,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 455683,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    "8a43e5e2-8b03-43cb-ab18-7c341aa22629": {
+      "updatedAtMs": 1777654897762,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 10 1 * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1777654800104,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 97658,
+        "lastError": "Delivering to Telegram requires target <chatId>",
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1,
+        "consecutiveSkipped": 0
+      }
+    },
+    "5d79017a-c767-47cb-a0ab-7106c334c141": {
+      "updatedAtMs": 1778206957335,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"15 9,16 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1777824900013,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 41986,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 2,
+        "consecutiveSkipped": 0,
+        "lastError": "Error: No callable tools remain after resolving explicit tool allowlist (runtime toolsAllow: read, edit, write, memory_search, memory_get, wiki_search, wiki_get, wiki_apply, wiki_lint); no registered tools matched. Fix the allowlist or enable the plugin that registers the requested tool."
+      }
+    },
+    "02315ad2-8608-47b9-bc34-b80dea28dce4": {
+      "updatedAtMs": 1778206954565,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 7 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1776435662705,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 285960,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    "fdd4cbdb-4fc4-4a7b-9912-e2e14eefd5d9": {
+      "updatedAtMs": 1778206961037,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":300000,\"anchorMs\":1777069131713}}",
+      "state": {
+        "lastRunAtMs": 1777117223790,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 33760,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    "d34b0a31-f798-48c2-9555-cb1d58e8dbc1": {
+      "updatedAtMs": 1778206960103,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":900000,\"anchorMs\":1777077809600}}",
+      "state": {
+        "lastRunAtMs": 1777102377807,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 51668,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
+      }
+    },
+    "b2d7a546-67e7-4e41-9759-f75b124b05e1": {
+      "updatedAtMs": 1777813250090,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 6 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1777813200016,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 50074,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      }
+    },
+    "c4724b8c-17d5-4617-a797-412ac3c90478": {
+      "updatedAtMs": 1777103077644,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":900000,\"anchorMs\":1777098499999}}",
+      "state": {
+        "lastRunAtMs": 1777103000060,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 77584,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    "0dee2ddf-6440-4e5d-bf56-a4d0555f17dc": {
+      "updatedAtMs": 1778206955489,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"*/2 8-17 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "lastRunAtMs": 1777310281964,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 24868,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
+      }
+    },
+    "2c923b59-220a-4bfa-96a6-6976a2d4d40c": {
+      "updatedAtMs": 1778206956418,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"cron\",\"expr\":\"*/5 0-7,18-23 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {}
+    },
+    "9e066fe7-023e-4ce9-9070-aee888cd3a66": {
+      "updatedAtMs": 1777382212335,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"at\",\"at\":\"2026-04-28T13:15:00.000Z\"}}",
+      "state": {
+        "lastRunAtMs": 1777382100027,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 112308,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    "9ed297eb-ce6c-46fb-a9f6-228ab9e50c4a": {
+      "updatedAtMs": 1778856324429,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":false,\"schedule\":{\"kind\":\"every\",\"everyMs\":600000,\"anchorMs\":1777655849025}}",
+      "state": {
+        "lastRunAtMs": 1778855885883,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 57050,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      }
+    },
+    "5c4e82a6-5a6b-4723-bb33-6c0f2f7c4ff4": {
+      "updatedAtMs": 1780016486284,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":true,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 18 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "nextRunAtMs": 1780102800000,
+        "lastRunAtMs": 1780016400015,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 86269,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested"
+      }
+    },
+    "a2cb362e-7e42-4d51-8a70-fd08a11c634d": {
+      "updatedAtMs": 1780036209262,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":true,\"schedule\":{\"kind\":\"cron\",\"expr\":\"30 23 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "nextRunAtMs": 1780122600000,
+        "lastRunAtMs": 1780036200013,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 9249,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested"
+      }
+    },
+    "a3d52f01-8183-474c-bc2a-fe2c049eef9e": {
+      "updatedAtMs": 1780048806273,
+      "scheduleIdentity": "{\"version\":1,\"enabled\":true,\"schedule\":{\"kind\":\"cron\",\"expr\":\"0 3 * * *\",\"tz\":\"America/Los_Angeles\"}}",
+      "state": {
+        "nextRunAtMs": 1780135200000,
+        "lastRunAtMs": 1780048800014,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 6259,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0,
+        "lastFailureNotificationDeliveryStatus": "not-requested"
+      }
+    }
+  }
+}

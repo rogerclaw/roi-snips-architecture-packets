@@ -1,0 +1,46 @@
+{
+  "docs/prompts/rebuild/16_DEEP_MINI_BROAD_PRO_STYLE_STOCK_HUNT.md": {
+    "exists": true,
+    "full_stock_picking_mandate_indicators": false,
+    "includes_trade_plan_fields": false,
+    "rejects_mega_cap_filler": false,
+    "rejects_stale_infq": false,
+    "requires_decisive_best_or_no_trade": false,
+    "size": 2254
+  },
+  "docs/prompts/rebuild/17_DEEP_MINI_SHORTLIST_BEST_IDEA.md": {
+    "exists": true,
+    "full_stock_picking_mandate_indicators": true,
+    "includes_trade_plan_fields": true,
+    "rejects_mega_cap_filler": true,
+    "rejects_stale_infq": true,
+    "requires_decisive_best_or_no_trade": true,
+    "size": 5719
+  },
+  "docs/prompts/rebuild/18_DEEP_MINI_ADVERSARIAL_RED_TEAM.md": {
+    "exists": true,
+    "full_stock_picking_mandate_indicators": false,
+    "includes_trade_plan_fields": false,
+    "rejects_mega_cap_filler": false,
+    "rejects_stale_infq": false,
+    "requires_decisive_best_or_no_trade": false,
+    "size": 680
+  },
+  "docs/prompts/rebuild/19_DEEP_MINI_FINAL_PACKET_SCHEMA.md": {
+    "exists": true,
+    "full_stock_picking_mandate_indicators": false,
+    "includes_trade_plan_fields": false,
+    "rejects_mega_cap_filler": false,
+    "rejects_stale_infq": false,
+    "requires_decisive_best_or_no_trade": true,
+    "size": 928
+  },
+  "generated_shortlist_input.md": {
+    "exists": true,
+    "includes_buy_range_targets_break_monitor_sell": true,
+    "includes_full_mandate_indicators": true,
+    "rejects_mega_cap_filler": true,
+    "rejects_stale_infq": true,
+    "requires_decisive_best_or_no_trade": true
+  }
+}

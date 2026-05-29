@@ -1,0 +1,55 @@
+{
+  "canary": {
+    "broker_access_attempted": false,
+    "orders_allowed": false,
+    "orders_submitted": false,
+    "path": "reports/readiness/canary_2026-05-29_post_final_patch.json",
+    "shell_capable": true,
+    "status": "PASS",
+    "validation_executed": true
+  },
+  "clawpatch": {
+    "features": 3,
+    "findings": 6,
+    "fixed": 6,
+    "open_findings": 0,
+    "review_run": "20260529T051610-ebfb09",
+    "state_dir": ".clawpatch"
+  },
+  "conditional_arming_gate_command": "ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true scripts/run_final_live_arming_gate.sh",
+  "conditional_arming_gate_installed": true,
+  "cron_0620_pt_runs_conditional_arming_gate": true,
+  "currently_live_armed": false,
+  "date": "2026-05-29",
+  "disable_entries_active": true,
+  "final_arming_dry_run": {
+    "action": "dry_run",
+    "blockers": [
+      "no_primary_or_backup_candidates"
+    ],
+    "orders_previewed_now": false,
+    "orders_submitted_now": false,
+    "path": "reports/live_monitor/live_trade_ready/final_arming_dry_run_post_patch_20260528T2220.json",
+    "verdict": "NO_GO"
+  },
+  "generated_at_pt": "2026-05-28T22:36:00-07:00",
+  "kill_switch_active": false,
+  "orders_previewed_now": false,
+  "orders_submitted_now": false,
+  "remaining_conditions_that_can_stop_live_trading": [
+    "deep_mini_missing_failed_timed_out_or_unparsed",
+    "same_day_morning_packet_missing_or_degraded",
+    "no_executable_candidate",
+    "candidate_specific_market_data_not_green",
+    "broker_account_order_position_cash_or_pdt_blocker",
+    "kill_switch_active",
+    "disable_entries_active_after_final_gate",
+    "opening_or_exit_manager_gate_not_green"
+  ],
+  "tests": {
+    "focused_post_patch": "41 passed",
+    "full_repo": "258 passed, 1 warning",
+    "order_router_after_sentinel_patch": "10 passed"
+  },
+  "verdict": "CONDITIONALLY_READY_FOR_MORNING_GATE_NOT_CURRENTLY_LIVE_ARMED"
+}

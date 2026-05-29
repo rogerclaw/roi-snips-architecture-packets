@@ -1,0 +1,103 @@
+[
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "mentions_deterministic_fallback": false,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.934543-07:00",
+    "parsed": false,
+    "path": "runs/2026-05-29/deep_mini/broad_discovery_input.md",
+    "request_or_response_ids_found": [],
+    "sha256": "9ab180d7c010d4348823dfa37fe6e92b333707c5b9e4e5dd8c81d52abe01d4fb",
+    "size": 11326
+  },
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "mentions_deterministic_fallback": false,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.934743-07:00",
+    "parsed": true,
+    "path": "runs/2026-05-29/deep_mini/broad_discovery_summary.json",
+    "request_or_response_ids_found": [],
+    "sha256": "043746458284e811bd7666475e6cd624b60c7208599f99caf24da60fad39ea02",
+    "size": 11811,
+    "status": "completed"
+  },
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "mentions_deterministic_fallback": true,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.934871-07:00",
+    "parsed": false,
+    "path": "runs/2026-05-29/deep_mini/broad_discovery_raw_output.txt",
+    "request_or_response_ids_found": [],
+    "sha256": "c64633dc835c339dab8bc76e7e688a339c8e7cb14be9b0a8d179df6813b2845a",
+    "size": 16622
+  },
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "mentions_deterministic_fallback": true,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.934972-07:00",
+    "parsed": false,
+    "path": "runs/2026-05-29/deep_mini/shortlist_input.md",
+    "request_or_response_ids_found": [],
+    "sha256": "d2e404c6d05dcc9f22f77577408e22b3d122761c265c849c70ec67ea2d52a8ab",
+    "size": 19271
+  },
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "mentions_deterministic_fallback": true,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.935095-07:00",
+    "parsed": true,
+    "path": "runs/2026-05-29/deep_mini/shortlist_synthesis_summary.json",
+    "request_or_response_ids_found": [],
+    "sha256": "0ce2b067c128efd81a3b2a4feac8bfdd6e47e271920492c1d0a89a371751c551",
+    "size": 3416,
+    "status": "completed"
+  },
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "mentions_deterministic_fallback": true,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.935194-07:00",
+    "parsed": false,
+    "path": "runs/2026-05-29/deep_mini/shortlist_raw_output.txt",
+    "request_or_response_ids_found": [],
+    "sha256": "c64633dc835c339dab8bc76e7e688a339c8e7cb14be9b0a8d179df6813b2845a",
+    "size": 16622
+  },
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "mentions_deterministic_fallback": false,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.935287-07:00",
+    "parsed": true,
+    "path": "runs/2026-05-29/deep_mini/red_team_summary.json",
+    "red_team_status": "PASS_ONLY_WITH_TAPE",
+    "request_or_response_ids_found": [],
+    "sha256": "75f25ed549706d9452ddf94ccf3c17c6fd97469824d65b86f885f889997eb1d8",
+    "size": 352
+  },
+  {
+    "completed_before_0920_et": false,
+    "exists": true,
+    "generated_at": "2026-05-29T13:17:39.921063+00:00",
+    "mentions_deterministic_fallback": true,
+    "mentions_non_executable": false,
+    "mtime_pt": "2026-05-29T06:24:22.936890-07:00",
+    "parsed": true,
+    "path": "runs/2026-05-29/deep_mini/final_packet.json",
+    "request_or_response_ids_found": [],
+    "sha256": "b31992949775a54f4cee919c022ccb74116457e6ffd3bd1f11685cef4c89531d",
+    "size": 250778,
+    "status": "completed"
+  }
+]

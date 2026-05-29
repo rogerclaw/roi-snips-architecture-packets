@@ -1,0 +1,72 @@
+{
+  "account_snapshot": {
+    "buying_power": "946.09",
+    "cash": "946.09",
+    "daytrade_count": 1,
+    "equity": "946.09"
+  },
+  "artifact_paths": {
+    "canary": "reports/readiness/canary_2026-05-28.json",
+    "live_readiness": "reports/live_monitor/live_trade_ready/go_no_go_live_readiness_20260529T041322Z.json",
+    "morning_packet_expected": "reports/morning/json/2026-05-29.json",
+    "opening_preflight": "reports/live_monitor/live_trade_ready/go_no_go_opening_preflight_after_patch_20260529T041409Z.json"
+  },
+  "blockers": [
+    "same_day_morning_packet_missing:reports/morning/json/2026-05-29.json",
+    "opening_bell_preflight_red:no_primary_or_backup_candidates",
+    "market_data_not_checked_for_actual_trade_date_candidates",
+    "research_war_room_not_proven_for_trade_date"
+  ],
+  "broad_ai_discovery_status": "MISSING_TOMORROW_PACKET",
+  "broker_live_ready": true,
+  "broker_runtime": {
+    "base_url": "https://api.alpaca.markets",
+    "configured": true,
+    "environment": "live",
+    "paper": false,
+    "provider": "alpaca"
+  },
+  "clean_rebuild_files_present": true,
+  "date": "2026-05-29",
+  "disable_entries_active": false,
+  "execution_engines_ready": true,
+  "exit_manager_ready": true,
+  "generated_at_utc": "2026-05-29T04:16:10.590643+00:00",
+  "kill_switch_active": false,
+  "live_armed": true,
+  "live_autonomous_trading_enabled_for_tomorrow": false,
+  "live_order_env_enabled": false,
+  "market_data_live_ready": false,
+  "max_live_notional_usd": 900,
+  "max_open_positions": 1,
+  "mega_cap_filler_blocked": true,
+  "order_state_clean": true,
+  "orders_previewed_now": false,
+  "orders_submitted_now": false,
+  "raw_candidate_count": 0,
+  "research_war_room_passed": false,
+  "same_style_backup_pool_ok": false,
+  "scheduled_commands": [
+    "10 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=720 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1",
+    "25 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=true scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1",
+    "28 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && scripts/run_live_opening_trade_ready.sh >> reports/live_monitor/live_trade_ready/opening_cron.log 2>&1",
+    "45 12 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && scripts/run_live_force_flat.sh >> reports/live_monitor/live_trade_ready/force_flat_cron.log 2>&1"
+  ],
+  "scheduled_live_order_env_enabled": true,
+  "scheduler_shell_capable": true,
+  "source_breadth_status": "MISSING_TOMORROW_PACKET",
+  "stale_prior_winner_blocked": true,
+  "telegram_sent": true,
+  "test_summary": {
+    "focused": "69 passed",
+    "full": "236 passed, 1 warning"
+  },
+  "tests_passed": true,
+  "tomorrow_schedule_installed": true,
+  "verdict": "NO_GO",
+  "warnings": [
+    "latest_available_packet_2026-05-28_raw_candidate_count_below_live_threshold:9",
+    "latest_available_packet_2026-05-28_same_style_backup_pool_failed",
+    "latest_available_packet_still_selects_INFQ_and_must_not_be_reused_without_fresh_catalyst_or_live_tape"
+  ]
+}
