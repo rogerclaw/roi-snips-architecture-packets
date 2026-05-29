@@ -1,0 +1,5 @@
+{
+  "sanitized_text": "SLICE 02: PASS\n\nImplemented:\n- src/workflows/live_monitor.py now loads the Trade Authorization Ticket first and returns only the authorized ticker.\n- src/workflows/live_monitor.py rejects proposals that do not match the ticket before save/submit.\n- src/workflows/opening_stream_supervisor.py loads the ticket first and revalidates before emitting a proposal.\n- src/execution/order_router.py independently checks the ticket and final arming readiness before broker preview/place when live/paper ticket enforcement is required.\n\nResult:\n- A ticket for INFQ blocks NVDA even if NVDA tape predicates would pass.\n- A no-trade/missing/invalid ticket submits nothing.\n- A direct OrderRouter call cannot bypass live monitor.\n\nTests:\n- tests/<REDACTED_LONG_ID>.py\n- tests/<REDACTED_LONG_ID>.py\n- tests/<REDACTED_LONG_ID>.py\n- tests/<REDACTED_LONG_ID>.py\n",
+  "source_path": "reports/implementation/slices/slice_02_execution_ticket_enforcement_2026-05-29.txt",
+  "source_sha256": "279e51d0b88856d21a9cc026576dfe605ab9d9fbab90f70995bbc225559f0d54"
+}

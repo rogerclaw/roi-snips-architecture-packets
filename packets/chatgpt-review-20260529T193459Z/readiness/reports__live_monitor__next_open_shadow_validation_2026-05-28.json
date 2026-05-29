@@ -1,0 +1,96 @@
+{
+  "sanitized_json": {
+    "all_steps_ok_or_shadow_allowed": false,
+    "broker_account_inspected": false,
+    "broker_orders_inspected": false,
+    "broker_positions_inspected": false,
+    "failure_class": null,
+    "generated_at_utc": "2026-05-28T13:55:51.147985+00:00",
+    "mode": "<REDACTED_LONG_ID>",
+    "orders_allowed": false,
+    "orders_submitted": false,
+    "shadow_mode": "OPENING_STREAM_SHADOW",
+    "status": "OK",
+    "steps": [
+      {
+        "finished_at_utc": "2026-05-28T13:35:49.504169+00:00",
+        "name": "research_skip_deep_mini",
+        "returncode": 0,
+        "started_at_utc": "2026-05-28T13:35:00.658805+00:00",
+        "status": "ok",
+        "stderr_tail": "",
+        "stdout_tail": "{\n  \"generated_at_utc\": \"2026-05-28T13:35:49.136685+00:00\",\n  \"tickers\": [\n    \"NVDA\",\n    \"AAPL\",\n    \"SMCI\",\n    \"TSLA\",\n    \"AMZN\",\n    \"AMD\",\n    \"META\",\n    \"INFQ\"\n  ],\n  \"summary\": {\n    \"raw_events_count\": 74,\n    \"raw_events_by_source\": {\n      \"exchange_scout\": 16,\n      \"external_movers_scout\": 8,\n      \"reddit\": 2,\n      \"ir_scout\": 14,\n      \"government_scout\": 10,\n      \"theme_basket_scout\": 1,\n      \"sec_edgar\": 23\n    },\n    \"candidate_clusters_count\": 41,\n    \"shortlisted_count\": 9,\n    \"eliminated_count\": 0,\n    \"elimination_reasons\": {},\n    \"discovery_events_count\": 40,\n    \"evidence_events_count\": 34,\n    \"discovered_symbols_count\": 8,\n    \"raw_candidate_count\": 9,\n    \"raw_candidate_sources\": [\n      \"exchange_scout\",\n      \"external_movers_scout\",\n      \"government_scout\",\n      \"ir_scout\",\n      \"reddit\",\n      \"sec_edgar\",\n      \"theme_basket_scout\"\n    ],\n    \"raw_candidate_buckets\": [\n      \"fresh_official_catalyst_names\",\n      \"<REDACTED_LONG_ID>\",\n      \"mna_strategic_review_names\",\n      \"retail_social_velocity_names\",\n      \"structured_news_catalyst_names\"\n    ],\n    \"target_raw_candidates_min\": 50,\n    \"target_raw_candidates_max\": 150,\n    \"preserved_top_raw_candidates\": 9,\n    \"<REDACTED_LONG_ID>\": 9,\n    \"research_ranked_count\": 9,\n    \"execution_eligible_count\": 9,\n    \"execution_blocked_count\": 0,\n    \"<REDACTED_LONG_ID>\": 8,\n    \"execution_gate_skipped\": false,\n    \"source_lane_status_count\": 16\n  },\n  \"mode\": \"research_v2\",\n  \"artifacts\": {\n    \"discovery_events\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/raw/discovery_events.jsonl\",\n    \"raw_runner_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/raw/raw_runner_candidates.json\",\n    \"top_raw_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/raw/top_raw_candidates.json\",\n    \"first_seen_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/normalized/first_seen_candidates.json\",\n    \"broad_ai_discovery_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/raw/broad_ai_discovery_candidates.json\",\n    \"broad_ai_discovery_sources\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/raw/broad_ai_discovery_sources.jsonl\",\n    \"discovered_symbols\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/normalized/discovered_symbols.json\",\n    \"research_ranked_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/normalized/research_ranked_candidates.json\",\n    \"execution_eligible_candidates\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/normalized/execution_eligible_candidates.json\",\n    \"candidate_research_packets\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/normalized/candidate_research_packets.json\",\n    \"daily_best_pick_packet\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/normalized/daily_best_pick_packet.json\",\n    \"source_lane_status\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/runs/2026-05-28/normalized/source_lane_status.json\",\n    \"deep_mini_input\": null,\n    \"deep_mini_run\": null\n  }\n}\n",
+        "timeout_seconds": 180
+      },
+      {
+        "finished_at_utc": "2026-05-28T13:35:50.730763+00:00",
+        "name": "premarket_pipeline",
+        "returncode": 0,
+        "started_at_utc": "2026-05-28T13:35:49.504409+00:00",
+        "status": "ok",
+        "stderr_tail": "",
+        "stdout_tail": "{\"ok\": true, \"status\": \"ok\", \"json\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/json/2026-05-28.json\", \"md\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/md/2026-05-28.md\"}\n",
+        "timeout_seconds": 120
+      },
+      {
+        "finished_at_utc": "2026-05-28T13:35:50.730796+00:00",
+        "name": "<REDACTED_LONG_ID>",
+        "returncode": 0,
+        "started_at_utc": "2026-05-28T13:35:50.730796+00:00",
+        "status": "ok",
+        "stderr_tail": "",
+        "stdout_tail": "{\"status\": \"skipped\", \"reason\": \"<REDACTED_LONG_ID>\"}",
+        "timeout_seconds": 0
+      },
+      {
+        "finished_at_utc": "2026-05-28T13:35:50.730844+00:00",
+        "name": "<REDACTED_LONG_ID>",
+        "returncode": 0,
+        "started_at_utc": "2026-05-28T13:35:50.730844+00:00",
+        "status": "ok",
+        "stderr_tail": "",
+        "stdout_tail": "{\"status\": \"skipped\", \"reason\": \"<REDACTED_LONG_ID>\"}",
+        "timeout_seconds": 0
+      },
+      {
+        "finished_at_utc": "2026-05-28T13:55:50.756040+00:00",
+        "name": "opening_stream_shadow",
+        "returncode": null,
+        "started_at_utc": "2026-05-28T13:35:50.730862+00:00",
+        "status": "timeout",
+        "stderr_tail": "",
+        "stdout_tail": "",
+        "timeout_seconds": 1200
+      }
+    ],
+    "stream": {
+      "blocked_proposal_count": 0,
+      "decision_count": 60861,
+      "decisions_count": 60861,
+      "fired_symbols": [],
+      "max_seconds": 900.0,
+      "ok": true,
+      "orders_submitted": false,
+      "output_dir": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/<REDACTED_LONG_ID>",
+      "proposal_count": 0,
+      "proposal_line_count": 0,
+      "raw_quote_count": 33100,
+      "raw_trade_count": 27761,
+      "reason": null,
+      "stopped_by_timer": true,
+      "stream_capture_completed": true,
+      "stream_capture_started": true,
+      "stream_captured": true,
+      "stream_status": {
+        "last_error": null,
+        "market_data_connected": true,
+        "trade_updates_connected": false
+      },
+      "summary_path": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/runs/<REDACTED_LONG_ID>/final_summary.json"
+    },
+    "stream_required": true,
+    "trade_date": "2026-05-28"
+  },
+  "source_path": "reports/live_monitor/next_open_shadow_validation_2026-05-28.json",
+  "source_sha256": "38bd7eb4af6a00051b383c81f665aa42798760fb91d640ed97f1309b8eabfa13"
+}

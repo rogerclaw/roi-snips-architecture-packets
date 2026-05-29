@@ -1,0 +1,13 @@
+{
+  "sanitized_json": {
+    "<REDACTED_LONG_ID>": false,
+    "cwd": "/Users/rogerclaw/.openclaw/workspace/roi-snips",
+    "generated_at_utc": "2026-05-28T13:35:00Z",
+    "orders_allowed": false,
+    "python": "/Users/rogerclaw/.openclaw/workspace/roi-snips/.venv/bin/python",
+    "shell": "/bin/sh",
+    "validation_script_exists": true
+  },
+  "source_path": "reports/live_monitor/shell_capable_shadow/canary_20260528T133500Z.json",
+  "source_sha256": "e58d0a960a37a64babfe27b72f1a8534e1ab9b409c9c56d09bdbbe40b0bf7bdc"
+}

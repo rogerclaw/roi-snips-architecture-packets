@@ -1,0 +1,192 @@
+{
+  "sanitized_json": {
+    "artifact_gate": {
+      "blockers": [],
+      "missing_artifacts": [],
+      "no_order_attestation": true,
+      "ready": true,
+      "warnings": []
+    },
+    "artifacts": {
+      "broad_discovery": {
+        "candidate_count": 3,
+        "minimum_lanes": [
+          "official",
+          "newswire",
+          "premarket_gap",
+          "social_velocity",
+          "theme_sympathy"
+        ],
+        "status": "deterministic_shadow"
+      },
+      "candidate_tournament": {
+        "backup_pool": [],
+        "best_pick": "ABCD",
+        "mega_cap_fallback_blocked": true,
+        "no_trade": false,
+        "no_trade_reasons": [],
+        "ranked": [
+          {
+            "candidate": {
+              "asymmetry_score": 9,
+              "catalyst": "fresh FDA clearance plus social velocity",
+              "evidence_score": 8,
+              "freshness_score": 9,
+              "market_cap_bucket": "micro",
+              "momentum_score": 8,
+              "official_source_count": 1,
+              "prior_winner": false,
+              "risks": [],
+              "social_velocity_score": 8,
+              "ticker": "ABCD"
+            },
+            "rejection_reasons": [],
+            "score": 75.7
+          },
+          {
+            "candidate": {
+              "asymmetry_score": 8,
+              "catalyst": "stale prior winner recycled old move",
+              "evidence_score": 8,
+              "freshness_score": 3,
+              "market_cap_bucket": "micro",
+              "momentum_score": 8,
+              "official_source_count": 0,
+              "prior_winner": true,
+              "risks": [],
+              "social_velocity_score": 0.0,
+              "ticker": "INFQ"
+            },
+            "rejection_reasons": [
+              "stale_prior_winner",
+              "stale_or_unproven_freshness",
+              "below_hyper_trade_threshold"
+            ],
+            "score": 27.0
+          },
+          {
+            "candidate": {
+              "asymmetry_score": 3,
+              "catalyst": "generic mega-cap analyst note",
+              "evidence_score": 6,
+              "freshness_score": 6,
+              "market_cap_bucket": "mega",
+              "momentum_score": 5,
+              "official_source_count": 0,
+              "prior_winner": false,
+              "risks": [],
+              "social_velocity_score": 0.0,
+              "ticker": "NVDA"
+            },
+            "rejection_reasons": [
+              "boring_mega_cap_fallback",
+              "insufficient_primary_evidence",
+              "below_hyper_trade_threshold"
+            ],
+            "score": 25.8
+          }
+        ],
+        "stale_winner_blocked": true
+      },
+      "catalyst_strategy_router": {
+        "allowed_modes": [
+          "EVENT_TIMED_MOMENTUM_LONG",
+          "OPENING_BURST_HYPER_LONG"
+        ],
+        "broker_action": "NONE",
+        "deterministic_guards": [
+          "long_only",
+          "one_position_max",
+          "fresh_catalyst_required",
+          "live_tape_confirmation_required",
+          "brokerless_shadow_output_only"
+        ],
+        "engines": {
+          "event_timed": true,
+          "opening_bell": true,
+          "orb": false,
+          "second_leg": false,
+          "vwap": false
+        },
+        "primary_mode": "EVENT_TIMED_MOMENTUM_LONG",
+        "requires_live_tape_confirmation": true,
+        "ticker": "ABCD"
+      },
+      "continuation_engine": {
+        "broker_action": "NONE",
+        "orb_break": false,
+        "output": "shadow_signal_only",
+        "second_leg": false,
+        "vwap_reclaim": false
+      },
+      "event_timed_engine": {
+        "broker_action": "NONE",
+        "enabled_by_router": true,
+        "engine": "event_timed",
+        "mode": "EVENT_TIMED_MOMENTUM_LONG",
+        "output": "shadow_signal_only"
+      },
+      "execution_plan": {
+        "<REDACTED_LONG_ID>": true,
+        "broker_action": "NONE",
+        "entry_surface": "shadow_only_no_order_preview",
+        "mode": "EVENT_TIMED_MOMENTUM_LONG",
+        "risk_shape": "<REDACTED_LONG_ID>"
+      },
+      "morning_control_plane": {
+        "blocks_boring_mega_cap_fallback": true,
+        "blocks_stale_winner_recycling": true,
+        "brokerless_shadow_only": true,
+        "opens_research_before_execution": true,
+        "status": "shadow_ready"
+      },
+      "no_order_attestation": {
+        "broker_account_inspected": false,
+        "brokerless": true,
+        "orders_canceled": false,
+        "orders_previewed": false,
+        "orders_submitted": false
+      },
+      "opening_bell_engine": {
+        "broker_action": "NONE",
+        "enabled_by_router": true,
+        "engine": "opening_bell",
+        "mode": "OPENING_BURST_HYPER_LONG",
+        "output": "shadow_signal_only"
+      },
+      "post_miss_learning": {
+        "<REDACTED_LONG_ID>": true,
+        "broker_action": "NONE",
+        "captures_missed_runner_reason": true,
+        "records_stale_winner_failures": true
+      },
+      "research_war_room": {
+        "best_pick": "ABCD",
+        "discovery_lanes": [
+          "official_filings_and_ir",
+          "newswire_and_local_news",
+          "premarket_relative_volume",
+          "theme_sympathy_and_policy",
+          "social_velocity"
+        ],
+        "mode": "<REDACTED_LONG_ID>",
+        "no_trade": false,
+        "ranked_count": 3,
+        "required_packet_fields": [
+          "catalyst",
+          "primary_evidence",
+          "freshness",
+          "momentum",
+          "asymmetry",
+          "risk",
+          "thesis_break",
+          "profit_taking_triggers"
+        ]
+      }
+    },
+    "generated_at_utc": "2026-05-29T00:17:11.545436+00:00",
+    "ready": true
+  },
+  "source_path": "reports/implementation/slice6_clean_rebuild_shadow_2026-05-28.json",
+  "source_sha256": "45792a712c14ccabd0f0232391241e4e544d69678f1aec86cd5e50b0c9dc6903"
+}

@@ -1,0 +1,57 @@
+{
+  "sanitized_json": {
+    "<REDACTED_LONG_ID>": [
+      "<REDACTED_LONG_ID>",
+      "<REDACTED_LONG_ID>",
+      "no_executable_candidate",
+      "<REDACTED_LONG_ID>",
+      "<REDACTED_LONG_ID>",
+      "kill_switch_active",
+      "<REDACTED_LONG_ID>",
+      "<REDACTED_LONG_ID>"
+    ],
+    "canary": {
+      "broker_access_attempted": false,
+      "orders_allowed": false,
+      "orders_submitted": false,
+      "path": "reports/readiness/<REDACTED_LONG_ID>.json",
+      "shell_capable": true,
+      "status": "PASS",
+      "validation_executed": true
+    },
+    "clawpatch": {
+      "features": 3,
+      "findings": 6,
+      "fixed": 6,
+      "open_findings": 0,
+      "review_run": "20260529T051610-ebfb09",
+      "state_dir": ".clawpatch"
+    },
+    "conditional_arming_gate_command": "<REDACTED_LONG_ID>=true scripts/run_final_live_arming_gate.sh",
+    "currently_live_armed": false,
+    "date": "2026-05-29",
+    "disable_entries_active": true,
+    "final_arming_dry_run": {
+      "action": "dry_run",
+      "blockers": [
+        "no_primary_or_backup_candidates"
+      ],
+      "orders_previewed_now": false,
+      "orders_submitted_now": false,
+      "path": "reports/live_monitor/live_trade_ready/<REDACTED_LONG_ID>.json",
+      "verdict": "NO_GO"
+    },
+    "generated_at_pt": "2026-05-28T22:36:00-07:00",
+    "kill_switch_active": false,
+    "orders_previewed_now": false,
+    "orders_submitted_now": false,
+    "tests": {
+      "<REDACTED_LONG_ID>": "10 passed",
+      "focused_post_patch": "41 passed",
+      "full_repo": "258 passed, 1 warning"
+    },
+    "verdict": "<REDACTED_LONG_ID>"
+  },
+  "source_path": "reports/readiness/clawpatch_live_readiness_runthrough_2026-05-29.json",
+  "source_sha256": "b17bc57ba9332da83f5e171ccff60e07454aae921dc43d1097f4509cbe88301a"
+}

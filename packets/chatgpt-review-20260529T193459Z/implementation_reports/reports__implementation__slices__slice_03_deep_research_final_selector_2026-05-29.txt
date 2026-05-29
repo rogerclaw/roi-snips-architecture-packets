@@ -1,0 +1,5 @@
+{
+  "sanitized_text": "SLICE 03: PASS\n\nImplemented:\n- Added docs/prompts/rebuild/DEEP_RESEARCH_SINGLE_BEST_TRADE.md as the canonical single-best-trade prompt.\n- Added src/research/deep_research_primary.py.\n- Added src/research/<REDACTED_LONG_ID>.py.\n- src/workflows/research_pipeline.py now writes runs/<date>/trade_authorization_ticket.json.\n- src/workflows/premarket_pipeline.py writes/loads the ticket and reports ticket path, validity, and blockers.\n\nResult:\n- OpenAI governed deep research/deep-mini is the final selector for the live ticket.\n- Deterministic fallback can still produce research context, but cannot create a live-executable ticket.\n\nTests:\n- tests/<REDACTED_LONG_ID>.py\n- tests/<REDACTED_LONG_ID>.py\n",
+  "source_path": "reports/implementation/slices/slice_03_deep_research_final_selector_2026-05-29.txt",
+  "source_sha256": "7247fea3c1cc2143e3ede54e00b192b3fd08344e42711d25fa144db3e5d33c2b"
+}

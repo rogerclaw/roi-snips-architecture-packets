@@ -1,0 +1,5 @@
+{
+  "sanitized_text": "SLICE 01: PASS\n\nImplemented:\n- Added src/research/trade_authorization_ticket.py.\n- Added src/research/trade_authorization_schema.py compatibility exports.\n- Added strict validation helpers: load_ticket, validate_ticket, ticket_authorizes_symbol, ticket_is_live_executable, <REDACTED_LONG_ID>.\n\nKey enforced blockers:\n- <REDACTED_LONG_ID>\n- ticket_no_trade\n- ticket_expired\n- <REDACTED_LONG_ID>\n- backup_execution_not_allowed\n- mega_cap_backup_not_authorized\n- <REDACTED_LONG_ID>\n\nTests:\n- tests/test_trade_authorization_ticket.py passed in focused run.\n",
+  "source_path": "reports/implementation/slices/slice_01_trade_authorization_ticket_2026-05-29.txt",
+  "source_sha256": "6db3f61d810a22a58a882caed78b5412ade63cb31b137a6c12455147fa5dfe72"
+}

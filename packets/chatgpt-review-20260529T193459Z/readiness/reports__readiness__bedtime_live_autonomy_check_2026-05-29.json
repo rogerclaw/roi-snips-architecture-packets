@@ -1,0 +1,52 @@
+{
+  "sanitized_json": {
+    "<REDACTED_LONG_ID>": [
+      "<REDACTED_LONG_ID>",
+      "<REDACTED_LONG_ID>",
+      "no_executable_candidate",
+      "<REDACTED_LONG_ID>",
+      "<REDACTED_LONG_ID>",
+      "kill_switch_active",
+      "<REDACTED_LONG_ID>",
+      "<REDACTED_LONG_ID>"
+    ],
+    "bedtime_canary": {
+      "broker_access_attempted": false,
+      "orders_allowed": false,
+      "orders_submitted": false,
+      "path": "reports/readiness/canary_2026-05-29_bedtime_final.json",
+      "shell_capable": true,
+      "shell_invoked": true,
+      "status": "PASS",
+      "validation_executed": true
+    },
+    "bedtime_final_arming_dry_run": {
+      "action": "dry_run",
+      "blockers": [
+        "<REDACTED_LONG_ID>"
+      ],
+      "orders_previewed_now": false,
+      "orders_submitted_now": false,
+      "path": "reports/live_monitor/live_trade_ready/<REDACTED_LONG_ID>.json",
+      "verdict": "NO_GO"
+    },
+    "conditional_arming_schedule": {
+      "force_flat_pt": "12:45",
+      "opening_supervisor_pt": "06:28",
+      "primary_gate_pt": "06:20",
+      "retry_gate_pt": "06:25"
+    },
+    "currently_live_armed": false,
+    "date": "2026-05-29",
+    "disable_entries_active": true,
+    "focused_live_readiness_tests": "62 passed, 1 warning",
+    "full_test_suite": "261 passed, 1 warning",
+    "generated_at_pt": "2026-05-28T22:43:36-07:00",
+    "kill_switch_active": false,
+    "orders_previewed_now": false,
+    "orders_submitted_now": false,
+    "verdict": "<REDACTED_LONG_ID>"
+  },
+  "source_path": "reports/readiness/bedtime_live_autonomy_check_2026-05-29.json",
+  "source_sha256": "14a3ee30be4bcc556ea043f636ef85d14c91a73db1265acf5b7d6c73cbb4af73"
+}

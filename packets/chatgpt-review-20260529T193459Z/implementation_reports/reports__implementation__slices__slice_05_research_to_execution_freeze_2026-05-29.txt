@@ -1,0 +1,5 @@
+{
+  "sanitized_text": "SLICE 05: PASS\n\nImplemented:\n- Removed pre-open standby arming behavior from src/workflows/final_live_arming_gate.py.\n- Final live arming now requires readiness_status=GREEN and a valid Trade Authorization Ticket.\n- Payload always reports pre_open_standby_override=false plus authorized_ticker, authorized_strategy, ticket_valid, ticket_status, and ticket_blockers.\n\nResult:\n- RED readiness cannot arm live.\n- <REDACTED_LONG_ID> cannot arm standby.\n- No valid ticket means NO_GO.\n\nTests:\n- tests/test_no_red_readiness_arming.py\n- tests/test_final_live_arming_gate.py\n- existing tests/test_opening_bell_readiness.py updated and passing.\n",
+  "source_path": "reports/implementation/slices/slice_05_research_to_execution_freeze_2026-05-29.txt",
+  "source_sha256": "61cac4fcd15258dcc1079adaf41136fb83d5c1c418ed943bad8eefd701539662"
+}

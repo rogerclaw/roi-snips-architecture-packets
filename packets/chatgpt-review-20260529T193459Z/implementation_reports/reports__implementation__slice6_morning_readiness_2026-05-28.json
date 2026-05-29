@@ -1,0 +1,34 @@
+{
+  "sanitized_json": {
+    "artifact_paths": {
+      "canary": "reports/readiness/canary_2026-05-28.json",
+      "same_day_packet": "/tmp/roi_slice6_ready.ZJFVIg/packet.json",
+      "source_lane_status": "/tmp/roi_slice6_ready.ZJFVIg/lanes.json",
+      "stream_summary": "/tmp/roi_slice6_ready.ZJFVIg/stream.json"
+    },
+    "backup_pool_status": "PASS",
+    "broker_account_inspected": false,
+    "broker_orders_inspected": false,
+    "broker_positions_inspected": false,
+    "canary_passed": true,
+    "continuation_window_covered": true,
+    "date": "2026-05-28",
+    "failure_reasons": [],
+    "final_status": "READY",
+    "generated_at_utc": "2026-05-29T00:19:30+00:00",
+    "human_summary": "Brokerless no-order morning proof is ready.",
+    "opening_burst_window_covered": true,
+    "orders_submitted": false,
+    "proof_scope": "MARKET_OPEN_READINESS",
+    "ready_for_live": false,
+    "ready_for_no_order": true,
+    "ready_for_paper": false,
+    "research_war_room_passed": true,
+    "same_day_packet_ready": true,
+    "source_breadth_status": "TARGET",
+    "stream_captured": true,
+    "warnings": []
+  },
+  "source_path": "reports/implementation/slice6_morning_readiness_2026-05-28.json",
+  "source_sha256": "d2bfadf47d8b7f10928e97bd8331ee4f31751fb41670839f49858cc3ac8fd79d"
+}

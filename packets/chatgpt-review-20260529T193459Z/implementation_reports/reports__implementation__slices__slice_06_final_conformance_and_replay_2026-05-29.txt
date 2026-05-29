@@ -1,0 +1,5 @@
+{
+  "sanitized_text": "SLICE 06: PASS\n\nImplemented:\n- Added tests/fixtures/nvda_failure_2026_05_29/fixture.json.\n- Added tests/<REDACTED_LONG_ID>.py.\n- Full focused replay proves the 2026-05-29 shape cannot submit NVDA when the ticket authorizes INFQ.\n\nReplay conditions:\n- Deep research did not authorize NVDA.\n- NVDA is a backup/watchlist candidate.\n- same_style_backup_pool_ok=false.\n- NVDA tape may say BUY_NOW.\n\nExpected and verified:\n- live monitor/order-router ticket validation blocks NVDA with <REDACTED_LONG_ID>.\n- A valid authorized symbol can pass the ticket gate in a simulated non-broker path.\n",
+  "source_path": "reports/implementation/slices/slice_06_final_conformance_and_replay_2026-05-29.txt",
+  "source_sha256": "7d9b7a7b9a7ce067e21fd2ff2b16af00087c62fa6a92a833b26d20762c7bfef6"
+}

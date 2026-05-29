@@ -1,0 +1,70 @@
+{
+  "sanitized_json": {
+    "date": "2026-05-29",
+    "remaining_before_live_arming": [
+      "Run a fresh same-day deep research pass before any future live arming.",
+      "Verify a same-day valid trade_authorization_ticket.json exists.",
+      "Verify final_live_arming_gate returns GO only with readiness_status GREEN.",
+      "Keep DISABLE_NEW_ENTRIES in place unless the future live gate passes."
+    ],
+    "requirements": [
+      {
+        "enforced_by": [
+          "src/research/trade_authorization_ticket.py",
+          "src/workflows/live_monitor.py",
+          "src/workflows/opening_stream_supervisor.py",
+          "src/execution/order_router.py",
+          "src/workflows/final_live_arming_gate.py"
+        ],
+        "requirement": "No valid Trade Authorization Ticket means no live trade",
+        "status": "CONFORMS"
+      },
+      {
+        "enforced_by": [
+          "src/workflows/live_monitor.py",
+          "src/workflows/opening_stream_supervisor.py"
+        ],
+        "requirement": "Live monitor cannot execute A/B/C watchlist backups",
+        "status": "CONFORMS"
+      },
+      {
+        "enforced_by": [
+          "src/execution/order_router.py"
+        ],
+        "requirement": "OrderRouter blocks unauthorized tickers as final circuit breaker",
+        "status": "CONFORMS"
+      },
+      {
+        "enforced_by": [
+          "src/workflows/final_live_arming_gate.py"
+        ],
+        "requirement": "RED readiness and <REDACTED_LONG_ID> cannot arm live",
+        "status": "CONFORMS"
+      },
+      {
+        "enforced_by": [
+          "src/workflows/research_pipeline.py",
+          "src/research/<REDACTED_LONG_ID>.py"
+        ],
+        "requirement": "OpenAI deep research is primary selector; deterministic fallback is not executable",
+        "status": "CONFORMS"
+      },
+      {
+        "enforced_by": [
+          "src/research/grok_social_scout.py",
+          "src/research/grok_challenger.py"
+        ],
+        "requirement": "Grok/X is scout/challenger only",
+        "status": "CONFORMS"
+      }
+    ],
+    "status": "PASS",
+    "tests": {
+      "execution_regression": "63 passed, 1 warning",
+      "focused_rebuild": "28 passed",
+      "full_suite": "296 passed, 1 warning"
+    }
+  },
+  "source_path": "reports/implementation/ROI_SNIPS_SIMPLIFIED_DEEP_RESEARCH_FIRST_REBUILD_CONFORMANCE_2026-05-29.json",
+  "source_sha256": "255c81a86d22f97036903f94025c401f837f695627f819f77ae7230a4405afa0"
+}

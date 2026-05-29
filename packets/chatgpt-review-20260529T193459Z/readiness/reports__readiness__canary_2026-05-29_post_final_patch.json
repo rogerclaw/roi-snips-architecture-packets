@@ -1,0 +1,31 @@
+{
+  "sanitized_json": {
+    "broker_access_attempted": false,
+    "can_execute_validation_script": true,
+    "can_write_reports": true,
+    "can_write_runs": true,
+    "failure_reasons": [],
+    "generated_at_utc": "2026-05-29T05:25:10.750570+00:00",
+    "human_summary": "Scheduler canary passed with brokerless no-order validation proof.",
+    "import_smoke_ok": true,
+    "no_order_env_forced_false": true,
+    "orders_allowed": false,
+    "orders_submitted": false,
+    "proof_path": "/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/readiness/canary_2026-05-29.json",
+    "python_ok": true,
+    "python_version": "Python 3.14.3",
+    "repo_root_ok": true,
+    "shell_capable": true,
+    "shell_invoked": true,
+    "status": "PASS",
+    "validation_executed": true,
+    "validation_result": {
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "tatus\\\": \\\"failed\\\",\\n      \\\"shortlist_status\\\": \\\"failed\\\",\\n      \\\"red_team_status\\\": \\\"FAIL_NO_TRADE\\\",\\n      \\\"final_status\\\": \\\"NO_TRADE_RESEARCH_INCOMPLETE\\\",\\n      \\\"completed\\\": false\\n    }\\n  }\\n}\\n\",\n      \"timeout_seconds\": 180\n    },\n    {\n      \"finished_at_utc\": \"2026-05-29T05:25:10.745674+00:00\",\n      \"name\": \"premarket_pipeline\",\n      \"returncode\": 0,\n      \"started_at_utc\": \"2026-05-29T05:25:10.139221+00:00\",\n      \"status\": \"ok\",\n      \"stderr_tail\": \"\",\n      \"stdout_tail\": \"{\\\"ok\\\": true, \\\"status\\\": \\\"NO_TRADE_RESEARCH_INCOMPLETE\\\", \\\"json\\\": \\\"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/json/2026-05-28.json\\\", \\\"md\\\": \\\"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/md/2026-05-28.md\\\"}\\n\",\n      \"timeout_seconds\": 120\n    },\n    {\n      \"finished_at_utc\": \"2026-05-29T05:25:10.745698+00:00\",\n      \"name\": \"<REDACTED_LONG_ID>\",\n      \"returncode\": 0,\n      \"started_at_utc\": \"2026-05-29T05:25:10.745698+00:00\",\n      \"status\": \"ok\",\n      \"stderr_tail\": \"\",\n      \"stdout_tail\": \"{\\\"status\\\": \\\"skipped\\\", \\\"reason\\\": \\\"<REDACTED_LONG_ID>\\\"}\",\n      \"timeout_seconds\": 0\n    },\n    {\n      \"finished_at_utc\": \"2026-05-29T05:25:10.745721+00:00\",\n      \"name\": \"<REDACTED_LONG_ID>\",\n      \"returncode\": 0,\n      \"started_at_utc\": \"2026-05-29T05:25:10.745721+00:00\",\n      \"status\": \"ok\",\n      \"stderr_tail\": \"\",\n      \"stdout_tail\": \"{\\\"status\\\": \\\"skipped\\\", \\\"reason\\\": \\\"<REDACTED_LONG_ID>\\\"}\",\n      \"timeout_seconds\": 0\n    }\n  ],\n  \"stream\": {\n    \"ok\": false,\n    \"reason\": \"stream_skipped\",\n    \"stream_capture_completed\": false,\n    \"stream_capture_started\": false,\n    \"stream_captured\": false\n  },\n  \"stream_required\": false,\n  \"summary_path\": \"/Users/rogerclaw/.openclaw/workspace/roi-snips/reports/live_monitor/<REDACTED_LONG_ID>.json\",\n  \"trade_date\": \"2026-05-29\"\n}\n"
+    },
+    "venv_ok": true
+  },
+  "source_path": "reports/readiness/canary_2026-05-29_post_final_patch.json",
+  "source_sha256": "e8f74eeb7928057398f83ab0d3c141d7789302eb10c3e0d789142512eeb1d678"
+}
