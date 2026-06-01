@@ -1,0 +1,47 @@
+Roi Snips Hybrid Grok Heat + Deep-Mini Primary Restore
+Generated: 2026-05-31 17:42 PT
+
+Summary:
+The incorrect Grok-primary live selector path has been restored to the intended hybrid architecture. Grok/X now supplies social heat, social velocity, fast web verification, thread context, and challenger notes. OpenAI deep-mini/governed deep research is again the primary live stock picker and the only path that can produce a live-valid Trade Authorization Ticket.
+
+Acceptance answers:
+1. Is deep-mini the primary live stock picker? Yes. config/workflow.yaml now sets primary_provider=openai, primary_mode=deep_mini, primary_role=live_stock_picker, deep_research.mode=deep_mini, and require_for_live_research=true.
+2. Is Grok/X still heavily used? Yes. scripts/run_live_trade_ready_premarket.sh runs Grok heat before the governed research pipeline, and deep-mini prompts ingest Grok/X artifacts.
+3. What does Grok do? It discovers X/social heat, estimates cashtag velocity, records key threads, performs quick web verification, writes social velocity summaries, and produces challenger notes for deep-mini.
+4. What can Grok not do? It cannot be the final live selector, cannot create a live-valid ticket, cannot authorize backups, cannot override deep-mini, and cannot approve or place orders.
+5. Can Grok create a live-valid ticket? No. grok_ticket_builder now marks Grok ticket candidates research-only and invalid for live; validate_ticket blocks authorizer=grok_d_research.
+6. Can deep-mini see Grok/X heat output? Yes. deep_mini_bridge loads runs/<date>/grok artifacts and embeds them in broad/shortlist input under "Grok/X Heat Radar and Web Verification Context."
+7. Can deterministic fallback execute? No. deterministic_fallback_executable_allowed remains false and validate_ticket blocks deterministic fallback.
+8. Can a Grok-only candidate trade? No. The root live ticket is not written by the Grok pipeline, and final arming requires a valid deep-mini/governed ticket.
+9. Can a Grok-discovered candidate trade after deep-mini authorizes it? Yes, but only if the deep-mini ticket authorizes that exact ticker and deterministic live readiness/tape/risk/broker gates pass.
+10. Can NVDA trade if Grok likes NVDA but deep-mini authorizes another ticker? No. The ticket gate rejects unauthorized_ticker_not_in_deep_research_ticket.
+11. Final Monday env/config values: premarket/final/opening wrappers default ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true, ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false, and ROI_SNIPS_SKIP_DEEP_MINI=false for premarket.
+12. Tests proving the architecture: focused hybrid suite passed 33 tests; full suite passed 343 tests with 1 warning.
+
+Tomorrow, Monday 2026-06-01, exact operating sequence:
+- 04:45 PT: morning canary checks shell/tool path. It remains smoke/canary only.
+- 05:00 PT: deterministic discovery-only run builds source lane candidate context.
+- 05:10 PT: premarket pass runs live readiness recording, Grok readiness canary, Grok/X heat pipeline, governed deep-mini research pipeline, and premarket report.
+- 05:45 PT: retry/refresh premarket pass with deep-mini still required.
+- 06:10 PT: final premarket research pass with shorter timeout.
+- 06:20 PT: final live arming gate requires valid same-day deep-mini/governed ticket plus GREEN readiness.
+- 06:25 PT: final arming retry with the same requirements.
+- 06:28 PT: opening monitor starts; it may watch and trade only the ticket-authorized ticker.
+- 12:45 PT: force-flat safety runs.
+
+Verification:
+- Focused hybrid command: PYTHONPATH=. .venv/bin/pytest tests/test_hybrid_research_roles.py tests/test_grok_feeds_deep_mini.py tests/test_grok_not_ticket_authorizer.py tests/test_deep_mini_primary_selector.py tests/test_ticket_authorizer_restrictions.py tests/test_hybrid_nvda_replay.py tests/test_monday_schedule_deep_mini_primary.py tests/test_trade_authorization_ticket.py tests/test_order_router_ticket_enforcement.py tests/test_nvda_failure_replay_ticket_gate.py tests/test_grok_ticket_builder.py tests/test_deep_mini_not_skipped_in_live_wrapper.py -q
+- Focused result: 33 passed, 1 warning in 59.29s.
+- Full command: PYTHONPATH=. .venv/bin/pytest tests -q
+- Full result: 343 passed, 1 warning in 4.03s.
+- Shell syntax: bash -n scripts/*.sh passed.
+- Final arming dry-run for 2026-06-01: NO_GO, no ticket, not armed, DISABLE_NEW_ENTRIES remains active, LIVE_ARMED remains false.
+
+Deliberate non-actions:
+- Did not inspect broker account/order/position state during this restore pass.
+- Did not preview/place/submit/replace/cancel orders.
+- Did not manually clear DISABLE_NEW_ENTRIES.
+- Did not manually create a fake deep-mini ticket.
+
+Remaining live risk:
+Monday execution is still conditional on live same-day deep-mini completing successfully, one valid same-day ticket, fresh candidate-specific data, GREEN final arming, and deterministic opening tape/risk/broker guards.

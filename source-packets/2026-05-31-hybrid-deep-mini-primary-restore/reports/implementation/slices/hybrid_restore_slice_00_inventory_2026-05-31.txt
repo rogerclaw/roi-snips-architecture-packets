@@ -1,0 +1,21 @@
+Roi Snips hybrid restore slice 00 inventory
+Generated: 2026-05-31 17:40 PT
+
+Current state before restore:
+- config/workflow.yaml had research_llm.primary_provider=grok and ticket_authorizer=grok_d_research.
+- config/workflow.yaml had deep_research.mode=grok_d_research, role=verifier_fallback_only, require_for_live_research=false, require_grok_for_live_research=true.
+- scripts/run_final_live_arming_gate.sh defaulted ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=false and ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=true.
+- src/workflows/grok_research_pipeline.py wrote runs/<date>/trade_authorization_ticket.json directly from Grok output.
+- src/research/grok_ticket_builder.py could produce a live-valid ticket with authorizer=grok_d_research.
+- src/research/trade_authorization.py treated governed_grok_d_research as an authorized governed research source mode.
+
+Required correction:
+- OpenAI deep-mini/governed deep research must be the primary live stock picker.
+- Grok/X must remain a strong heat, social velocity, web-verification, and challenger input layer.
+- Grok must not create a live-valid ticket, authorize backups, override deep-mini, or directly approve orders.
+- The root runs/<date>/trade_authorization_ticket.json must be valid only when created from OpenAI deep-mini/deep governed output.
+
+Inventory result:
+- Grok ticket creation surfaces found: src/research/grok_ticket_builder.py and src/workflows/grok_research_pipeline.py.
+- Deep-mini ticket creation surfaces found: src/research/deep_research_trade_authorization.py, src/research/trade_authorization_ticket.py, and src/workflows/research_pipeline.py.
+- Installed cron live block found and later updated to require deep-mini for the 05:10/05:45/06:10 premarket passes, 06:20/06:25 final arming gates, and 06:28 opening monitor.

@@ -1,0 +1,55 @@
+{
+  "generated_at_pt": "2026-05-31 17:42 PT",
+  "architecture": "hybrid_grok_heat_deep_mini_primary",
+  "deep_mini_primary_live_stock_picker": true,
+  "grok_x_heavily_used": true,
+  "grok_role": [
+    "x_social_heat_discovery",
+    "social_velocity",
+    "fast_web_verification",
+    "challenger_notes",
+    "deep_mini_input_evidence"
+  ],
+  "grok_cannot": [
+    "authorize_live_ticket",
+    "override_deep_mini",
+    "authorize_backups",
+    "place_orders",
+    "create_live_executable_primary"
+  ],
+  "live_ticket_allowed_authorizers": [
+    "openai_deep_mini",
+    "openai_deep_research",
+    "governed_deep_research"
+  ],
+  "live_ticket_disallowed_authorizers": [
+    "grok_d_research",
+    "grok_x_heat_radar",
+    "grok_web_verification",
+    "deterministic_fallback",
+    "internal_ranking",
+    "social_only"
+  ],
+  "deterministic_fallback_executable": false,
+  "grok_only_candidate_can_trade": false,
+  "grok_discovered_deep_mini_authorized_candidate_can_trade_if_deterministic_gates_pass": true,
+  "installed_cron_deep_mini_required": true,
+  "installed_cron_grok_required": false,
+  "verification": {
+    "focused_hybrid_suite": "33 passed, 1 warning in 59.29s",
+    "full_suite": "343 passed, 1 warning in 4.03s",
+    "shell_syntax": "bash -n scripts/*.sh passed",
+    "final_arming_dry_run_2026_06_01": "NO_GO; no valid ticket; armed_live=false"
+  },
+  "tomorrow_2026_06_01_pt": [
+    {"time": "04:45", "step": "shell/tool canary"},
+    {"time": "05:00", "step": "deterministic discovery"},
+    {"time": "05:10", "step": "Grok heat then deep-mini primary premarket pass"},
+    {"time": "05:45", "step": "Grok heat then deep-mini primary refresh"},
+    {"time": "06:10", "step": "final premarket deep-mini pass"},
+    {"time": "06:20", "step": "final live arming gate"},
+    {"time": "06:25", "step": "final live arming retry"},
+    {"time": "06:28", "step": "ticket-only opening monitor"},
+    {"time": "12:45", "step": "force-flat safety"}
+  ]
+}

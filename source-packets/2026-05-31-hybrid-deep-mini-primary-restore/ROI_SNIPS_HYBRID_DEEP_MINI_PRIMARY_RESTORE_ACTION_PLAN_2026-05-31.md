@@ -72,12 +72,16 @@ All times are Pacific unless otherwise installed in cron.
 
 ## Acceptance Evidence
 
-Focused verification passed:
+Focused and full verification passed:
 
 ```text
-bash -n scripts/run_live_trade_ready_premarket.sh scripts/run_research_pipeline.sh scripts/run_final_live_arming_gate.sh scripts/run_opening_bell_live_monitor.sh
-.venv/bin/python -m pytest tests/test_deep_mini_not_skipped_in_live_wrapper.py tests/test_deep_research_routing.py tests/test_grok_no_direct_order_authority.py tests/test_research_pipeline.py tests/test_trade_authorization_ticket.py
-25 passed in 0.13s
+bash -n scripts/*.sh
+PYTHONPATH=. .venv/bin/pytest tests/test_hybrid_research_roles.py tests/test_grok_feeds_deep_mini.py tests/test_grok_not_ticket_authorizer.py tests/test_deep_mini_primary_selector.py tests/test_ticket_authorizer_restrictions.py tests/test_hybrid_nvda_replay.py tests/test_monday_schedule_deep_mini_primary.py tests/test_trade_authorization_ticket.py tests/test_order_router_ticket_enforcement.py tests/test_nvda_failure_replay_ticket_gate.py tests/test_grok_ticket_builder.py tests/test_deep_mini_not_skipped_in_live_wrapper.py -q
+33 passed, 1 warning in 59.29s
+PYTHONPATH=. .venv/bin/pytest tests -q
+343 passed, 1 warning in 4.03s
+ROI_SNIPS_TRADE_DATE=2026-06-01 scripts/run_final_live_arming_gate.sh --dry-run
+verdict=NO_GO; ticket_status=MISSING; armed_live=false
 ```
 
 ## Explicit Non-Actions
