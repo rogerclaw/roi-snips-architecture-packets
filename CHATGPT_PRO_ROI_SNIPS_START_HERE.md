@@ -20,6 +20,20 @@ If a repo does not appear in ChatGPT after connecting GitHub, open GitHub search
 
 ChatGPT Pro with GitHub can read, search, analyze, and cite repository content. It should draft architecture findings and proposed changes.
 
+## 2026-06-03 Full Rearchitecture Authority
+
+Charles has now explicitly authorized ChatGPT to propose full Roi Snips config edits and complete architecture changes. This supersedes older packet language that only asked ChatGPT to preserve the current architecture.
+
+Start with:
+
+- `source-packets/2026-06-03-same-day-autonomy-failure-rearchitecture/README.md`
+- `source-packets/2026-06-03-same-day-autonomy-failure-rearchitecture/CHATGPT_FULL_ARCHITECTURE_EDIT_AUTHORITY.md`
+- `source-packets/2026-06-03-same-day-autonomy-failure-rearchitecture/TELEGRAM_TIMELINE_SANITIZED.md`
+
+ChatGPT may recommend replacing discovery, schedule, prompt generation, model routing, ticket schema, stale-artifact hygiene, final arming, live monitor, risk config, Telegram update machinery, and runtime/GitHub checkout layout if the current design is wrong.
+
+The boundary is publication and runtime safety: do not expose secrets, `.env`, broker credentials, raw broker account/order/position payloads, or unrelated private workspace data. ChatGPT's text is a proposal until implemented, tested, committed, and deployed.
+
 John/Codex remains responsible for:
 
 - branch creation
@@ -89,14 +103,9 @@ In `rogerclaw/roi-snips` branch `codex/hybrid-main-repo-sync`:
 ## Good Prompt
 
 ```text
-Use GitHub to review Roi Snips. Read repo rogerclaw/roi-snips branch codex/hybrid-main-repo-sync and repo rogerclaw/roi-snips-architecture-packets. Start with CHATGPT_PRO_ROI_SNIPS_START_HERE.md, docs/CHATGPT_PRO_GITHUB_PLUGIN_START_HERE.md, docs/architecture/RESEARCH_TO_EXECUTION_TICKET_BOUNDARY.md, and source-packets/2026-05-31-hybrid-deep-mini-primary-restore/ROI_SNIPS_HYBRID_DEEP_MINI_PRIMARY_RESTORE_ACTION_PLAN_2026-05-31.md.
+Use GitHub to review Roi Snips. Read repo rogerclaw/roi-snips and repo rogerclaw/roi-snips-architecture-packets. Start with CHATGPT_PRO_ROI_SNIPS_START_HERE.md, source-packets/2026-06-03-same-day-autonomy-failure-rearchitecture/README.md, and source-packets/2026-06-03-same-day-autonomy-failure-rearchitecture/CHATGPT_FULL_ARCHITECTURE_EDIT_AUTHORITY.md.
 
-Audit whether code, config, scripts, and tests enforce the current architecture:
-- Grok/X is heat/challenger only.
-- OpenAI deep-mini/deep is the primary live selector.
-- only a valid same-day Trade Authorization Ticket can authorize live/paper execution.
-- deterministic final arming and order-router gates cannot be bypassed.
+Charles authorizes you to propose full config and architecture changes, including replacing the current discovery, schedule, prompt, runner, ticket, stale-artifact, final arming, monitor, and Telegram update design if needed.
 
-Return findings first, with file paths and exact reason. Then give a branch-sized patch plan, tests to add, validation commands, and rollback risks. Do not propose weakening risk gates or adding live-trading autonomy outside the ticket/guard boundary.
+Return findings first, with file paths and exact reasons. Then give a complete target architecture, exact config edits, branch-sized patch plan, tests to add, validation commands, rollout plan, and rollback risks. Keep secrets and broker credentials out of GitHub.
 ```
-

@@ -1,0 +1,31 @@
+{
+  "packet": "2026-06-03-same-day-autonomy-failure-rearchitecture",
+  "created_at_pdt": "2026-06-03T07:20:00-07:00",
+  "purpose": "Sanitized full report of the 2026-06-03 Roi Snips same-day autonomy failure and ChatGPT full rearchitecture authority.",
+  "files": [
+    "README.md",
+    "TELEGRAM_TIMELINE_SANITIZED.md",
+    "CHATGPT_FULL_ARCHITECTURE_EDIT_AUTHORITY.md",
+    "MANIFEST.json"
+  ],
+  "excluded": [
+    ".env files",
+    "broker credentials",
+    "raw broker account/order/position payloads",
+    "OpenClaw memory/profile files",
+    "unrelated STR/email/calendar/message data",
+    "private raw logs"
+  ],
+  "final_trading_state": {
+    "orders_previewed": false,
+    "orders_placed": false,
+    "live_armed": false,
+    "disable_new_entries_active": true,
+    "ticket_status": "NO_TRADE",
+    "ticket_valid": false,
+    "authorized_ticker": null,
+    "blocker": "governed_deep_mini_xos_unavailable_or_unparsed"
+  },
+  "chatgpt_authority": "full architecture and config edit recommendations authorized by Charles; secrets and direct live actions excluded"
+}
+

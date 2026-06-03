@@ -30,6 +30,8 @@ Older packets remain useful as incident history and regression evidence, but the
 
 ## Latest Packets
 
+- `source-packets/2026-06-03-same-day-autonomy-failure-rearchitecture/`
+  - Full sanitized report of the failed 2026-06-03 same-day autonomy run, including Telegram timeline, config/runtime state, ticker-selection failure, XOS attempt, safety gates, and explicit ChatGPT authority to propose full architecture/config rewrites.
 - `source-packets/2026-05-31-hybrid-deep-mini-primary-restore/`
   - Current hybrid Grok heat plus deep-mini primary restore.
   - Includes action plan, implementation report, config snapshots, script snapshots, and focused regression test snapshots.
@@ -65,4 +67,4 @@ The May 31 hybrid restore packet records:
 
 ## Review Notes
 
-When reviewing with ChatGPT Pro, ask for file-path citations and a branch-sized patch plan. ChatGPT can analyze and draft. John/Codex should perform edits, validation, commits, pushes, and PR work.
+When reviewing with ChatGPT Pro, start with the June 3 failure/rearchitecture packet. Charles has authorized ChatGPT to propose complete architecture and config changes, not only incremental patches. Ask for file-path citations, exact config edits, a validation matrix, rollout plan, and rollback risks. ChatGPT can analyze and draft; implementation still needs tested commits and PR work, and secrets must stay out of GitHub.
