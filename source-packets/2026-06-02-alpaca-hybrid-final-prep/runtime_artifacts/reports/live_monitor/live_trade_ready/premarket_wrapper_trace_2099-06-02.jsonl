@@ -1,0 +1,12 @@
+{"event":"wrapper_start","status":"started","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:07Z"}
+{"event":"live_readiness_start","status":"started","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:07Z"}
+{"event":"live_readiness_done","status":"recorded","exit_code":1,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"grok_canary_start","status":"started","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"grok_canary_done","status":"WARN_CONTINUE","exit_code":7,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"grok_pipeline_start","status":"started","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"grok_pipeline_done","status":"recorded","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"deep_mini_research_start","status":"started","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"deep_mini_research_done","status":"recorded","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"premarket_pipeline_start","status":"started","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"premarket_pipeline_done","status":"recorded","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}
+{"event":"wrapper_final","status":"DEGRADED_OK_FOR_DEEP_MINI","exit_code":0,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z"}

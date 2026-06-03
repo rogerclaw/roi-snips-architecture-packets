@@ -1,0 +1,159 @@
+{
+  "action": "dry_run",
+  "armed_live": false,
+  "authorized_strategy": null,
+  "authorized_ticker": null,
+  "blockers": [
+    "broker_state_inspection_skipped",
+    "premarket_research_never_reached_deep_mini",
+    "no_valid_trade_authorization_ticket"
+  ],
+  "candidate_specific_readiness": {
+    "ok": false,
+    "reason": "skipped_until_generic_readiness_green"
+  },
+  "execute": false,
+  "generated_at_utc": "2026-06-03T05:42:22.304638+00:00",
+  "guards_after": {
+    "disable_entries": true,
+    "force_flat": false,
+    "in_entry_window": false,
+    "kill_switch": false,
+    "live_armed": false
+  },
+  "ignored_arm_guard_blockers": [
+    "disable_entries_active",
+    "live_armed_missing"
+  ],
+  "live_order_env_enabled": true,
+  "orders_previewed_now": false,
+  "orders_submitted_now": false,
+  "paper_order_env_enabled": false,
+  "pre_open_standby_override": false,
+  "primary_candidate": null,
+  "readiness": {
+    "candidate_specific_readiness": {
+      "ok": false,
+      "reason": "skipped_until_generic_readiness_green"
+    },
+    "ignored_arm_guard_blockers": [
+      "disable_entries_active",
+      "live_armed_missing"
+    ],
+    "message": "hard block / no live order",
+    "opening_bell_blockers": [
+      "broker_state_inspection_skipped"
+    ],
+    "opening_bell_enabled": true,
+    "primary_candidate": null,
+    "readiness": {
+      "broker_health": {
+        "ok": true,
+        "reason": "broker_state_inspection_skipped",
+        "skipped": true
+      },
+      "broker_provider": "alpaca",
+      "broker_runtime": {
+        "base_url": "https://api.alpaca.markets",
+        "configured": true,
+        "environment": "live",
+        "paper": false,
+        "provider": "alpaca"
+      },
+      "execution_blockers": [
+        "live_armed_missing",
+        "disable_entries_active",
+        "broker_state_inspection_skipped"
+      ],
+      "full_execution_ready": false,
+      "market_data_health": {
+        "bars": {
+          "bars": [],
+          "feed": "sip",
+          "ok": true
+        },
+        "feed": "sip",
+        "ok": true,
+        "quote": {
+          "feed": "sip",
+          "ok": true,
+          "quote": {
+            "ask": 759.63,
+            "ask_size": 480.0,
+            "bid": 759.6,
+            "bid_size": 200.0,
+            "last": 759.57,
+            "prev_close": 723.77,
+            "raw_quote": {
+              "ask_exchange": "P",
+              "ask_price": 759.63,
+              "ask_size": 480.0,
+              "bid_exchange": "P",
+              "bid_price": 759.6,
+              "bid_size": 200.0,
+              "conditions": [
+                "R"
+              ],
+              "symbol": "SPY",
+              "tape": "B",
+              "timestamp": "2026-06-03 00:00:00.161137+00:00"
+            },
+            "raw_trade": {
+              "conditions": [
+                " ",
+                "M"
+              ],
+              "exchange": "P",
+              "id": 52983625893192,
+              "price": 759.57,
+              "size": 1198982.0,
+              "symbol": "SPY",
+              "tape": "B",
+              "timestamp": "2026-06-03 00:00:00.001930+00:00"
+            },
+            "spread_bps": 0.395,
+            "timestamp": "2026-06-03 00:00:00.161137+00:00"
+          }
+        },
+        "requested_feed": "sip"
+      },
+      "market_data_provider": "alpaca",
+      "market_data_runtime": {
+        "allow_iex_fallback": true,
+        "configured": true,
+        "data_base_url": "https://data.alpaca.markets",
+        "feed": "sip",
+        "provider": "alpaca_market_data"
+      },
+      "ok": false,
+      "position_state": {
+        "ok": true,
+        "positions": [],
+        "positive_position_count": 0
+      },
+      "probe_symbol": "SPY",
+      "runtime_guards": {
+        "disable_entries": true,
+        "force_flat": false,
+        "in_entry_window": false,
+        "kill_switch": false,
+        "live_armed": false
+      },
+      "session_phase": "PRE_ENTRY"
+    },
+    "status": "RED",
+    "ticket_blockers": [
+      "no_valid_trade_authorization_ticket"
+    ],
+    "ticket_status": "MISSING",
+    "ticket_valid": false
+  },
+  "readiness_status": "RED",
+  "ticket_blockers": [
+    "no_valid_trade_authorization_ticket"
+  ],
+  "ticket_status": "MISSING",
+  "ticket_valid": false,
+  "trade_date": "2026-06-03",
+  "verdict": "NO_GO"
+}

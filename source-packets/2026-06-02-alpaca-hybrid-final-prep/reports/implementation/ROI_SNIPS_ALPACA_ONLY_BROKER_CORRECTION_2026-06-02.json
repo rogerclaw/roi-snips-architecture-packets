@@ -1,0 +1,71 @@
+{
+  "answers": {
+    "any_order_preview_place_cancel_replace": false,
+    "deep_mini_still_primary_live_stock_picker": true,
+    "does_any_live_wrapper_force_webull": false,
+    "does_final_arming_dry_run_mention_webull": false,
+    "does_readiness_still_mention_webull_credentials": false,
+    "grok_still_optional_heat_challenger": true,
+    "is_live_config_now_alpaca": true,
+    "is_market_data_now_alpaca_sip": true,
+    "live_armed": false,
+    "tests_passed": true,
+    "trade_authorization_ticket_rules_unchanged": true,
+    "was_live_config_incorrectly_set_to_webull_before_patch": true,
+    "webull_adapters_present_only_as_legacy_optional_adapters": true
+  },
+  "architecture_packet_repo": {
+    "commit": "987debb2f69309f7e55a687e7529b36433712227",
+    "path": "source-packets/2026-06-02-alpaca-only-broker-correction/",
+    "repo": "rogerclaw/roi-snips-architecture-packets"
+  },
+  "blockers": [],
+  "deep_mini_primary_live_selector": true,
+  "evidence": {
+    "final_arming_dry_run_json": "/tmp/roi_snips_alpaca_runtime_final_dry_run_2026-06-03.json",
+    "focused_tests_log": "/tmp/roi_snips_alpaca_focused_2026-06-02.log",
+    "full_tests_log": "/tmp/roi_snips_alpaca_full_2026-06-02.log",
+    "shell_syntax_log": "/tmp/roi_snips_alpaca_shell_2026-06-02.log"
+  },
+  "final_arming_dry_run": {
+    "armed_live": false,
+    "blockers": [
+      "broker_state_inspection_skipped",
+      "premarket_research_never_reached_deep_mini",
+      "no_valid_trade_authorization_ticket"
+    ],
+    "broker_provider": "alpaca",
+    "broker_runtime": {
+      "base_url": "https://api.alpaca.markets",
+      "configured": true,
+      "environment": "live",
+      "paper": false,
+      "provider": "alpaca"
+    },
+    "market_data_provider": "alpaca",
+    "orders_previewed_now": false,
+    "orders_submitted_now": false,
+    "verdict": "NO_GO"
+  },
+  "focused_tests": "34 passed, 1 warning in 2.48s",
+  "full_tests": "376 passed, 1 warning in 3.58s",
+  "generated_at_utc": "2026-06-03T05:35:04.931815+00:00",
+  "grok_optional_heat_layer": true,
+  "guard_files_mutated": false,
+  "live_armed": false,
+  "live_broker_base_url": "https://api.alpaca.markets",
+  "live_broker_provider": "alpaca",
+  "live_broker_role": "data_and_execution",
+  "market_data_feed_required": "sip",
+  "market_data_provider": "alpaca",
+  "orders_canceled": false,
+  "orders_placed": false,
+  "orders_previewed": false,
+  "orders_replaced": false,
+  "shell_syntax": "bash -n scripts/*.sh passed with rc=0",
+  "status": "PASS",
+  "target_trade_date": "2026-06-03",
+  "ticket_only_execution": true,
+  "webull_credential_blocker_present": false,
+  "webull_selected_anywhere_for_live": false
+}

@@ -1,0 +1,1 @@
+OpenClaw cron metadata reachable, classified as notification_or_artifact_inspection_only for Roi Snips. Local shell crontab is executable proof.

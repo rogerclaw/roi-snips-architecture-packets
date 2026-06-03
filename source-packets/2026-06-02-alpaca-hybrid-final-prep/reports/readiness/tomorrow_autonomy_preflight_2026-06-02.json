@@ -1,0 +1,93 @@
+{
+  "architecture_packets_repo": {
+    "commit_before_final_packet": "987debb2f69309f7e55a687e7529b36433712227",
+    "packet_path": "source-packets/2026-06-02-alpaca-hybrid-final-prep/",
+    "repo": "rogerclaw/roi-snips-architecture-packets"
+  },
+  "blockers_before_tomorrow": [],
+  "date_generated": "2026-06-03T05:43:49.467183+00:00",
+  "deep_mini_primary_live_selector": true,
+  "deep_mini_required_for_live": true,
+  "final_arming_dry_run": "NO_GO; broker=alpaca; market_data=alpaca; armed_live=false; orders_previewed_now=false; orders_submitted_now=false; blockers=['broker_state_inspection_skipped', 'premarket_research_never_reached_deep_mini', 'no_valid_trade_authorization_ticket']",
+  "final_arming_dry_run_details": {
+    "armed_live": false,
+    "blockers": [
+      "broker_state_inspection_skipped",
+      "premarket_research_never_reached_deep_mini",
+      "no_valid_trade_authorization_ticket"
+    ],
+    "broker_provider": "alpaca",
+    "broker_runtime": {
+      "base_url": "https://api.alpaca.markets",
+      "configured": true,
+      "environment": "live",
+      "paper": false,
+      "provider": "alpaca"
+    },
+    "market_data_provider": "alpaca",
+    "orders_previewed_now": false,
+    "orders_submitted_now": false,
+    "verdict": "NO_GO",
+    "webull_in_payload": false
+  },
+  "focused_tests": "56 passed, 1 warning in 2.39s",
+  "full_tests": "376 passed, 1 warning in 3.29s",
+  "github_main_repo": {
+    "branch": "codex/hybrid-main-repo-sync",
+    "commit_at_report_generation": "5e27d26b9fdfb2f5d6d7255f629ab1257b945e40",
+    "pr_head_at_report_generation": "5e27d26b9fdfb2f5d6d7255f629ab1257b945e40",
+    "pr_mergeable": "MERGEABLE",
+    "pr_state": "OPEN",
+    "pr_url": "https://github.com/rogerclaw/roi-snips/pull/2",
+    "repo": "rogerclaw/roi-snips"
+  },
+  "grok_optional_heat_layer": true,
+  "guard_files_mutated_tonight": false,
+  "guard_state": {
+    "disable_new_entries_present": false,
+    "disable_new_entries_sha1_observed": "029d86019a5fc8d6d283d9eebc0eb1126d9bd1d3",
+    "guard_files_mutated_tonight": false,
+    "kill_switch_present": false,
+    "live_armed_present": false
+  },
+  "live_arming_performed_tonight": false,
+  "live_broker_base_url": "https://api.alpaca.markets",
+  "live_broker_provider": "alpaca",
+  "live_broker_role": "data_and_execution",
+  "local_shell_crontab_ready": true,
+  "market_data_feed_required": "sip",
+  "market_data_provider": "alpaca",
+  "openclaw_cron_shell_proof": false,
+  "optional_grok_failure_nonfatal": true,
+  "order_preview_before_arming_blocked": true,
+  "orders_canceled_or_replaced_tonight": false,
+  "orders_placed_tonight": false,
+  "orders_previewed_tonight": false,
+  "premarket_wrapper_live_submission_env_safe": true,
+  "safe_smoke": {
+    "optional_grok_failure_reaches_deep_mini": true,
+    "orders_placed": false,
+    "orders_previewed": false
+  },
+  "scheduler": {
+    "local_shell_crontab_proven": true,
+    "openclaw_cron_role": "notification_or_artifact_inspection_only",
+    "openclaw_cron_shell_proven": false,
+    "tomorrow_jobs_present": true
+  },
+  "shell_syntax": "bash -n scripts/*.sh passed",
+  "status": "PASS",
+  "target_trade_date": "2026-06-03",
+  "ticket_only_execution": true,
+  "tomorrow_morning_go_conditions": [
+    "governed OpenAI deep-mini/deep research completes for the same trade date",
+    "valid same-day OpenAI/governed Trade Authorization Ticket exists",
+    "final_live_arming_gate returns GO with readiness GREEN",
+    "candidate-specific market data is fresh and Alpaca SIP-backed",
+    "broker/order/position state is clean",
+    "opening monitor watches only the ticket-authorized ticker"
+  ],
+  "tomorrow_state": "PENDING_MORNING_DEEP_MINI",
+  "webull_credential_blocker_present": false,
+  "webull_selected_for_live": false
+}

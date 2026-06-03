@@ -1,0 +1,14 @@
+{
+  "blockers": [],
+  "deep_mini_reached": true,
+  "deep_mini_required": true,
+  "exit_code": 0,
+  "generated_at_utc": "2026-06-03T05:42:08.272146+00:00",
+  "grok_required": false,
+  "mode": "live_trade_ready_premarket",
+  "optional_grok_failure_nonfatal": true,
+  "orders_previewed": false,
+  "orders_submitted": false,
+  "status": "DEGRADED_OK_FOR_DEEP_MINI",
+  "trade_date": "2099-06-02"
+}

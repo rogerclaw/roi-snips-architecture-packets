@@ -1,0 +1,1 @@
+{"status":"WARN_CONTINUE","step":"grok_research_readiness","exit_code":7,"trade_date":"2099-06-02","generated_at_utc":"2026-06-03T05:42:08Z","deep_mini_required":true,"deep_mini_reached":false,"note":"optional_grok_readiness_must_not_block_deep_mini_primary_selector"}

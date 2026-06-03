@@ -1,0 +1,1 @@
+Executable scheduler: local shell crontab. Runtime path: /Users/rogerclaw/.openclaw/workspace/roi-snips. OpenClaw cron is not shell proof.

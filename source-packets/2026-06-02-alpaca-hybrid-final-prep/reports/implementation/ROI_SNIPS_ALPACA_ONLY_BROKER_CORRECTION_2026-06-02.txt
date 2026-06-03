@@ -1,0 +1,54 @@
+ROI SNIPS ALPACA-ONLY BROKER/DATA CORRECTION - 2026-06-02
+================================================================
+
+Status: PASS
+Architecture packet: rogerclaw/roi-snips-architecture-packets 987debb2f69309f7e55a687e7529b36433712227 at source-packets/2026-06-02-alpaca-only-broker-correction/
+Target trade date: 2026-06-03
+Generated: 2026-06-03T05:35:04.931815+00:00 UTC
+
+Summary
+-------
+Live broker/data drift was confirmed and corrected. Before this patch, `configs/live.yaml` selected Webull live execution and live wrappers forced `WEBULL_ENVIRONMENT=live`. The current live runtime contract is back to Alpaca execution plus Alpaca SIP market data, while Webull adapters remain only as explicit legacy/optional adapters.
+
+Required Answers
+----------------
+1. Was live config incorrectly set to Webull before this patch? Yes.
+2. Is live config now Alpaca? Yes: broker.provider=alpaca, base_url=https://api.alpaca.markets, broker_role=data_and_execution.
+3. Is market data now Alpaca SIP? Yes: market_data.provider=alpaca, required_feed_for_full_mode=sip.
+4. Does readiness still mention Webull credentials? No.
+5. Does final arming dry-run mention Webull? No.
+6. Does any live wrapper force Webull? No; `WEBULL_ENVIRONMENT=live` was removed from final arming, opening, and force-flat wrappers.
+7. Are Webull adapters still present only as legacy optional adapters? Yes; they are still buildable only when a caller explicitly asks for provider `webull`, but `configs/live.yaml` does not select them.
+8. Are Trade Authorization Ticket rules unchanged? Yes.
+9. Is deep-mini still primary live stock picker? Yes.
+10. Is Grok still optional heat/challenger? Yes.
+11. Did tests pass? Yes: focused `34 passed, 1 warning in 2.48s`; full `376 passed, 1 warning in 3.58s`; shell syntax passed.
+12. Did any order preview/place/cancel/replace occur? No.
+13. Was live armed? No.
+
+Validation
+----------
+Focused tests: 34 passed, 1 warning in 2.48s
+Full tests: 376 passed, 1 warning in 3.58s
+Shell syntax: bash -n scripts/*.sh passed with rc=0
+Broker-safe systems check: passed from the actual runtime path with Alpaca live invariants.
+Runtime final arming dry-run: NO_GO with armed_live=False, orders_previewed_now=False, orders_submitted_now=False; blockers=['broker_state_inspection_skipped', 'premarket_research_never_reached_deep_mini', 'no_valid_trade_authorization_ticket'].
+Runtime final arming dry-run broker provider: alpaca
+Runtime final arming dry-run market data provider: alpaca
+Runtime final arming broker runtime: {'base_url': 'https://api.alpaca.markets', 'configured': True, 'environment': 'live', 'paper': False, 'provider': 'alpaca'}
+
+Safety
+------
+No orders were previewed, placed, canceled, or replaced. No live arming was performed. No real guard files were mutated. `.env` and secrets were not touched or uploaded.
+
+Files Patched
+-------------
+- configs/live.yaml
+- scripts/run_final_live_arming_gate.sh
+- scripts/run_live_opening_trade_ready.sh
+- scripts/run_live_force_flat.sh
+- ops/progress/broker_safe_systems_check.py
+- src/adapters/alpaca_trade.py
+- tests/test_alpaca_live_provider_contract.py
+- tests/test_no_webull_live_runtime.py
+- tests/test_live_readiness_uses_alpaca.py

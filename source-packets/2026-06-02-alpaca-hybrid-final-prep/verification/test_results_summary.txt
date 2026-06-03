@@ -1,0 +1,6 @@
+Focused tests: 56 passed, 1 warning in 2.39s.
+Full tests: 376 passed, 1 warning in 3.29s.
+Shell syntax: bash -n scripts/*.sh passed.
+Broker-safe systems check: passed.
+Safe smoke: optional Grok failure reached governed deep-mini; no order preview/place.
+Final arming dry-run: NO_GO, broker=alpaca, market_data=alpaca, no Webull blocker, no preview/submission/arming.
