@@ -1,0 +1,112 @@
+opening_bell:
+  enabled: true
+  mode: HYPER_SPECULATIVE_AUTONOMOUS
+  strategy_priority_order:
+    - OPENING_BURST_HYPER_LONG
+    - SOCIAL_TAPE_ROCKET
+    - PREMARKET_SURGE_LONG
+    - STAGED_OPEN_EXPLOSION_LONG
+    - PREMARKET_HIGH_RECLAIM_LONG
+    - ORB_BREAK
+    - VWAP_RECLAIM
+  human_approval_required: false
+  operator_expected_awake: false
+  no_naked_market_orders: true
+  max_open_positions: 1
+
+  arming:
+    require_live_armed_file: true
+    live_armed_file: "state/LIVE_ARMED"
+    disable_entries_file: "state/DISABLE_NEW_ENTRIES"
+    kill_switch_file: "state/KILL_SWITCH"
+    require_env_live_submission: true
+    env_live_submission_key: "ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION"
+
+  data:
+    primary_feed: alpaca_sip
+    require_quotes: true
+    require_trades: true
+    require_bars: true
+    max_quote_age_ms: 1000
+    max_trade_age_ms: 2000
+    max_bar_age_seconds: 90
+    subscribe_symbols: primary_plus_backups
+
+  windows:
+    preopen_freeze: "09:29:30"
+    first_print_observe: ["09:30:00", "09:30:05"]
+    first_10s_entry: ["09:30:05", "09:30:15"]
+    first_30s_entry: ["09:30:15", "09:30:30"]
+    first_60s_entry: ["09:30:30", "09:31:00"]
+    continuation_entry: ["09:31:00", "09:31:30"]
+    rescue_or_reclaim: ["09:31:30", "09:34:59"]
+    fallback_orb_vwap: ["09:35:00", "11:00:00"]
+
+  thresholds:
+    first_10s:
+      min_hyper_trade_score: 8.0
+      min_opening_drive_score: 8.5
+      min_volume_burst_score: 8.0
+      max_rug_pull_score: 3.0
+      max_upper_wick_fade_score: 4.0
+    first_30s:
+      min_hyper_trade_score: 7.5
+      min_opening_drive_score: 7.8
+      min_volume_burst_score: 7.0
+      max_rug_pull_score: 4.0
+      max_upper_wick_fade_score: 5.0
+    first_60s:
+      min_hyper_trade_score: 7.0
+      min_opening_drive_score: 7.2
+      min_volume_burst_score: 6.5
+      max_rug_pull_score: 5.0
+      max_chase_risk_score: 6.0
+
+  social_tape_rocket:
+    min_attention_acceleration_score: 8.0
+    min_hyper_trade_score: 7.0
+    min_opening_drive_score: 7.2
+    min_volume_burst_score: 6.5
+    max_spread_bps: 200
+
+  spread_policy:
+    missing_bid_ask: hard_block
+    stale_quote: hard_block
+    active_halt: hard_block
+    spread_bps_allow_full: 50
+    spread_bps_allow_reduced: 100
+    spread_bps_social_tape_max: 200
+    spread_bps_hard_block: 250
+
+  order:
+    type: aggressive_limit
+    market_orders_allowed: false
+    one_replace_max: true
+    slippage_cap_bps: 20
+    slippage_cap_cents: 0.03
+    cancel_unfilled_seconds:
+      first_10s: 2
+      first_30s: 3
+      first_60s: 5
+      staged_open: 75
+    never_replace_above_entry_cap: true
+
+  sizing:
+    bankroll_usd: 900
+    social_tape_default_usd: 100
+    social_tape_max_usd: 300
+    verified_default_usd: 300
+    verified_strong_usd: 500
+    a_plus_max_usd: 900
+    require_cash_or_buying_power: true
+
+  exits:
+    force_flat_time: "15:45:00"
+    average_down_allowed: false
+    time_stop_seconds_soft: 120
+    time_stop_seconds_hard: 300
+    exit_on_thesis_break: true
+    exit_on_opening_drive_failure: true
+    exit_on_bid_collapse: true
+    exit_on_data_degrade: true
+    exit_on_broker_mismatch: true

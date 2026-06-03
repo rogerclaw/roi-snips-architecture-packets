@@ -1,0 +1,192 @@
+version: 5
+profile: catalyst_continuation_long_playbook_v2_paper
+
+mode:
+  name: CATALYST_CONTINUATION_LONG_PLAYBOOK_V2_PAPER
+  human_approval_required: false
+  paper_trading_enabled: true
+  operator_assumed_asleep: true
+  human_override_available: true
+
+bankroll:
+  live_poc_bankroll_usd: 1000
+  max_total_live_exposure_usd: 1000
+  max_total_loss_budget_usd: 1000
+  max_daily_realized_loss_usd: 500
+  max_open_risk_usd_normal: 80
+  max_open_risk_usd_aggressive: 125
+  max_open_risk_usd_a_plus: 175
+
+broker:
+  provider: alpaca
+  environment: paper
+  base_url: https://paper-api.alpaca.markets
+  broker_role: data_and_execution
+  require_trade_updates_stream: true
+  rest_reconcile_fallback: true
+  use_client_order_id: true
+
+market_data:
+  provider: alpaca
+  required_feed_for_full_mode: iex
+  allow_basic_iex_micro_scouts: true
+  max_quote_age_ms_normal: 2000
+  max_quote_age_ms_open: 750
+  max_bar_age_seconds: 90
+  require_bid_ask: true
+  require_prior_close: true
+  require_premarket_volume: true
+  require_vwap: true
+
+research_mode:
+  allow_partial_market_data: true
+  allow_discovery_without_quotes: true
+  allow_social_discovery_without_execution_eligibility: true
+
+schedule:
+  timezone: America/New_York
+  overnight_micro_scout_enabled: false
+  data_collection_start: "04:00:00"
+  aggressive_premarket_start: "06:30:00"
+  confirmation_backup_start: "09:30:00"
+  no_new_symbols_after: "11:00:00"
+  force_flat_at: "15:45:00"
+
+session:
+  timezone: America/New_York
+  first_new_entry_et: "09:30:00"
+  last_new_entry_et: "11:00:00"
+  force_flat_all_et: "15:45:00"
+
+scope:
+  universe: us_stocks_etfs
+  direction: long_only
+  options_allowed: false
+  short_allowed: false
+  margin_allowed: false
+
+universe:
+  asset_class: us_equity
+  include_etfs: true
+  long_only: true
+  exclude_otc: true
+  min_price_default: 2.0
+  max_price_default: 300.0
+  allow_tier_c_hype: true
+  tier_c_hype_max_notional_usd: 250
+  require_asset_status_active: true
+  require_asset_tradable: true
+  require_fractionable_for_notional: true
+  require_fractional_eh_enabled_for_extended_fractional: true
+
+strategy:
+  family: CatalystContinuationLong
+  triggers: [OPENING_DRIVE_LONG, ORB_BREAK, VWAP_RECLAIM]
+  max_open_positions: 1
+  enabled_modes:
+    - OPENING_DRIVE_LONG
+    - ORB_BREAK
+    - VWAP_RECLAIM
+  optional_modes: []
+  opening_drive:
+    enabled: true
+    entry_start_et: "09:30:00"
+    entry_cutoff_et: "09:34:59"
+    min_regular_bars: 1
+    require_premarket_reference: true
+    min_first_minute_volume: 150000
+    min_first_minute_dollar_volume: 750000
+    min_close_in_range_pct: 0.6
+    max_chase_pct_above_reference: 1.0
+    max_spread_bps: 35
+    max_slippage_bps: 18
+    risk_budget_usd: 40
+    notional_cap_usd: 500
+    time_stop_et: "09:45:00"
+    subminute:
+      enabled: true
+      entry_cutoff_et: "09:30:55"
+      min_quote_samples: 3
+      min_elapsed_seconds: 10
+      min_projected_first_minute_volume: 150000
+      min_projected_first_minute_dollar_volume: 750000
+      min_close_in_range_pct: 0.75
+      max_pullback_from_high_pct: 0.35
+      min_push_from_first_sample_pct: 0.15
+      min_break_above_reference_bps: 5
+      min_hold_pct_of_subminute_high: 0.9975
+
+pdt_governor:
+  enabled: true
+  equity_threshold_usd: 25000
+  max_day_trades_rolling_5d_before_block: 3
+  block_new_same_day_flatten_trades_when_slots_exhausted: true
+  allow_overnight_hold_candidate_when_slots_exhausted: false
+
+risk:
+  initial_notional_usd_min: 50
+  initial_notional_usd_max: 1000
+  max_trade_risk_usd: 80
+  max_daily_risk_usd: 500
+  max_spread_bps: 60
+  max_slippage_bps: 30
+  max_quote_age_ms: 2000
+  max_bar_age_seconds: 90
+  opening_drive_max_spread_bps: 35
+  opening_drive_max_slippage_bps: 18
+  opening_drive_max_trade_risk_usd: 40
+  opening_drive_notional_usd_max: 500
+  opening_drive_min_first_minute_volume: 150000
+  opening_drive_min_first_minute_dollar_volume: 750000
+  opening_drive_max_chase_pct: 1.0
+  opening_drive_min_close_in_range_pct: 0.6
+
+execution:
+  no_naked_market_orders_extended_hours: true
+  entry_order_type_default: limit
+  use_marketable_limit_regular: true
+  max_replace_attempts: 1
+  notional_orders_allowed: true
+  cancel_notional_instead_of_replace: true
+  extended_hours:
+    enabled: false
+    order_type: limit
+    time_in_force: day
+    cancel_unfilled_after_sec: 10
+    max_spread_tax_pct_hard_catalyst: 0.006
+    max_spread_tax_pct_hype: 0.010
+  regular:
+    use_bracket_when_stable: true
+    use_oco_after_fill_when_needed: true
+    use_oto_stop_only_when_needed: true
+    trailing_stop_runner_allowed_regular_hours_only: true
+
+exits:
+  require_initial_stop_before_entry: true
+  local_watchdog_required: true
+  native_bracket_regular_hours_if_supported: true
+  force_flat_at: "15:45:00"
+  average_down_allowed: false
+
+controls:
+  approval_required: false
+  telegram_controls: true
+  live_order_submission_default: false
+  kill_switch_file: /Users/rogerclaw/.openclaw/workspace/roi-snips/state/KILL_SWITCH
+  disable_entries_file: /Users/rogerclaw/.openclaw/workspace/roi-snips/state/DISABLE_NEW_ENTRIES
+  telegram_offset_file: /Users/rogerclaw/.openclaw/workspace/roi-snips/state/telegram_offset.txt
+  proposals_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/state/proposals
+  operator_events_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/state/operator_events
+
+sources:
+  sec_edgar: required
+  alpaca_news: required
+  benzinga: optional
+  alpaca_market_data: required_for_paper_execution
+  reddit: required
+  x: optional
+
+outputs:
+  morning_report_json_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/json
+  morning_report_md_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/md
+  order_journal_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/reports/journal

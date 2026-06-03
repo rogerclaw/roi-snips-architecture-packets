@@ -1,0 +1,1 @@
+Executable surface: local shell crontab at /usr/sbin/cron. Runtime path: /Users/rogerclaw/.openclaw/workspace/roi-snips. Live broker correction does not change schedule. OpenClaw cron remains notification/artifact-inspection context only.

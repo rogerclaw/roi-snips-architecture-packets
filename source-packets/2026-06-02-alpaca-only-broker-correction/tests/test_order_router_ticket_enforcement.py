@@ -1,0 +1,5 @@
+from tests.test_order_router_authorization_ticket_guard import test_order_router_blocks_unauthorized_ticker_before_preview
+
+
+def test_order_router_ticket_guard_alias(tmp_path, monkeypatch):
+    test_order_router_blocks_unauthorized_ticker_before_preview(tmp_path, monkeypatch)
