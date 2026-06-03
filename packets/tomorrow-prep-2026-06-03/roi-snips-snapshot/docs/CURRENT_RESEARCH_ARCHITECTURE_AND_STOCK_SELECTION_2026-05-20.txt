@@ -1,0 +1,184 @@
+CURRENT ROI SNIPS RESEARCH ARCHITECTURE AND HOW A STOCK IS FOUND
+Date: 2026-05-20
+
+Purpose
+Roi Snips is built to find one high-conviction, long-only U.S. stock or ETF idea for a same-day to 1-3 day speculative trade. It is not supposed to produce a generic conservative watchlist. The target style is a volatile, catalyst-driven setup with asymmetric upside, strong evidence, live tape confirmation, and clear invalidation.
+
+Hard constraints
+- U.S. stocks and ETFs only.
+- Long only.
+- No options.
+- No shorting.
+- No margin behavior.
+- One open position max.
+- Intraday execution posture.
+- Valid entry window: 09:30 ET to 11:00 ET.
+- Opening-drive entries are only allowed from 09:30:00 to 09:34:59 ET.
+- ORB_BREAK and VWAP_RECLAIM are allowed after 09:35 ET if the setup confirms.
+- Force flat by 15:45 ET.
+- LLM research can recommend and explain, but deterministic guards decide whether live execution is allowed.
+
+Current scheduled research flow
+The workflow is configured around repeated premarket passes:
+- 04:05-04:25 ET: official sweep.
+- 06:05-06:20 ET: filing refresh.
+- 07:05-08:20 ET: tradeability gate.
+- 08:20-09:00 ET: shortlist verification.
+- 09:05-09:20 ET: final judge.
+- 09:20-09:29 ET: bell-readiness check.
+- 09:29 ET: freeze normal research changes except material breaking news.
+
+Primary source lanes
+The automated research pipeline uses scouts under `roi-snips/src/research/scouts/`:
+- SEC / EDGAR filings via `sec_scout.py`.
+- Company IR and press releases via `ir_scout.py`.
+- Structured news via `newswire_scout.py` and configured Benzinga/Alpaca news adapters.
+- FDA / biotech catalysts via `fda_scout.py`.
+- Government / contract / regulatory catalysts via `government_scout.py`.
+- Exchange / unusual listing or market structure signals via `exchange_scout.py`.
+- Social and retail discussion signals via `social_scout.py`.
+- Obscure or secondary confirmation via `obscure_scout.py`.
+
+Market data and tradeability lanes
+Roi Snips overlays market data before a candidate can become actionable:
+- last or premarket price
+- gap percentage
+- premarket volume and dollar volume
+- average 20-day dollar volume
+- estimated spread
+- execution readiness score
+- execution blockers and warnings
+
+The configured execution thresholds include:
+- minimum execution price around $3 in workflow config, $2 in risk config
+- minimum average dollar volume of $10,000,000
+- maximum spread of 0.75% for normal execution
+- tighter opening-drive spread limit of 35 bps
+- minimum first-minute opening-drive volume of 150,000 shares
+- minimum first-minute opening-drive dollar volume of $750,000
+- maximum opening-drive chase of 1.0%
+- stale quote limit of 2 seconds
+
+How the automated pipeline finds candidates
+1. Collect raw discovery events.
+   The system gathers fresh filings, company announcements, news, FDA/government items, market-moving themes, retail/social acceleration, and obscure catalyst hints.
+
+2. Derive a candidate universe.
+   It turns raw events into a limited ticker universe, currently capped around 40 discovery candidates unless manually overridden.
+
+3. Collect evidence for the candidate universe.
+   Once tickers are discovered, the system does a second evidence pass across SEC, IR, news, FDA, exchange, government, social, and obscure lanes.
+
+4. Cluster evidence by ticker and story.
+   Related events are grouped into candidate clusters so a stock with a stacked catalyst gets treated as one thesis instead of scattered snippets.
+
+5. Score research priority.
+   The ranking model weighs:
+   - catalyst strength
+   - freshness
+   - attention acceleration
+   - asymmetry
+   - official and structured confirmation
+   - evidence diversity
+   - source quality
+   - obscurity / lesser-known-name bonus
+   - crowding penalty
+   - social-only penalty
+   - mega-cap penalty unless the catalyst is genuinely exceptional
+
+6. Apply execution gates.
+   A candidate can rank well as research but still be blocked for execution if it lacks market overlay data, has broken spread/liquidity, lacks official or structured confirmation, has stale data, is too extended, or fails readiness thresholds.
+
+7. Build the daily best-pick packet.
+   If governed deep research/deep-mini succeeds, its output becomes the structured best-pick packet. If it fails or is unavailable, the system falls back to internal ranking and marks the packet as an internal fallback.
+
+8. Generate reports.
+   Outputs are written under:
+   - `roi-snips/reports/morning/json/`
+   - `roi-snips/reports/morning/md/`
+   - per-run artifacts under `roi-snips/runs/`
+
+How the LLM layer is supposed to be used
+The LLM is not supposed to be the whole stock picker. It is a synthesis and judgment layer over evidence.
+
+Preferred LLM use:
+- Broad discovery: full deep research when several serious candidates exist.
+- Shortlist synthesis: bounded deep-mini or equivalent once candidates are narrowed.
+- Final memo: decisive single-name recommendation with entry framework, targets, thesis break, and sell triggers.
+- Critique: explain why the chosen name beats other visible gappers.
+
+The current prompt asks for:
+- one single best stock, not a generic watchlist
+- 2-4 ranked backups when useful
+- catalyst and why it can move now
+- why the market may not have fully priced it
+- official evidence and sentiment trend
+- buy range or entry framework
+- same-day target
+- 1-3 day target
+- downside / thesis-break level
+- monitoring timeframe
+- sell triggers and danger signals
+
+Manual browser-research path I use in chat
+When doing this manually in chat, I use a similar architecture but with browser tools:
+1. Search for current high-volume / high-catalyst candidates from news, filings, earnings, FDA, M&A, contracts, and market movers.
+2. Cross-check official sources first: company release, SEC filing, FDA page, government contract notice, earnings deck, or exchange notice.
+3. Check structured market/news sources for whether the catalyst is actually being picked up.
+4. Check retail/social signals only as an amplifier: Reddit, StockTwits, X discussion velocity, forums, and trading blogs.
+5. Reject or downgrade names that are rumor-only, stale, already exhausted, too illiquid, too wide-spread, or likely dilution traps.
+6. Compare finalists on catalyst strength, freshness, asymmetry, tape confirmation, crowding, and invalidation clarity.
+7. Produce one best pick with a concrete entry framework and exit rules.
+
+Where Grok would fit
+Grok is most interesting as a scout, not as the final authority.
+
+Good use for Grok:
+- X-search and real-time retail sentiment discovery.
+- Fast detection of ticker chatter acceleration.
+- Finding posts, threads, or narratives that normal web/news search misses.
+- Acting as one more independent candidate-discovery lane.
+
+Bad use for Grok:
+- Letting X hype become proof by itself.
+- Allowing Grok to choose a stock without official-source verification.
+- Allowing Grok to override deterministic liquidity, spread, risk, or stale-data gates.
+- Treating Grok as a reliable execution signal.
+
+If added, Grok should be wired as:
+1. X/social scout proposes candidates and sentiment summaries.
+2. Roi Snips requires official or structured confirmation before promotion.
+3. Existing ranking weighs Grok/X as social attention, not primary evidence.
+4. Final LLM synthesis can cite Grok-derived sentiment only with source context.
+5. Execution gates remain unchanged.
+
+Current known weaknesses
+- The governed deep-research runner did not start today because `OPENAI_API_KEY` is missing in the current execution context.
+- `XAI_API_KEY` is also not currently available in the checked environment, so Grok is not wired yet.
+- Today's mechanical checks produced ranked candidates but zero execution-eligible candidates because key spread estimates were missing.
+- Live readiness is still blocked by `state/DISABLE_NEW_ENTRIES`, SIP-vs-IEX data-policy mismatch, and missing live execution market fields in the SIP path.
+- Clawpatch currently maps/reviews zero Roi Snips features, so it cannot be treated as a complete architecture audit.
+
+What "good" looks like for Charles's target style
+A good pick should usually have:
+- fresh hard catalyst
+- official or structured confirmation
+- believable reason the market has not fully priced it
+- high relative volume or premarket participation
+- small/mid-cap or lesser-known asymmetry when possible
+- social/retail attention accelerating, but not as the only proof
+- tight enough spread to trade
+- clear level where the thesis is broken
+- clear profit-taking and danger signals
+
+What should be avoided
+- boring mega-cap default picks unless the catalyst is exceptional
+- blue-chip quality bias masquerading as short-term opportunity
+- pure meme/social-only moves with no hard evidence
+- already-exhausted gap-and-fade traps
+- names with broken liquidity or untradeable spreads
+- dilution/offering traps
+- stale catalysts already digested by the market
+
+Bottom line
+The current architecture is catalyst-first discovery, evidence clustering, research ranking, market overlay, execution gating, and LLM synthesis. The best-stock decision should come from a combination of official catalyst evidence, attention acceleration, tradeable market structure, and clear risk thresholds. Grok could improve the social/X discovery lane, but it should not replace official verification or deterministic execution guards.

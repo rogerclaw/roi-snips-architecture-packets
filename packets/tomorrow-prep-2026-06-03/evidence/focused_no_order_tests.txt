@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.3, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/rogerclaw/.openclaw/workspace
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collected 28 items
+
+tests/test_monday_schedule_deep_mini_primary.py ...                      [ 10%]
+tests/test_deep_mini_required_for_live.py ...                            [ 21%]
+tests/test_no_live_trade_without_deep_mini.py .                          [ 25%]
+tests/test_premarket_wrapper_no_order_surface.py ..                      [ 32%]
+tests/test_final_live_arming_gate.py ....                                [ 46%]
+tests/test_no_red_readiness_arming.py .                                  [ 50%]
+tests/test_deep_mini_not_skipped_in_live_wrapper.py ....                 [ 64%]
+tests/test_provider_factory.py ..........                                [100%]
+
+============================== 28 passed in 0.88s ==============================

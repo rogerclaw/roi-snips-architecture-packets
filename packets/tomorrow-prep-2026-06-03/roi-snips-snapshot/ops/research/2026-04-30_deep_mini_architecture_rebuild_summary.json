@@ -1,0 +1,266 @@
+{
+  "started_at": "2026-04-30T14:06:48.458916+00:00",
+  "agent_id": null,
+  "user_request": "You are doing a governed deep-mini research pass for Roi Snips.\n\nObjective:\nRedesign the Roi Snips stock-research and premarket-selection architecture so it reliably surfaces the single best high-risk, high-upside, catalyst-driven U.S. stock opportunity for same-day or 1-3 day trades entered just after the open, instead of defaulting to conservative mega-cap names.\n\nThis is an architecture/prompt/research-workflow task, not an order request.\n\nCritical user preference to optimize for:\n- The user explicitly does NOT want conservative blue-chip defaults.\n- The user wants volatile, lesser-known, smaller-cap or mid-cap U.S. stocks that can explode upward on fresh catalysts.\n- The user is fine with maximum risk for a very small position.\n- The user wants one single best stock, not a generic watchlist.\n- The user wants exhaustive deep research using broad source coverage.\n- The user believes a deep-mini/deep-research style prompt produced materially better results than the current pipeline.\n\nCurrent implementation findings already established:\n- Current default universe is hard-coded to: NVDA, TSLA, AAPL, AMD, PLTR, SMCI, AMZN, META.\n- The obscure/small-cap scout currently returns nothing.\n- The morning pipeline only ranks the hard-coded list instead of discovering names dynamically.\n- Current gating and market-overlay logic penalize lower price, lower average dollar volume, unknown spreads, and imperfect tradeability early in the pipeline, which likely suppresses the exact explosive small/mid-cap names the user wants.\n- Deep-mini research has been used successfully as a side channel, but not integrated as the main production selector.\n- There is some broker/config drift in the codebase, but the primary failure appears to be research-universe and ranking bias.\n\nUse this user-style target prompt as a calibration anchor for the architecture:\n---\nI am looking to make a stock investment today just after market open, with the intention of selling the same day or within a couple of days. I want you to conduct an exhaustive, high-depth search across all relevant resources you can access, including financial news, company press releases, SEC filings, earnings materials, analyst commentary, trading blogs, market newsletters, Reddit threads, stock forums, X sentiment, Motley Fool, and any other credible or high-signal sources available to ChatGPT Pro. Treat this as if I am consulting one of the best stock pickers in the world for a high-conviction short-term trade.\n\nI do not want a generic watchlist. I want you to identify the single best short-term stock opportunity for today based on the strongest combination of catalyst, sentiment, technical setup, and probability of a sharp near-term move. Do deep research, think carefully, and synthesize both institutional-quality signals and retail sentiment to find something volatile that is expected to have a massive short-term uptick due to key progress, approval, product launch, merger, acquisition, partnership, contract award, earnings surprise, guidance revision, short squeeze potential, unusual volume, sector momentum, or another material catalyst.\n\nI am completely fine with high risk; this will be a very small investment, so I am able to tolerate maximum risk. I am not a professional day trader and use Webull.\n\nIn your analysis, weigh:\n- current news flow and catalyst strength\n- sentiment across retail and professional channels\n- premarket or early-session trading behavior if available\n- unusual volume, momentum, float dynamics, and short-interest conditions if relevant\n- technical levels such as support, resistance, breakout levels, gap fills, and likely liquidity zones\n- whether the move is already overcrowded or still early\n- what could invalidate the trade quickly\n\nFor the final answer, give me:\n- The single best stock to buy today\n- Ticker and company name\n- The exact reason it could move sharply in the next hours or days\n- The underlying catalyst and why the market may not have fully priced it in yet\n- Evidence from the research you reviewed, including sentiment and discussion trends\n- A suggested limit buy price or buy range\n- A realistic upside target for same-day and 1–3 day scenarios\n- A downside level or clear risk threshold where the thesis is broken\n- What timeframes I should monitor most closely after entry\n- Specific sell triggers, including both profit-taking and danger signals\n- A brief note on execution risk for someone using Robinhood with basic tools\n\nPrioritize asymmetric upside and high-conviction setups over safer, lower-volatility names. I care more about explosive short-term potential than stability. Be decisive, ranking quality of evidence over hype, but do not ignore hype if it is clearly becoming a market-moving force.\n---\n\nHard strategy constraints for Roi Snips:\n- Long-only U.S. equities/ETFs only\n- No shorting, no options, no margin\n- Intraday-first system\n- One open position max\n- Entries only 09:35-11:00 ET\n- Flat by 15:45 ET\n- Research can be aggressive, but execution must remain deterministic and fail-closed\n\nResearch/design questions to answer:\n1. What exact architecture should replace the current blue-chip-biased pipeline?\n2. What should the staged workflow be from overnight/pre-open discovery to final single-pick selection?\n3. How should source gathering be structured across official sources, structured news, exchange movers, social/retail sentiment, and browser/deep research?\n4. What should the dynamic candidate-universe generation logic be so MRAM-like names are discoverable by default?\n5. How should scoring be redesigned to favor fresh hard catalysts, attention acceleration, float scarcity, and asymmetric upside without admitting total junk?\n6. Where exactly should execution/tradeability filters be applied so they do not prematurely suppress volatile winners?\n7. When should the system use normal research vs governed deep-mini vs full deep research?\n8. What exact prompt stack should Roi Snips use for: architect stage, broad candidate discovery, shortlist synthesis, best-pick final memo, and live-supervisor conversion?\n9. What code-module changes are needed in the current repo to implement this?\n10. What should be changed this week first versus later?\n\nDeliverable:\nProduce an actionable architecture memo with these sections:\n1. Executive diagnosis of why the current system underperforms for this strategy\n2. Target architecture for a catalyst-driven “daily single best pick” engine\n3. Proposed staged workflow (overnight -> premarket -> post-09:35 confirmation -> selection)\n4. Dynamic universe/discovery design\n5. Source hierarchy and evidence policy\n6. Scoring/ranking framework, including concrete factor weights or pseudo-formula\n7. Prompt suite: exact recommended prompts/templates for each stage\n8. Integration plan for governed deep-mini/deep usage following the official routing policy\n9. Repo/module-level implementation plan referencing likely files/components to change\n10. Top failure modes / guardrails\n11. A concrete “do this next this week” checklist\n\nDecision style:\nBe concrete and opinionated. Do not just give general advice like “use smaller caps.” Design a system that could actually replace the current one.\n\nBudget discipline note:\nThis is a deep-mini architecture pass, not an unconstrained literature review. Use enough browsing to produce a strong design, but prioritize actionable synthesis over exhaustive tangents.",
+  "architect_route": "deep_mini",
+  "route_chosen": "deep_mini",
+  "route_override_reason": null,
+  "justification": "The request asks for an actionable architecture, prompt, and repo-level workflow redesign for a trading-research system with many constraints and explicit preference for a governed deep-mini pass. It needs meaningful synthesis and likely some external validation of catalyst-driven discovery sources, market-mover workflows, sentiment inputs, and tradeability guardrails, but the scope is bounded and architecture-focused rather than an unconstrained full deep research investigation.",
+  "architect_model": "gpt-5.5",
+  "architect_request_id": "req_01dd97ea07794e01b967eaea3fc4a87a",
+  "architect_response_id": "resp_0a513e0dce1429240069f361f969088198b787a2a83c96cde3",
+  "architect_usage": {
+    "input_tokens": 1941,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 2196,
+    "output_tokens_details": {
+      "reasoning_tokens": 145
+    },
+    "total_tokens": 4137
+  },
+  "brief": {
+    "Objective": "Redesign Roi Snips’ stock-research and premarket-selection architecture so it reliably discovers and selects one high-risk, high-upside, catalyst-driven U.S. equity/ETF opportunity for same-day or 1–3 day long trades entered shortly after the open, instead of defaulting to conservative mega-cap names. This is an architecture/prompt/research-workflow deliverable, not a live trade recommendation or order request.",
+    "Primary question": "What concrete architecture, staged workflow, scoring model, prompt stack, deep-research routing policy, and repo/module implementation plan should replace the current blue-chip-biased Roi Snips pipeline so it can dynamically discover volatile smaller-cap or mid-cap U.S. stocks with fresh catalysts and produce one decisive best-pick candidate while keeping execution deterministic and fail-closed?",
+    "Sub-questions to answer": "1. Why does the current implementation underperform for this user’s stated strategy?\n2. What should the target architecture be for a catalyst-driven “daily single best pick” engine?\n3. What should the workflow be from overnight discovery to premarket refinement, post-09:35 confirmation, final single-pick selection, and live-supervisor conversion?\n4. How should source gathering be structured across official sources, structured news, exchange/market-mover feeds, SEC filings, company press releases, earnings materials, analyst/pro commentary, trading blogs/newsletters, Reddit/forums, X/social sentiment, and browser/deep-research synthesis?\n5. How should dynamic universe generation work so lesser-known MRAM-like names are discoverable by default and not dependent on a hard-coded mega-cap list?\n6. How should scoring/ranking be redesigned to favor fresh hard catalysts, attention acceleration, float scarcity, unusual volume, short-squeeze potential, technical breakout structure, asymmetric upside, and early/non-overcrowded moves, while still filtering out unacceptable junk?\n7. Where should liquidity, spread, price, tradeability, and execution-risk filters be applied so they do not prematurely suppress volatile winners, but execution still remains deterministic and fail-closed?\n8. When should the system use normal research versus governed deep-mini versus full deep research? Align this with an official routing-policy style: normal path by default, deep-mini for bounded high-synthesis discovery/selection, full deep research only for materially harder or higher-uncertainty cases.\n9. What exact prompt stack should Roi Snips use for: architect stage, broad candidate discovery, shortlist synthesis, best-pick final memo, and live-supervisor conversion?\n10. What repo/module-level changes are needed, based on the known implementation findings, to replace the current pipeline?\n11. What should be implemented this week first versus later?",
+    "Known context": "User objective and preferences:\n- The user explicitly does NOT want conservative blue-chip defaults.\n- The user wants volatile, lesser-known, smaller-cap or mid-cap U.S. stocks that can explode upward on fresh catalysts.\n- The user accepts maximum risk for a very small position.\n- The user wants one single best stock, not a generic watchlist.\n- The user wants broad, high-depth research and believes deep-mini/deep-research style prompts produced materially better results than the current pipeline.\n- The user uses retail brokerage-style execution tools; the calibration prompt mentions Webull and later Robinhood/basic tools. Treat this as retail/basic-tool execution risk, not institutional execution.\n\nEstablished implementation findings:\n- Current default universe is hard-coded to: NVDA, TSLA, AAPL, AMD, PLTR, SMCI, AMZN, META.\n- The obscure/small-cap scout currently returns nothing.\n- The morning pipeline ranks only the hard-coded list instead of discovering names dynamically.\n- Current gating and market-overlay logic penalize lower price, lower average dollar volume, unknown spreads, and imperfect tradeability early in the pipeline, likely suppressing the exact explosive small/mid-cap names the user wants.\n- Deep-mini research has worked as a side channel but is not integrated as the main production selector.\n- Some broker/config drift exists in the codebase, but the primary failure appears to be research-universe and ranking bias.\n\nHard strategy constraints:\n- Long-only U.S. equities/ETFs only.\n- No shorting, no options, no margin.\n- Intraday-first system.\n- One open position max.\n- Entries only 09:35–11:00 ET.\n- Flat by 15:45 ET.\n- Research can be aggressive, but execution must remain deterministic and fail-closed.\n\nCalibration prompt intent to preserve:\n- Identify the single best short-term stock opportunity for today based on catalyst, sentiment, technical setup, and probability of a sharp near-term move.\n- Search broadly across financial news, company press releases, SEC filings, earnings materials, analyst commentary, trading blogs, newsletters, Reddit, stock forums, X/social sentiment, Motley Fool-like retail/pro commentary, and other credible/high-signal sources available.\n- Favor catalysts such as approvals, product launches, M&A, partnerships, contracts, earnings surprises, guidance revisions, short squeeze potential, unusual volume, sector momentum, and other material events.\n- Final production memo should explain ticker/company, catalyst, why it can move sharply, why it may not be priced in, evidence/sentiment, buy range, same-day and 1–3 day upside target, downside invalidation, monitoring windows, sell triggers, and execution risk.",
+    "Scope boundaries": "- Produce a system design and implementation memo, not an actual stock pick.\n- Focus on architecture, research workflow, candidate discovery, scoring, prompt design, deep-mini routing, and repo/module change planning.\n- Use external tools only to validate current best-practice source categories and practical discovery mechanisms for U.S. market movers, catalyst stocks, SEC/company news, premarket movers, social sentiment, float/short-interest considerations, and intraday tradeability guardrails.\n- If the task is mostly answerable from the provided context, use tools only for narrow verification that materially improves confidence.\n- Keep the design compatible with deterministic execution: aggressive research is allowed; order placement and position management must be rule-bound and fail-closed.\n- Assume current codebase contains components corresponding to the findings, but do not invent exact filenames unless they are clearly described as likely/representative components. If referencing files/components, phrase as “likely modules/components to inspect/change,” unless the source context proves exact names.",
+    "Out of scope": "- Do not provide a live buy/sell recommendation.\n- Do not recommend options, shorting, margin, crypto, foreign equities, or non-U.S. instruments.\n- Do not design a discretionary manual day-trading strategy that bypasses deterministic system controls.\n- Do not perform exhaustive literature review on trading theory.\n- Do not over-index on compliance/legal boilerplate, though a concise risk/guardrail section is required.\n- Do not assume access to proprietary feeds unless framed as optional enhancements.\n- Do not claim that any source guarantees predictive alpha.",
+    "Source priorities": "Use minimum necessary external verification. Prioritize first-party and high-signal sources for source hierarchy design, not for selecting a live stock.\n1. Official/first-party market and issuer sources: SEC EDGAR/company filings, company investor relations press releases, exchange pages, Nasdaq/NYSE market activity pages if relevant.\n2. Structured market data/source categories: premarket movers, unusual volume/gainers/losers, float/market-cap/short-interest providers, earnings calendars, FDA/biotech calendars if relevant to catalyst discovery, analyst/newswire services.\n3. Reputable financial news and calendars: Reuters/AP/CNBC/MarketWatch/Yahoo Finance/Seeking Alpha/newswire-like sources only as examples of source classes and evidence policy.\n4. Social/retail sentiment sources: Reddit, Stocktwits, X, trading forums, newsletters, blogs; use as attention/sentiment evidence, not as sole catalyst proof.\n5. Broker/execution considerations: retail brokerage limitations and basic execution risk; verify only if needed.\n6. Existing user-provided implementation findings are primary for diagnosis; do not spend browsing budget trying to rediscover them.",
+    "Required deliverable": "Produce an actionable architecture memo with exactly these sections:\n1. Executive diagnosis of why the current system underperforms for this strategy\n2. Target architecture for a catalyst-driven “daily single best pick” engine\n3. Proposed staged workflow: overnight -> premarket -> post-09:35 confirmation -> selection\n4. Dynamic universe/discovery design\n5. Source hierarchy and evidence policy\n6. Scoring/ranking framework, including concrete factor weights or pseudo-formula\n7. Prompt suite: exact recommended prompts/templates for each stage\n8. Integration plan for governed deep-mini/deep usage following the official routing policy\n9. Repo/module-level implementation plan referencing likely files/components to change\n10. Top failure modes / guardrails\n11. A concrete “do this next this week” checklist\n\nDeliverable requirements:\n- Be concrete and opinionated.\n- Include a staged architecture that can replace the current hard-coded mega-cap universe.\n- Include dynamic candidate-universe generation logic that explicitly captures small/mid-cap catalyst movers.\n- Include clear candidate stages: raw discovery, evidence enrichment, shortlist, final pick, live confirmation, execution handoff.\n- Include scoring weights or a pseudo-formula, with separate research-alpha scoring and execution-safety gating.\n- Explicitly move harsh liquidity/spread/tradeability filtering later in the process, while defining final fail-closed execution gates.\n- Include exact prompt templates for architect stage, broad candidate discovery, shortlist synthesis, best-pick final memo, and live-supervisor conversion.\n- Include when to use normal research, governed deep-mini, and full deep research.\n- Include repo/module-level implementation plan tied to known problems: hard-coded universe, empty small-cap scout, morning ranker, premature gating/market overlay, deep-mini side-channel integration, broker/config drift.\n- Include first-week implementation checklist with sequencing and acceptance tests.",
+    "Decision criteria": "A successful answer should:\n- Preserve the user’s preference for high-risk, high-upside, volatile smaller/mid-cap catalyst stocks.\n- Avoid conservative blue-chip defaults unless a mega-cap genuinely wins under the new catalyst/volatility framework.\n- Produce one best candidate, not a generic watchlist, while still using a broad candidate funnel internally.\n- Distinguish evidence-backed catalysts from social hype, but allow social attention acceleration to matter when corroborated by price/volume/news.\n- Make the pipeline robust against empty discovery results by using multiple independent discovery channels and fallback logic that does not revert only to mega-caps.\n- Separate “research desirability” from “execution permissibility.” Early ranking should not kill names merely for being small, volatile, or imperfectly liquid; final execution should still reject untradeable setups.\n- Define deterministic live execution gates for 09:35–11:00 ET entry and flat-by-15:45 ET exit.\n- Be implementable in an existing repo through identifiable modules/components and staged changes.\n- Provide prompt templates that are production-usable, not vague suggestions.",
+    "Stopping condition": "Stop once the architecture memo is well-supported by the provided context plus a small number of high-signal external checks on source categories/workflow assumptions. Do not continue browsing for marginal examples or attempt to identify an actual current stock pick. The final output should be specific enough that an engineer could start modifying the Roi Snips pipeline this week.",
+    "Budget discipline note": "Use the minimum necessary tool use. Do not run duplicate searches. Reuse gathered evidence before searching again. Prioritize first-party or explicitly requested source classes. Use tools only where they materially improve confidence in the architecture or source hierarchy. Stop once the deliverable is well-supported; this is a deep-mini architecture pass, not an unconstrained literature review or live market scan."
+  },
+  "brief_source": "optimized_rewrite",
+  "brief_optimization_applied": true,
+  "model_invoked": "o4-mini-deep-research",
+  "tools_attached": {
+    "web_search": true,
+    "mcp": false,
+    "file_search": false,
+    "code_interpreter": false
+  },
+  "background_job_id": "resp_02d90aed8b1bf45e0069f3624ed558819b8b2f71ac0809edf6",
+  "response_id": "resp_02d90aed8b1bf45e0069f3624ed558819b8b2f71ac0809edf6",
+  "start_time": "2026-04-30T14:06:48.458916+00:00",
+  "end_time": "2026-04-30T14:17:18.332028+00:00",
+  "success": true,
+  "status": "completed",
+  "token_usage": {
+    "input_tokens": 32889,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 6098,
+    "output_tokens_details": {
+      "reasoning_tokens": 6098
+    },
+    "total_tokens": 38987
+  },
+  "error": null,
+  "brief_rewrite_request_id": "req_197b421cc1f74004a2c69721780a05ee",
+  "brief_rewrite_response_id": "resp_0782ac4c679503770069f3621fcfb881939cdd480de1760480",
+  "brief_rewrite_usage": {
+    "input_tokens": 1973,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 2651,
+    "output_tokens_details": {
+      "reasoning_tokens": 65
+    },
+    "total_tokens": 4624
+  },
+  "tool_events": [
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "searching",
+      "name": null
+    }
+  ],
+  "completion_time": 542.872,
+  "executor_output": "# Architecture for Catalyst-Driven Daily Stock-Pick Engine\n\n## 1. Executive Diagnosis  \nThe existing system is biased toward large-caps and safe names because its universe is *hard-coded* to megacaps (NVDA, TSLA, AAPL, etc.) and its gating logic penalizes low-price or low-volume stocks early. This single-agent setup never “discovers” fresh catalysts in smaller issues, so it systematically misses the user’s target universe of volatile small/mid caps. In effect, the current pipeline resembles a single black-box engine with a fixed watchlist, rather than a broad multi-signal system. By contrast, modern research architectures split tasks into parallel streams (news, filings, technicals, sentiment) and then *orchestrate* them ([kadiyala.medium.com](https://kadiyala.medium.com/building-the-next-generation-stock-analyst-ec694ecb1677#:~:text=What%20distinguishes%20multi,The%20orchestrator%20then%20synthesizes%2C%20not)). The lack of such specialization means our system under-engages high-upside stocks and over-focuses on blue chips. In sum, the pipeline’s fixed universe and early filters starve the user’s strategy of high-risk candidates, so a redesign to dynamically scan and rank small/mid caps is needed.\n\n## 2. Target Architecture  \nWe propose a **modular, staged pipeline** with an orchestration layer that coordinates specialized agents. Key components will include: (a) a **Discovery module** that scans diverse sources (news, filings, calendars, market data, social) to build a live candidate list; (b) an **Evidence aggregation module** that enriches each candidate with catalyst details (company news, SEC filings, analyst notes, technical readouts, sentiment signals); (c) a **Scoring/Ranking module** that computes a composite “research score” based on catalyst strength, volume/volatility and short interest; and (d) a **Filter/Execution module** that applies final liquidity/tradeability checks before signaling a trade. These components can run in parallel (a multi-agent style design) with an *orchestrator* agent that synthesizes their outputs ([kadiyala.medium.com](https://kadiyala.medium.com/building-the-next-generation-stock-analyst-ec694ecb1677#:~:text=What%20distinguishes%20multi,The%20orchestrator%20then%20synthesizes%2C%20not)). For example, one agent continuously monitors official news and SEC feeds, another watches price/volume anomalies, another polls social sentiment, etc. Each agent produces signals on tickers, and the orchestrator merges and ranks them. This structure matches best practices: separate reasoning domains operate concurrently and an overseer synthesizes conclusions ([kadiyala.medium.com](https://kadiyala.medium.com/building-the-next-generation-stock-analyst-ec694ecb1677#:~:text=What%20distinguishes%20multi,The%20orchestrator%20then%20synthesizes%2C%20not)). The architecture remains deterministic on execution: once the single-best candidate is chosen, trading rules (entry window, stop-loss, size limit) are applied in code.\n\n## 3. Staged Workflow  \n- **Overnight Scan (after previous close – premarket):** Run broad discovery queries. Pull all new company filings (8-Ks, earnings releases) from the SEC, earnings/date calendars (earnings, FDA, product launches), and press releases. Query structured news sources (e.g. Reuters, Bloomberg, PR Newswire) for catalyst headlines. Pull top pre-market movers and volume anomalies (via API or data feeds). Consolidate all tickers with fresh events or unusual activity into a *raw candidate list*.  \n- **Premarket Refinement (pre-open):** Enrich each raw candidate with context. For each ticker, fetch news stories, SEC filings text, analyst notes and social buzz. Estimate overnight sentiment (e.g. change in sentiment on StockTwits or X). Rank candidates by a preliminary score combining the freshness of the catalyst and momentum (e.g. premarket percent change and volume spike). Exclude any clearly broken names (e.g. halted stocks). By market open, produce a *shortlist* of, say, 5–10 top candidates.  \n- **Post-Open Confirmation (09:30–09:35 ET):** Observe actual market open behavior. Confirm that shortlisted tickers show directionally consistent moves (e.g. continuing upward momentum, volume initiation). Drop any that stall or reverse immediately. This step prevents false premarket moves. The updated list is now the *final slate* of candidates.  \n- **Final Selection and Entry (9:35–11:00 ET):** Use a final deep-mining pass on the remaining candidates (see Section 8) and compute each’s full score. Select the single best-ranked ticker. Convert the research into an execution plan. Enter the trade (e.g. market-if-touched orders or limit orders at breakout) within the allowed window. The system is then flat by 15:45 ET (with trailing stop/target orders in place). Throughout, execution is rule-bound: if no candidate meets the final criteria or if any check fails, the system stays flat (fail-closed).\n\n## 4. Dynamic Universe and Discovery Design  \nRather than a static watchlist, the universe will be *dynamically generated* each day through multiple discovery channels: \n\n- **Catalyst Calendars:** Pull from earnings calendars (e.g. Nasdaq or company IR), FDA/Biotech event calendars, M&A rumor feeds, conference schedules, and any scheduled regulatory announcements. These yield ticker-event pairs, especially in small/mid caps.  \n- **Structured News Feeds:** Subscribe to wire services and PR aggregators (e.g. BusinessWire, PR Newswire, GlobeNewswire), or APIs like Benzinga, for company press releases and news. Parse headlines for keywords (FDA, contract, acquisition, earnings surprise, guidance, etc.) to flag fresh catalysts.  \n- **SEC Filings:** Monitor EDGAR for fresh 8-Ks, 10-Q/K, etc. A spike in filings (insider buys, debt changes) can be a catalyst. Use keyword filtering (litigation, merger, product, etc.) to surface relevant items.  \n- **Market Data Scanners:** Use pre-market movers lists (Nasdaq/NYSE gainers, top premarket by %), unusual volume scanners (e.g. from trading platforms or public screens), and initial breakouts. As TradingView notes, “unusually high or low volume may influence future prices, so it’s useful to detect it to make timely decisions” ([www.tradingview.com](https://www.tradingview.com/markets/stocks-usa/market-movers-unusual-volume/#:~:text=Unusually%20high%20or%20low%20volume,are%20sorted%20by%20relative%20volume)). We will automate queries to such screener APIs or websites each morning.  \n- **Social and Retail Buzz:** Track trending tickers on StockTwits, Reddit (r/WallStreetBets, r/stocks), and Twitter/X. Use mention volume or sentiment APIs to flag names “going viral.” These are *secondary* signals – they won’t drive buy decisions alone but can highlight unusual attention.  \n- **Analyst & Expert Commentary:** Scan sources like Seeking Alpha, Motley Fool, and newsletters for highlighted small-cap ideas. Also monitor FinTwit/YouTube summaries for emerging themes.  \n\nAll tickers identified by any channel are merged into the candidate pool. This ensures obscure mid-cap names (e.g. a memory-chip maker like MRAM) can surface if they have a fresh event or volume spike, rather than only primetime tech giants.\n\n## 5. Source Hierarchy and Evidence Policy  \nSources are ranked by reliability and used as follows: \n\n- **(1) Official/Regulatory:** First-tier evidence comes from SEC EDGAR filings and company-issued news (press releases, earnings reports). These are factual anchors for a catalyst.  \n- **(2) Structured Market Data:** Next, structured feeds like premarket movers, unusual-volume scanners, earnings/fda calendars, Nasdaq/NYSE data on short interest and float. These provide objective quantitative signals (e.g. “XYZ had +50% volume before open”).  \n- **(3) Reputable News:** Financial wire services and reputable sites (Reuters, Bloomberg, WSJ, CNBC, Motley Fool, Seeking Alpha) confirm or add context to catalysts. They may include analyst commentary.  \n- **(4) Social/Community:** Theme-level color comes from StockTwits/X/Reddit/posts. These inform sentiment. They are *only supporting evidence* – e.g. “X is surging on Reddit hype, and we see in data the volume is indeed anomalous.” We never use social as sole proof.  \n- **(5) Blogs/Newsletters:** As tertiary context, select trading blogs or newsletters may justify or contradict a catalyst. Use caution with these.  \n\nIn practice, the system collects all evidence but weights it. A catalyst tied to a credible official release or newswire is highest-confidence. Unusual volume confirmed by chart data is a strong quantitative signal ([www.tradingview.com](https://www.tradingview.com/markets/stocks-usa/market-movers-unusual-volume/#:~:text=Unusually%20high%20or%20low%20volume,are%20sorted%20by%20relative%20volume)). Social buzz is noted only if aligned with hard data. All claims (e.g. “FDA says X”) are tagged with source so the final report can show “source-linked evidence.” This multi-channel evidence fusion builds conviction on a candidate before entry.\n\n## 6. Scoring and Ranking Framework  \nEach candidate is scored on a weighted mix of **Research-Alpha factors** (signal strength) and **Execution-Risk factors** (safety). For research scoring, we might define a pseudo-formula like:  \n\n```\nScore = Wc*(CatalystStrength) + Wv*(VolumeSpike) + Ws*(ShortInterest) + Wt*(TechnicalBullish) + Wa*(AttentionRank)\n```  \n\n- **CatalystStrength:** Numeric score (0–10) reflecting the substance of the event (e.g. FDA approval = 10, minor PR = 2). More weight on truly material news.  \n- **VolumeSpike:** Ratio of recent volume to average volume. High unusual volume gets high score (supported by evidence that abnormal volume often precedes moves ([www.tradingview.com](https://www.tradingview.com/markets/stocks-usa/market-movers-unusual-volume/#:~:text=Unusually%20high%20or%20low%20volume,are%20sorted%20by%20relative%20volume))).  \n- **ShortInterest:** Proxy for squeeze potential. High short % (e.g. >30% float) raises score.  \n- **TechnicalBullish:** Indicators like a breakout above a moving average, RSI momentum, or pattern breakout. Definitions are codified (e.g. “price crossing 20-day SMA with volume >1.5× average”).  \n- **AttentionRank:** Composite of media/social attention (mentions, trending status). Only adds score if corroborating signals (like volume) are present.  \n\nThese terms can be normalized and weighted (e.g. Wc=0.4, Wv=0.25, Ws=0.15, Wt=0.15, Wa=0.05). The exact weights should be empirically tuned, but the intent is clear: *fresh catalysts and volume are weighted heaviest*.  \n\n**Execution filters** are applied *after* scoring, just before final selection, to ensure tradeability. For example, we require current price ≥ $3 (to avoid penny-stock illiquidity), average daily volume ≥ 200k shares, and bid/ask spread ≤ 2% of price. Crucially, these filters are not used during initial ranking so as not to cull explosive candidates prematurely. Only the final choice must pass all execution criteria, else we skip it. This separation—“optimize for upside” vs “guardrail for risk”—means we may rank some small illiquid name high, then reject it at the very end if it fails strict tradability rules. \n\n## 7. Prompt Suite for Staged Research  \nWe will use tailored LLM prompts at each stage of the workflow. Example prompts are as follows:\n\n- **Architect Stage Prompt:**  \n  *Role:* “System Architect.” *Instruction:* “Design a daily catalyst-driven stock-picking pipeline that finds one high-upside small/mid-cap U.S. equity each day. The system should scan SEC filings, press releases, news feeds, social trends, and premarket data. Emphasize fresh material catalysts (FDA, earnings surprises, M&A, product launches, etc.) and incorporate technical/volume signals. Explain the multi-stage architecture (discovery, analysis, ranking, etc.) and how each stage operates deterministically. Provide concrete choices of data sources and modules. The user forbids use of default blue-chip-only lists. Output a detailed pipeline architecture description with stages.”  \n\n- **Broad Candidate Discovery Prompt:**  \n  *Role:* “Market Scanner AI.” *Instruction:* “Search overnight news and data for today’s U.S. market-moving events. List all tickers (preferably small/mid caps) with any fresh catalyst. Include those mentioned in SEC filings, press releases, newswires, or showing unusual premarket moves. For each ticker, give a one-sentence reason (e.g. ‘ABC: FDA approved new drug’ or ‘XYZ: Q2 earnings beat’ or ‘QQQ: +60% premarket volume’). Ignore big tech defaults unless they have a truly unexpected catalyst. Return a JSON list of candidate tickers and reasons.”  \n\n- **Shortlist Synthesis Prompt:**  \n  *Role:* “Equity Analyst AI.” *Instruction:* “You have the list of candidate tickers from the discovery stage. For each ticker, gather and synthesize key details: describe the catalyst in more depth, summarize relevant news or filings, give recent technical/volume context, and note any market sentiment clues. Then score or rank them by conviction (high, medium, low) explaining why. Format as a brief dossier for each ticker. The goal is to identify which are most promising for a sharp near-term rise.”  \n\n- **Best-Pick Final Memo Prompt:**  \n  *Role:* “Senior Research Analyst.” *Instruction:* “From the shortlisted candidates, select the single best stock for today’s play. Provide a clear memo: include the ticker, company description, the catalytic event (with evidence/sources), why this catalyst likely isn’t fully priced in, and why it could trigger a rapid move. Detail near-term upside targets and a downside invalidation (stop-loss). Define a buy range (e.g. breakout level after confirmation) and a 1–3 day price target. Mention associated risks (liquidity, sector headwinds). Cite any key facts (e.g. quotes from news, data).”  \n\n- **Live-Supervisor / Execution Plan Prompt:**  \n  *Role:* “Trading Assistant.” *Instruction:* “Given the chosen stock and research, draft precise execution instructions. Specify entry order type and trigger (e.g. “Buy 100 shares if price breaks $X with volume >Y”), initial stop (e.g. 2% below entry or key support level), and profit targets (or trailing stop criteria). Include a schedule (enter by 11:00 ET, exit by 15:45 ET if target not hit) and maximum position size. This will feed into a retail brokerage API, so use concrete price/size terms and keep it compliant with intraday flat-by-close rules.”  \n\nEach prompt forces the LLM to operate in a focused role. The text can be refined further in implementation, but these templates ensure consistent use of “you-are” instructions and clear output formatting expectations.\n\n## 8. Research Routing Policy (Normal vs Deep-Mini vs Full Deep)  \nWe classify tasks into three modes: \n\n- **Normal Research:** Quick-turn queries that rely on public sources and fast summarization. Used for broad discovery and initial analysis (Stages 3 and 4 above). If the candidate universe is changing rapidly or data is abundant, normal mode suffices to fetch headlines, price stats, and sentiment without intense computation.  \n- **Deep-Mini Research:** For the top 3–5 final candidates, invoke a more thorough bounded deep dive. This involves combining multiple prompts or using an agent with access to premium data if available. For example, query detailed SEC text (RAG), cross-reference news articles, and extract nuanced insights. The goal is to refine the shortlist and generate the final memo. This step is “governed” – it draws on prior evidence and is limited to known candidate set.  \n- **Full Deep Research:** This is reserved for truly hard/ambiguous cases. For instance, if multiple candidates have conflicting signals or the catalyst is unusually novel (e.g. highly technical biotech news), we may launch a full multi-agent deep analysis (multi-day if needed) to validate the thesis. In practice, this may seldom happen in a same-day system, but the framework is: by default use normal research; escalate to deep-mini for top picks; only use full deep if something is highly uncertain or high-impact. This ensures the system remains agile.\n\nAll research steps remain governed: every piece of data or insight is tied to sources (news URLs, filings) and the LLM’s reasoning is logged. We avoid ad-hoc creative leaps. The orchestrator agent (or supervising code) enforces that if deep-mini fails to reach consensus or conflicts appear, it can fall back to the next highest-ranked candidate or abort for the day. This governed approach aligns with recommendations to structure reasoning chains and human-in-the-loop review for critical tasks ([kadiyala.medium.com](https://kadiyala.medium.com/building-the-next-generation-stock-analyst-ec694ecb1677#:~:text=%3E%20The%20multi,box%20model%20integrations)).\n\n## 9. Repo/Module-Level Implementation Plan  \nBased on the known codebase issues, the following components should be inspected and updated:\n\n- **Universe Generator / Stock Scout:** Replace the hard-coded ticker list with a dynamic discovery module. Hunt in the code for the static array `[NVDA, TSLA, AAPL,…]` or any “default universe” and remove it. Implement a new “CandidateDiscovery” component (script or service) that queries news APIs, SEC feeds, and screeners to output a list of tickers. If there is a currently empty “small-cap scout” routine, debug it or fold its logic into the main scanner.  \n- **Morning Ranking/Pipeline:** Modify the morning pipeline module so it no longer only ranks the fixed list. Instead it should accept the dynamic list from the discovery step. This likely involves changes in the component that assembles the list of equities to evaluate (e.g. something like `morningRanker.py` or `stockPicker.py`). Ensure that scoring uses the new factors (catalyst, volume, etc.) rather than just market-cap or analyst ratings.  \n- **Gating/Market-Overlay Logic:** Review the code that currently applies liquidity filters early (possibly in a `filter.py` or similar). Shift low-price or low-volume checks to the final execution module instead. In practice, move these checks just before order submission. That way, earlier stages keep stock like $5 or thin-volume names alive until the final call.  \n- **Deep-Mini Integration:** If “deep-mini” research was only a side channel, formalize it as part of the pipeline. For example, integrate a module that, after initial ranking, queries an LLM with the “Shortlist Synthesis” and “Best-Pick” prompts. This might be implemented in a new file or function (e.g. `deepMiniResearch.py`). Ensure the system can route the top N tickers into this module and receive structured output (memo).  \n- **Prompt Infrastructure:** Ensure there are code hooks for each stage’s prompt. Possibly a PromptManager or sequence script that calls the LLM with each template. Consolidate prompt texts into config or function inputs.  \n- **Broker/Execution Module:** Verify that the final selected ticker and its parameters (price stop, target) are correctly sent to the brokerage interface (as Webull/Robinhood orders). Account for “one position max” – e.g. disable new entry if an order is still pending or existing position is open. Fix any \"broker/config drift\" issues (such as incorrect API credentials or trading logic differences) now since execution gating will be critical.  \n\nIn summary, refactor or create modules roughly along these lines: *CandidateDiscovery*, *EvidenceAggregator*, *ScoreEngine*, *DeepResearch*, *ExecutionFilter*, and *TradeExecutor*. Implementation should be incremental: first plug in the discovery feed and dynamic scoring, then layer in the LLM-based analysis. Use version control branches or feature flags to keep the old mega-cap path as a fallback until the new pipeline is validated.\n\n## 10. Top Failure Modes and Guardrails  \n- **False Catalysts / News Misinformation:** A rumored event may not materialize (e.g. a false M&A tweet). Guardrail: require at least one credible source (e.g. 8-K or major wire) for the main catalyst.  \n- **Overcrowding / News Already Priced:** Sometimes a catalyst is widely known before issuance. Guardrail: check trade volume/price reaction immediately after overnight news; if it already spiked premarket by >X%, our expected upside is lower.  \n- **High Execution Risk:** A high-score stock may be untradable (e.g. halted, penny with 50% spread). Vigilantly apply the final filters before order. If the chosen stock fails any liquidity or price-check, the system should cancel the trade for the day (“fail-closed”).  \n- **Data Unavailability:** If key data feed (e.g. SEC API or news service) is down, have fallbacks. The orchestrator should detect missing data inputs and either use alternate sources or skip the drive (again fail-closed).  \n- **LLM Hallucination:** The LLM might invent facts about a small company. Mitigation: Always require citations in the output. In prompts, demand “source URLs for any factual claims.” The pipeline code can cross-check any “evidence” from LLM against real sources.  \n- **Timing Miss:** If discovery runs too late (after 9:30), we could miss the entry window. Implementation must ensure overnight scans finish by 5 AM, and premarket by 9:15 AM. Use monitoring alerts if a phase overruns its time budget.  \n- **Excessive Risk:** By design, the user accepts high risk *in the chosen trade*, but we still pad in conservative final exits. Always flatten by 15:45 ET. Set a hard cap on position size (e.g. $X or X% of equity) to limit blow-ups.  \nEach guardrail is coded as a hard rule. If any fail, the pipeline aborts or moves to the next-best candidate. This ensures the system never takes an unapproved risk.\n\n## 11. Immediate Next Steps (This Week) vs Later Work  \n**This Week (High Priority):**  \n- *Implement Basic Discovery:* Remove the static ticker list and wire up a simple premarket/news scanner. For example, call a free news API or RSS feeds for press releases and collect tickers. Test with a few known catalysts (e.g. use yesterday’s news to see if it finds examples).  \n- *Adjust Universe Logic:* Modify the morning pipeline code so it ingests the dynamic list instead of the hard-coded list. Ensure the system handles an empty discovery result gracefully (e.g. enters fallback logic like “no trade today” rather than defaulting to blue chips).  \n- *Reorder Liquidity Filters:* Revisit the code that filters by price/volume and move those checks to after scoring. Validate that small stocks now survive early stages. Write automated tests: e.g. create a mock stock with low price but large catalyst and see that it passes until the end.  \n- *Design Scoring Skeleton:* Code a prototype of the multi-factor scoring (catalyst flag, volume, etc.). Initially, make each factor binary or simple. Hook it into the ranking step. Verify the system output changes (e.g. small stock with a news now ranks above a quiet large-cap).  \n- *Develop Prompt Templates:* Finalize the text of the prompts above, and integrate with the LLM interface. Test each prompt with a toy example to ensure it returns structured output. For example, run the candidate discovery prompt on last night’s data and inspect the results.  \n- *Testing:* After each change, run end-to-end in dry-mode (no real trades): the system should now occasionally pick a small stock candidate (even if ultimately filtered). Track performance and debug issues (e.g. coverage of sources, prompt clarity).  \n\n**Later Work (Pipeline Refinements):**  \n- Refine weighting of the scoring model based on historical backtests or live play. Fine-tune what constitutes a “strong” vs “weak” catalyst.  \n- Add more data sources and deeper analysis: e.g. integrate short-interest API, social sentiment APIs, or premium news feeds.  \n- Polish deep-mini and full-deep workflows: add caching, better chaining of LLM calls, and human-in-loop checkpoints for edge cases.  \n- Improve guardrails with statistical checks (e.g. if loss on numerous simulated days, adjust risk filters).  \n- Build monitoring/dashboard features (tracking which sources triggered picks, logging decisions by category) to iteratively improve the system.  \n\nBy focusing first on the core pipeline changes (dynamic universe, staging, scoring, and prompts), we enable switching away from mega-cap defaults this week. Later tasks can fine-tune and extend the architecture into a robust production system.\n\n**Sources:** We follow multi-agent research design principles ([kadiyala.medium.com](https://kadiyala.medium.com/building-the-next-generation-stock-analyst-ec694ecb1677#:~:text=What%20distinguishes%20multi,The%20orchestrator%20then%20synthesizes%2C%20not)) and best practices of screening for unusual volume to catch spikes ([www.tradingview.com](https://www.tradingview.com/markets/stocks-usa/market-movers-unusual-volume/#:~:text=Unusually%20high%20or%20low%20volume,are%20sorted%20by%20relative%20volume)). These guide the new pipeline’s structure and signals.",
+  "request_id": "req_4494664ce55a4a72bad6fcd81d24627f"
+}

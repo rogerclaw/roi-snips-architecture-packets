@@ -1,0 +1,1121 @@
+ROI SNIPS 2026-05-21 LIVE-RUN AUDIT PACKET
+====================================================
+Created at: Thu May 21 07:05:30 PDT 2026
+Workdir: /Users/rogerclaw/.openclaw/workspace/roi-snips
+Scope: read-only audit. No orders were placed by this audit, and no guard files were created, cleared, or modified by this audit.
+
+1. EXECUTIVE SUMMARY
+- Buy order placed by Roi Snips live monitor: NO.
+- Primary ticker selected: AMD.
+- Primary backups shown in the morning packet: PLTR and SMCI. B-tier also showed META twice, which is a duplicate-watchlist defect.
+- Exact no-buy reason: the manually recovered live monitor never generated a valid trade proposal. The log shows 0 proposal mentions and 0 submission/order mentions from the monitor path. It first returned DISARM because candidate quote freshness breached the tight open threshold; after live patches it stayed in WATCH because every watched symbol returned no_valid_mode_for_phase.
+- Broker/account/readiness was not the reason for no buy. Latest readiness is GREEN/full_execution_ready=true with no execution blockers, live Alpaca account, SIP data, $1,000 cash/buying power/equity, and no open orders.
+- System behavior under current rules: after patching the false all-system disarm condition, the system behaved conservatively and correctly by not buying without a deterministic entry mode. Before the patch, it was too brittle: one stale backup/duplicate quote could disarm the whole loop.
+- Classification: mixed infrastructure/implementation miss plus final correct no-trade. The missed scheduled cron was infrastructure/ops. The invalid deep-mini mode and stale-backup disarm were implementation/config misses. The ultimate no-buy after recovery was a strategy/no-signal decision because no valid opening-drive/ORB/VWAP proposal appeared.
+
+2. TIMELINE
+- 2026-05-20 21:16 PT / 2026-05-21 04:16 UTC: Charles had explicitly armed live trading. Guard state after arming: state/LIVE_ARMED present, state/DISABLE_NEW_ENTRIES absent, state/KILL_SWITCH absent.
+- 2026-05-20 21:56 PT / 2026-05-21 04:56 UTC: Plan A preflight logged to reports/live_monitor/opening_bell_live_2026-05-21.jsonl. First log entries show preflight_start live_readiness at 04:56:11 UTC, preflight_complete at 04:56:13 UTC, opening_bell_readiness start at 04:56:13 UTC, complete at 04:56:14 UTC.
+- 2026-05-21 06:00 PT / 13:00 UTC: expected one-shot OpenClaw cron d3f02133... should have run research/premarket/readiness. Audit command now returns cron job not found. Morning report artifacts were initially missing during manual investigation, so this scheduled path did not produce the needed packet on time.
+- 2026-05-21 06:29:30 PT / 13:29:30 UTC: expected one-shot live monitor cron f112f794... should have started opening-bell monitor. Audit command now returns cron job not found. Live monitor log had no 06:29:30 cron execution; only prior preflight and later manual starts.
+- 2026-05-21 about 06:32 PT / 13:32 UTC: manual recovery ran PYTHONPATH=. .venv/bin/python -m src.workflows.research_pipeline, then PYTHONPATH=. .venv/bin/python -m src.workflows.premarket_pipeline. Manifest generated_at_utc is 13:32:10.975691 and morning report generated_at_utc is 13:32:21.581152.
+- 2026-05-21 06:32:33 PT / 13:32:33 UTC: manual live-readiness preflight starts in opening_bell_live log.
+- 2026-05-21 06:33:14 PT / 13:33:14 UTC: manual live_monitor_loop_start appears in log.
+- 2026-05-21 06:34:00-06:35:36 PT / 13:34:00-13:35:36 UTC: live monitor repeatedly returned disarm/market_data_unhealthy because one or more candidate quotes were stale by the open threshold; examples include AMD quote_age_ms 999, 760, 1008, 1352, 1424 and META quote_age_ms 1301, 1847, 1778, 2471.
+- 2026-05-21 about 06:38 PT / 13:38 UTC: live_monitor.py was patched so only all-unhealthy candidates disarm the whole run; a stale backup no longer turns the entire run into disarm. A live monitor command at 13:38:41 UTC returned watch rather than disarm.
+- 2026-05-21 about 06:39 PT / 13:39 UTC: focused tests were run. Journal entries at 13:39:24 UTC are test artifacts from order-router/live-monitor tests, not a real AMD monitor order. They include plan_test_* and persisted_to_postgres=false.
+- 2026-05-21 about 06:40-06:41 PT / 13:40-13:41 UTC: detached screen session roi-snips-opening-bell was started to keep scripts/run_opening_bell_live_monitor.sh --loop-only alive. screen -ls later shows 67996.roi-snips-opening-bell detached.
+- Latest audited monitor state: log has 1085 JSON-ish rows, status counts disarm=7 and watch=194, proposal_mentions=0, submission_order_mentions=0. Latest status rows remain watch/no_valid_mode_for_phase.
+
+3. STOCKS PICKED AND WHY
+- Morning report status: ok; generated_at_utc=2026-05-21T13:32:21.581152+00:00 / PT=2026-05-21 06:32:21 PDT.
+- Best pick candidate raw: {
+  "attention_acceleration_score": 0.0,
+  "catalyst_strength_score": 3.5,
+  "catalyst_type": "earnings_or_material_update",
+  "claim_summary": "AMD 8-K filing",
+  "company_name": "AMD",
+  "crowding_score": 0.0,
+  "execution_blockers": [],
+  "execution_gate_pass": true,
+  "execution_readiness_score": 100.0,
+  "execution_warnings": [],
+  "freshness_score": 10.0,
+  "gap_pct": 5.0786,
+  "last_price": 441.33,
+  "official_confirmation_count": 1,
+  "premarket_dollar_volume": 279128683.72,
+  "premarket_volume": 659403,
+  "research_priority_score": 3.014,
+  "social_confirmation_count": 0,
+  "spread_pct": 0.1903,
+  "story_stage": "early",
+  "structured_confirmation_count": 0,
+  "symbol": "AMD"
+}
+- Daily best-pick packet selected AMD because it was the top internal research and execution-ranked candidate after deterministic scoring and late execution gating. Packet caveat: governed_deep_mini_unparsed.
+- Best-pick packet fields:
+  - best_pick: AMD
+  - best_pick_summary: AMD 8-K filing
+  - source_mode: internal_fallback
+  - route_chosen: None
+  - executive_summary: Fallback packet derived from internal ranking because governed deep-mini output was unavailable or unparsed.
+  - why_best_pick_wins: Top internal research and execution-ranked candidate based on catalyst-first scoring and late execution gating.
+  - research_leader: AMD
+  - why_market_may_not_be_fully_priced: AMD screens as early: fresh evidence with attention not yet fully crowded. Catalyst: AMD 8-K filing
+  - suggested_buy_zone: Use live tape; do not chase above about $445.74. Prefer VWAP/opening-range reclaim or controlled pullback near current liquidity.
+  - same_day_upside_target: $476.64-$520.77, only if volume expands and spread remains controlled.
+  - one_to_three_day_upside_target: $507.53-$595.8 over 1-3 days if catalyst follow-through and retail attention continue.
+  - thesis_break_level: Breaks below about $414.85, loses VWAP with fading volume, or spread/liquidity deteriorates.
+  - profit_taking_triggers: ['Scale or exit into a sharp volume-backed spike toward the same-day target.', 'Take profit if the move gets vertical while social chatter becomes one-sided and spread widens.', 'Do not turn an intraday catalyst trade into a hold unless price closes strong with continuing catalyst flow.']
+  - danger_signals: ['VWAP loss with declining relative volume.', 'Offering, ATM, dilution, halt, or filing that contradicts the bullish catalyst.', 'Spread blows out or liquidity thins enough that retail execution becomes poor.', 'Catalyst is revealed as stale, rumor-only, or already fully priced.']
+  - ranked_backups: [{'summary': 'PLTR 8-K filing', 'ticker': 'PLTR'}, {'summary': 'SMCI 8-K filing', 'ticker': 'SMCI'}]
+  - caveats: ['governed_deep_mini_unparsed']
+- Execution-eligible candidate summary, top 15:
+  - {"blockers": [], "catalyst_type": "earnings_or_material_update", "claim_summary": "AMD 8-K filing", "event_sources": ["sec_edgar"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 5.0786, "hyper_trade_score_detail": 4.405, "hyper_trade_score_row": 2.184, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 441.33, "official_confirmations": 1, "official_sources": ["https://www.sec.gov/Archives/edgar/data/2488/000119312526226746/d118163d8k.htm"], "premarket_dollar_volume": 279128683.72, "premarket_volume": 659403, "research_priority_score": 3.014, "social_confirmations": 0, "source_quality_score": 9.0, "spread_pct": 0.1903, "structured_confirmations": 0, "ticker": "AMD", "warnings": []}
+  - {"blockers": [], "catalyst_type": "earnings_or_material_update", "claim_summary": "PLTR 8-K filing", "event_sources": ["sec_edgar"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 2.0519, "hyper_trade_score_detail": 3.998, "hyper_trade_score_row": 2.184, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 137.77, "official_confirmations": 1, "official_sources": ["https://www.sec.gov/Archives/edgar/data/1321655/000132165526000026/pltr-20260504.htm"], "premarket_dollar_volume": 78307264.56, "premarket_volume": 582263, "research_priority_score": 3.014, "social_confirmations": 0, "source_quality_score": 9.0, "spread_pct": 0.0581, "structured_confirmations": 0, "ticker": "PLTR", "warnings": []}
+  - {"blockers": [], "catalyst_type": "earnings_or_material_update", "claim_summary": "SMCI 8-K filing", "event_sources": ["sec_edgar"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 9.0344, "hyper_trade_score_detail": 4.603, "hyper_trade_score_row": 2.184, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 33.31, "official_confirmations": 1, "official_sources": ["https://www.sec.gov/Archives/edgar/data/1375365/000137536526000015/smci-20260512.htm"], "premarket_dollar_volume": 14080385.06, "premarket_volume": 451884, "research_priority_score": 3.014, "social_confirmations": 0, "source_quality_score": 9.0, "spread_pct": 0.06, "structured_confirmations": 0, "ticker": "SMCI", "warnings": []}
+  - {"blockers": [], "catalyst_type": "earnings_or_material_update", "claim_summary": "TSLA 8-K filing", "event_sources": ["sec_edgar"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 4.309, "hyper_trade_score_detail": 4.111, "hyper_trade_score_row": 2.184, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 422.66, "official_confirmations": 1, "official_sources": ["https://www.sec.gov/Archives/edgar/data/1318605/000162828026026551/tsla-20260422.htm"], "premarket_dollar_volume": 416533889.77, "premarket_volume": 1020925, "research_priority_score": 3.014, "social_confirmations": 0, "source_quality_score": 9.0, "spread_pct": 0.0402, "structured_confirmations": 0, "ticker": "TSLA", "warnings": []}
+  - {"blockers": [], "catalyst_type": "government_contract", "claim_summary": "Elon Musk Says 'This Will Be Awesome' As NASA Unveils Moon Base Plans", "event_sources": ["government_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 4.309, "hyper_trade_score_detail": 4.109, "hyper_trade_score_row": 2.182, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 422.66, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 416533889.77, "premarket_volume": 1020925, "research_priority_score": 2.959, "social_confirmations": 0, "source_quality_score": 7.2, "spread_pct": 0.0402, "structured_confirmations": 1, "ticker": "TSLA", "warnings": []}
+  - {"blockers": [], "catalyst_type": "earnings_or_guidance", "claim_summary": "NVDA exchange mover candidate | Jim Cramer Likes ARM 'Very Much' As Stock Jumps 3% Premarket, But Calls Post-Nvidia Surge 'A Little Silly'", "event_sources": ["exchange_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": -0.3403, "hyper_trade_score_detail": 3.901, "hyper_trade_score_row": 2.172, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 222.5301, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 1270244634.28, "premarket_volume": 5669908, "research_priority_score": 2.913, "social_confirmations": 0, "source_quality_score": 8.4, "spread_pct": 0.0584, "structured_confirmations": 1, "ticker": "NVDA", "warnings": []}
+  - {"blockers": [], "catalyst_type": "product_or_partnership", "claim_summary": "Jensen Huang Says Nvidia Is Powering Uber's Push Into Trillion-Dollar Self-Driving Opportunity Across 30 Cities", "event_sources": ["ir_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": -0.3403, "hyper_trade_score_detail": 3.784, "hyper_trade_score_row": 2.055, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 222.5301, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 1270244634.28, "premarket_volume": 5669908, "research_priority_score": 2.807, "social_confirmations": 0, "source_quality_score": 7.0, "spread_pct": 0.0584, "structured_confirmations": 1, "ticker": "NVDA", "warnings": []}
+  - {"blockers": [], "catalyst_type": "product_or_partnership", "claim_summary": "Axios Reported Earlier, Palantir Is Battling Pentagon's Defense Intelligence Agency For Ability To Bid On Contract To Modernize Data Analytics System", "event_sources": ["ir_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 2.0519, "hyper_trade_score_detail": 3.849, "hyper_trade_score_row": 2.035, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 137.77, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 78307264.56, "premarket_volume": 582263, "research_priority_score": 2.783, "social_confirmations": 0, "source_quality_score": 6.6, "spread_pct": 0.0581, "structured_confirmations": 1, "ticker": "PLTR", "warnings": []}
+  - {"blockers": [], "catalyst_type": "product_or_partnership", "claim_summary": "PLTR exchange mover candidate | Axios Reported Earlier, Palantir Is Battling Pentagon's Defense Intelligence Agency For Ability To Bid On Contract To Modernize Data Analytics System", "event_sources": ["exchange_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 2.0519, "hyper_trade_score_detail": 3.855, "hyper_trade_score_row": 2.04, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 137.77, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 78307264.56, "premarket_volume": 582263, "research_priority_score": 2.778, "social_confirmations": 0, "source_quality_score": 6.89, "spread_pct": 0.0581, "structured_confirmations": 1, "ticker": "PLTR", "warnings": []}
+  - {"blockers": [], "catalyst_type": "filing_update", "claim_summary": "AAPL 10-Q filing", "event_sources": ["sec_edgar"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 0.7926, "hyper_trade_score_detail": 3.701, "hyper_trade_score_row": 1.95, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 301.37, "official_confirmations": 1, "official_sources": ["https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm"], "premarket_dollar_volume": 81269393.97, "premarket_volume": 272410, "research_priority_score": 2.735, "social_confirmations": 0, "source_quality_score": 9.0, "spread_pct": 0.0166, "structured_confirmations": 0, "ticker": "AAPL", "warnings": []}
+  - {"blockers": [], "catalyst_type": "filing_update", "claim_summary": "NVDA 10-Q filing", "event_sources": ["sec_edgar"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": -0.3403, "hyper_trade_score_detail": 3.679, "hyper_trade_score_row": 1.95, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 222.5301, "official_confirmations": 1, "official_sources": ["https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm"], "premarket_dollar_volume": 1270244634.28, "premarket_volume": 5669908, "research_priority_score": 2.735, "social_confirmations": 0, "source_quality_score": 9.0, "spread_pct": 0.0584, "structured_confirmations": 0, "ticker": "NVDA", "warnings": []}
+  - {"blockers": [], "catalyst_type": "product_or_partnership", "claim_summary": "Following Trump-Xi Talks, Elon Musk's Tesla Launches Full Self-Driving In China After Years Of Uncertainty", "event_sources": ["ir_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 4.309, "hyper_trade_score_detail": 3.91, "hyper_trade_score_row": 1.983, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 422.66, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 416533889.77, "premarket_volume": 1020925, "research_priority_score": 2.721, "social_confirmations": 0, "source_quality_score": 7.0, "spread_pct": 0.0402, "structured_confirmations": 1, "ticker": "TSLA", "warnings": []}
+  - {"blockers": [], "catalyst_type": "product_or_partnership", "claim_summary": "Jim Cramer Says Nvidia Stock Getting 'Relentless Hammering' A Familiar Pattern, Daniel Newman Calls Company 'Victim Of Its Own Success'", "event_sources": ["ir_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": 0.8247, "hyper_trade_score_detail": 3.736, "hyper_trade_score_row": 1.983, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 261.64, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 93481817.75, "premarket_volume": 359749, "research_priority_score": 2.721, "social_confirmations": 0, "source_quality_score": 7.0, "spread_pct": 0.0306, "structured_confirmations": 1, "ticker": "AMZN", "warnings": []}
+  - {"blockers": [], "catalyst_type": "product_or_partnership", "claim_summary": "Jim Cramer Says Nvidia Stock Getting 'Relentless Hammering' A Familiar Pattern, Daniel Newman Calls Company 'Victim Of Its Own Success'", "event_sources": ["ir_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": -0.3403, "hyper_trade_score_detail": 3.712, "hyper_trade_score_row": 1.983, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 222.5301, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 1270244634.28, "premarket_volume": 5669908, "research_priority_score": 2.721, "social_confirmations": 0, "source_quality_score": 7.0, "spread_pct": 0.0584, "structured_confirmations": 1, "ticker": "NVDA", "warnings": []}
+  - {"blockers": [], "catalyst_type": "product_or_partnership", "claim_summary": "Transcript: NVIDIA Q1 2027 Earnings Conference Call", "event_sources": ["ir_scout"], "execution_gate_pass": true, "execution_readiness_score": 100.0, "freshness_score": 10.0, "gap_pct": -0.3403, "hyper_trade_score_detail": 3.712, "hyper_trade_score_row": 1.983, "lane_tags_row": ["MOVER_FIRST_EXPLAIN_LATER"], "lane_tags_scorecard": ["VERIFIED_CATALYST_RUNNER"], "last_premarket_price": 222.5301, "official_confirmations": 0, "official_sources": [], "premarket_dollar_volume": 1270244634.28, "premarket_volume": 5669908, "research_priority_score": 2.721, "social_confirmations": 0, "source_quality_score": 7.0, "spread_pct": 0.0584, "structured_confirmations": 1, "ticker": "NVDA", "warnings": []}
+- Discovery source counts from raw discovery_events.jsonl: {"exchange_scout": 8, "government_scout": 1, "grok_x_search": 8, "ir_scout": 6, "sec_edgar": 13}
+- Ticker-level discovery evidence:
+  - AAPL: 5 discovery events
+    - {"catalyst_type": "exchange_mover", "headline": "AAPL exchange mover candidate | 'The Nvidia Way' Author Tae Kim Says Nvidia Is Increasingly Undervalued As Google TPU, Amazon Trainium Threats Remain A 'Rounding Error'", "notes": ["benzinga_hits=0", "alpaca_news_hits=3", "gap_pct=0.8781", "premarket_dollar_volume=81269393.97", "execution_readiness_score=100.0", "spread_pct=0.0199"], "official": false, "published_at": "2026-05-21T10:28:28Z", "social": false, "source": "exchange_scout", "structured": true, "url": "https://www.benzinga.com/markets/tech/26/05/52711423/tae-kim-says-nvidia-undervalued-as-tpu-trainium-threats-remain-negligible"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for AAPL", "notes": ["mentions=1", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+    - {"catalyst_type": "filing_update", "headline": "AAPL 10-Q filing", "notes": ["form=10-Q", "accession=0000320193-26-000013"], "official": true, "published_at": "2026-05-01", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm"}
+    - {"catalyst_type": "earnings_or_material_update", "headline": "AAPL 8-K filing", "notes": ["form=8-K", "accession=0000320193-26-000011"], "official": true, "published_at": "2026-04-30", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000011/aapl-20260430.htm"}
+    - {"catalyst_type": "earnings_or_material_update", "headline": "AAPL 8-K filing", "notes": ["form=8-K", "accession=0001140361-26-015711"], "official": true, "published_at": "2026-04-20", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126015711/ef20071035_8k.htm"}
+  - AMD: 3 discovery events
+    - {"catalyst_type": "exchange_mover", "headline": "AMD exchange mover candidate | What's Going On With Taiwan Semiconductor Stock Thursday?", "notes": ["benzinga_hits=0", "alpaca_news_hits=6", "gap_pct=6.2667", "premarket_dollar_volume=279128683.72", "execution_readiness_score=100.0", "spread_pct=0.0896"], "official": false, "published_at": "2026-05-21T10:44:40Z", "social": false, "source": "exchange_scout", "structured": true, "url": "https://www.benzinga.com/markets/tech/26/05/52711640/whats-going-on-with-taiwan-semiconductor-stock-thursday-2"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for AMD", "notes": ["mentions=3", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+    - {"catalyst_type": "earnings_or_material_update", "headline": "AMD 8-K filing", "notes": ["form=8-K", "accession=0001193125-26-226746"], "official": true, "published_at": "2026-05-15", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526226746/d118163d8k.htm"}
+  - AMZN: 3 discovery events
+    - {"catalyst_type": "exchange_mover", "headline": "AMZN exchange mover candidate | 'Anthropic Is in Talks to Use Microsoft's AI Chips' - The Information", "notes": ["benzinga_hits=0", "alpaca_news_hits=9", "gap_pct=1.2794", "premarket_dollar_volume=93481817.75", "execution_readiness_score=100.0", "spread_pct=0.0152"], "official": false, "published_at": "2026-05-21T13:06:46Z", "social": false, "source": "exchange_scout", "structured": true, "url": "https://www.benzinga.com/news/26/05/52715497/anthropic-is-in-talks-to-use-microsofts-ai-chips-the-information"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for AMZN", "notes": ["mentions=1", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+    - {"catalyst_type": "product_or_partnership", "headline": "Jim Cramer Says Nvidia Stock Getting 'Relentless Hammering' A Familiar Pattern, Daniel Newman Calls Company 'Victim Of Its Own Success'", "notes": ["source=benzinga", "scout=ir_scout", "freshness_hours=11.419"], "official": false, "published_at": "2026-05-21T02:06:09Z", "social": false, "source": "ir_scout", "structured": true, "url": "https://www.benzinga.com/markets/tech/26/05/52708343/jim-cramer-nvidia-stock-relentless-hammering-daniel-newman"}
+  - META: 2 discovery events
+    - {"catalyst_type": "exchange_mover", "headline": "META exchange mover candidate | SpaceX Wants You To Bankroll Musk's Mars Dream \u2014 And Stay Out Of It", "notes": ["benzinga_hits=0", "alpaca_news_hits=4", "gap_pct=-0.5901", "premarket_dollar_volume=99458779.51", "execution_readiness_score=100.0", "spread_pct=0.0584"], "official": false, "published_at": "2026-05-21T12:24:06Z", "social": false, "source": "exchange_scout", "structured": true, "url": "https://www.benzinga.com/markets/ipos/26/05/52714223/spacex-wants-you-to-bankroll-musks-mars-dream-and-stay-out-of-it"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for META", "notes": ["mentions=1", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+  - NVDA: 9 discovery events
+    - {"catalyst_type": "earnings_or_guidance", "headline": "NVDA exchange mover candidate | Jim Cramer Likes ARM 'Very Much' As Stock Jumps 3% Premarket, But Calls Post-Nvidia Surge 'A Little Silly'", "notes": ["benzinga_hits=0", "alpaca_news_hits=31", "gap_pct=-1.0816", "premarket_dollar_volume=1270244634.28", "execution_readiness_score=100.0", "spread_pct=0.0226"], "official": false, "published_at": "2026-05-21T12:02:22Z", "social": false, "source": "exchange_scout", "structured": true, "url": "https://www.benzinga.com/markets/equities/26/05/52713641/jim-cramer-likes-arm-very-much-as-stock-jumps-3-premarket-but-calls-post-nvidia-surge-a-little-silly"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for NVDA", "notes": ["mentions=2", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+    - {"catalyst_type": "product_or_partnership", "headline": "Jensen Huang Says Nvidia Is Powering Uber's Push Into Trillion-Dollar Self-Driving Opportunity Across 30 Cities", "notes": ["source=benzinga", "scout=ir_scout", "freshness_hours=4.39"], "official": false, "published_at": "2026-05-21T09:07:53Z", "social": false, "source": "ir_scout", "structured": true, "url": "https://www.benzinga.com/markets/earnings/26/05/52710372/jensen-huang-says-nvidia-is-powering-ubers-push-into-trillion-dollar-self-driving-opportunity-across-30-cities"}
+    - {"catalyst_type": "product_or_partnership", "headline": "Jim Cramer Says Nvidia Stock Getting 'Relentless Hammering' A Familiar Pattern, Daniel Newman Calls Company 'Victim Of Its Own Success'", "notes": ["source=benzinga", "scout=ir_scout", "freshness_hours=11.419"], "official": false, "published_at": "2026-05-21T02:06:09Z", "social": false, "source": "ir_scout", "structured": true, "url": "https://www.benzinga.com/markets/tech/26/05/52708343/jim-cramer-nvidia-stock-relentless-hammering-daniel-newman"}
+    - {"catalyst_type": "product_or_partnership", "headline": "Transcript: NVIDIA Q1 2027 Earnings Conference Call", "notes": ["source=benzinga", "scout=ir_scout", "freshness_hours=14.784"], "official": false, "published_at": "2026-05-20T22:44:13Z", "social": false, "source": "ir_scout", "structured": true, "url": "https://www.benzinga.com/insights/news/26/05/52707551/transcript-nvidia-q1-2027-earnings-conference-call"}
+  - PLTR: 5 discovery events
+    - {"catalyst_type": "product_or_partnership", "headline": "PLTR exchange mover candidate | Axios Reported Earlier, Palantir Is Battling Pentagon's Defense Intelligence Agency For Ability To Bid On Contract To Modernize Data Analytics System", "notes": ["benzinga_hits=0", "alpaca_news_hits=1", "gap_pct=1.1593", "premarket_dollar_volume=78307264.56", "execution_readiness_score=100.0", "spread_pct=0.1391"], "official": false, "published_at": "2026-05-21T09:29:40Z", "social": false, "source": "exchange_scout", "structured": true, "url": "https://www.benzinga.com/news/26/05/52710521/axios-reported-earlier-palantir-is-battling-pentagons-defense-intelligence-agency-for-ability-to-bid"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for PLTR", "notes": ["mentions=4", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+    - {"catalyst_type": "product_or_partnership", "headline": "Axios Reported Earlier, Palantir Is Battling Pentagon's Defense Intelligence Agency For Ability To Bid On Contract To Modernize Data Analytics System", "notes": ["source=benzinga", "scout=ir_scout", "freshness_hours=4.027"], "official": false, "published_at": "2026-05-21T09:29:40Z", "social": false, "source": "ir_scout", "structured": true, "url": "https://www.benzinga.com/news/26/05/52710521/axios-reported-earlier-palantir-is-battling-pentagons-defense-intelligence-agency-for-ability-to-bid"}
+    - {"catalyst_type": "filing_update", "headline": "PLTR 10-Q filing", "notes": ["form=10-Q", "accession=0001321655-26-000028"], "official": true, "published_at": "2026-05-05", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000028/pltr-20260331.htm"}
+    - {"catalyst_type": "earnings_or_material_update", "headline": "PLTR 8-K filing", "notes": ["form=8-K", "accession=0001321655-26-000026"], "official": true, "published_at": "2026-05-04", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000026/pltr-20260504.htm"}
+  - SMCI: 3 discovery events
+    - {"catalyst_type": "exchange_mover", "headline": "SMCI exchange mover candidate | SMCI premarket mover candidate", "notes": ["benzinga_hits=0", "alpaca_news_hits=0", "gap_pct=8.1502", "premarket_dollar_volume=14080385.06", "execution_readiness_score=100.0", "spread_pct=0.1513"], "official": false, "published_at": null, "social": false, "source": "exchange_scout", "structured": true, "url": "https://finance.yahoo.com/quote/SMCI"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for SMCI", "notes": ["mentions=1", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+    - {"catalyst_type": "earnings_or_material_update", "headline": "SMCI 8-K filing", "notes": ["form=8-K", "accession=0001375365-26-000015"], "official": true, "published_at": "2026-05-18", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000015/smci-20260512.htm"}
+  - TSLA: 6 discovery events
+    - {"catalyst_type": "exchange_mover", "headline": "TSLA exchange mover candidate | Tesla Rival Li Auto's Stock Remains Underpriced As Value Score Rises\u2014 Morgan Stanley Sees 61% Upside Potential", "notes": ["benzinga_hits=0", "alpaca_news_hits=9", "gap_pct=4.1979", "premarket_dollar_volume=416533889.77", "execution_readiness_score=100.0", "spread_pct=0.09"], "official": false, "published_at": "2026-05-21T12:15:24Z", "social": false, "source": "exchange_scout", "structured": true, "url": "https://www.benzinga.com/markets/equities/26/05/52713953/tesla-rival-li-autos-stock-remains-underpriced-as-value-score-rises-morgan-stanley-sees-61-upside-potential"}
+    - {"catalyst_type": "social_acceleration", "headline": "Grok/X attention for TSLA", "notes": ["mentions=2", "source=grok_x_search", "auth_mode=openclaw_grok_web_search", "citation=https://x.com/amitisinvesting/status/1870252520011858184", "citation=https://x.com/amitisinvesting/status/2049166990518944005", "citation=https://x.com/search?q=tesla+stock+price%EF%BC%88axonorn.net%EF%BC%89.riz&lang=bg"], "official": false, "published_at": null, "social": true, "source": "grok_x_search", "structured": false, "url": "https://x.com/amitisinvesting/status/1870252520011858184"}
+    - {"catalyst_type": "product_or_partnership", "headline": "Following Trump-Xi Talks, Elon Musk's Tesla Launches Full Self-Driving In China After Years Of Uncertainty", "notes": ["source=benzinga", "scout=ir_scout", "freshness_hours=3.085"], "official": false, "published_at": "2026-05-21T10:26:10Z", "social": false, "source": "ir_scout", "structured": true, "url": "https://www.benzinga.com/markets/tech/26/05/52711372/trump-xi-elon-musk-tesla-fsd-china-after-years"}
+    - {"catalyst_type": "government_contract", "headline": "Elon Musk Says 'This Will Be Awesome' As NASA Unveils Moon Base Plans", "notes": ["source=benzinga", "scout=government_scout", "freshness_hours=3.352"], "official": false, "published_at": "2026-05-21T10:10:10Z", "social": false, "source": "government_scout", "structured": true, "url": "https://www.benzinga.com/news/space/26/05/52710963/elon-musk-nasa-moonbase-plan-awesome-jared-isaacman"}
+    - {"catalyst_type": "filing_update", "headline": "TSLA 10-Q filing", "notes": ["form=10-Q", "accession=0001628280-26-026673"], "official": true, "published_at": "2026-04-23", "social": false, "source": "sec_edgar", "structured": false, "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm"}
+- Why AMD beat backups: AMD, PLTR, and SMCI tied on displayed research_priority_score 3.014 and execution_readiness_score 100 with no blockers. AMD was first in execution_eligible and first in the rendered A-tier; it had the largest premarket dollar volume among the A-tier ($279.1M vs PLTR $78.3M and SMCI $14.1M), a 5.08% gap, official SEC 8-K confirmation, and a manageable displayed premarket spread pct 0.1903. SMCI had a larger gap (9.03%) but much less premarket dollar volume and a lower price band; PLTR had lower gap and dollar volume. The selection is defensible as a liquidity-first primary among tied official filing candidates, but the catalyst quality itself was not especially novel.
+
+4. RESEARCH METHOD
+- research_pipeline.py initializes discovery scouts: NewswireScout, ExchangeScout, SocialScout, ObscureScout, IRScout, FdaScout, GovernmentScout, plus seeded SecScout.
+- The pipeline collected discovery events, wrote raw/discovery_events.jsonl, selected candidate symbols, collected evidence events, clustered all events, ranked clusters, applied market overlays and execution gates, attempted governed deep-mini, then built/wrote daily_best_pick_packet.json.
+- Manifest summary: {
+  "candidate_clusters_count": 34,
+  "deep_mini_route_chosen": null,
+  "deep_mini_status": "failed",
+  "deep_mini_success": false,
+  "discovered_symbols_count": 7,
+  "discovery_events_count": 36,
+  "eliminated_count": 0,
+  "elimination_reasons": {},
+  "evidence_events_count": 24,
+  "execution_blocked_count": 0,
+  "execution_eligible_count": 15,
+  "raw_events_by_source": {
+    "exchange_scout": 15,
+    "government_scout": 2,
+    "grok_x_search": 8,
+    "ir_scout": 11,
+    "sec_edgar": 24
+  },
+  "raw_events_count": 60,
+  "research_ranked_count": 34,
+  "shortlisted_count": 15
+}
+- Manifest tickers: ["NVDA", "TSLA", "AAPL", "AMD", "AMZN", "SMCI", "META"]
+- Deep-mini was supposed to synthesize the shortlisted execution-eligible names into a governed best-pick packet. It failed because config/workflow.yaml had deep_research.mode set to full while the runner accepts only deep or deep_mini. Exact manifest error: "usage: research_architecture_runner.py [-h] [--mode {deep,deep_mini}]\n                                       [--input INPUT_TEXT]\n                                       [--input-file INPUT_FILE]\n                                       [--agent-id AGENT_ID]\n                                       [--workspace WORKSPACE]\n                                       [--poll-seconds POLL_SECONDS]\n                                       [--timeout-seconds TIMEOUT_SECONDS]\n                                       [--summary-json SUMMARY_JSON]\nresearch_architecture_runner.py: error: argument --mode: invalid choice: 'full' (choose from deep, deep_mini)"
+- Deterministic fallback still produced a valid packet: daily_best_pick_packet source_mode=internal_fallback, best_pick=AMD, caveat governed_deep_mini_unparsed. This was enough to create a premarket packet, but it lacked the extra online synthesis Charles wanted.
+
+5. PREMARKET PACKET
+- premarket_pipeline.py loads discovered_symbols, research_ranked_candidates, execution_eligible_candidates, execution_blocked_candidates, and daily_best_pick_packet; it renders A/B/C watchlists and suppresses blocked best picks.
+- reports/morning/md/2026-05-21.md says AMD was best pick, A-tier AMD/PLTR/SMCI, B-tier duplicate META rows, C-tier none, no-trade list none.
+- Packet had enough broad research and readiness data to identify a primary and backups. It did not by itself authorize a trade; live_monitor still needed an actual opening-drive, ORB break, VWAP reclaim, or equivalent deterministic entry mode.
+- Buy zone and targets from packet: suggested_buy_zone=Use live tape; do not chase above about $445.74. Prefer VWAP/opening-range reclaim or controlled pullback near current liquidity.
+  same_day_upside_target=$476.64-$520.77, only if volume expands and spread remains controlled.
+  one_to_three_day_upside_target=$507.53-$595.8 over 1-3 days if catalyst follow-through and retail attention continue.
+  thesis_break_level=Breaks below about $414.85, loses VWAP with fading volume, or spread/liquidity deteriorates.
+
+6. LIVE READINESS AND GUARD STATE
+- Latest live readiness parsed: full_execution_ready=True; execution_blockers=[]; session_phase=ENTRY_WINDOW
+- Runtime guards from readiness: {
+  "disable_entries": false,
+  "force_flat": false,
+  "in_entry_window": true,
+  "kill_switch": false,
+  "live_armed": true
+}
+- Broker runtime: {
+  "base_url": "https://api.alpaca.markets",
+  "configured": true,
+  "environment": "live",
+  "paper": false,
+  "provider": "alpaca"
+}
+- Broker account status: ok=true; status=ACTIVE; cash=1000; buying_power=1000; equity=1000; trading_blocked=False; account_blocked=False; pattern_day_trader=False
+- Open orders from readiness: []
+- Market data health: feed=sip; requested_feed=sip; quote_ok=True; bars_ok=True
+- Opening readiness parsed: status=GREEN; message=opening-bell autonomous trading armed; primary_candidate=AMD; opening_bell_blockers=[]
+
+7. LIVE MONITOR BEHAVIOR
+- Log path: reports/live_monitor/opening_bell_live_2026-05-21.jsonl
+- Event counts: {"live_monitor_iteration_complete": 239, "live_monitor_iteration_start": 242, "live_monitor_loop_complete": 3, "live_monitor_loop_start": 9, "preflight_complete": 3, "preflight_start": 4}
+- Status counts: {"disarm": 7, "watch": 235}
+- Reason counts: {"market_data_unhealthy": 7}
+- Proposal mentions in live monitor log: 0
+- Submission/order mentions in live monitor log: 0
+- First meaningful monitor statuses:
+  - {"action": "DISABLE NEW ENTRIES", "details": [{"quote_age_ms": 999, "reason": "stale_quote", "status": "unhealthy", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:34:00.232699+00:00", "ok": true, "reason": "market_data_unhealthy", "status": "disarm"}
+  - {"action": "DISABLE NEW ENTRIES", "details": [{"quote_age_ms": 760, "reason": "stale_quote", "status": "unhealthy", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"quote_age_ms": 855, "reason": "stale_quote", "status": "unhealthy", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"quote_age_ms": 841, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:34:04.890669+00:00", "ok": true, "reason": "market_data_unhealthy", "status": "disarm"}
+  - {"action": "DISABLE NEW ENTRIES", "details": [{"quote_age_ms": 1008, "reason": "stale_quote", "status": "unhealthy", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:34:17.907241+00:00", "ok": true, "reason": "market_data_unhealthy", "status": "disarm"}
+  - {"action": "DISABLE NEW ENTRIES", "details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"quote_age_ms": 1301, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}, {"quote_age_ms": 1847, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:35:14.598710+00:00", "ok": true, "reason": "market_data_unhealthy", "status": "disarm"}
+  - {"action": "DISABLE NEW ENTRIES", "details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"quote_age_ms": 1778, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}, {"quote_age_ms": 2471, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:35:19.143209+00:00", "ok": true, "reason": "market_data_unhealthy", "status": "disarm"}
+  - {"action": "DISABLE NEW ENTRIES", "details": [{"quote_age_ms": 1352, "reason": "stale_quote", "status": "unhealthy", "symbol": "AMD"}, {"quote_age_ms": 751, "reason": "stale_quote", "status": "unhealthy", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"quote_age_ms": 1091, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:35:31.342317+00:00", "ok": true, "reason": "market_data_unhealthy", "status": "disarm"}
+  - {"action": "DISABLE NEW ENTRIES", "details": [{"quote_age_ms": 1424, "reason": "stale_quote", "status": "unhealthy", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"quote_age_ms": 1070, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:35:36.924134+00:00", "ok": true, "reason": "market_data_unhealthy", "status": "disarm"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:38:41.072237+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:40:01.890901+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:40:06.728002+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:40:11.509039+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T13:40:34.034381+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+- Latest meaningful monitor statuses:
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:03:35.213064+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"quote_age_ms": 2917, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:03:40.837838+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:03:46.518095+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:03:52.077194+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:03:57.589369+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:03.188955+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:08.759421+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:14.317106+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:19.893915+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"quote_age_ms": 2726, "reason": "stale_quote", "status": "unhealthy", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:25.484742+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:31.132970+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:36.811146+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:42.512465+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:48.096040+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:53.683878+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:04:59.348779+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:05:05.491058+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:05:11.261133+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:05:16.887146+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+  - {"details": [{"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "AMD"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "PLTR"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "SMCI"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}, {"phase": "ENTRY_WINDOW", "reason": "no_valid_mode_for_phase", "status": "watch", "symbol": "META"}], "generated_at_utc": "2026-05-21T14:05:22.576125+00:00", "ok": true, "phase": "ENTRY_WINDOW", "status": "watch"}
+- opening_drive_subminute_state.json exists and contains symbols: AMD, META, PLTR, SMCI
+  - AMD: 4 samples; last_sample={'ask': 439.97, 'bid': 439.55, 'last': 439.765, 'spread_bps': 9.5506, 'timestamp': '2026-05-21T14:05:23.251783+00:00'}
+  - META: 10 samples; last_sample={'ask': 595.91, 'bid': 595.64, 'last': 595.775, 'spread_bps': 4.5319, 'timestamp': '2026-05-21T14:05:25.338608+00:00'}
+  - PLTR: 5 samples; last_sample={'ask': 137.16, 'bid': 137.11, 'last': 137.14, 'spread_bps': 3.6459, 'timestamp': '2026-05-21T14:05:23.824049+00:00'}
+  - SMCI: 5 samples; last_sample={'ask': 33.31, 'bid': 33.3, 'last': 33.305, 'spread_bps': 3.0026, 'timestamp': '2026-05-21T14:05:24.151161+00:00'}
+
+8. WHY NO BUY ORDER WAS MADE
+- Plain English: Roi Snips found AMD as the best research candidate and was live-armed, but the live trading loop never saw a valid entry pattern it was allowed to buy. It kept watching instead of forcing a trade.
+- Technical reason: _build_structured_candidate returned None for AMD/PLTR/SMCI/META in ENTRY_WINDOW, producing no_valid_mode_for_phase on every watched symbol. Without a candidate, live_monitor never called build_trade_proposal, save_proposal, append_audit_event(proposal_created), or router.submit_order.
+- Hard blockers observed early: stale_quote entries caused disarm/market_data_unhealthy because quote_age_ms exceeded the open threshold. This was an implementation/config fragility of REST polling, not an Alpaca account entitlement failure.
+- Strategy/no-signal decision observed later: after relaxing max_quote_age_ms_open to 2500 and patching disarm logic, monitor status changed to watch, but still no_valid_mode_for_phase for all watched symbols. That means the code did not detect opening-drive/subminute/ORB/VWAP criteria sufficient to construct a proposal.
+- Missing cron issue: the 06:00 research cron and 06:29:30 monitor cron were not retrievable after scheduled time and did not leave the expected morning artifacts/log execution on time. Manual recovery generated the packet late, after the first open minutes were already gone.
+- Deep-mini config bug: governed deep-mini failed due invalid mode full. Fallback generated a packet, but online research synthesis did not run.
+- Polling vs streaming limitation: the monitor used repeated REST quote/bars calls. At the open, quote ages in the 760-2471 ms range created false brittleness, and REST polling cannot reliably see first-5s/10s tape states the way a real quote/trade stream can.
+- Proposal/order evidence: state/proposals has no recent files from this run; find -mtime -1 returns only journal/live_monitor/log files, not a proposal. The live monitor log has zero proposal/submission mentions. reports/journal/2026-05-21.jsonl contains plan_test_* order-router test events, persisted_to_postgres=false; those are not a live monitor AMD trade and do not prove a broker order.
+
+9. ARCHITECTURE ASSESSMENT
+- Worked: live arming guard model; Alpaca live broker/SIP readiness; manual research and premarket generation; fallback best-pick packet; detached screen as a more durable execution host than short nohup jobs; fail-closed router/readiness posture; patched watch-vs-disarm behavior.
+- Failed: one-shot cron reliability for the 06:00 and 06:29:30 jobs; invalid deep_research.mode config; opening quote-age tolerance too tight for REST polling; monitor loop originally killed or disarmed too easily; candidate-specific readiness was not checked before the open; duplicate META in B-tier; actual live production path still not the dedicated streaming opening-bell engine.
+- Fragile: relying on OpenClaw one-shot cron deletion semantics as proof of execution; broad SPY readiness instead of candidate-specific readiness; REST polling for subminute open; mixing real live logs and test journal entries in the same daily journal namespace; late-night untracked patch pile with limited integration tests.
+- Fixed live: config/workflow.yaml full -> deep_mini; configs/live.yaml max_quote_age_ms_open -> 2500; scripts/run_opening_bell_live_monitor.sh continues after iteration errors; src/workflows/live_monitor.py only disarms for market data when all monitored candidates are unhealthy; detached screen session started.
+- Still unacceptable before next armed run: no durable streaming supervisor, no pre-open candidate-specific readiness report, no run-specific journal separation, no reliable cron proof/backup launcher, duplicate watchlist rows, and no post-run broker/order reconciliation command in the live loop.
+
+10. RECOMMENDATIONS
+- Immediate before next live attempt: replace one-shot OpenClaw cron-only launch with a supervised local runner or launchd/agent process that records start, heartbeat, exit, and PID; keep OpenClaw cron only as notification/backup.
+- Build a true Alpaca SIP quote/trade streaming supervisor for primary plus backups; store replayable tick/tape logs; derive opening-drive features from streaming data, not REST snapshots.
+- Add candidate-specific readiness at 06:20/06:25/06:28 PT: quote/trade freshness, bid/ask, bars, tradability, spread, first reference levels, entry-cap math, duplicate rows, stale candidate packet, proposal duplication, and current phase ability to produce a mode.
+- Separate test journal from live journal. Tests must write to test-specific journal files or be marked test_run=true so audit cannot confuse fake post_place events with broker action.
+- Fix deep-research mode schema permanently: validate config/workflow.yaml at startup and fail the research packet loudly before the open if mode is not deep or deep_mini.
+- Deduplicate watchlists by ticker and choose the strongest row per ticker before live monitor input.
+- Add explicit no_valid_mode_for_phase diagnostics: for each symbol, log which predicates failed: subminute cutoff, min samples, projected volume, premarket reference break, close-in-range, regular bars count, ORB break, VWAP reclaim, chase cap, spread cap.
+- Keep max_quote_age_ms_open=2500 only as a temporary REST-polling tolerance. Revert to stricter streaming freshness once the streaming supervisor exists, where stale means missing stream heartbeat rather than REST latency.
+- Add a broker reconciliation step every N iterations and at shutdown: open orders, positions, fills, account status, last order IDs. Log it to reports/live_monitor and a run-specific audit JSON.
+- Require the live monitor to write a final run summary file even on no-trade: selected primary, watched symbols, iterations, statuses, proposal count, order attempts, broker result, and exact no-buy reason.
+
+11. PROPOSED IMPLEMENTATION PLAN
+Priority 0 - preserve fail-closed live safety
+- Files: src/execution/order_router.py, src/workflows/live_monitor.py, scripts/check_live_readiness.sh.
+- Acceptance: no path submits unless LIVE_ARMED exists, DISABLE_NEW_ENTRIES/KILL_SWITCH absent, live env true, account live, no open position/order, SIP/candidate data healthy. Tests must cover guard reappearance mid-run.
+Priority 1 - reliable run launcher
+- Files: scripts/run_opening_bell_live_monitor.sh, new scripts/supervise_opening_bell_live_monitor.sh, ops/progress/ACTIVE.md, runbooks/PRODUCTION_STOCK_HUNT_RUNBOOK.md.
+- Acceptance: dry-run/smoke creates a run directory with launcher_start, heartbeat, command, pid, exit_status. If OpenClaw cron disappears, local supervisor still runs; if supervisor fails, Telegram says INTERNAL_FAILURE with exact blocker.
+Priority 2 - candidate-specific pre-open readiness
+- Files: scripts/check_opening_bell_readiness.sh, src/workflows/opening_bell_monitor.py, src/workflows/premarket_pipeline.py.
+- Acceptance: readiness includes AMD/PLTR/SMCI rows with quote age, trade age, bars age, spread, tradability, duplicate status, mode availability by phase, first allowed entry window, and no generic SPY-only green.
+Priority 3 - streaming supervisor
+- Files: src/adapters/alpaca_streams.py, new src/workflows/opening_stream_supervisor.py, src/features/opening_tape.py, src/execution/fast_cancel.py, src/execution/opening_position_manager.py, config/opening_bell.yaml.
+- Acceptance: subscribe to primary plus backups; persist raw quote/trade stream; compute 5s/10s/30s/60s features; replay tests from captured stream; produce proposal only when deterministic thresholds pass; fast-cancel and exit-manager are wired to actual broker/order state.
+Priority 4 - mode diagnostics and proposal audit
+- Files: src/workflows/live_monitor.py, src/strategy/opening_burst_hyper_long.py, tests/test_live_monitor.py, tests/test_opening_burst_strategy.py.
+- Acceptance: every no_valid_mode_for_phase includes failed predicate list. Unit tests prove AMD-like rows produce a proposal when all predicates pass and stay watch when any critical predicate fails.
+Priority 5 - research reliability
+- Files: config/workflow.yaml, src/workflows/research_pipeline.py, src/workflows/deep_mini_bridge.py, tests/test_deep_mini_bridge.py.
+- Acceptance: invalid deep mode fails config validation before run or auto-normalizes with warning; deep-mini failure still clearly marks fallback packet; final packet distinguishes official filing catalyst from stale/weak catalysts and ranks fresh structured catalysts over generic old filings when tape/liquidity tie.
+Priority 6 - audit/log hygiene
+- Files: src/audit/journal.py or equivalent, tests, runbooks.
+- Acceptance: live run journal and test journal cannot collide. Audit command can answer: selected ticker, proposals created, orders attempted, broker order IDs, open orders, positions, fills, and final no-buy reason from one run directory.
+Validation commands before next armed run:
+- PYTHONPATH=. .venv/bin/pytest tests
+- PYTHONPATH=. .venv/bin/pytest tests/test_live_monitor.py tests/test_opening_bell_readiness.py tests/test_order_router.py tests/test_opening_burst_strategy.py tests/test_fast_cancel.py
+- ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_live_readiness.sh
+- ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_opening_bell_readiness.sh
+- scripts/supervise_opening_bell_live_monitor.sh --preflight-only --no-submit-smoke
+- Replay captured stream fixture through opening_stream_supervisor in dry-run mode and assert proposal/no-proposal matches expectation.
+Rollback/fail-closed behavior: create state/DISABLE_NEW_ENTRIES immediately if stream drops, broker mismatch appears, open-order reconciliation fails, duplicate position/order appears, or cancel/exit manager cannot verify state. Never fall back to market orders.
+
+12. FINAL VERDICT
+- Was not buying the correct outcome today? After manual recovery and live patches, yes: not buying was correct because no deterministic proposal was produced. Earlier, the system missed the intended open because scheduled jobs failed and the first loop was too brittle; that part was not acceptable.
+- What would have needed to be true for the system to buy? The scheduled or manual monitor had to be running before 09:30 ET with a current primary packet; candidate-specific data had to be fresh; AMD or a backup had to satisfy opening-drive/subminute/ORB/VWAP predicates; a proposal had to validate; no duplicate/open position/order; router submission mode live; broker preview/place had to return ok. None of the proposal-producing conditions are evidenced in the log.
+- Future autonomous trade odds after recommended fixes: with streaming supervisor, reliable launcher, candidate-specific readiness, and diagnostic mode logging, I would raise same-day order-attempt odds from today's effective near-zero after missed launch to roughly 50-70% on a day with a real catalyst runner. Actual fill odds remain lower, about 35-55%, because capped aggressive limits and fast cancel should still refuse bad tape. Profit odds remain unknowable/high variance.
+
+APPENDIX A - RAW COMMAND OUTPUTS
+--- date: date ---
+Thu May 21 07:05:24 PDT 2026
+--- git status --short: git status --short ---
+M ../USER.md
+?? ../.clawpatch-strops/
+?? ../.env.example
+?? ../.firecrawl/
+?? ../.openclaw/
+?? ../.str_calendar.env
+?? ../.str_calendar.env.bak-openclaw-token-align-20260517T174248Z
+?? ../.str_calendar.env.bak_strops_20260505_2200
+?? ../.tmp/
+?? ../.tmp_patch_gonzaga_neighbors.applescript
+?? ../.tmp_patch_gonzaga_note.applescript
+?? ../.tmp_str_action_plan_2026-05-08.html
+?? ../.tmp_str_action_plan_2026-05-08.json
+?? ../.tmp_str_action_plan_2026-05-08.txt
+?? ../.tmp_str_action_plan_2026-05-09.html
+?? ../.tmp_str_action_plan_2026-05-09.json
+?? ../.tmp_str_action_plan_2026-05-09.txt
+?? ../.tmp_str_action_plan_2026-05-10.html
+?? ../.tmp_str_action_plan_2026-05-10.json
+?? ../.tmp_str_action_plan_2026-05-10.txt
+?? ../.tmp_str_action_plan_2026-05-11.html
+?? ../.tmp_str_action_plan_2026-05-11.json
+?? ../.tmp_str_action_plan_2026-05-11.txt
+?? ../.tmp_str_action_plan_2026-05-12.html
+?? ../.tmp_str_action_plan_2026-05-12.json
+?? ../.tmp_str_action_plan_2026-05-12.txt
+?? ../.tmp_str_action_plan_2026-05-13.html
+?? ../.tmp_str_action_plan_2026-05-13.json
+?? ../.tmp_str_action_plan_2026-05-13.txt
+?? ../.tmp_str_action_plan_2026-05-14.html
+?? ../.tmp_str_action_plan_2026-05-14.json
+?? ../.tmp_str_action_plan_2026-05-14.txt
+?? ../.tmp_str_action_plan_2026-05-15.html
+?? ../.tmp_str_action_plan_2026-05-15.json
+?? ../.tmp_str_action_plan_2026-05-15.txt
+?? ../.tmp_str_action_plan_2026-05-18.html
+?? ../.tmp_str_action_plan_2026-05-18.json
+?? ../.tmp_str_action_plan_2026-05-18.txt
+?? ../.tmp_str_action_plan_2026-05-19.html
+?? ../.tmp_str_action_plan_2026-05-19.json
+?? ../.tmp_str_action_plan_2026-05-19.txt
+?? ../.tmp_str_action_plan_2026-05-20.html
+?? ../.tmp_str_action_plan_2026-05-20.json
+?? ../.tmp_str_action_plan_2026-05-20.txt
+?? ../.tmp_str_action_plan_2026-05-21.html
+?? ../.tmp_str_action_plan_2026-05-21.json
+?? ../.tmp_str_action_plan_2026-05-21.txt
+?? ../.venv312/
+?? ../AGENTS.md
+?? ../CHATGPT_PRO_PROPERTY_ARCHIVE_RESEARCH_PROMPT.md
+?? ../CURRENT_RESERVATIONS_REBUILD_PLAN.md
+?? ../CURRENT_STATE_AUDIT_2026-04-04.md
+?? ../DREAMS.md
+?? ../Dockerfile
+?? ../GOG_EMAIL_NOTES.md
+?? ../HEARTBEAT.md
+?? ../HOSPITABLE_API_REFERENCE_INDEX.md
+?? ../MEMORY.md
+?? ../MEMORY.md.pre-reliability-fix-20260505-151620.bak
+?? ../PROPERTY_NOTES_AUTOMATION_SOP.md
+?? ../PROPERTY_NOTES_FULL_ROLLOUT_PLAN.md
+?? ../Q_TRAVEL_ACCEPTANCE_CHECKLIST.md
+?? ../Q_TRAVEL_AUDIT_LOG.md
+?? ../Q_TRAVEL_CHANGELOG.md
+?? ../Q_TRAVEL_MASTER_PLAN.md
+?? ../Q_TRAVEL_PROGRESS_LEDGER.md
+?? ../Q_TRAVEL_ROLLOUT_PLAN.md
+?? ../README.md
+?? ../SAB1.md
+?? ../SAB_MODEL_POLICY.md
+?? ../SESSION_COMPACTION_SNAPSHOT.md
+?? ../SOUL.md
+?? ../STROPS_CONTROL/
+?? ../STR_ARCHITECTURE_BASELINE.md
+?? ../STR_BROWSER_AUTH.md
+?? ../STR_BROWSER_HARDENING.md
+?? ../STR_CALENDAR_IMPLEMENTATION_PLAN.md
+?? ../STR_CALENDAR_PROGRESS_LOG.md
+?? ../STR_CURRENT_WEBHOOK_FULL_HANDOFF_2026-03-12.md
+?? ../STR_EFFICIENCY_ENFORCEMENT_PLAN_2026-04-07.md
+?? ../STR_EXECUTION_SOP.md
+?? ../STR_MARCH_PROMPT_RENDERER_CONTRACT.md
+?? ../STR_PROPERTY_ARCHIVE_ROLLOUT_PLAN.md
+?? ../STR_PROPERTY_INFORMATION/
+?? ../STR_PROPERTY_ISSUE_ARCHIVE/
+?? ../STR_PROPERTY_ISSUE_DEEP_MINI_PROMPT.md
+?? ../STR_PROPERTY_NOTES_SOP.md
+?? ../STR_QUEUE_DRAIN_REINTRODUCTION_PLAN.md
+?? ../STR_RESERVATION_CALENDAR_OPERATING_SOP.md
+?? ../STR_STATUS.md
+?? ../STR_TRIAGE_AUDIT_WORKSHEET.md
+?? ../STR_WEBHOOK_LIVE_UPDATE_SOP.md
+?? ../TAILSCALE_BROWSER_ACCESS_NOTE.md
+?? ../TOOLS.md
+?? ../TRAVEL_READY_STR_OPERATING_MODEL_2026-03-12.md
+?? ../__pycache__/
+?? ../adapters/
+?? ../agent-main/
+?? ../april_day_by_day_rollout.py
+?? ../archives/
+?? ../bin/
+?? ../booking_calendar.sqlite
+?? ../bounded_rerender_sweep.py
+?? ../browser-lanes/
+?? ../browser-stack/
+?? ../bruteforce_fill_current_from_ci_co.py
+?? ../calendar_day_by_day_audit.py
+?? ../calendar_deprecated.py
+?? ../calendar_desired_state_rebuild.py
+?? ../calendar_duplicate_audit.py
+?? ../calendar_police.py
+?? ../calendar_preflight.py
+?? ../calendar_reconcile_apply_safe.py
+?? ../calendar_reconcile_plan.py
+?? ../calendar_reconciler.py
+?? ../calendar_runtime_smoke.py
+?? ../calendar_semantic_dedupe.py
+?? ../calendar_validity_sweep.py
+?? ../calendar_writer.py
+?? ../capabilities/
+?? ../cheap/
+?? ../chief-of-staff/
+?? ../cleanup_cancelled_calendar_artifacts.py
+?? ../command-center/
+?? ../config/
+?? ../consistency_rerender_sweep.py
+?? ../current-str-browser
+?? ../current_board_lib.py
+?? ../current_overlay_audit.py
+?? ../current_reservation_daily_invariant.py
+?? ../current_reservation_rollover.py
+?? ../current_reservations_rerender.py
+?? ../data/
+?? ../day_rollout.py
+?? ../db.py
+?? ../dedupe_calendar_by_source_key.py
+?? ../disaster_recovery/
+?? ../docs/
+?? ../emergency_current_cleanup_via_reconciler.py
+?? ../emergency_current_repair.py
+?? ../eval_str_triage.py
+?? ../export-str-ops-browser-state.sh
+?? ../extractor.py
+?? ../fly.toml
+?? ../google_oauth_client.json
+?? ../historical_calendar_cleanup.py
+?? ../hospitable.py
+?? ../hospitable_team_ics.py
+?? ../inspect_calendar_reservation.py
+?? ../launch-chatgpt-browser.sh
+?? ../launch-personal-agent-browser.sh
+?? ../launch-str-ops-browser.sh
+?? ../launch-travel-browser.sh
+?? ../local_worker.py
+?? ../logs/
+?? ../main.py
+?? ../mb_rosecrans_multistage_notes.py
+?? ../memory/.dreams/
+?? ../memory/2026-03-10.md
+?? ../memory/2026-03-11.md
+?? ../memory/2026-03-12.md
+?? ../memory/2026-03-13.md
+?? ../memory/2026-03-15.md
+?? ../memory/2026-03-17.md
+?? ../memory/2026-04-04.md
+?? ../memory/2026-04-05-validity-sweep.md
+?? ../memory/2026-04-05.md
+?? ../memory/2026-04-06.md
+?? ../memory/2026-04-07-operator-visibility.md
+?? ../memory/2026-04-07-qmd-cleanup.md
+?? ../memory/2026-04-07.md
+?? ../memory/2026-04-08-calendar-duplicates.md
+?? ../memory/2026-04-08-memory-handoff.md
+?? ../memory/2026-04-08-qmd-cleanup.md
+?? ../memory/2026-04-08.md
+?? ../memory/2026-04-09-heartbeat-status.md
+?? ../memory/2026-04-09-identity-chat.md
+?? ../memory/2026-04-09-john-persona.md
+?? ../memory/2026-04-09.md
+?? ../memory/2026-04-10-heartbeat-alert.md
+?? ../memory/2026-04-10-str-audit.md
+?? ../memory/2026-04-10.md
+?? ../memory/2026-04-11.md
+?? ../memory/2026-04-12.md
+?? ../memory/2026-04-13.md
+?? ../memory/2026-04-14-check-in.md
+?? ../memory/2026-04-14-gateway-cleanup.md
+?? ../memory/2026-04-14.md
+?? ../memory/2026-04-15-roi-snips-catalyst-hunter-foundation.md
+?? ../memory/2026-04-15.md
+?? ../memory/2026-04-16.md
+?? ../memory/2026-04-17.md
+?? ../memory/2026-04-18.md
+?? ../memory/2026-04-19.md
+?? ../memory/2026-04-20.md
+?? ../memory/2026-04-21.md
+?? ../memory/2026-04-22.md
+?? ../memory/2026-04-23.md
+?? ../memory/2026-04-24.md
+?? ../memory/2026-04-25.md
+?? ../memory/2026-04-26.md
+?? ../memory/2026-04-27.md
+?? ../memory/2026-04-28.md
+?? ../memory/2026-04-29.md
+?? ../memory/2026-04-30.md
+?? ../memory/2026-04-30.md.pre-heartbeat-repair-2115
+?? ../memory/2026-05-01.md
+?? ../memory/2026-05-01.md.bak_heartbeat_20260501_0945
+?? ../memory/2026-05-02.md
+?? ../memory/2026-05-03.md
+?? ../memory/2026-05-04.md
+?? ../memory/2026-05-05.md
+?? ../memory/2026-05-06.md
+?? ../memory/2026-05-07.md
+?? ../memory/2026-05-08.md
+?? ../memory/2026-05-09.md
+?? ../memory/2026-05-11.md
+?? ../memory/2026-05-13.md
+?? ../memory/2026-05-14.md
+?? ../memory/2026-05-15.md
+?? ../memory/2026-05-16.md
+?? ../memory/2026-05-17.md
+?? ../memory/2026-05-18.md
+?? ../memory/2026-05-19.md
+?? ../memory/2026-05-20.md
+?? ../memory/2026-05-21.md
+?? ../memory/dreaming/
+?? ../memory/runbooks/
+?? ../memory_qmd_healthcheck.sh
+?? ../memory_qmd_hygiene_review.sh
+?? ../ops/
+?? ../ops_window_rerender_10.py
+?? ../owner_stay.py
+?? ../pilot_property_archive_batch.py
+?? ../plan_current_board_then_apply.py
+?? ../policy/
+?? ../ports/
+?? ../property_notes_generate_single.py
+?? ../property_notes_mapping.json
+?? ../property_notes_prepare_evidence.py
+?? ../property_notes_rollout_checkpoint.py
+?? ../property_notes_rollout_runner.py
+?? ../property_notes_rollout_state.json
+?? ../property_notes_sync.py
+?? ../property_notes_sync_state.json
+?? ../pytest.ini
+?? ../q_travel/
+?? ../q_travel_spec.txt
+?? ../queue_drain_once.py
+?? ../rebuild_current_month_from_ci_co.py
+?? ../rebuild_current_today.py
+?? ../rebuild_current_today_combined.py
+?? ../rebuild_current_today_from_property_calendar.py
+?? ../rebuild_current_today_permanent.py
+?? ../rebuild_current_today_uniform.py
+?? ../rebuild_march.py
+?? ../reconcile_identity_map.py
+?? ../refresh-chatgpt-browser-auth.sh
+?? ../refresh-str-ops-browser-auth.sh
+?? ../render_property_notes_for_apple.py
+?? ../renderer.py
+?? ../repair_single_reservation_calendar.py
+?? ../requirements.txt
+?? ../research/
+?? ../reservation_backfill_sweep.py
+?? ../reservation_identity.py
+?? ../reservation_ops_window_refresh.py
+?? ../reservation_validity.py
+?? ../restore-str-ops-browser-state.sh
+?? ../revert_simple_key_duplicates.py
+?? ./
+?? ../run_consistency_rerender.sh
+?? ../run_ops_rollout_batch.sh
+?? ../run_property_notes_sync.sh
+?? ../run_str_60day_rollout.sh
+?? ../run_str_morning_briefing.py
+?? ../run_str_triage_eval.sh
+?? ../runbooks/
+?? ../save-str-ops-browser-state.sh
+?? ../scripts/
+?? ../shared_env.py
+?? ../skills/
+?? ../str-calendar-architecture-note-2026-04-05.md
+?? ../str_60day_rollout.py
+?? ../str_api_apply_window.py
+?? ../str_api_day_reconciler.py
+?? ../str_daily_action_plan.py
+?? ../str_daily_cycle.sh
+?? ../str_db_day_reconciler.py
+?? ../str_health_audit.sh
+?? ../str_historical_crossref.py
+?? ../str_hospitable_day_pull.py
+?? ../str_hospitable_property_calendar_day.py
+?? ../str_hourly_backfill.sh
+?? ../str_queue_canary.py
+?? ../str_task_routing.py
+?? ../str_triage_eval_worker.py
+?? ../str_triage_remediation_prompt.txt
+?? ../strops_mapping_review_for_charles.md
+?? ../strops_personal_messages_candidate_review.md
+?? ../strops_property_contact_mapping.json
+?? ../templates/
+?? ../test-chatgpt-browser.sh
+?? ../test-str-ops-browser.sh
+?? ../tests/
+?? ../tmp/
+?? ../tools/
+?? ../verify_canonical_path.sh
+?? ../webhook_health_audit.py
+?? ../webhook_proof_report.py
+?? ../wipe_month_calendars.py
+--- live readiness: ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_live_readiness.sh ---
+{
+  "broker_health": {
+    "account": {
+      "account": {
+        "account_blocked": false,
+        "account_number": "237788686",
+        "buying_power": "1000",
+        "cash": "1000",
+        "daytrade_count": 0,
+        "equity": "1000",
+        "multiplier": "1",
+        "non_marginable_buying_power": "1000",
+        "pattern_day_trader": false,
+        "raw": {
+          "account_blocked": false,
+          "account_number": "237788686",
+          "accrued_fees": "0",
+          "buying_power": "1000",
+          "cash": "1000",
+          "created_at": "2026-04-22 14:08:15.698071+00:00",
+          "crypto_status": "ACTIVE",
+          "currency": "USD",
+          "daytrade_count": 0,
+          "daytrading_buying_power": "0",
+          "equity": "1000",
+          "id": "60444603-bfff-4518-b1f8-3a9c6b0f16b4",
+          "initial_margin": "0",
+          "last_equity": "1000",
+          "last_maintenance_margin": "0",
+          "long_market_value": "0",
+          "maintenance_margin": "0",
+          "multiplier": "1",
+          "non_marginable_buying_power": "1000",
+          "options_approved_level": null,
+          "options_buying_power": null,
+          "options_trading_level": null,
+          "pattern_day_trader": false,
+          "pending_transfer_in": null,
+          "pending_transfer_out": null,
+          "portfolio_value": "1000",
+          "regt_buying_power": "1000",
+          "short_market_value": "0",
+          "shorting_enabled": false,
+          "sma": "1000",
+          "status": "ACTIVE",
+          "trade_suspended_by_user": false,
+          "trading_blocked": false,
+          "transfers_blocked": false
+        },
+        "trading_blocked": false
+      },
+      "ok": true
+    },
+    "ok": true,
+    "open_orders": {
+      "ok": true,
+      "orders": []
+    }
+  },
+  "broker_provider": "alpaca",
+  "broker_runtime": {
+    "base_url": "https://api.alpaca.markets",
+    "configured": true,
+    "environment": "live",
+    "paper": false,
+    "provider": "alpaca"
+  },
+  "execution_blockers": [],
+  "full_execution_ready": true,
+  "market_data_health": {
+    "bars": {
+      "bars": [
+        {
+          "close": 738.0,
+          "high": 738.27,
+          "low": 737.91,
+          "open": 738.18,
+          "raw": {
+            "close": 738.0,
+            "high": 738.27,
+            "low": 737.91,
+            "open": 738.18,
+            "symbol": "SPY",
+            "timestamp": "2026-05-21 13:36:00+00:00",
+            "trade_count": 2247.0,
+            "volume": 134220.0,
+            "vwap": 738.08725
+          },
+          "timestamp": "2026-05-21 13:36:00+00:00",
+          "trade_count": 2247.0,
+          "volume": 134220.0,
+          "vwap": 738.08725
+        },
+        {
+          "close": 738.13,
+          "high": 738.28,
+          "low": 737.75,
+          "open": 738.02,
+          "raw": {
+            "close": 738.13,
+            "high": 738.28,
+            "low": 737.75,
+            "open": 738.02,
+            "symbol": "SPY",
+            "timestamp": "2026-05-21 13:37:00+00:00",
+            "trade_count": 2143.0,
+            "volume": 141157.0,
+            "vwap": 738.053558
+          },
+          "timestamp": "2026-05-21 13:37:00+00:00",
+          "trade_count": 2143.0,
+          "volume": 141157.0,
+          "vwap": 738.053558
+        }
+      ],
+      "feed": "sip",
+      "ok": true
+    },
+    "feed": "sip",
+    "ok": true,
+    "quote": {
+      "feed": "sip",
+      "ok": true,
+      "quote": {
+        "ask": 740.18,
+        "ask_size": 80.0,
+        "bid": 740.15,
+        "bid_size": 120.0,
+        "last": 740.17,
+        "prev_close": 711.21,
+        "raw_quote": {
+          "ask_exchange": "T",
+          "ask_price": 740.18,
+          "ask_size": 80.0,
+          "bid_exchange": "V",
+          "bid_price": 740.15,
+          "bid_size": 120.0,
+          "conditions": [
+            "R"
+          ],
+          "symbol": "SPY",
+          "tape": "B",
+          "timestamp": "2026-05-21 14:05:25.049235+00:00"
+        },
+        "raw_trade": {
+          "conditions": [
+            " "
+          ],
+          "exchange": "D",
+          "id": 71683848946743,
+          "price": 740.17,
+          "size": 50.0,
+          "symbol": "SPY",
+          "tape": "B",
+          "timestamp": "2026-05-21 14:05:24.912747+00:00"
+        },
+        "spread_bps": 0.4053,
+        "timestamp": "2026-05-21 14:05:25.049235+00:00"
+      }
+    },
+    "requested_feed": "sip"
+  },
+  "market_data_provider": "alpaca",
+  "market_data_runtime": {
+    "allow_iex_fallback": true,
+    "configured": true,
+    "data_base_url": "https://data.alpaca.markets",
+    "feed": "sip",
+    "provider": "alpaca_market_data"
+  },
+  "ok": true,
+  "probe_symbol": "SPY",
+  "runtime_guards": {
+    "disable_entries": false,
+    "force_flat": false,
+    "in_entry_window": true,
+    "kill_switch": false,
+    "live_armed": true
+  },
+  "session_phase": "ENTRY_WINDOW"
+}
+--- opening bell readiness: ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_opening_bell_readiness.sh ---
+{
+  "message": "opening-bell autonomous trading armed",
+  "opening_bell_blockers": [],
+  "opening_bell_enabled": true,
+  "primary_candidate": "AMD",
+  "readiness": {
+    "broker_health": {
+      "account": {
+        "account": {
+          "account_blocked": false,
+          "account_number": "237788686",
+          "buying_power": "1000",
+          "cash": "1000",
+          "daytrade_count": 0,
+          "equity": "1000",
+          "multiplier": "1",
+          "non_marginable_buying_power": "1000",
+          "pattern_day_trader": false,
+          "raw": {
+            "account_blocked": false,
+            "account_number": "237788686",
+            "accrued_fees": "0",
+            "buying_power": "1000",
+            "cash": "1000",
+            "created_at": "2026-04-22 14:08:15.698071+00:00",
+            "crypto_status": "ACTIVE",
+            "currency": "USD",
+            "daytrade_count": 0,
+            "daytrading_buying_power": "0",
+            "equity": "1000",
+            "id": "60444603-bfff-4518-b1f8-3a9c6b0f16b4",
+            "initial_margin": "0",
+            "last_equity": "1000",
+            "last_maintenance_margin": "0",
+            "long_market_value": "0",
+            "maintenance_margin": "0",
+            "multiplier": "1",
+            "non_marginable_buying_power": "1000",
+            "options_approved_level": null,
+            "options_buying_power": null,
+            "options_trading_level": null,
+            "pattern_day_trader": false,
+            "pending_transfer_in": null,
+            "pending_transfer_out": null,
+            "portfolio_value": "1000",
+            "regt_buying_power": "1000",
+            "short_market_value": "0",
+            "shorting_enabled": false,
+            "sma": "1000",
+            "status": "ACTIVE",
+            "trade_suspended_by_user": false,
+            "trading_blocked": false,
+            "transfers_blocked": false
+          },
+          "trading_blocked": false
+        },
+        "ok": true
+      },
+      "ok": true,
+      "open_orders": {
+        "ok": true,
+        "orders": []
+      }
+    },
+    "broker_provider": "alpaca",
+    "broker_runtime": {
+      "base_url": "https://api.alpaca.markets",
+      "configured": true,
+      "environment": "live",
+      "paper": false,
+      "provider": "alpaca"
+    },
+    "execution_blockers": [],
+    "full_execution_ready": true,
+    "market_data_health": {
+      "bars": {
+        "bars": [
+          {
+            "close": 738.0,
+            "high": 738.27,
+            "low": 737.91,
+            "open": 738.18,
+            "raw": {
+              "close": 738.0,
+              "high": 738.27,
+              "low": 737.91,
+              "open": 738.18,
+              "symbol": "SPY",
+              "timestamp": "2026-05-21 13:36:00+00:00",
+              "trade_count": 2247.0,
+              "volume": 134220.0,
+              "vwap": 738.08725
+            },
+            "timestamp": "2026-05-21 13:36:00+00:00",
+            "trade_count": 2247.0,
+            "volume": 134220.0,
+            "vwap": 738.08725
+          },
+          {
+            "close": 738.13,
+            "high": 738.28,
+            "low": 737.75,
+            "open": 738.02,
+            "raw": {
+              "close": 738.13,
+              "high": 738.28,
+              "low": 737.75,
+              "open": 738.02,
+              "symbol": "SPY",
+              "timestamp": "2026-05-21 13:37:00+00:00",
+              "trade_count": 2143.0,
+              "volume": 141157.0,
+              "vwap": 738.053558
+            },
+            "timestamp": "2026-05-21 13:37:00+00:00",
+            "trade_count": 2143.0,
+            "volume": 141157.0,
+            "vwap": 738.053558
+          }
+        ],
+        "feed": "sip",
+        "ok": true
+      },
+      "feed": "sip",
+      "ok": true,
+      "quote": {
+        "feed": "sip",
+        "ok": true,
+        "quote": {
+          "ask": 740.17,
+          "ask_size": 120.0,
+          "bid": 740.14,
+          "bid_size": 320.0,
+          "last": 740.155,
+          "prev_close": 711.21,
+          "raw_quote": {
+            "ask_exchange": "Z",
+            "ask_price": 740.17,
+            "ask_size": 120.0,
+            "bid_exchange": "T",
+            "bid_price": 740.14,
+            "bid_size": 320.0,
+            "conditions": [
+              "R"
+            ],
+            "symbol": "SPY",
+            "tape": "B",
+            "timestamp": "2026-05-21 14:05:26.772631+00:00"
+          },
+          "raw_trade": {
+            "conditions": [
+              " "
+            ],
+            "exchange": "D",
+            "id": 71683863032909,
+            "price": 740.155,
+            "size": 50.0,
+            "symbol": "SPY",
+            "tape": "B",
+            "timestamp": "2026-05-21 14:05:26.780835+00:00"
+          },
+          "spread_bps": 0.4053,
+          "timestamp": "2026-05-21 14:05:26.772631+00:00"
+        }
+      },
+      "requested_feed": "sip"
+    },
+    "market_data_provider": "alpaca",
+    "market_data_runtime": {
+      "allow_iex_fallback": true,
+      "configured": true,
+      "data_base_url": "https://data.alpaca.markets",
+      "feed": "sip",
+      "provider": "alpaca_market_data"
+    },
+    "ok": true,
+    "probe_symbol": "SPY",
+    "runtime_guards": {
+      "disable_entries": false,
+      "force_flat": false,
+      "in_entry_window": true,
+      "kill_switch": false,
+      "live_armed": true
+    },
+    "session_phase": "ENTRY_WINDOW"
+  },
+  "status": "GREEN"
+}
+--- screen -ls and pgrep: screen -ls; pgrep -af 'run_opening_bell_live_monitor|src.workflows.live_monitor' || true ---
+There is a screen on:
+	67996.roi-snips-opening-bell	(Detached)
+1 Socket in /var/folders/_r/p8hk1pwj57b5p0f4drd0m7yc0000gn/T/.screen.
+
+67996
+67998
+67999
+71751
+--- recent files: find state/proposals reports/journal reports/live_monitor -maxdepth 4 -type f -mtime -1 | sort ---
+reports/journal/2026-05-20.jsonl
+reports/journal/2026-05-21.jsonl
+reports/live_monitor/opening_bell_live_2026-05-21.jsonl
+reports/live_monitor/opening_bell_runner_2026-05-21.pid
+reports/live_monitor/opening_bell_runner_stdout_2026-05-21-loop.log
+reports/live_monitor/opening_bell_runner_stdout_2026-05-21.log
+reports/live_monitor/opening_bell_screen_2026-05-21.log
+--- cron get morning: openclaw cron get d3f02133-95f6-4733-bc77-1c94d90025ee 2>&1 || true ---
+GatewayClientRequestError: cron job not found: d3f02133-95f6-4733-bc77-1c94d90025ee
+--- cron get live monitor: openclaw cron get f112f794-a79f-418c-9aaa-d0af8c737097 2>&1 || true ---
+GatewayClientRequestError: cron job not found: f112f794-a79f-418c-9aaa-d0af8c737097
+--- cron get force flat: openclaw cron get d3ad7443-fc5e-49b1-9564-36ded5b5cbee 2>&1 || true ---
+{
+  "id": "d3ad7443-fc5e-49b1-9564-36ded5b5cbee",
+  "name": "Roi Snips force-flat live safety - 2026-05-21",
+  "enabled": true,
+  "deleteAfterRun": true,
+  "createdAtMs": 1779337142839,
+  "schedule": {
+    "kind": "at",
+    "at": "2026-05-21T19:45:00.000Z"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "now",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Roi Snips force-flat safety for Thursday 2026-05-21.\n\nWorkdir: /Users/rogerclaw/.openclaw/workspace/roi-snips.\n\nCharles explicitly armed live trading for 2026-05-21. At the configured force-flat time, run the deterministic force-flat command with live submission enabled:\n\nROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true PYTHONPATH=. .venv/bin/python -m src.approval.command_processor FLAT ALL NOW\n\nThen run a broker/order status check if available:\nROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_live_readiness.sh\n\nSend Charles one concise Telegram message with cancel/flatten result, any remaining open order/position evidence, and blockers if any. Final-answer exactly SENT if Telegram message was sent, otherwise INTERNAL_FAILURE with concrete blocker. Do not ask for approval; this is the safety flatten path.",
+    "model": "openai/gpt-5.5",
+    "thinking": "low",
+    "timeoutSeconds": 900,
+    "toolsAllow": [
+      "exec",
+      "message"
+    ]
+  },
+  "delivery": {
+    "mode": "none",
+    "channel": "telegram",
+    "to": "8262254077",
+    "accountId": "roisnips"
+  },
+  "state": {
+    "nextRunAtMs": 1779392700000
+  },
+  "updatedAtMs": 1779337142839
+}
+--- cron get post run: openclaw cron get 97cd1f96-027f-44ee-aff8-7646f5bf7eed 2>&1 || true ---
+{
+  "id": "97cd1f96-027f-44ee-aff8-7646f5bf7eed",
+  "name": "Roi Snips post-run learning review - 2026-05-21",
+  "enabled": true,
+  "deleteAfterRun": true,
+  "createdAtMs": 1779339812310,
+  "schedule": {
+    "kind": "at",
+    "at": "2026-05-21T20:30:00.000Z"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "now",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Roi Snips post-run learning review for Thursday 2026-05-21.\n\nWorkdir: /Users/rogerclaw/.openclaw/workspace/roi-snips.\n\nPurpose: learn from what actually happened during the armed opening-bell run and produce the next-level streaming-supervisor build plan. Do not place orders. Do not alter guards. Do not send broker orders. This is read-only analysis plus Telegram summary.\n\nInputs to inspect:\n- docs/NEXT_LEVEL_LEARNING_AND_STREAMING_SUPERVISOR_PLAN_2026-05-20.txt\n- reports/morning/json/2026-05-21.json\n- reports/morning/md/2026-05-21.md\n- reports/live_monitor/opening_bell_live_2026-05-21.jsonl\n- reports/journal/2026-05-21.jsonl if present\n- state/proposals/ latest records\n- openclaw cron get d3f02133-95f6-4733-bc77-1c94d90025ee\n- openclaw cron get f112f794-a79f-418c-9aaa-d0af8c737097\n- openclaw cron get d3ad7443-fc5e-49b1-9564-36ded5b5cbee\n- ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_live_readiness.sh\n\nRequired output:\n1. Create docs/POST_RUN_LEARNING_REVIEW_2026-05-21.txt with: what happened, whether an order was submitted, exact blockers or trade timeline, whether the no-trade/trade decision was correct, runtime reliability, polling-path weaknesses, concrete streaming-supervisor requirements learned from logs, prioritized next implementation plan, and immediate safety patches before the next armed run.\n2. Append concise raw notes to ../memory/2026-05-21.md or memory/2026-05-21.md depending cwd/path availability.\n3. Send Charles a concise Telegram summary via message tool with the result, where the full file is, and the top 3 next fixes.\n4. Final-answer exactly SENT if Telegram message was sent; otherwise INTERNAL_FAILURE with concrete blocker.",
+    "model": "openai/gpt-5.5",
+    "thinking": "medium",
+    "timeoutSeconds": 1800,
+    "toolsAllow": [
+      "exec",
+      "message"
+    ]
+  },
+  "delivery": {
+    "mode": "none",
+    "channel": "last",
+    "to": "8262254077",
+    "accountId": "roisnips"
+  },
+  "state": {
+    "nextRunAtMs": 1779395400000
+  },
+  "updatedAtMs": 1779339812310
+}
+
+APPENDIX B - IMPORTANT FILE EXISTENCE
+- reports/morning/json/2026-05-21.json: exists=True size=131599
+- reports/morning/md/2026-05-21.md: exists=True size=4564
+- runs/2026-05-21/normalized/daily_best_pick_packet.json: exists=True size=97733
+- runs/2026-05-21/normalized/research_ranked_candidates.json: exists=True size=130476
+- runs/2026-05-21/normalized/execution_eligible_candidates.json: exists=True size=75742
+- runs/2026-05-21/raw/discovery_events.jsonl: exists=True size=40587
+- reports/live_monitor/opening_bell_live_2026-05-21.jsonl: exists=True size=224240
+- reports/journal/2026-05-21.jsonl: exists=True size=17298
+- state/opening_drive_subminute_state.json: exists=True size=4429
+- ops/progress/ACTIVE.md: exists=True size=2165
+- ../memory/2026-05-21.md: exists=True size=6902
+- config/workflow.yaml: exists=True size=3326
+- configs/live.yaml: exists=True size=6261
+- config/opening_bell.yaml: exists=True size=2711
+- src/workflows/research_pipeline.py: exists=True size=12813
+- src/workflows/premarket_pipeline.py: exists=True size=19696
+- src/workflows/live_monitor.py: exists=True size=38101
+- scripts/run_opening_bell_live_monitor.sh: exists=True size=3195
+- scripts/check_live_readiness.sh: exists=True size=691
+- scripts/check_opening_bell_readiness.sh: exists=True size=286
+
+APPENDIX C - JOURNAL NOTE
+- reports/journal/2026-05-21.jsonl exists and has event_type counts: {"order_blocked": 2, "post_place": 3, "post_preview": 6, "pre_place": 3, "pre_preview": 6, "proposal_created": 3}
+- Relevant journal entries look like test artifacts, not live monitor orders:
+  - {"event_type": "proposal_created", "persisted_to_postgres": false, "plan_id": "plan-1", "status": "ok", "submission_mode": "live", "symbol": "MRAM", "ts_utc": "2026-05-21T13:39:24.870931+00:00"}
+  - {"event_type": "proposal_created", "persisted_to_postgres": false, "plan_id": "plan-1", "status": "ok", "submission_mode": "dry_run", "symbol": "MRAM", "ts_utc": "2026-05-21T13:39:24.871447+00:00"}
+  - {"event_type": "proposal_created", "persisted_to_postgres": false, "plan_id": "plan-1", "status": "ok", "submission_mode": "paper", "symbol": "MRAM", "ts_utc": "2026-05-21T13:39:24.872075+00:00"}
+  - {"event_type": "pre_place", "persisted_to_postgres": false, "plan_id": "plan_test_2", "status": "ok", "submission_mode": null, "symbol": "NVDA", "ts_utc": "2026-05-21T13:39:24.875843+00:00"}
+  - {"event_type": "post_place", "persisted_to_postgres": false, "plan_id": "plan_test_2", "status": "ok", "submission_mode": null, "symbol": "NVDA", "ts_utc": "2026-05-21T13:39:24.875903+00:00"}
+  - {"event_type": "pre_place", "persisted_to_postgres": false, "plan_id": "plan_test_3", "status": "ok", "submission_mode": null, "symbol": "NVDA", "ts_utc": "2026-05-21T13:39:24.876928+00:00"}
+  - {"event_type": "post_place", "persisted_to_postgres": false, "plan_id": "plan_test_3", "status": "ok", "submission_mode": null, "symbol": "NVDA", "ts_utc": "2026-05-21T13:39:24.876987+00:00"}
+  - {"event_type": "pre_place", "persisted_to_postgres": false, "plan_id": "plan_test_4", "status": "ok", "submission_mode": null, "symbol": "NVDA", "ts_utc": "2026-05-21T13:39:24.878635+00:00"}
+  - {"event_type": "post_place", "persisted_to_postgres": false, "plan_id": "plan_test_4", "status": "ok", "submission_mode": null, "symbol": "NVDA", "ts_utc": "2026-05-21T13:39:24.878686+00:00"}
+
+APPENDIX D - CONFIG SNAPSHOT
+- configs/live.yaml market_data max_quote_age_ms_open is currently 2500; this was a live-window relaxation from the earlier tighter threshold.
+- config/opening_bell.yaml still declares opening_bell.data.max_quote_age_ms=1000 for the intended opening-bell architecture; production live_monitor currently uses configs/live.yaml market_data.max_quote_age_ms_open.
+- config/workflow.yaml deep_research.mode has been fixed to deep_mini after the failed run. The manifest preserves the original failure due mode full.

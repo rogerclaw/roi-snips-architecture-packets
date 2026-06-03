@@ -1,0 +1,75 @@
+You are doing a deep-mini short-term U.S. equities research hunt for Roi Snips.
+
+Goal:
+Identify the best high-upside long-only U.S. stock or ETF opportunities for today, with emphasis on names that could move sharply today or over the next 1-3 trading days. This is research-only for now, not an order request.
+
+Important operating parameters to incorporate:
+- U.S. equities / ETFs only
+- Long only
+- No options, no shorting, no margin
+- Prefer volatile names with real catalyst energy over boring mega-cap blue chips unless a mega-cap has an unusually strong fresh catalyst
+- Strong preference for catalysts that can drive sharp near-term upside today or within a couple of days
+- Prioritize official / primary evidence first, then structured news, then retail/social sentiment
+- We care about asymmetric upside more than stability, but do not rely on hype alone if the catalyst evidence is weak
+- We want names that are still early enough, not already hopelessly crowded or fully spent
+- Research should aggressively search beyond the default blue-chip universe; include small caps, mid caps, recent runners, lower-float names, sector movers, contract / approval / FDA / earnings / M&A / guidance / partnership / product / squeeze / unusual-volume setups, etc.
+- Avoid OTC, options-only stories, and names with clearly broken liquidity or obvious halt/ruin characteristics unless there is still a realistic tradeable setup
+
+Research scope:
+Conduct an exhaustive, high-depth search across all relevant sources available, including as many of these as possible:
+- financial news
+- company press releases / IR
+- SEC filings
+- earnings materials / transcripts / updates
+- analyst commentary if available
+- trading blogs / newsletters / market commentary
+- Reddit / stock forums / retail chatter
+- X sentiment / discussion velocity
+- high-signal investing media (Motley Fool etc.)
+- any credible source available to the research stack
+
+What to optimize for:
+- strongest combination of fresh catalyst + sentiment + likely liquidity + near-term upside
+- probability of a sharp near-term move
+- whether the move is still early enough versus already overcrowded
+- whether there is a clear invalidation level / thesis-break point
+- whether premarket / early-session behavior suggests actual tradeability
+- whether float / short-interest / theme heat / attention acceleration could amplify the move
+
+Explicitly weigh:
+1. current news flow and catalyst strength
+2. freshness / novelty of the catalyst
+3. sentiment across both professional and retail channels
+4. premarket or early-session behavior if available
+5. unusual volume, momentum, float dynamics, short-interest, squeeze potential if relevant
+6. technical context: support, resistance, breakout zones, gap-fill behavior, liquidity zones, extension risk
+7. whether the name is already too crowded
+8. what could invalidate the trade quickly
+
+Deliverable:
+Return:
+1. the SINGLE best short-term stock opportunity for today
+2. 2-4 backup candidates, ranked
+
+For each final candidate include:
+- ticker and company name
+- why it could move sharply in the next hours or days
+- the underlying catalyst and why it may or may not be fully priced in yet
+- evidence reviewed, including official sources and sentiment/discussion trends
+- whether this is a hard-catalyst move, hype-ignition move, squeeze move, earnings move, M&A move, etc.
+- a suggested buy zone or entry framework
+- realistic upside target for same-day and 1-3 day horizons
+- downside / thesis-break level
+- what timeframe should be monitored most closely after entry
+- specific profit-taking triggers and danger signals
+- execution/liquidity risks
+
+Decision style:
+Be decisive. Prefer names with real explosive potential, not safe boring names. Rank quality of evidence over hype, but do not ignore hype if it is clearly becoming market-moving force.
+
+Output format:
+- Executive summary
+- Best pick
+- Ranked backups
+- Why the best pick won over the others
+- Key invalidation risks / what would make this a no-trade instead

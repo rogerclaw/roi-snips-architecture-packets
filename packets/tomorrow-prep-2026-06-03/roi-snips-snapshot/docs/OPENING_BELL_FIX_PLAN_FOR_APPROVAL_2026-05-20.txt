@@ -1,0 +1,175 @@
+ROI SNIPS OPENING-BELL FIX PLAN FOR APPROVAL
+Generated: 2026-05-20 21:35 PT
+Owner approval needed: Charles
+
+================================================================================
+SUMMARY
+================================================================================
+
+Roi Snips is armed for tomorrow and current readiness is green, but the Clawpatch
+pass did not meaningfully review the system because it mapped zero repo features.
+Manual review found two real architecture gaps:
+
+1. The scheduled live job runs src.workflows.live_monitor, not the newer
+   opening_bell_monitor / OpeningBurstExecutor production path directly.
+
+2. The current production execution loop polls latest quote + 1-minute bars
+   about every 2 seconds. It is guarded and can trade, but it is not a true
+   first-seconds Alpaca quote/trade streaming supervisor.
+
+Recommendation: approve a narrow tonight hardening pass, not a risky rewrite.
+
+================================================================================
+RECOMMENDED APPROVAL: PLAN A - TONIGHT HARDENING
+================================================================================
+
+Approve this if the priority is to keep tomorrow live-capable while reducing the
+largest avoidable runtime risk.
+
+Scope:
+
+1. Create a dedicated opening-bell live runner script.
+   Suggested file:
+   - scripts/run_opening_bell_live_monitor.sh
+
+   Behavior:
+   - export ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true
+   - run scripts/check_live_readiness.sh
+   - run scripts/check_opening_bell_readiness.sh
+   - fail closed if either has a hard blocker
+   - start the live monitor loop
+   - log every loop result to reports/live_monitor/opening_bell_live_2026-05-21.jsonl
+   - stop at the configured end time
+   - never use market orders
+   - never bypass LIVE_ARMED / DISABLE_NEW_ENTRIES / KILL_SWITCH / broker / data / cash / position / order checks
+
+2. Patch the 06:29:30 PT OpenClaw cron to call that script directly.
+   Current job:
+   - f112f794-a79f-418c-9aaa-d0af8c737097
+
+   Reason:
+   - removes fragile inline shell loop from the cron prompt
+   - makes the exact live command auditable and repeatable
+   - keeps cron as the scheduler, not the implementation surface
+
+3. Add a pre-open self-test that proves the live runner exits before order logic
+   when a hard guard is active.
+   Suggested test:
+   - temporarily simulate DISABLE_NEW_ENTRIES in a temp state/config context if feasible
+   - verify runner refuses to proceed
+
+4. Add a short architecture note to the runbook:
+   - Tomorrow's production execution path is the guarded live_monitor polling path.
+   - The newer opening-bell modules are partially wired scaffolding and test-covered helpers, not yet a full streaming execution engine.
+   - Streaming supervisor is next-phase work.
+
+5. Re-run focused tests:
+   - tests/test_opening_bell_readiness.py
+   - tests/test_live_monitor.py
+   - tests/test_order_router.py
+   - tests/test_opening_burst_strategy.py
+   - tests/test_fast_cancel.py
+
+6. Re-run live no-order readiness:
+   - ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_live_readiness.sh
+   - ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/check_opening_bell_readiness.sh
+
+Expected effect:
+
+- Preserves tomorrow's ability to autonomously submit a live order.
+- Reduces cron/session fragility.
+- Makes tomorrow's live execution command deterministic and inspectable.
+- Does not attempt a risky rewrite of the execution engine hours before open.
+
+Residual risk after Plan A:
+
+- Still not true quote/trade streaming.
+- Still dependent on OpenClaw cron starting the isolated session.
+- Still dependent on morning research producing a real candidate.
+- Still dependent on polling loop catching the tape fast enough.
+
+================================================================================
+DO NOT RECOMMEND TONIGHT: PLAN B - FULL STREAMING ENGINE
+================================================================================
+
+This is the architecture ideal, but I do not recommend doing it tonight before a
+live armed run.
+
+Scope would include:
+
+- build Alpaca stream supervisor for quotes/trades/bars
+- wire OpeningTapeTracker into real stream events
+- wire OPENING_BURST_HYPER_LONG into the live execution loop
+- wire OpeningBurstExecutor and OpeningPositionManager as the primary production
+  path
+- build durable reconnect/backoff/state recovery
+- add simulated stream replay tests
+- add integration tests around fill/cancel/exit handoff
+
+Reason not tonight:
+
+- Higher chance of introducing a new live-trading bug than improving tomorrow's
+  expected outcome.
+- Needs more test surface than can responsibly be built immediately before open.
+
+Recommended timing:
+
+- Build after tomorrow's run, with replay fixtures from real logs.
+
+================================================================================
+OPTIONAL PLAN C - CONSERVATIVE NO-TRADE MODE
+================================================================================
+
+Approve only if Charles changes his mind and wants tomorrow to be research-only.
+
+Actions:
+
+- remove state/LIVE_ARMED
+- recreate state/DISABLE_NEW_ENTRIES
+- edit 06:29:30 job to no-order monitor only
+
+This is not currently recommended because Charles explicitly armed live trading.
+
+================================================================================
+MY RECOMMENDATION
+================================================================================
+
+Approve Plan A.
+
+It is the right risk balance:
+
+- keep the system live-capable for tomorrow
+- harden the brittle cron/live-loop surface
+- document the actual production path honestly
+- avoid a late-night rewrite into the more complex streaming engine
+
+Approval phrase:
+
+"Approve Plan A hardening. Do not de-arm. Do not rewrite streaming tonight."
+
+================================================================================
+WHAT WILL NOT CHANGE UNDER PLAN A
+================================================================================
+
+- No market orders.
+- No options.
+- No shorts.
+- No margin behavior.
+- No more than one open position.
+- No bypass of hard blockers.
+- No live order before the scheduled opening-bell run.
+- No change to Charles's explicit live arming unless he asks.
+
+================================================================================
+SUCCESS CRITERIA
+================================================================================
+
+Plan A is complete when:
+
+1. Dedicated live runner script exists.
+2. 06:29:30 PT cron calls the runner.
+3. Focused tests pass.
+4. Live no-order readiness is still green.
+5. Opening-bell readiness is still green.
+6. Charles receives a final status with the exact command and remaining risks.
+

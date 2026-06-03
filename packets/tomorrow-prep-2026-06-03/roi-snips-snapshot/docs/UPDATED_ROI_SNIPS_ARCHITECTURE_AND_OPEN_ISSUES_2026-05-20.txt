@@ -1,0 +1,457 @@
+UPDATED ROI SNIPS ARCHITECTURE AND OPEN ISSUES
+Generated: 2026-05-20
+
+Purpose
+=======
+
+This is the current practical architecture for Roi Snips after the Alpaca,
+OpenAI/deep-research, Grok/X, and Reddit setup work.
+
+The goal is still one decisive short-term long-only U.S. stock/ETF pick for a
+same-day to 1-3 day speculative trade. It should not behave like a generic
+watchlist generator. It should behave like a fast catalyst hunter with hard
+execution gates.
+
+The system should combine:
+
+1. deterministic source scouts
+2. evidence ledger and source scoring
+3. market/tape/liquidity overlay
+4. social attention overlay
+5. governed online AI research, comparable in shape to a ChatGPT Pro search
+6. execution/no-trade gates that outrank all LLM enthusiasm
+7. a final packet Charles can actually act on
+
+
+Current High-Level Architecture
+===============================
+
+One-line version:
+
+    broad catalyst discovery
+    -> evidence ledger
+    -> social/attention overlay
+    -> market/tape overlay
+    -> reject bad setups
+    -> rank finalists
+    -> governed online AI research on the shortlist
+    -> one final best-pick/no-trade packet
+    -> live execution only if all deterministic gates pass and live entries are armed
+
+
+Research Flow
+=============
+
+1. Discovery scouts build the universe
+--------------------------------------
+
+Current usable or partly usable lanes:
+
+- Alpaca SIP quote/trade/bar market data
+- Alpaca account/order/position checks
+- Alpaca News
+- Benzinga newswire
+- SEC EDGAR
+- Company IR / press-release discovery
+- FDA / biotech keyword scout
+- Government / contract keyword scout
+- Exchange / mover scout
+- Reddit public JSON fallback
+- optional X API adapter when X bearer token is present
+- Grok-backed X/web search through OpenClaw
+- Governed OpenAI deep-research runner
+
+Discovery should include obvious premarket movers, fresh hard catalysts,
+official filings, obscure under-covered catalysts, social attention spikes,
+and candidates that look volatile enough to matter for a small speculative
+same-day / 1-3 day trade.
+
+2. Evidence ledger normalizes every candidate
+---------------------------------------------
+
+For every ticker, the system should track:
+
+- ticker and company mapping
+- catalyst claim
+- official source URLs
+- structured/news source URLs
+- social/X/Reddit citations
+- freshness
+- source quality
+- official confirmation count
+- structured confirmation count
+- social confirmation count
+- story stage: early, developing, late, crowded, exhausted
+- attention acceleration
+- crowding / pump risk
+- hidden-edge or why-not-fully-priced rationale
+- unresolved questions
+- elimination flags
+
+Social can discover candidates. Social cannot prove candidates.
+
+3. Ranking scores the research opportunity
+------------------------------------------
+
+The ranking model should prefer:
+
+- fresh hard catalysts
+- official or structured confirmation
+- strong asymmetry
+- early story stage
+- unusual but still tradeable attention/volume
+- smaller or lesser-known names when the catalyst quality is comparable
+
+The ranking model should penalize:
+
+- mega-cap defaults unless the catalyst/tape is exceptional
+- stale catalysts
+- hype-only setups
+- exhausted/parabolic moves
+- missing official or structured evidence
+- poor liquidity
+- wide spreads
+- unclear ticker mapping
+
+4. Market overlay and execution gates decide whether a research idea is tradable
+-------------------------------------------------------------------------------
+
+Roi Snips must separate "interesting idea" from "executable trade."
+
+Market overlay checks:
+
+- live quote
+- last price
+- bid/ask
+- spread
+- prior close
+- premarket bars
+- volume / dollar volume
+- average liquidity
+- halt/abnormal state
+- price band
+- configured data feed
+
+Execution gates block candidates when:
+
+- no official or structured confirmation exists
+- quote/last/bid/ask/spread data is missing
+- spread is too wide
+- liquidity is too thin
+- price band fails
+- session phase is wrong
+- one-position rule fails
+- broker/account state is unhealthy
+- kill switch is active
+- disable-new-entries is active
+
+If nothing passes execution gates, the correct output is no-trade or
+research-leader-only. It must not invent an executable best pick.
+
+
+ChatGPT Pro-Style Online Research Route
+=======================================
+
+Charles's concern is correct: this system needs a route that behaves like a
+real online ChatGPT Pro search/deep-research pass, not just a local scoring
+script or a normal LLM chat reply.
+
+The intended route now is:
+
+1. Deterministic scouts build a broad universe from market, news, filings,
+   official sources, social, and mover feeds.
+
+2. The pipeline ranks and filters candidates before the LLM sees them. This
+   prevents the AI from wasting time on junk and prevents social hype from
+   bypassing gates.
+
+3. The top execution-eligible or near-eligible names are written into a
+   generated shortlist brief.
+
+4. `tools/deep-research-runner` sends that brief through the governed OpenAI
+   research architect path.
+
+5. The architect routes the request:
+
+   - `no_escalation` for simple cases or smoke checks
+   - `deep_mini` / `o4-mini-deep-research` for normal morning shortlist synthesis
+   - `deep` / `o3-deep-research` for unusually broad, ambiguous, high-stakes,
+     or source-conflicted cases
+
+6. When escalated, the OpenAI Responses API can attach web-search tooling and
+   produce an online research memo with citations.
+
+7. The deep-research output must produce one best pick plus only enough backups
+   to explain why the winner is better.
+
+8. The final packet must include:
+
+   - best ticker/company or explicit no-trade
+   - catalyst
+   - why the move may not be fully priced
+   - evidence and sentiment/attention trend
+   - buy zone / entry framework
+   - same-day target
+   - 1-3 day target
+   - downside / thesis-break level
+   - monitoring timeframe
+   - profit-taking triggers
+   - danger signals
+   - why it beats backups
+   - execution gate status
+   - live-trading guard status
+
+Important constraint: deep research can help choose and explain the idea. It
+cannot override official-source requirements, spread/liquidity gates, stale
+data checks, one-position rule, kill switch, disable-entry state, or the
+long-only/no-options/no-shorts/no-margin constraints.
+
+
+Grok / X Search Role
+====================
+
+Grok is now usable as a first-pass X/social discovery lane.
+
+Current working shape:
+
+- OpenClaw has Grok web search available through provider `grok`.
+- `src/adapters/grok_search.py` calls OpenClaw web search instead of storing
+  xAI credentials in Roi Snips.
+- `src/research/scouts/social_scout.py` emits `grok_x_search` raw events.
+- Those events are marked social-only:
+  - `social_flag=true`
+  - `official_flag=false`
+  - `structured_flag=false`
+- Existing execution gates therefore still block Grok-only candidates from
+  executable status until another source lane confirms them.
+
+What Grok is good for:
+
+- finding X/cashtag chatter
+- finding retail momentum and attention acceleration
+- surfacing obscure tickers getting sudden discussion
+- adding citations/URLs to the social overlay
+
+What Grok is not allowed to do:
+
+- choose the final trade by itself
+- populate an order plan directly
+- override official/structured source requirements
+- override market data, spread, liquidity, or risk gates
+
+Remaining Grok work:
+
+- tune query templates for premarket small-cap catalyst discovery
+- persist full response JSON, query text, and citations more richly in run
+  artifacts
+- optionally move from Grok web-search wrapping to direct xAI `x_search`
+  tooling if that gives better source control
+
+
+Reddit Status
+=============
+
+We cannot currently get authenticated Reddit API credentials.
+
+Current local status:
+
+- `REDDIT_CLIENT_ID` is not configured.
+- `REDDIT_CLIENT_SECRET` is not configured.
+- Reddit API approval/application creation is pending on Reddit's side.
+- The adapter falls back to public Reddit JSON listing endpoints.
+- Public JSON fallback currently works for basic discovery, but it is not a
+  dependable production-grade replacement for API credentials.
+
+Important architecture decision:
+
+- Reddit must be non-blocking until credentials are approved.
+- `config/workflow.yaml` has been adjusted so Reddit is optional and
+  non-blocking, using `oauth_preferred_public_json_fallback`.
+
+How Reddit works for now:
+
+- Public JSON can provide weak retail-attention discovery.
+- It can count cashtag mentions in selected public subreddits.
+- It should be treated as low-confidence social input.
+- It cannot be relied on for continuous production availability.
+
+Once Reddit approves API access, add:
+
+- `REDDIT_CLIENT_ID`
+- `REDDIT_CLIENT_SECRET`
+- `REDDIT_USER_AGENT=roi-snips/0.1 by u/<reddit_username>`
+
+Then run a no-post validation fetch and keep Reddit as social discovery only.
+
+
+Current Validation Evidence
+===========================
+
+Latest safe checks from 2026-05-20:
+
+- Full Roi Snips test suite:
+  - `PYTHONPATH=. .venv/bin/pytest tests`
+  - result: 72 passed, 1 warning
+
+- Alpaca no-order readiness:
+  - broker account reachable
+  - live Alpaca broker configured
+  - open orders: 0
+  - SIP market data: OK
+  - SIP quote: OK
+  - SIP bars: OK
+  - full execution ready: false
+  - blocker: `disable_entries_active`
+  - runtime guards show disable entries active and force-flat active
+
+- OpenAI governed deep-research runner:
+  - first smoke attempt timed out at network layer
+  - retry succeeded
+  - route: `no_escalation`
+  - justification: smoke test confirmed; no browsing/research needed
+
+- Grok/X search:
+  - Grok web search returned X/cashtag citations for a test query
+  - Roi Snips Grok adapter returned `ok=true` with ticker candidate and X URLs
+
+- Reddit:
+  - authenticated OAuth credentials missing
+  - public JSON fallback returned posts/trending counts in a small test
+
+- Discovery-only pipeline smoke:
+  - manual MRAM discovery-only run completed
+  - output mode: `research_v2_discovery_only`
+  - discovered symbols included MRAM
+
+
+Main Issues / Remaining Gaps
+============================
+
+1. Reddit authenticated API credentials are not available yet
+------------------------------------------------------------
+
+This is the clearest external gap. Reddit public JSON fallback works, but it
+is weaker and less reliable than proper API access.
+
+Action later: after Reddit approves the app/API request, store client ID and
+secret safely and run OAuth validation.
+
+2. ChatGPT Pro-style research route exists, but should be exercised on a real market shortlist
+---------------------------------------------------------------------------------------------
+
+The governed runner works on a smoke test after retry, and the runbook now
+describes the online AI deep-research procedure. The next meaningful proof is
+not another trivial smoke. It is a real morning candidate brief with 5-15
+candidates, source URLs, tape context, and social citations.
+
+Action later: run one full dry research pass during an actual market window
+or premarket window, with live trading still blocked.
+
+3. Grok integration is first-pass, not mature
+--------------------------------------------
+
+Grok can now scour X through OpenClaw and feed social-only events into the
+pipeline. That is useful. It is not yet a fully audited social-alpha subsystem.
+
+Needs:
+
+- better query templates
+- full response persistence
+- source/citation normalization
+- stale/hype/pump filters
+- stronger tests around malformed Grok output
+
+4. Source coverage still has holes
+----------------------------------
+
+High-value missing or weak channels:
+
+- Stocktwits ticker stream
+- float / shares outstanding / short-interest data
+- independent premarket gappers/movers feed
+- ClinicalTrials.gov / FDA calendar source
+- SAM.gov / USAspending / agency award notices
+- earnings/calendar and analyst-action feed
+- general web/news discovery fallback such as Brave/SerpAPI/Crawl4AI
+
+These matter because the best small-cap catalyst trade may appear first in
+places Alpaca/Benzinga/SEC/social do not fully cover.
+
+5. Full execution remains deliberately blocked
+----------------------------------------------
+
+`state/DISABLE_NEW_ENTRIES` is active. This is correct.
+
+API keys, Alpaca funding, SIP data, Grok access, and OpenAI access do not mean
+live trading is armed.
+
+Before live entries:
+
+- Charles must explicitly say to arm live trading.
+- readiness must be green except the guard that will be intentionally cleared.
+- risk budget must be confirmed.
+- first live run should be actively monitored.
+
+6. Clawpatch remains a limited signal
+-------------------------------------
+
+Clawpatch previously ran against Roi Snips but mapped/reviewed 0 features. It
+reported no findings, but that does not prove the architecture is correct. The
+useful validation right now is direct code inspection plus tests plus live
+no-order readiness checks.
+
+
+How This All Works Together
+===========================
+
+The architecture should work as a layered funnel:
+
+1. Broad scouts find candidates
+   - official/company/SEC/news/FDA/government/exchange/Alpaca/Benzinga
+   - social lanes: Reddit fallback, X optional, Grok/X
+
+2. Evidence ledger dedupes and scores candidates
+   - official and structured sources carry proof weight
+   - social sources carry attention weight only
+
+3. Market overlay tests whether the idea is actually tradable
+   - spread, liquidity, price, bars, prior close, halt/session state
+
+4. Deterministic gates split candidates into:
+   - executable candidates
+   - research leaders that are not executable
+   - rejected/no-trade names
+
+5. Governed OpenAI deep research analyzes the shortlist
+   - this is the ChatGPT Pro-style online research layer
+   - it should compare candidates, verify sources, and choose one best idea
+
+6. Final packet is produced
+   - one pick or explicit no-trade
+   - full catalyst/evidence/entry/target/risk packet
+   - execution gate and live guard state included
+
+7. Live monitor can only act if explicitly armed
+   - disable-new-entries must be cleared intentionally
+   - no social-only or blocked candidate can become an order
+
+
+Practical Current Conclusion
+============================
+
+The system is now close enough to run serious dry research passes.
+
+It is not yet ready for unattended live trading because live entries are still
+intentionally disabled and the first full ChatGPT Pro-style research route
+needs to be exercised on a real market shortlist.
+
+The right next test is:
+
+1. keep `state/DISABLE_NEW_ENTRIES` active
+2. run a full premarket/morning research pass
+3. verify the generated shortlist and evidence ledger
+4. run governed deep-mini/deep research on that shortlist
+5. inspect the final packet
+6. confirm no social-only or execution-blocked name is promoted as executable
+7. only then decide whether live arming should be considered
+

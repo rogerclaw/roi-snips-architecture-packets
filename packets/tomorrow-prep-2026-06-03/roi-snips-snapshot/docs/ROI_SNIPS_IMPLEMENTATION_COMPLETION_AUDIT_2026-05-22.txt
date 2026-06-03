@@ -1,0 +1,455 @@
+ROI SNIPS IMPLEMENTATION COMPLETION AUDIT
+
+Generated: 2026-05-22 09:59 PDT
+Audited workspace: /Users/rogerclaw/.openclaw/workspace/roi-snips
+Audit role: Roi Snips implementation completion auditor
+
+PURPOSE
+
+Determine exactly what was implemented, what was partially implemented, what was skipped, what broke, what tests passed or failed, and what remains before the next autonomous live attempt after the last INFQ/research/opening-tape implementation runbook.
+
+This is a standalone completion audit. It is intentionally strict: source code presence alone is not treated as full completion when generated artifacts or real-market no-order proof are still missing.
+
+AUDIT BOUNDARIES FOLLOWED IN THIS JOG
+
+- No broker orders were placed.
+- No broker orders were previewed.
+- No broker orders were canceled.
+- No live broker account state was queried in this audit jog.
+- No live broker position state was queried in this audit jog.
+- No live broker open-order state was queried in this audit jog.
+- No guard files were altered.
+- LIVE_ARMED was not created, cleared, or edited.
+- DISABLE_NEW_ENTRIES was not removed or created.
+- KILL_SWITCH was not touched.
+- No live trading workers were restarted.
+- No new feature changes were made.
+- The only intentional writes during this audit were this report and progress-ledger updates in ops/progress/ACTIVE.md.
+
+OVERALL COMPLETION STATUS
+
+Overall status: PARTIAL, with important local implementation complete.
+
+The last implementation pass did materially change the codebase and local tests are green. The system now has source-level support for:
+
+- research_leader versus executable_primary separation
+- anti-chase classification for extended runners
+- second-leg continuation logic
+- no-order brokerless continuation validation wrapper
+- stream-required shadow validation checks
+- source-lane status generation in the research pipeline
+- candidate/report fields needed to explain why a top research idea is watch-only rather than executable
+
+However, completion is not fully proven at the artifact/runtime level:
+
+- The latest JSON morning report artifact reports INFQ as best_pick_candidate but does not contain research_leader, executable_primary, second_leg_watch, anti_chase_state, opportunity_lifecycle_state, entry_viability_score, same_style_backup_status, or source_lane_status.
+- No source_lane_status.json artifact was found under runs/ or reports/.
+- The existing INFQ replay artifact still ends NO_TRADE on the opening-burst path with failed predicate inside_opening_burst_window. The intended 09:46-style catch is proven by a local continuation fixture, not by a full captured-tape continuation replay artifact.
+- The no-order real-market continuation validation is not complete yet. It is scheduled for Tuesday 2026-05-26 06:35 PT / 09:35 ET via OpenClaw cron job c6046c47-ec16-4f54-9b6c-b1e3c80038ad.
+- Backup breadth remains weakly evidenced. Source now records same_style_backup_status, but there is no regenerated artifact proving the backup pool is broad enough for top premarket gappers, high-RVOL names, small/mid/micro runners, same-theme laggards, sector sympathy names, fresh catalysts, and retail-attention names.
+
+BOTTOM LINE
+
+Do not treat the last run as fully complete for autonomous live trading. Treat it as locally implemented and locally test-green, with a required external proof boundary still outstanding: the scheduled no-order brokerless market-data validation through the configured 11:00 ET entry cutoff.
+
+EVIDENCE COLLECTED
+
+Commands run in this audit jog:
+
+1. pwd
+   Result: /Users/rogerclaw/.openclaw/workspace/roi-snips
+
+2. date '+%Y-%m-%d %H:%M:%S %Z'
+   Result: 2026-05-22 09:53:53 PDT
+
+3. sed -n '1,220p' ops/progress/ACTIVE.md
+   Result: ACTIVE.md showed unfinished work. It recorded the next scheduled proof as OpenClaw cron job c6046c47-ec16-4f54-9b6c-b1e3c80038ad at Tuesday 2026-05-26 06:35 PT / 09:35 ET, with the command scripts/run_no_order_continuation_validation.sh.
+
+4. find src docs scripts tests ops reports -type f -newermt '2026-05-22 07:30' -print
+   Result: implementation-window changes exist in src/research, src/features, src/workflows, src/common, src/execution, src/risk, src/strategy, scripts, tests, reports, docs, and ops/progress/ACTIVE.md. Python __pycache__ files were also present and are ignored for substantive audit purposes.
+
+5. git -C /Users/rogerclaw/.openclaw/workspace status --short roi-snips
+   Result: roi-snips is untracked from the parent workspace Git root. Git cannot provide a clean per-file patch boundary for this audit.
+
+6. sed -n on docs/INFQ_FORENSIC_IMPLEMENTATION_REPORT_2026-05-22.md
+   Result: the prior implementation report claims the requested local implementation/report pass was complete, lists changed files, and identifies the Tuesday no-order validation as the remaining external proof boundary.
+
+7. rg for required fields and lifecycle terms in src/tests/docs
+   Result: source/test references exist for research_leader, executable_primary, second_leg_watch, same_style_backup_status, source_lane_status, anti_chase_state, opportunity_lifecycle_state, entry_viability_score, SECOND_LEG_WATCH, NO_TRADE_EXTENDED, PREMARKET_BUILDING, EXTENDED_CHASE, and SECOND_LEG_CONTINUATION_ACTIVE. Exact states SECOND_LEG_RESET, OPENING_CONTINUATION_ACTIVE, and STALE_PRIOR_WINNER were not found.
+
+8. jq on reports/morning/json/2026-05-22.json
+   Result: best_pick_candidate is INFQ, but the new explanatory fields are absent/null:
+   - research_leader: null
+   - executable_primary: null
+   - anti_chase_state: null
+   - opportunity_lifecycle_state: null
+   - entry_viability_score: null
+   - second_leg_watch: null
+   - source_lane_status_count: 0
+   - same_style_backup_status: null
+
+9. jq/sed on reports/live_monitor/runs/opening_stream_2026-05-22_132548/final_summary.json
+   Result: the live opening stream summary exists and shows:
+   - ok=true
+   - mode=live_order_submission
+   - orders_allowed=true
+   - orders_submitted=false
+   - proposal_count=0
+   - blocked_proposal_count=0
+   - order_result_count=0
+   - symbols=[AMZN, INFQ, NVDA]
+   - raw_quotes/raw_trades/decisions are file paths, not top-level counts
+   - stopped_by_timer=true
+   - stream_status.market_data_connected=true
+   The summary does not itself include top-level raw_quote_count/raw_trade_count/decision_count, zero_proposal_reason, mode_coverage, or final_decision.
+
+10. jq on reports/live_monitor/runs/replay_infq_2026-05-22_fixed/final_summary.json
+    Result:
+    - ok=true
+    - status=NO_TRADE
+    - final_decision.action=NO_TRADE
+    - final_decision.failed_predicates=["inside_opening_burst_window"]
+    - final_decision.reason=outside_opening_burst_window
+    - final_decision.window=fallback_or_closed
+    - orders_submitted is not present as a top-level value in this artifact
+    - mode_coverage/raw counts/zero_proposal_reason/proposal_count/order_result_count are absent
+
+11. find runs reports -path '*source_lane_status.json' -print
+    Result: no source_lane_status.json artifact found.
+
+12. sed on scripts/run_no_order_continuation_validation.sh
+    Result: the wrapper exists and forces:
+    - ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=false
+    - ROI_SNIPS_ALLOW_PAPER_ORDER_SUBMISSION=false
+    - ROI_SNIPS_RUN_CONTINUATION_MONITOR=true
+    - ROI_SNIPS_OPENING_STREAM_MAX_SECONDS default 900
+    - ROI_SNIPS_SHADOW_SKIP_BROKER_PREFLIGHT=true
+    - ROI_SNIPS_SKIP_BROKER_STATE_FOR_SHADOW=true
+    It then execs scripts/supervise_opening_bell_live_monitor.sh.
+
+13. sed on scripts/run_next_open_shadow_validation.py
+    Result: the script now has stream-required validation logic. It computes raw_quote_count/raw_trade_count/decision_count from file paths in the latest stream summary and marks the validation SHADOW_INVALID if a required stream is skipped, not started, not completed, or not captured.
+
+14. PYTHONPATH=. .venv/bin/pytest tests/test_live_monitor.py tests/test_opening_bell_readiness.py tests/test_opening_stream_supervisor.py tests/test_order_router.py tests/test_premarket_pipeline.py tests/test_research_pipeline.py tests/test_candidate_packets.py tests/test_research_ranking.py tests/test_market_overlay.py
+    Result: 56 passed, 1 existing websockets.legacy deprecation warning.
+
+15. PYTHONPATH=. .venv/bin/pytest tests
+    Result: 144 passed, 1 existing websockets.legacy deprecation warning.
+
+IMPLEMENTATION CHECKLIST
+
+1. research_leader vs executable_primary separation
+Status: DONE IN SOURCE, PARTIAL IN ARTIFACTS.
+
+Source evidence:
+- src/workflows/premarket_pipeline.py defines role logic and emits research_leader, research_leader_symbol, executable_primary, watch_only, second_leg_watch, no_trade_extended, anti_chase_state, opportunity_lifecycle_state, and entry_viability_score.
+- src/research/models.py includes DailyBestPickPacket.research_leader and MarketOverlay anti_chase/lifecycle/entry-viability fields.
+- tests/test_premarket_pipeline.py::test_extended_policy_runner_is_research_leader_not_executable_primary passes.
+
+Artifact gap:
+- reports/morning/json/2026-05-22.json does not contain the new fields. It appears stale relative to the source changes, even though it identifies INFQ as best_pick_candidate.
+
+2. Anti-chase classification for extended runners
+Status: DONE IN SOURCE/TESTS, PARTIAL IN ARTIFACTS.
+
+Source/test evidence:
+- src/research/market_overlay.py has classify_anti_chase_state logic.
+- Validated liquid extreme-gap runners can remain SECOND_LEG_WATCH instead of being discarded as NO_TRADE_EXTENDED.
+- Unvalidated extreme-gap runners remain NO_TRADE_EXTENDED.
+- tests/test_premarket_pipeline.py includes passing tests for validated and unvalidated extreme-gap handling.
+
+Artifact gap:
+- Latest JSON morning report does not expose anti_chase_state or opportunity_lifecycle_state.
+
+3. Opportunity lifecycle vocabulary
+Status: PARTIAL.
+
+Implemented/found:
+- PREMARKET_BUILDING
+- SECOND_LEG_WATCH
+- EXTENDED_CHASE
+- NO_TRADE_EXTENDED
+- EXHAUSTED_OR_DISTRIBUTING
+- OPENING_DRIVE_ACTIVE
+- SECOND_LEG_CONTINUATION_ACTIVE
+
+Not found as exact source states:
+- SECOND_LEG_RESET
+- OPENING_CONTINUATION_ACTIVE
+- STALE_PRIOR_WINNER
+
+Conclusion:
+The lifecycle model is useful but not complete versus the broader directive vocabulary. This is not necessarily a blocker for the Tuesday no-order validation, but it is a blocker for claiming total runbook completion.
+
+4. Stream-skipped handling
+Status: DONE IN VALIDATION WRAPPER SOURCE, NOT YET PROVEN BY REQUIRED RUN.
+
+Evidence:
+- scripts/run_next_open_shadow_validation.py now treats a skipped or uncaptured required stream as SHADOW_INVALID.
+- It derives raw_quote_count, raw_trade_count, and decision_count by counting lines in the files referenced by final_summary.json.
+
+Remaining:
+- reports/live_monitor/next_open_shadow_validation_2026-05-22.json is a skip-stream/pre-open artifact and therefore is not proof of the required real-stream behavior.
+- The scheduled Tuesday run must prove stream capture under the actual no-order validation conditions.
+
+5. No-order continuation validation wrapper
+Status: DONE AS WRAPPER, PENDING RUNTIME PROOF.
+
+Evidence:
+- scripts/run_no_order_continuation_validation.sh exists.
+- It disables live and paper submission.
+- It enables ROI_SNIPS_RUN_CONTINUATION_MONITOR=true.
+- It skips broker preflight and broker state for shadow mode.
+
+Remaining:
+- Must be run at the scheduled live-market window.
+- Must verify orders_submitted=false.
+- Must verify raw quote/trade/decision capture.
+- Must verify continuation logic remains active through configured 11:00 ET entry cutoff.
+- Must verify no live broker order/account/position inspection occurred.
+
+6. Opening stream supervisor and final summaries
+Status: PARTIAL.
+
+Source evidence:
+- src/workflows/opening_stream_supervisor.py includes newer fields/functions for per-symbol decision summaries, mode coverage, opening candidate conversion, and expected opening dollar-volume baseline.
+
+Artifact evidence:
+- opening_stream_2026-05-22_132548/final_summary.json exists and shows no submitted orders and no proposals.
+- It references raw quote/trade/decision files, and stream_status.market_data_connected=true.
+
+Artifact gap:
+- That final_summary.json does not include top-level raw_quote_count/raw_trade_count/decision_count, zero_proposal_reason, mode_coverage, or final_decision.
+- The audit can infer counts only by counting the referenced files; this jog did not need to recount them after confirming the wrapper performs that counting.
+
+7. Corrected volume baseline
+Status: DONE IN SOURCE, PARTIAL IN REPLAY PROOF.
+
+Evidence:
+- src/workflows/opening_stream_supervisor.py computes expected_opening_dollar_volume_60s from premarket dollar volume divided by elapsed premarket minutes, instead of treating the entire premarket dollar volume as a one-minute baseline.
+- The prior implementation report states corrected INFQ candidate fields included expected_opening_dollar_volume_60s=380246.8293 and premarket_dollar_volume=119981670.8.
+
+Remaining:
+- The replay artifact still ends NO_TRADE on opening-burst window logic. It does not prove a captured-tape continuation catch.
+
+8. SECOND_LEG_CONTINUATION_LONG / ORB / VWAP path
+Status: DONE IN SOURCE/TESTS, PENDING REAL-STREAM PROOF.
+
+Evidence:
+- src/strategy/second_leg_continuation.py exists.
+- src/strategy/second_leg_continuation_long.py exists.
+- src/strategy/orb_break.py exists.
+- src/strategy/vwap_reclaim.py exists.
+- src/risk/rules.py permits second-leg/ORB/VWAP modes and triggers.
+- tests/test_live_monitor.py::test_no_order_continuation_monitor_arms_infq_orb_break_after_0935 passes and proves a local no-order fixture can arm INFQ as ORB_BREAK_LONG after 09:35 without adding a submission field.
+
+Remaining:
+- No captured-tape continuation replay artifact was found proving the exact 09:46-style INFQ move is caught end-to-end from real stream data.
+- Tuesday no-order validation remains required.
+
+9. INFQ replay
+Status: PARTIAL.
+
+Existing replay artifact:
+- reports/live_monitor/runs/replay_infq_2026-05-22_fixed/final_summary.json
+
+Observed result:
+- ok=true
+- status=NO_TRADE
+- final_decision.action=NO_TRADE
+- failed_predicates=["inside_opening_burst_window"]
+- reason=outside_opening_burst_window
+
+Interpretation:
+- The opening-burst path still does not buy the 09:46-style move, by design, because it is outside the opening-burst window.
+- The continuation path is locally tested but not proven by this replay artifact.
+
+10. source_lane_status
+Status: PARTIAL.
+
+Source evidence:
+- src/research/source_lane_status.py defines required source lanes.
+- src/workflows/research_pipeline.py imports build_source_lane_status and writes normalized/source_lane_status.json and source_lane_status.json.
+
+Artifact gap:
+- find runs reports -path '*source_lane_status.json' found no current source_lane_status artifact.
+- The latest JSON morning report has source_lane_status_count=0.
+
+Conclusion:
+Implemented in source, not proven in generated artifacts.
+
+11. Backup candidate breadth
+Status: PARTIAL / WEAK.
+
+Source evidence:
+- src/workflows/premarket_pipeline.py defines _same_style_backup_status and emits same_style_backup_status.
+
+Gap:
+- Latest JSON morning report has same_style_backup_status=null.
+- No regenerated artifact proves adequate backup breadth.
+- No specific artifact proves inclusion of the desired backup buckets: top premarket gappers, high-RVOL names, small/mid/micro-cap runners, same-theme laggards, sector sympathy names, fresh-catalyst names, and high-retail-attention names.
+
+12. Policy-theme runner archetype
+Status: MOSTLY DONE, WITH DESIGN CAVEAT.
+
+Evidence:
+- src/research/archetypes/policy_theme_runner.py exists.
+- It exposes score_policy_theme_runner_archetype and emits POLICY_THEME_RUNNER_ARCHETYPE when appropriate.
+
+Caveat:
+- The implementation wraps the INFQ-style scorer rather than being a fully independent archetype. That may be acceptable for the immediate repair, but it is not a fully generalized archetype yet.
+
+13. Order safety and no-order behavior
+Status: DONE IN LOCAL SOURCE/TESTS, NOT LIVE-AUTHORIZED.
+
+Evidence:
+- tests/test_order_router.py passes within the focused suite.
+- tests/test_risk_rules.py passes in the full suite.
+- scripts/run_no_order_continuation_validation.sh forces no live/paper submissions.
+- tests/test_live_monitor.py includes brokerless no-order continuation coverage.
+
+Important boundary:
+- This audit jog did not inspect live broker orders/account/positions because the directive forbade it.
+- Existing historical artifacts may include broker/account/readiness output from earlier runs. Those are historical evidence only and were not refreshed in this audit.
+
+TEST RESULTS
+
+Focused suite:
+Command:
+PYTHONPATH=. .venv/bin/pytest tests/test_live_monitor.py tests/test_opening_bell_readiness.py tests/test_opening_stream_supervisor.py tests/test_order_router.py tests/test_premarket_pipeline.py tests/test_research_pipeline.py tests/test_candidate_packets.py tests/test_research_ranking.py tests/test_market_overlay.py
+
+Result:
+- 56 passed
+- 1 warning: websockets.legacy deprecation warning
+- exit code 0
+
+Full local suite:
+Command:
+PYTHONPATH=. .venv/bin/pytest tests
+
+Result:
+- 144 passed
+- 1 warning: websockets.legacy deprecation warning
+- exit code 0
+
+No test failures remain from the local suite.
+
+WHAT WAS SKIPPED OR NOT DONE
+
+- No broker/account/order/position inspection was performed during this audit jog.
+- No live order attempt was performed.
+- No guard file change was performed.
+- No live worker restart was performed.
+- No new captured-tape continuation replay was generated.
+- No new source_lane_status artifact was generated.
+- No morning report regeneration was performed beyond reading existing artifacts.
+- No feature patch was made to fill missing lifecycle states or backup-pool gaps.
+
+WHAT BROKE
+
+No local tests broke in this audit jog.
+
+The main broken/incomplete surfaces are artifact/proof surfaces rather than current unit-test failures:
+
+- Latest JSON morning report is stale/incomplete relative to implemented source fields.
+- source_lane_status output is not present in current artifacts.
+- Existing replay artifact proves opening-burst NO_TRADE, not continuation catch.
+- Backup breadth is not proven.
+- Some requested lifecycle state names are missing.
+
+WHAT REMAINS BEFORE NEXT AUTONOMOUS LIVE ATTEMPT
+
+Required before any next autonomous live attempt:
+
+1. Let OpenClaw cron job c6046c47-ec16-4f54-9b6c-b1e3c80038ad run Tuesday 2026-05-26 06:35 PT / 09:35 ET.
+
+2. That job must execute:
+   scripts/run_no_order_continuation_validation.sh
+
+3. Confirm, from its artifacts, all of the following:
+   - orders_submitted=false
+   - no live/paper order submission
+   - no live broker order/account/position inspection
+   - real raw quotes captured
+   - real raw trades captured
+   - decisions captured
+   - stream_required=true
+   - stream_captured=true
+   - continuation monitor started
+   - continuation logic stayed alive through configured 11:00 ET entry cutoff
+   - no internal failure or SHADOW_INVALID status
+
+4. Regenerate and inspect the morning report artifact after the source changes, confirming:
+   - research_leader present
+   - executable_primary present or intentionally null
+   - second_leg_watch present when applicable
+   - anti_chase_state present
+   - opportunity_lifecycle_state present
+   - entry_viability_score present
+   - same_style_backup_status present
+   - source_lane_status present
+
+5. Generate or preserve a captured-tape continuation proof for INFQ-style 09:35-09:50 behavior, not only an opening-burst replay.
+
+6. Close the backup breadth gap with either:
+   - a regenerated artifact proving adequate backup diversity, or
+   - a follow-up implementation that explicitly builds/labels the required backup buckets.
+
+FINAL AUDIT VERDICT
+
+The prior implementation run was not a vague no-op. It produced real source changes and local tests pass. The most important local behavior, an INFQ-style post-09:35 ORB continuation arming without broker submission, is covered by a passing test.
+
+It is still not fully complete against the runbook as an operational/live-readiness matter. The generated report artifacts are stale or incomplete in several places, the source-lane artifact is missing, the backup-pool proof is weak, some lifecycle labels are missing, and the real-market no-order continuation proof is still scheduled for Tuesday 2026-05-26.
+
+Strict conclusion:
+LOCAL IMPLEMENTATION: mostly complete.
+LOCAL TEST VERIFICATION: complete and green.
+ARTIFACT COMPLETION: partial.
+REAL-MARKET NO-ORDER PROOF: not complete.
+NEXT AUTONOMOUS LIVE ATTEMPT: not cleared by this audit.
+
+RE-AUDIT ADDENDUM FROM RESUMED GOVERNANCE NUDGE
+
+Resumed verification: 2026-05-22 09:58 PDT
+
+Reason for addendum:
+John governance nudge asked Roi Snips to resume from ops/progress/ACTIVE.md and strictly verify whether the prior audit/report work was actually completed after a choppy/stalled run.
+
+Additional read-only evidence gathered:
+
+1. sed -n '1,220p' roi-snips/ops/progress/ACTIVE.md
+   Result: ACTIVE.md already recorded this audit report as complete at docs/ROI_SNIPS_IMPLEMENTATION_COMPLETION_AUDIT_2026-05-22.txt, with verdict PARTIAL and the next external proof boundary scheduled for OpenClaw cron job c6046c47-ec16-4f54-9b6c-b1e3c80038ad on Tuesday 2026-05-26 06:35 PT / 09:35 ET.
+
+2. wc -l docs/ROI_SNIPS_IMPLEMENTATION_COMPLETION_AUDIT_2026-05-22.txt
+   Result before this addendum: 409 lines.
+
+3. sed -n '1,260p' and sed -n '261,460p' docs/ROI_SNIPS_IMPLEMENTATION_COMPLETION_AUDIT_2026-05-22.txt
+   Result: the report exists, has the required title, describes the audit purpose, records the no-broker/no-guard/no-worker boundaries, gives a strict PARTIAL verdict, lists evidence commands, enumerates implemented/partial/skipped/broken surfaces, and states the remaining pre-live requirements.
+
+4. rg --files docs scripts src tests reports | sort
+   Result: the expected report file, no-order validation wrapper, source files, tests, and live-monitor artifacts are present.
+
+5. rg -n for research_leader, executable_primary, source_lane_status, anti_chase_state, opportunity_lifecycle_state, SECOND_LEG_CONTINUATION_ACTIVE, SECOND_LEG_RESET, OPENING_CONTINUATION_ACTIVE, and STALE_PRIOR_WINNER across src/tests/scripts/docs.
+   Result: source/test evidence exists for the implemented leader/executable/source-lane/anti-chase/continuation terms. SECOND_LEG_RESET, OPENING_CONTINUATION_ACTIVE, and STALE_PRIOR_WINNER still were not found as exact implemented state names.
+
+6. jq on reports/morning/json/2026-05-22.json
+   Result: INFQ remains best_pick_candidate, while research_leader, executable_primary, anti_chase_state, opportunity_lifecycle_state, entry_viability_score, second_leg_watch, source_lane_status, and same_style_backup_status remain absent/null in that artifact.
+
+7. jq on reports/live_monitor/runs/opening_stream_2026-05-22_132548/final_summary.json
+   Result: ok=true, mode=live_order_submission, orders_allowed=true, orders_submitted=false, proposal_count=0, blocked_proposal_count=0, order_result_count=0, stopped_by_timer=true, market_data_connected=true, final_decision=null.
+
+8. jq on reports/live_monitor/runs/replay_infq_2026-05-22_fixed/final_summary.json
+   Result: ok=true, status=NO_TRADE, final_decision.action=NO_TRADE, failed_predicates=["inside_opening_burst_window"], reason=outside_opening_burst_window; orders_submitted is absent/null in that replay artifact.
+
+Additional boundary confirmation:
+- This resumed addendum did not place, preview, cancel, replace, or inspect live broker orders.
+- It did not inspect live broker account or position state.
+- It did not alter guard files.
+- It did not create or clear LIVE_ARMED.
+- It did not remove or create DISABLE_NEW_ENTRIES.
+- It did not touch KILL_SWITCH.
+- It did not restart live trading workers.
+- It made no feature changes; the only writes were this report addendum and ops/progress/ACTIVE.md bookkeeping.
+
+Addendum verdict:
+The attached report is present and satisfies the requested standalone audit shape. Its strict conclusion remains correct: local implementation/test status is mostly complete/green, but operational completion remains PARTIAL until missing artifacts are regenerated/proven and the scheduled brokerless no-order market-data continuation validation completes through the configured 11:00 ET entry cutoff.

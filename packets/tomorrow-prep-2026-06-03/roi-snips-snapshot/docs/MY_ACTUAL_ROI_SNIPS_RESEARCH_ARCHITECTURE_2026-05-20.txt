@@ -1,0 +1,236 @@
+MY ACTUAL ROI SNIPS RESEARCH ARCHITECTURE
+Date: 2026-05-20
+
+What this file is
+This is the architecture I use, or should use, to find a short-term stock for Charles.
+It is not a deep-research run and it is not a Grok evaluation. It is the operating model:
+what I look at, how I rank it, what I reject, and how I turn research into one trade idea.
+
+Mission
+Find one best long-only U.S. stock or ETF idea for a same-day to 1-3 day speculative trade.
+
+The target is not safety. The target is asymmetric upside:
+- fresh hard catalyst
+- strong attention acceleration
+- volatile enough to move
+- tradeable enough to enter and exit
+- clear thesis-break level
+- clear sell triggers
+
+The default answer should not be a generic watchlist. It should be one decisive best pick,
+with a few backups only when they help explain why the winner is better.
+
+Non-negotiable constraints
+- Long-only U.S. stocks and ETFs.
+- No options.
+- No shorting.
+- No margin behavior.
+- One open position max.
+- Small speculative position assumption.
+- Entry should be compatible with a normal retail broker such as Webull.
+- Execution/risk gates must outrank LLM enthusiasm.
+
+Architecture in one line
+Hard-catalyst discovery -> evidence ledger -> social/attention overlay -> market/tape overlay
+-> reject bad setups -> rank finalists -> choose one -> produce an entry/exit packet.
+
+Layer 1: discovery
+I start by finding stocks with a reason to move now, not stocks that are generally good businesses.
+
+Primary discovery lanes:
+- Company press releases and investor-relations pages.
+- SEC filings, especially 8-K, S-1/S-3, 10-Q/10-K, offering, merger, guidance, and material-agreement filings.
+- Earnings releases, guidance revisions, conference-call headlines, and investor decks.
+- FDA, biotech, trial, approval, advisory-committee, and regulatory catalysts.
+- Government contracts, awards, enforcement actions, policy changes, and defense/energy/infrastructure notices.
+- M&A, strategic alternatives, partnerships, licensing deals, customer wins, product launches, and analyst actions.
+- Premarket movers, unusual volume, gap lists, high relative-volume scans, and momentum leaderboards.
+- Retail/social chatter from Reddit, StockTwits, X, trading blogs, Discord/forum-style sources when available.
+
+The key rule: social hype can discover a candidate, but it does not prove the thesis by itself.
+
+Layer 2: candidate universe
+The first pass should produce a broad but finite candidate list:
+- obvious gappers with news
+- smaller names with fresh official catalysts
+- names with unusual premarket volume
+- names where social attention is accelerating
+- names tied to an active sector theme
+- names with squeeze-like float/short-interest dynamics, if data supports it
+
+Large-cap names are penalized unless the catalyst/tape is exceptional. Charles asked for
+explosive short-term potential, so "quality company" is not enough.
+
+Layer 3: evidence ledger
+For every serious ticker, I build an evidence ledger:
+- what happened
+- when it happened
+- whether it is official, structured, or rumor/social
+- how fresh it is
+- whether price/volume already reacted
+- what retail is saying
+- what professional or news sources are saying
+- what could make the move continue
+- what would invalidate it quickly
+
+Official evidence gets the highest weight. Social/retail evidence is treated as an amplifier.
+
+Layer 4: catalyst scoring
+I score the story, not just the ticker.
+
+High-value catalysts:
+- FDA approval, trial success, regulatory clearance, or major clinical update
+- merger/acquisition, buyout rumor with credible support, strategic review, asset sale
+- major contract award or customer win
+- earnings surprise with guidance raise
+- short-squeeze setup with real volume and a hard catalyst
+- major partnership, licensing deal, financing that removes near-term bankruptcy risk
+- sector-wide move where a small-cap sympathy name has not fully caught up
+
+Low-value or dangerous catalysts:
+- stale news already fully digested
+- vague "AI/blockchain/crypto" pivot with no numbers
+- paid promotion with no official confirmation
+- social-only pump
+- gap already extended with no second catalyst
+- dilution/offering risk
+- reverse-split or compliance noise without real business catalyst
+
+Layer 5: attention and sentiment overlay
+After catalyst quality, I check whether attention is building fast enough to matter.
+
+Signals I want:
+- rising ticker mentions
+- high retail discussion velocity
+- premarket/early-session volume
+- news being repeated by multiple market sources
+- traders focusing on the same breakout/level/catalyst
+- sector peers moving in sympathy
+
+Signals I distrust:
+- old threads recycling stale news
+- bagholder communities with no new catalyst
+- one influencer driving all attention
+- low-float mania after the easy move already happened
+- comments that are bullish but disconnected from the actual catalyst
+
+Layer 6: market/tape overlay
+A good story is not enough. The setup must be tradeable.
+
+I check:
+- current price
+- premarket or early-session percentage move
+- relative volume
+- dollar volume
+- spread
+- liquidity
+- intraday high/low
+- VWAP behavior
+- opening range
+- resistance and support
+- gap-fill risk
+- whether the move is already overcrowded
+
+For Charles's style, I should prefer a volatile setup that is still early or confirming,
+not a slow blue-chip drift and not a name already exhausted by a vertical gap.
+
+Layer 7: rejection gates
+I should reject or heavily downgrade names when:
+- no hard catalyst exists
+- only social hype supports the move
+- the spread is too wide
+- liquidity is too thin
+- the stock is already too extended without a fresh second leg
+- dilution/offering risk is obvious
+- filings contradict the bullish story
+- the ticker is not practical for Webull-style retail execution
+- the thesis-break level is unclear
+- I cannot explain why the market may not have fully priced it yet
+
+This is where "boring blue-chip crap" should get filtered out unless the evidence is unusually strong.
+
+Layer 8: final ranking
+The final ranking is not "best company." It is "best short-term asymmetric trade setup."
+
+My ranking weights should be approximately:
+- catalyst strength and freshness
+- reason the move can continue today or in 1-3 days
+- volume/tape confirmation
+- attention acceleration
+- asymmetry versus downside
+- clean invalidation level
+- tradeability
+- whether the move is early enough
+- risk of immediate rug-pull, offering, halt, or fade
+
+The winner should be the name with the best combination of catalyst, attention, tape, and risk control.
+
+Layer 9: final answer packet
+The final output should always include:
+- single best stock to buy today
+- ticker and company name
+- exact reason it could move sharply in the next hours or days
+- underlying catalyst and why it may not be fully priced
+- evidence reviewed, including sentiment/discussion trend
+- suggested limit buy price or buy range
+- same-day upside target
+- 1-3 day upside target
+- downside/thesis-break level
+- timeframes to monitor after entry
+- profit-taking triggers
+- danger signals
+- why this name beats the backups
+
+Manual browser-mode workflow
+When I am doing this live in chat, my manual process should be:
+1. Pull current market movers and fresh news.
+2. Search official sources for the top movers: press release, SEC filing, FDA/government/contract page.
+3. Check whether the catalyst is fresh, material, and specific.
+4. Check premarket or early-session tape: price, gap, volume, spread, VWAP/opening range if available.
+5. Search social/retail discussion for acceleration, not just bullishness.
+6. Compare 5-15 real candidates, not one easy headline.
+7. Kill weak/stale/overextended names.
+8. Pick one winner and write the trade packet.
+
+Automated Roi Snips code map
+The repo currently reflects this architecture in these areas:
+- `src/research/scouts/`: discovery lanes for SEC, IR, news, FDA, government, exchange, social, obscure sources.
+- `src/research/universe.py`: turns discovery into candidate universe.
+- `src/research/cluster.py`: groups evidence by ticker/story.
+- `src/research/ranking.py`: ranks candidates by research priority.
+- `src/research/market_overlay.py`: adds tradeability and market data context.
+- `src/research/gates.py`: applies research/execution eligibility gates.
+- `src/risk/rules.py`: enforces risk constraints.
+- `config/workflow.yaml`: research schedule and workflow posture.
+- `config/risk.yaml`: risk parameters.
+- `configs/live.yaml` and `configs/paper.yaml`: environment-specific trading settings.
+
+Current weakness in my architecture
+The architecture is directionally right, but it needs sharper live execution inputs:
+- better real-time spread/quote coverage
+- better premarket and first-15-minute tape data
+- better retail/social velocity scoring
+- cleaner comparison against high-risk small-cap movers
+- less bias toward safe large-cap names
+- stronger explicit "why this is not already priced in" scoring
+- clearer handling when official evidence is strong but tape is already exhausted
+
+Where Grok would fit, if added later
+Grok should be a social/X discovery and sentiment lane, not the final stock picker.
+
+Good role:
+- discover fast-moving X narratives
+- summarize retail attention acceleration
+- find obscure ticker chatter before normal search catches it
+- feed candidates into the existing evidence/ranking system
+
+Bad role:
+- choose a stock by itself
+- treat X hype as proof
+- override official-source checks
+- override spread, liquidity, and risk gates
+
+Bottom line
+My architecture should be aggressive but disciplined:
+find fresh hard catalysts, measure whether attention and tape are confirming, reject weak or exhausted setups,
+then give Charles one decisive high-upside stock with concrete entry, targets, thesis break, and sell rules.

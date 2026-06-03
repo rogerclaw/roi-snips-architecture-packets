@@ -1,0 +1,150 @@
+Roi Snips Research Repair - Deep Mini Result and First Patch
+Generated: 2026-05-21 07:29 PT
+
+Context
+-------
+Charles correctly called out the 2026-05-21 research failure: Roi Snips picked AMD, a large-cap filing-driven name, while the intended mandate is high-risk, catalyst-heavy, volatile, asymmetric same-day to 1-3 day setups. INFQ was the concrete miss pattern: fresh government/CHIPS/quantum funding, strong premarket action, social/retail attention, and same-day investor-event visibility.
+
+Deep-mini conclusion
+--------------------
+The research architecture needs strict stages:
+
+1. Discovery
+2. Normalization and deduplication
+3. Catalyst classification
+4. Source validation
+5. Catalyst/asymmetry ranking
+6. ChatGPT Pro-style human-readable packet
+7. Deterministic broker, data, risk, and order gates
+
+The failure mode was discovery/ranking overweighting popular large-cap or stale/routine filing signals and underweighting fresh small/mid-cap hard catalysts. Grok/X and Reddit should be discovery and attention lanes only; they should trigger verification against IR, SEC, government, exchange, or reputable financial/newswire sources before a thesis is treated as validated.
+
+First repair implemented
+------------------------
+This first patch does not place orders, alter live guards, or bypass deterministic execution gates. It changes research scoring and candidate evidence only.
+
+Files changed:
+
+- src/research/models.py
+  Added `validation_status` to `ResearchScorecard`.
+
+- src/research/ranking.py
+  Added candidate `validation_status` values:
+  - `primary_and_structured_confirmed`
+  - `primary_confirmed`
+  - `structured_confirmed`
+  - `social_discovery_only`
+  - `unvalidated`
+
+  Added a hard-catalyst bonus for government/CHIPS/Department of Commerce/LOI/funding/quantum/equity-stake catalysts and same-day investor-event language.
+
+  Preserved social-only suppression and mega-cap penalty notes.
+
+- src/research/cluster.py
+  Increased government-contract base catalyst weight and added specific catalyst-strength boosts for Department of Commerce, CHIPS, grants, funding, LOIs, government equity/equity stakes, and quantum.
+
+- src/research/universe.py
+  Increased universe-stage bonus for government-contract candidates and added extra discovery scoring for CHIPS/Commerce/funding/LOI/equity-stake/quantum language.
+
+- src/research/scouts/government_scout.py
+  Expanded discovery keywords to catch INFQ-like catalysts: `letter of intent`, `LOI`, `funding`, `grant(s)`, `CHIPS`, `CHIPS Act`, `Department of Commerce`, `Commerce Department`, `government equity`, `equity stake`, `quantum`, and `quantum computing`.
+
+- src/research/scouts/ir_scout.py
+  Expanded IR-style discovery to catch LOI/funding/grant and same-day event language such as investor events, symposia, and fireside chats.
+
+- src/research/scouts/newswire_scout.py
+  Classifies Department of Commerce/CHIPS/government grant/federal contract/government equity/equity stake headlines as `government_contract`.
+
+- src/workflows/deep_mini_bridge.py
+  Includes `validation_status` in the deep-mini shortlist brief so the model sees whether a name is validated or only socially discovered.
+
+- src/research/candidate_packets.py
+  Added deterministic ChatGPT Pro-style top-candidate packets with headline thesis, catalyst summary, evidence table, timeline, market snapshot, source confidence, asymmetry reasons, why the thesis may be wrong, invalidation checklist, and deterministic trade-gate status.
+
+- src/workflows/research_pipeline.py
+  Writes `normalized/candidate_research_packets.json` and exposes it in the run manifest. This gives the morning pipeline a structured research artifact beyond ranked rows.
+
+- tests/test_keyword_scouts.py
+  Added coverage proving the government scout catches a CHIPS/quantum/funding/LOI-style headline.
+
+- tests/test_research_ranking.py
+  Added a regression proving an INFQ-style government/quantum catalyst ranks above a boring AMD-style mega-cap filing setup. Also asserts social-only candidates are explicitly marked `social_discovery_only`.
+
+- tests/test_candidate_packets.py and tests/test_research_pipeline.py
+  Added coverage for the new packet artifact and required packet sections.
+
+Verification
+------------
+Focused tests:
+
+`PYTHONPATH=. .venv/bin/pytest tests/test_candidate_packets.py tests/test_research_pipeline.py tests/test_research_ranking.py tests/test_keyword_scouts.py tests/test_deep_mini_bridge.py`
+
+Result: 18 passed.
+
+Full Roi Snips suite:
+
+`PYTHONPATH=. .venv/bin/pytest tests`
+
+Result: 95 passed, 1 existing `websockets.legacy` deprecation warning.
+
+What this fixes
+---------------
+This makes the INFQ miss harder to repeat when the relevant catalyst appears in the available scout feeds:
+
+- CHIPS/Commerce/government-funding/quantum language is more likely to enter the candidate universe.
+- Government-funding catalysts score stronger than routine structured news.
+- Candidates now carry explicit validation status into ranking and deep-mini synthesis.
+- Top candidates now produce a deterministic research packet with the sections Charles expects from the ChatGPT Pro-style workflow.
+- Social-only hype remains discovery-only unless corroborated.
+- A replay-style unit test protects against AMD-style large-cap filing drift beating an INFQ-style hard catalyst.
+
+What this does not fix yet
+--------------------------
+This is not the full ChatGPT Pro-equivalent research stack yet.
+
+Still required before trusting another armed run:
+
+1. Build a scout coordinator that persists separate Grok/X, Reddit, Benzinga/newswire, SEC/IR, government, exchange, and Alpaca SIP evidence records with first-seen timestamps and validation state.
+2. Add broader government-source discovery beyond news keywords, including Commerce, CHIPS, DOE, DOD, NASA, grants/procurement, and agency pages where feasible.
+3. Render the new candidate packets into the human-facing morning Markdown/Telegram packet, not only JSON.
+4. Add replay fixtures from the 2026-05-21 window using AMD/PLTR/SMCI/META/INFQ-style events and expected ranking behavior.
+5. Add post-run missed-winner memory so outcomes like INFQ feed future scoring calibration.
+6. Add a streaming market-data supervisor before the next live autonomous order attempt; REST polling remains fragile at the open.
+7. Keep all order authority deterministic. Research models can recommend and explain; they must not bypass broker/data/risk/order gates.
+
+Current verdict
+---------------
+The deep-mini diagnosis is sound and matches the observed miss. The first repair is in place and tested, but it is only the immediate scoring/discovery guardrail layer. The next engineering pass should build the structured scout coordinator and full candidate packet generator, then replay the 2026-05-21 miss end to end.
+
+## 2026-05-21 08:55 PT - INFQ-style rebuild implementation pass
+
+Implemented the attached INFQ-style OpenClaw rebuild directive as executable code and regression coverage, while leaving live guard state unchanged.
+
+Core changes:
+- Added explicit INFQ-style runner archetype scoring for government/policy funding catalysts, quantum/sector waves, undercovered high-beta names, same-day investor-event visibility, social acceleration, professional validation, premarket repricing, and supply/exhaustion/mega-cap penalties.
+- Added theme-basket discovery for quantum/CHIPS/Commerce-style sector baskets so INFQ-like undercovered names can surface before conservative filtering.
+- Added SEC materiality classification so routine/generic filings do not get trade priority merely because they are official.
+- Added anti-blue-chip fallback audit. Common fallback mega-caps are demoted unless catalyst novelty, attention/tape profile, and lane tags are exceptional.
+- Added SOCIAL_TAPE_ROCKET qualification. Social-only discovery can watch/wait, but cannot trade without price/volume/spread/opening-tape confirmation.
+- Added Alpaca stream adapter hooks for quote/trade subscriptions and run-specific raw quote/trade JSONL logging.
+- Added opening stream supervisor that feeds quote/trade events into the opening tape engine, writes raw quotes/trades/features/decisions/proposals/final summary, and emits BUY_NOW only when deterministic opening-burst predicates pass.
+- Repaired first-seconds tape freshness: quote_age_ms=0.0 is now treated as fresh, not stale.
+- Replaced generic no_valid_mode_for_phase live monitor output with predicate-based WAIT/NO_TRADE diagnostics including attempted modes, actuals, thresholds, passed predicates, and failed predicates.
+- Added candidate-specific opening-bell readiness for the actual primary/backups instead of generic SPY-only readiness.
+- Added opening exit-manager arming as a live order-router requirement for opening modes.
+
+New strategy priority order:
+1. OPENING_BURST_HYPER_LONG
+2. SOCIAL_TAPE_ROCKET
+3. PREMARKET_SURGE_LONG
+4. STAGED_OPEN_EXPLOSION_LONG
+5. PREMARKET_HIGH_RECLAIM_LONG
+6. ORB_BREAK
+7. VWAP_RECLAIM
+
+Verification:
+- Focused acceptance suite: 34 passed.
+- Full suite: 102 passed, 1 existing websockets.legacy deprecation warning.
+
+Remaining external integration blocker:
+- Some requested discovery sources need authenticated or explicitly selected providers before they can be real production feeds: FMP movers, StockTwits API, TradingView-style screener, SAM.gov/USAspending, ClinicalTrials/OpenFDA. Current patch wires the architecture/scoring/packet/test path and uses available scouts/adapters; the next smallest patch is adding those concrete source adapters with credentials/API choices and replay fixtures.

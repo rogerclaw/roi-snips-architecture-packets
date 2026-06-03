@@ -1,0 +1,197 @@
+ROI SNIPS POST-AUDIT FIX COMPLETION REPORT
+Date: 2026-05-22
+Status: PROVEN-NO-ORDER-READY LOCALLY / PARTIAL FOR LIVE ARMING
+
+Summary
+The post-completion-audit fix directive has been implemented as a code/config/test/artifact patch. No live orders were placed, previewed, canceled, or submitted. No live guard files were changed. No autonomous live worker was started.
+
+The remaining blocker is external/time-gated: Tuesday 2026-05-26 no-order real-market validation must still prove the continuation loop remains active through the configured 11:00 ET cutoff with real live stream capture and orders_submitted=false.
+
+Files changed or created
+- src/research/lifecycle.py
+- src/research/source_lane_status.py
+- src/research/archetypes/policy_theme_runner.py
+- src/workflows/premarket_pipeline.py
+- src/workflows/opening_stream_supervisor.py
+- src/workflows/live_monitor.py
+- src/strategy/second_leg_continuation.py
+- scripts/replay_infq_continuation.py
+- scripts/build_post_audit_validation_artifacts.py
+- scripts/run_next_open_shadow_validation.py
+- tests/test_opening_tape.py
+- tests/test_post_audit_fix_directive.py
+- tests/test_live_monitor.py
+- reports/morning/json/2026-05-22_post_audit_validation.json
+- reports/morning/md/2026-05-22_post_audit_validation.md
+- runs/2026-05-22/normalized/source_lane_status.json
+- reports/live_monitor/runs/replay_infq_2026-05-22_continuation/final_summary.json
+- reports/live_monitor/next_open_shadow_validation_2026-05-22.json
+
+Exact changes made
+1. Research/execution separation proof
+- Built a post-audit validation artifact at reports/morning/json/2026-05-22_post_audit_validation.json.
+- The artifact explicitly shows INFQ as research_leader and executable_primary as null.
+- INFQ is classified as SECOND_LEG_WATCH, not automatic execution.
+- entry_viability_score is present.
+- source_lane_status and same_style_backup_status are present and non-empty.
+
+2. Lifecycle states
+- Added centralized lifecycle constants in src/research/lifecycle.py:
+  EARLY_CATALYST_DISCOVERY, PREMARKET_BUILDING, OPENING_DRIVE_ACTIVE, EXTENDED_CHASE, SECOND_LEG_WATCH, SECOND_LEG_RESET, OPENING_CONTINUATION_ACTIVE, EXHAUSTED_OR_DISTRIBUTING, STALE_PRIOR_WINNER, NO_TRADE_EXTENDED.
+- Wired those constants through anti-chase classification, premarket roles, opening-stream summaries, live-monitor continuation context, and second-leg strategy decisions.
+- second-leg continuation now emits SECOND_LEG_RESET for waiting/reset states and OPENING_CONTINUATION_ACTIVE for confirmed continuation.
+
+3. Source lane status
+- src/research/source_lane_status.py now emits the required lane list and compatibility/count fields.
+- research_pipeline writes runs/2026-05-22/normalized/source_lane_status.json.
+- premarket reports include source_lane_status.
+
+4. Captured INFQ replay
+- Added scripts/replay_infq_continuation.py.
+- It rebuilds 1-minute INFQ bars from captured raw trades and quote spreads from captured raw quotes in reports/live_monitor/runs/opening_stream_2026-05-22_132548.
+- It replays the 09:35+ continuation window through second-leg continuation logic, including VWAP_RECLAIM_LONG and ORB_BREAK_LONG.
+- Output artifact: reports/live_monitor/runs/replay_infq_2026-05-22_continuation/final_summary.json.
+
+5. Stream-required validation
+- Hardened scripts/run_next_open_shadow_validation.py so stream_required=true fails if stream_skipped, raw_quote_count <= 0, raw_trade_count <= 0, decision_count <= 0, or orders_submitted is not false.
+- Smoke artifact: reports/live_monitor/next_open_shadow_validation_2026-05-22.json.
+- The smoke artifact is intentionally SHADOW_INVALID because stream_required=true was combined with --skip-stream; that proves stream_skipped is now failure, not success.
+
+6. Backup breadth
+- Added backup_pool_diagnostics to report artifacts.
+- Post-audit validation uses same-style non-mega-cap quantum/high-volatility backups: QBTS, RGTI, QUBT, IONQ.
+- Mega-cap backups are not used in the validation artifact.
+
+7. Policy/theme archetype
+- Refactored src/research/archetypes/policy_theme_runner.py so it no longer wraps the INFQ scorer.
+- It scores direct policy/funding/theme beneficiaries with ticker-neutral logic and penalizes stale prior winners, indirect sector mentions, and mega-cap sympathy.
+
+8. Zero-proposal explainability
+- Opening-stream summary path includes per-symbol decision summaries, top failed predicates, score maxima, first/best/last decisions, mode coverage, windows monitored, handoff flags, lifecycle state, kept/discarded state, and zero_proposal_reason.
+- Captured INFQ continuation replay final summary is self-contained and does not require reading decisions.jsonl to understand the result.
+
+9. Test compatibility
+- Added tests/test_opening_tape.py as a compatibility alias for tests/test_opening_tape_features.py so older runbooks no longer fail on the requested test command.
+
+Feature status table
+- Morning artifact fields: DONE
+- source_lane_status artifact: DONE
+- lifecycle vocabulary: DONE
+- +40% runner research_leader without automatic executable_primary: DONE
+- opening burst to continuation transition: DONE locally
+- captured INFQ continuation replay: DONE with caveat
+- same-style volatile backups: DONE in validation artifact
+- stream_skipped failure when stream_required=true: DONE
+- live guard/order safety: DONE / unchanged
+- Tuesday real-market no-order validation: PARTIAL, still pending
+
+Test commands and exact results
+1. Focused directive command:
+   PYTHONPATH=. .venv/bin/pytest tests/test_live_monitor.py tests/test_opening_burst_strategy.py tests/test_opening_tape.py tests/test_order_router.py tests/test_risk_rules.py
+   Result: 31 passed in 0.07s.
+
+2. Additional post-audit focused suite:
+   PYTHONPATH=. .venv/bin/pytest tests/test_post_audit_fix_directive.py tests/test_premarket_pipeline.py tests/test_research_pipeline.py tests/test_hyper_trade_score.py tests/test_market_overlay.py tests/test_opening_stream_supervisor.py
+   Result: 33 passed, 1 existing websockets.legacy warning in 4.12s.
+
+3. Full suite:
+   PYTHONPATH=. .venv/bin/pytest tests
+   Result: 153 passed, 1 existing websockets.legacy warning in 4.23s.
+
+New and rebuilt artifacts
+- reports/morning/json/2026-05-22_post_audit_validation.json
+- reports/morning/md/2026-05-22_post_audit_validation.md
+- runs/2026-05-22/normalized/source_lane_status.json
+- reports/live_monitor/runs/replay_infq_2026-05-22_continuation/final_summary.json
+- reports/live_monitor/next_open_shadow_validation_2026-05-22.json
+
+Morning artifact proof
+reports/morning/json/2026-05-22_post_audit_validation.json shows:
+- status: post_audit_validation
+- research_leader.symbol: INFQ
+- executable_primary: null
+- anti_chase_state: SECOND_LEG_WATCH
+- opportunity_lifecycle_state: SECOND_LEG_WATCH
+- entry_viability_score: 42.0
+- second_leg_watch: INFQ
+- same_style_non_megacap_backups: QBTS, RGTI, QUBT, IONQ
+- source_lane_status count: 16
+- orders_submitted: false
+
+source_lane_status proof
+runs/2026-05-22/normalized/source_lane_status.json exists and contains 16 lanes:
+- Alpaca SIP
+- Alpaca News
+- Benzinga
+- SEC EDGAR
+- Company IR
+- FMP movers
+- StockTwits
+- TradingView-style screener
+- Grok/X
+- Reddit
+- Tavily/Brave/Exa
+- Firecrawl/Crawl4AI
+- openFDA
+- ClinicalTrials.gov
+- SAM.gov/USAspending
+- Nasdaq halt feed
+
+Captured INFQ replay proof
+Artifact: reports/live_monitor/runs/replay_infq_2026-05-22_continuation/final_summary.json
+- input_artifact_path: reports/live_monitor/runs/opening_stream_2026-05-22_132548
+- replay_window_start_et: 2026-05-22T09:35:00-04:00
+- replay_window_end_et: 2026-05-22T09:50:00-04:00
+- research_leader: INFQ
+- executable_primary: null
+- first decision: WAIT, VWAP_RECLAIM_LONG, failed predicate volume_expansion_ok at 09:35 ET
+- best decision: BUY_NOW, ORB_BREAK_LONG at 09:36 ET
+- last decision: WAIT, ORB_BREAK_LONG, failed predicate volume_expansion_ok at 09:40 ET
+- proposal_count: 2
+- hypothetical_order_count: 2
+- orders_submitted: false
+- mode_coverage: ORB_BREAK_LONG, VWAP_RECLAIM_LONG
+- stream source counts: raw_quote_count 30394, raw_trade_count 49022, decisions_count 6, minute_bars_built 11
+- whether_0946_style_move_was_caught: true
+
+Important replay caveat
+The local captured INFQ stream artifact contains usable INFQ continuation bars through about 09:40 ET. The replay artifact is labeled for the requested 09:35-09:50 window, but the available captured data does not prove every minute through 09:50. It does prove the continuation path would have caught the setup before the screenshot-style 09:46 move, at 09:36 ET, with no submitted orders. Tuesday real-market validation is still required to prove continuous monitoring through the 11:00 ET cutoff.
+
+Backup quality proof
+The validation artifact uses QBTS, RGTI, QUBT, and IONQ as same-style, non-mega-cap or high-beta quantum/theme backups. backup_pool_diagnostics shows:
+- same_style_candidates_selected: QBTS, RGTI, QUBT
+- mega_cap_backups_used: none
+- reason_mega_cap_backup_used: null
+- source_lane_failures_affecting_backups: none
+
+Policy/theme runner proof
+tests/test_post_audit_fix_directive.py verifies:
+- INFQ-like direct beneficiary scores high.
+- stale prior winner scores lower and gets STALE_PRIOR_WINNER tag.
+- unrelated mega-cap sympathy is demoted.
+- indirect sector mention does not outrank a true beneficiary.
+- a non-INFQ policy/theme ticker can score high.
+
+Current guard posture
+Read-only guard check during this patch:
+- LIVE_ARMED: present
+- DISABLE_NEW_ENTRIES: absent
+- KILL_SWITCH: absent
+- No live Roi Snips/opening-stream/live-monitor/research/premarket process was found in the final process check.
+
+Guard safety assessment
+This posture is operationally too close to live for non-live validation. It is not recommended for unattended non-live work. I did not alter guard files because the directive forbade it.
+
+If Charles wants fail-closed posture restored, he should explicitly approve:
+  cd /Users/rogerclaw/.openclaw/workspace/roi-snips && touch state/DISABLE_NEW_ENTRIES
+
+Remaining blockers before autonomous live arming
+1. Tuesday 2026-05-26 no-order real-market validation must run through the configured 11:00 ET cutoff.
+2. That validation must prove real stream capture with raw_quote_count > 0, raw_trade_count > 0, decisions_count > 0, continuation monitor active, and orders_submitted=false.
+3. Guard posture should be made fail-closed before additional non-live validation unless Charles explicitly wants it left close to live.
+
+Tuesday validation required?
+Yes. Local source, tests, artifacts, and captured replay are now strong enough for PROVEN-NO-ORDER-READY locally, but they do not replace a fresh full-window real-market no-order validation.
+
+Live arming recommendation
+Live arming is NOT recommended yet. The build is ready for no-order validation, not autonomous live trading. Do not proceed to future autonomous live arming until the Tuesday real-market validation passes and Charles explicitly authorizes live arming.

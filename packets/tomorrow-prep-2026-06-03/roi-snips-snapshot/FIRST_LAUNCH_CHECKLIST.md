@@ -1,0 +1,25 @@
+# Roi Snips First Launch Checklist
+
+- [ ] `.env` populated from `.env.example`
+- [ ] Alpaca API credentials verified
+- [ ] Alpaca market-data feed entitlement verified (`ALPACA_MARKET_DATA_FEED` matches intended runtime)
+- [ ] Paper path validated first with `configs/paper.yaml` + `scripts/check_paper_readiness.sh`
+- [ ] Postgres running and reachable via `POSTGRES_DSN`
+- [ ] Migrations applied
+- [ ] `scripts/run_mechanical_checks.sh` passes
+- [ ] Alpaca account/buying-power read verified
+- [ ] Alpaca asset lookup verified for intended symbols
+- [ ] Alpaca quote + 1m bars verified
+- [ ] Morning report generated at least once
+- [ ] Live monitor generates proposals cleanly
+- [ ] Proposal files written to `state/proposals/`
+- [ ] Audit/operator event files are being written
+- [ ] Telegram polling loop verified with allowed chat id
+- [ ] `STATUS` command returns healthy response
+- [ ] `FLAT ALL NOW` dry run tested
+- [ ] Optional paper submissions tested only with `ROI_SNIPS_ALLOW_PAPER_ORDER_SUBMISSION=true`
+- [ ] Kill switch path verified
+- [ ] Disable-new-entries path verified
+- [ ] Read-only morning completed with no broken data/account state
+- [ ] `ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION` remains `false` until live Alpaca verification is complete
+- [ ] Day-one live constraints chosen before arming the runtime

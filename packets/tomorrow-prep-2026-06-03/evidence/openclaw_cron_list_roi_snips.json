@@ -1,0 +1,372 @@
+{
+  "jobs": [
+    {
+      "id": "53dfcc3e-07d2-49bb-94a7-6167b9d86b54",
+      "agentId": "roi-snips",
+      "name": "Roi Snips 2026-06-01 opening live monitor",
+      "description": "Roi Snips Monday 2026-06-01 guarded live-readiness sequence. Managed from roi-snips/ops/progress/ACTIVE.md on 2026-05-31.",
+      "enabled": false,
+      "deleteAfterRun": false,
+      "createdAtMs": 1780282920688,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-06-01T13:29:30.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "In /Users/rogerclaw/.openclaw/workspace/roi-snips, run exactly: bash scripts/run_live_opening_trade_ready.sh > reports/live_monitor/live_trade_ready/opening_cron.log 2>&1 . Do not inspect live broker/account/order/position state except inside that command if it is the deterministic guarded live path. Do not manually place, preview, replace, or cancel orders. If the command succeeds, final-answer exactly OK. If it fails, final-answer FAILURE plus the command, exit code, and the last useful log line.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 7200,
+        "toolsAllow": [
+          "exec"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1780320570012,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 6394,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1780320576406,
+      "status": "disabled"
+    },
+    {
+      "id": "9a5bb279-8396-4770-bd98-50d998bd536a",
+      "agentId": "roi-snips",
+      "name": "Roi Snips 2026-06-01 premarket deep-mini primary",
+      "description": "Roi Snips Monday 2026-06-01 guarded live-readiness sequence. Managed from roi-snips/ops/progress/ACTIVE.md on 2026-05-31.",
+      "enabled": false,
+      "deleteAfterRun": false,
+      "createdAtMs": 1780282918782,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-06-01T12:10:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "In /Users/rogerclaw/.openclaw/workspace/roi-snips, run exactly: bash scripts/run_live_trade_ready_premarket.sh > reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1 . Do not inspect live broker/account/order/position state except inside that command if it is the deterministic guarded live path. Do not manually place, preview, replace, or cancel orders. If the command succeeds, final-answer exactly OK. If it fails, final-answer FAILURE plus the command, exit code, and the last useful log line.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 5400,
+        "toolsAllow": [
+          "exec"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1780315800035,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 8687,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1780315808722,
+      "status": "disabled"
+    },
+    {
+      "id": "a197d1aa-c41e-4510-86cb-e83a823a33fb",
+      "agentId": "roi-snips",
+      "name": "Roi Snips 2026-06-01 canary",
+      "description": "Roi Snips Monday 2026-06-01 guarded live-readiness sequence. Managed from roi-snips/ops/progress/ACTIVE.md on 2026-05-31.",
+      "enabled": false,
+      "deleteAfterRun": false,
+      "createdAtMs": 1780282918127,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-06-01T11:45:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "In /Users/rogerclaw/.openclaw/workspace/roi-snips, run exactly: bash scripts/roi_snips_morning_canary.sh > reports/live_monitor/live_trade_ready/canary_cron.log 2>&1 . Do not inspect live broker/account/order/position state except inside that command if it is the deterministic guarded live path. Do not manually place, preview, replace, or cancel orders. If the command succeeds, final-answer exactly OK. If it fails, final-answer FAILURE plus the command, exit code, and the last useful log line.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 600,
+        "toolsAllow": [
+          "exec"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1780314300015,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 7932,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1780314307947,
+      "status": "disabled"
+    },
+    {
+      "id": "a7f378b3-fb1d-4d69-8578-410985e241c0",
+      "agentId": "roi-snips",
+      "name": "Roi Snips isolated exec smoke 2026-06-01",
+      "description": "Broker-safe same-surface OpenClaw cron exec smoke; writes only reports/live_monitor/cron_exec_smoke artifact.",
+      "enabled": false,
+      "deleteAfterRun": false,
+      "createdAtMs": 1780329898709,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-06-01T16:05:58.554Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "In /Users/rogerclaw/.openclaw/workspace/roi-snips, run exactly: mkdir -p reports/live_monitor/cron_exec_smoke && date \"+%Y-%m-%dT%H:%M:%S%z\" > reports/live_monitor/cron_exec_smoke/openclaw_cron_exec_smoke_latest.txt && printf \"OK\\n\" >> reports/live_monitor/cron_exec_smoke/openclaw_cron_exec_smoke_latest.txt . Do not inspect broker/account/order/position state. Do not place, preview, replace, cancel, or submit orders. Do not alter live guard files. If the command succeeds and the artifact exists, final-answer exactly OK. If shell/exec is unavailable or the command fails, final-answer FAILURE plus the reason.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 180,
+        "toolsAllow": [
+          "exec"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1780336207135,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 11356,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1780336218491,
+      "status": "disabled"
+    },
+    {
+      "id": "b2d7a546-67e7-4e41-9759-f75b124b05e1",
+      "agentId": "roi-snips",
+      "sessionKey": "agent:roi-snips:telegram:roisnips:direct:8262254077",
+      "name": "Roi Snips daily 6am catalyst hunt",
+      "description": "Daily Roi Snips morning catalyst stock hunt at 6am PT, including weekends for practice and Monday live prep.",
+      "enabled": false,
+      "createdAtMs": 1777092904147,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * *",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "session:agent:roi-snips:telegram:roisnips:direct:8262254077",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Start the Roi Snips morning catalyst hunt now. Mode: long-only U.S. equities/ETFs research and proposal generation only. Do not place, modify, or cancel any live order unless live submission is armed and deterministic guards pass. No per-order human approval is required once live submission is armed, but fail closed on any guard/data/state mismatch.\n\nBuild off Charles's original 'fire' stock-hunter prompt: act like an elite high-conviction short-term stock picker looking for the single best U.S.-listed long opportunity for today/next session, intended same-day to 1-3 trading days. Do not produce a generic watchlist. Be decisive. Prioritize asymmetric upside and high-conviction volatile catalysts over stability, while ranking evidence quality over hype.\n\nUse the approved Roi Snips morning-research architecture: broad multi-surface catalyst hunt; official/primary sources first, structured financial/news sources second, social/retail only as an overlay/accelerator; avoid boring mega-cap defaults and avoid trashy microcap hype; prefer tradeable, catalyst-backed names with real liquidity.\n\nHunt specifically for: product launches, tech breakthroughs, FDA/medical approvals or trial updates, regulatory wins, M&A/strategic reviews, contract/government awards, earnings surprises, guidance revisions, partnerships/licensing, unusual volume/RVOL, short squeeze/float dynamics, sector momentum, and underpriced material catalysts.\n\nSequence: 1) check local Roi Snips repo/run state and prior reports; 2) run/feed current catalyst discovery across SEC/company IR/press releases/earnings/FDA/regulatory/contracts/M&A/product launches; 3) use Brave/web/browser sources and available browser lanes for broad search; 4) check live/pre-market marketability where available: price, spread, volume/RVOL, halt status, liquidity, crowding; 5) verify top survivors with official pages; 6) produce top 5 ranked candidates, one decisive best pick or explicit no-high-quality-long; 7) include ticker/company, exact catalyst, why it can move sharply, why it may not be fully priced, evidence reviewed, sentiment/discussion trend, catalyst classification, buy zone/entry framework, same-day and 1-3 day upside targets, thesis-break/downside level, monitoring window, sell/profit/danger triggers, tradeability/liquidity notes, ORB_BREAK/VWAP_RECLAIM observation levels where data permits, and execution-risk notes; 8) include a no-trade list of tempting but dangerous names; 9) save artifacts under roi-snips/reports/morning and summarize to Charles.\n\nAdditionally, run a deep-mini research pass using the following exact user prompt as a high-conviction overlay before final ranking:\n\nI am looking to make a stock investment today just after market open, with the intention of selling the same day or within a couple of days. I want you to conduct an exhaustive, high-depth search across all relevant resources you can access, including financial news, company press releases, SEC filings, earnings materials, analyst commentary, trading blogs, market newsletters, Reddit threads, stock forums, X sentiment, Motley Fool, and any other credible or high-signal sources available to ChatGPT Pro. Treat this as if I am consulting one of the best stock pickers in the world for a high-conviction short-term trade.\n\nI do not want a generic watchlist. I want you to identify the single best short-term stock opportunity for today based on the strongest combination of catalyst, sentiment, technical setup, and probability of a sharp near-term move. Do deep research, think carefully, and synthesize both institutional-quality signals and retail sentiment to find something volatile that is expected to have a massive short-term uptick due to key progress, approval, product launch, merger, acquisition, partnership, contract award, earnings surprise, guidance revision, short squeeze potential, unusual volume, sector momentum, or another material catalyst.\n\nI am completely fine with high risk; this will be a very small investment, so I am able to tolerate maximum risk. I am not a professional day trader and use Webull.\n\nIn your analysis, weigh:\n\ncurrent news flow and catalyst strength\nsentiment across retail and professional channels\npremarket or early-session trading behavior if available\nunusual volume, momentum, float dynamics, and short-interest conditions if relevant\ntechnical levels such as support, resistance, breakout levels, gap fills, and likely liquidity zones\nwhether the move is already overcrowded or still early\nwhat could invalidate the trade quickly\n\nFor the final answer, give me:\n\nThe single best stock to buy today\nTicker and company name\nThe exact reason it could move sharply in the next hours or days\nThe underlying catalyst and why the market may not have fully priced it in yet\nEvidence from the research you reviewed, including sentiment and discussion trends\nA suggested limit buy price or buy range\nA realistic upside target for same-day and 1–3 day scenarios\nA downside level or clear risk threshold where the thesis is broken\nWhat timeframes I should monitor most closely after entry\nSpecific sell triggers, including both profit-taking and danger signals\nA brief note on execution risk for someone using Robinhood with basic tools\n\nPrioritize asymmetric upside and high-conviction setups over safer, lower-volatility names. I care more about explosive short-term potential than stability. Be decisive, ranking quality of evidence over hype, but do not ignore hype if it is clearly becoming a market-moving force.\n\nWeekend/practice mode: run even on weekends; on non-market days, produce next-session candidates and explicitly note stale/limited price-action constraints.",
+        "model": "openai/gpt-5.5",
+        "thinking": "high",
+        "timeoutSeconds": 7200,
+        "lightContext": false
+      },
+      "delivery": {
+        "mode": "announce",
+        "bestEffort": true,
+        "to": "8262254077",
+        "channel": "telegram"
+      },
+      "state": {
+        "lastRunAtMs": 1777813200016,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 50074,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1777813250090,
+      "status": "disabled"
+    },
+    {
+      "id": "be9fe0ed-5481-44c0-ab87-29f6f8f320d9",
+      "agentId": "roi-snips",
+      "name": "Roi Snips 2026-06-01 final guarded arming retry",
+      "description": "Roi Snips Monday 2026-06-01 guarded live-readiness sequence. Managed from roi-snips/ops/progress/ACTIVE.md on 2026-05-31.",
+      "enabled": false,
+      "deleteAfterRun": false,
+      "createdAtMs": 1780282920058,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-06-01T13:25:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "In /Users/rogerclaw/.openclaw/workspace/roi-snips, run exactly: bash scripts/run_final_live_arming_gate.sh > reports/live_monitor/live_trade_ready/final_arming_retry_cron.log 2>&1 . Do not inspect live broker/account/order/position state except inside that command if it is the deterministic guarded live path. Do not manually place, preview, replace, or cancel orders. If the command succeeds, final-answer exactly OK. If it fails, final-answer FAILURE plus the command, exit code, and the last useful log line.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 900,
+        "toolsAllow": [
+          "exec"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1780320300013,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 8032,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1780320308045,
+      "status": "disabled"
+    },
+    {
+      "id": "cd4493a7-4279-4a22-a0aa-4d17a69498c4",
+      "agentId": "roi-snips",
+      "name": "Roi Snips 2026-06-01 force flat",
+      "description": "Roi Snips Monday 2026-06-01 guarded live-readiness sequence. Managed from roi-snips/ops/progress/ACTIVE.md on 2026-05-31.",
+      "enabled": false,
+      "deleteAfterRun": false,
+      "createdAtMs": 1780282921331,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-06-01T19:45:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "In /Users/rogerclaw/.openclaw/workspace/roi-snips, run exactly: bash scripts/run_live_force_flat.sh > reports/live_monitor/live_trade_ready/force_flat_cron.log 2>&1 . Do not inspect live broker/account/order/position state except inside that command if it is the deterministic guarded live path. Do not manually place, preview, replace, or cancel orders. If the command succeeds, final-answer exactly OK. If it fails, final-answer FAILURE plus the command, exit code, and the last useful log line.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 900,
+        "toolsAllow": [
+          "exec"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1780343100018,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 4769,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1780343104787,
+      "status": "disabled"
+    },
+    {
+      "id": "e39f17ae-fa4f-43a0-8961-237337afaa81",
+      "agentId": "roi-snips",
+      "name": "Roi Snips 2026-06-01 final guarded arming gate",
+      "description": "Roi Snips Monday 2026-06-01 guarded live-readiness sequence. Managed from roi-snips/ops/progress/ACTIVE.md on 2026-05-31.",
+      "enabled": false,
+      "deleteAfterRun": false,
+      "createdAtMs": 1780282919422,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-06-01T13:20:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "In /Users/rogerclaw/.openclaw/workspace/roi-snips, run exactly: bash scripts/run_final_live_arming_gate.sh > reports/live_monitor/live_trade_ready/final_arming_cron.log 2>&1 . Do not inspect live broker/account/order/position state except inside that command if it is the deterministic guarded live path. Do not manually place, preview, replace, or cancel orders. If the command succeeds, final-answer exactly OK. If it fails, final-answer FAILURE plus the command, exit code, and the last useful log line.",
+        "model": "openai/gpt-5.5",
+        "thinking": "low",
+        "timeoutSeconds": 900,
+        "toolsAllow": [
+          "exec"
+        ]
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1780320000010,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 11075,
+        "lastDeliveryStatus": "not-requested",
+        "lastFailureNotificationDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0,
+        "consecutiveSkipped": 0
+      },
+      "updatedAtMs": 1780320011085,
+      "status": "disabled"
+    }
+  ],
+  "total": 8,
+  "offset": 0,
+  "limit": 8,
+  "hasMore": false,
+  "nextOffset": null,
+  "deliveryPreviews": {
+    "53dfcc3e-07d2-49bb-94a7-6167b9d86b54": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "9a5bb279-8396-4770-bd98-50d998bd536a": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "a197d1aa-c41e-4510-86cb-e83a823a33fb": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "a7f378b3-fb1d-4d69-8578-410985e241c0": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "b2d7a546-67e7-4e41-9759-f75b124b05e1": {
+      "label": "announce -> telegram:8262254077",
+      "detail": "explicit"
+    },
+    "be9fe0ed-5481-44c0-ab87-29f6f8f320d9": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "cd4493a7-4279-4a22-a0aa-4d17a69498c4": {
+      "label": "not requested",
+      "detail": "not requested"
+    },
+    "e39f17ae-fa4f-43a0-8961-237337afaa81": {
+      "label": "not requested",
+      "detail": "not requested"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "authorized_ticker": "INFQ",
+  "backup_ticker": "NVDA",
+  "same_style_backup_pool_ok": false,
+  "readiness_status": "RED",
+  "nvda_tape_action": "BUY_NOW"
+}

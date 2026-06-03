@@ -1,0 +1,12 @@
+universe:
+  market: US_EQUITIES
+  include_exchanges: [NASDAQ, NYSE, NYSE_ARCA, NYSE_AMERICAN]
+  security_types: [COMMON_STOCK, ETF]
+  excludes:
+    - OTC
+    - ETN
+    - RIGHTS
+    - WARRANTS
+    - PREFERRED
+    - LOW_LIQUIDITY_MICROCAP
+  optional_watchlist_symbols: []

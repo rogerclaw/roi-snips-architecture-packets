@@ -1,0 +1,9 @@
+PASS config/workflow.yaml contains required invariants
+PASS configs/live.yaml contains required invariants
+PASS scripts/run_live_trade_ready_premarket.sh contains required invariants
+PASS scripts/run_final_live_arming_gate.sh contains required invariants
+PASS scripts/run_live_opening_trade_ready.sh contains required invariants
+PASS scripts/run_live_force_flat.sh contains required invariants
+PASS OpenClaw cron metadata surface is reachable
+PASS weekday shell crontab contains canary, discovery, premarket retries, final arming, opening, and force-flat
+PASS local guard posture is fail-closed before deterministic live gate

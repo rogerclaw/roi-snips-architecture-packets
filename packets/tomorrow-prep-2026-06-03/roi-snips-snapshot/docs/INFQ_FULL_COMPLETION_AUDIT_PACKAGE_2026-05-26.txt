@@ -1,0 +1,602 @@
+INFQ / ROI SNIPS FULL COMPLETION AUDIT PACKAGE
+Generated: 2026-05-26 08:24-08:31 PT
+Prepared for: Charles Clydsdale
+Scope: completion audit package for the INFQ forensic implementation directive, later completion audit, and 2026-05-26 no-order continuation validation.
+
+IMPORTANT SAFETY BOUNDARY
+This package was assembled from local code, reports, ledgers, and generated no-order artifacts.
+During the 2026-05-26 resume/audit-package pass, I did not inspect, preview, place, replace, cancel, or mutate live broker orders, account state, or positions.
+I did not arm guard files, clear guard files, touch KILL_SWITCH, touch LIVE_ARMED, remove DISABLE_NEW_ENTRIES, restart live trading workers, or submit live/paper orders.
+
+
+1. EXECUTIVE TRUTH
+
+The implementation/report work from the INFQ forensic directive was completed locally on 2026-05-22.
+
+The remaining open item after that report was not a missing code patch; it was an external proof boundary:
+prove that a brokerless no-order live market-data stream can stay alive through the configured 11:00 ET continuation cutoff, with continuation/ORB/VWAP/second-leg monitoring active, while submitting zero orders and avoiding live broker inspection.
+
+That proof is now complete as of 2026-05-26:
+
+- Proof run: reports/live_monitor/runs/opening_stream_2026-05-26_145507/
+- Mode: shadow_no_order_submission
+- ok: true
+- orders_allowed: false
+- orders_submitted: false
+- stream_captured: true
+- raw_quote_count: 60,199
+- raw_trade_count: 123,198
+- decision_count: 183,397
+- proposal_count: 0
+- order_result_count: 0
+- fired_symbols: []
+- stopped_by_timer: true
+- first raw quote timestamp: 2026-05-26 14:55:08.246878+00:00 / 10:55:08 ET
+- last raw quote timestamp: 2026-05-26 15:10:04.521826+00:00 / 11:10:04 ET
+- This crosses the configured 11:00 ET continuation cutoff.
+
+Mode coverage in the final proof run:
+
+- opening_burst_ran: true
+- continuation_monitor_started: true
+- orb_vwap_monitor_started: true
+- second_leg_monitor_started: true
+- handoff_completed: true
+- stream_captured: true
+
+Remaining caveat:
+The 2026-05-26 live proof used today's generated execution symbols AAPL, AMD, and TSLA, not an INFQ-style hard-catalyst runner, because today's morning packet did not surface an INFQ-style runner. The INFQ-style 09:46 continuation behavior is proven locally by a deterministic test fixture; the live-market stream proof proves the handoff/continuation plumbing stays alive through cutoff in no-order mode.
+
+
+2. WHAT HAPPENED / WHY THIS LOOKED STALLED
+
+On 2026-05-22, the local implementation and forensic report were completed. The local report was:
+
+- docs/INFQ_FORENSIC_IMPLEMENTATION_REPORT_2026-05-22.md
+
+That report closed the code/config/test/documentation portion and recorded one remaining external proof boundary:
+
+- Tuesday 2026-05-26 no-order brokerless market-data validation through the 11:00 ET continuation cutoff.
+
+On 2026-05-26:
+
+- The first scheduled validation created reports/live_monitor/runs/opening_stream_2026-05-26_133518/ but failed the data proof because no stream symbols/watchlist existed.
+- A later validation run, reports/live_monitor/runs/opening_stream_2026-05-26_142119/, captured real SIP data and submitted no orders, but only covered 10:21:21-10:36:20 ET, so it did not cross 11:00 ET.
+- The useful final run, reports/live_monitor/runs/opening_stream_2026-05-26_145507/, ran 10:55:08-11:10:04 ET and crossed the cutoff.
+- A duplicate retry started during the response hit Alpaca "connection limit exceeded" because the existing validation stream already held the SIP websocket. The duplicate was stopped; the useful existing validation was allowed to finish.
+
+The live thread should have delivered the final report earlier. The operational failure was incomplete closure/reporting after the May 22 implementation plus not clearly distinguishing "code done" from "final market-data proof still pending."
+
+
+3. FILES CHANGED OR CREATED BY THE IMPLEMENTATION
+
+Implementation and orchestration files:
+
+- src/research/models.py
+- src/research/cluster.py
+- src/research/hyper_trade_score.py
+- src/research/source_lane_status.py
+- src/research/candidate_packets.py
+- src/research/market_overlay.py
+- src/research/archetypes/__init__.py
+- src/research/archetypes/policy_theme_runner.py
+- src/workflows/research_pipeline.py
+- src/workflows/premarket_pipeline.py
+- src/workflows/opening_stream_supervisor.py
+- src/workflows/live_monitor.py
+- src/features/opening_tape.py
+- src/strategy/opening_burst_hyper_long.py
+- src/strategy/second_leg_continuation.py
+- src/strategy/second_leg_continuation_long.py
+- src/strategy/orb_break.py
+- src/strategy/vwap_reclaim.py
+- src/risk/rules.py
+- src/execution/order_router.py
+- src/execution/audit_logger.py
+- src/execution/proposal_store.py
+- src/adapters/alpaca_market_data.py
+- src/common/provider_factory.py
+- scripts/run_next_open_shadow_validation.py
+- scripts/run_opening_bell_live_monitor.sh
+- scripts/supervise_opening_bell_live_monitor.sh
+- scripts/run_no_order_continuation_validation.sh
+
+Tests and evidence files:
+
+- tests/test_research_pipeline.py
+- tests/test_premarket_pipeline.py
+- tests/test_live_monitor.py
+- tests/test_opening_stream_supervisor.py
+- tests/test_opening_bell_readiness.py
+- reports/live_monitor/runs/replay_infq_2026-05-22_fixed/*
+- reports/live_monitor/runs/opening_stream_2026-05-26_145507/*
+- docs/INFQ_RESEARCH_AND_OPENING_TAPE_FORENSIC_REPORT_2026-05-22.txt
+- docs/INFQ_FORENSIC_IMPLEMENTATION_REPORT_2026-05-22.md
+- docs/INFQ_FULL_COMPLETION_AUDIT_PACKAGE_2026-05-26.txt
+- ops/progress/ACTIVE.md
+
+
+4. IMPLEMENTATION SUMMARY
+
+The patch changed Roi Snips so INFQ-style setups are treated as high-risk, catalyst-heavy, asymmetric opportunities without turning them into automatic executable buys.
+
+Implemented behavior:
+
+- Fresh hard-catalyst asymmetric setups can outrank routine mega-cap filing/default names.
+- Source validation state is preserved in candidate packets and morning reports.
+- Research leadership is separated from execution readiness.
+- A validated runner can be the best research leader while still being routed to second-leg watch instead of immediate chase.
+- Opening-stream candidate conversion no longer treats full premarket dollar volume as per-minute baseline.
+- expected_opening_dollar_volume_60s and premarket_dollar_volume_per_minute are computed from total premarket dollar volume divided by elapsed premarket minutes.
+- Opening burst, opening drive, ORB break, VWAP reclaim, and second-leg continuation are explicitly covered.
+- Live-order opening-stream runs hand off to the broker-aware continuation monitor.
+- No-order/shadow runs continue only when ROI_SNIPS_RUN_CONTINUATION_MONITOR=true.
+- Brokerless no-order validation can skip broker position checks and order-router construction.
+- Dry-run/no-order proposals remain possible without a broker submission field.
+- Final summaries explain zero-proposal runs with per-symbol predicates, decisions, mode coverage, windows monitored, and proposal/order counts.
+
+
+5. EXACT NEW SCHEMAS AND FIELDS
+
+Research/model fields:
+
+- MarketOverlay.anti_chase_state
+- MarketOverlay.opportunity_lifecycle_state
+- MarketOverlay.entry_viability_score
+- ResearchScorecard.hyper_trade_score
+- ResearchScorecard.lane_tags
+- ResearchScorecard.speculative_risk_penalties
+- ResearchScorecard.validation_status
+- DailyBestPickPacket.research_leader
+- DailyBestPickPacket.why_market_may_not_be_fully_priced
+- DailyBestPickPacket.suggested_buy_zone
+- DailyBestPickPacket.same_day_upside_target
+- DailyBestPickPacket.one_to_three_day_upside_target
+- DailyBestPickPacket.thesis_break_level
+- DailyBestPickPacket.monitoring_timeframes
+- DailyBestPickPacket.profit_taking_triggers
+- DailyBestPickPacket.danger_signals
+
+Candidate packet / report fields:
+
+- infq_archetype.infq_archetype_score
+- infq_archetype.policy_theme_runner_score
+- infq_archetype.components
+- infq_archetype.tags
+- mega_cap_fallback_audit
+- deterministic_trade_gate_status
+- research_leader
+- research_leader_symbol
+- executable_primary
+- watch_only
+- second_leg_watch
+- no_trade_extended
+- anti_chase_state
+- opportunity_lifecycle_state
+- entry_viability_score
+- same_style_backup_status.same_style_non_megacap_backups
+- same_style_backup_status.megacap_default_backups
+- same_style_backup_status.same_style_backup_pool_ok
+
+Opening/live-monitor fields:
+
+- opening_strategy_score
+- infq_archetype_score
+- expected_opening_dollar_volume_60s
+- premarket_dollar_volume_per_minute
+- mode_coverage.opening_burst_ran
+- mode_coverage.continuation_monitor_started
+- mode_coverage.orb_vwap_monitor_started
+- mode_coverage.second_leg_monitor_started
+- mode_coverage.stream_captured
+- mode_coverage.handoff_completed
+- zero_proposal_reason
+- broker_state_mode=brokerless_no_order_shadow
+
+Trade-plan modes/triggers now allowed:
+
+- OPENING_DRIVE_LONG
+- OPENING_BURST_HYPER_LONG
+- OPENING_BURST
+- ORB_BREAK
+- ORB_BREAK_LONG
+- VWAP_RECLAIM
+- VWAP_RECLAIM_LONG
+- SECOND_LEG_CONTINUATION
+- SECOND_LEG_CONTINUATION_LONG
+- PREMARKET_HIGH_RECLAIM
+- PREMARKET_HIGH_RECLAIM_LONG
+- PREMARKET_SURGE
+- SOCIAL_TAPE_ROCKET
+- STAGED_OPEN_ORDER
+
+
+6. EXACT STRATEGY PRIORITY AFTER PATCH
+
+Research/report priority:
+
+1. Rank fresh hard-catalyst / policy-theme asymmetric runners first when source validation, freshness, liquidity, and archetype score support them.
+2. Keep the best research pick as research_leader even if immediate entry would be a chase.
+3. Promote to executable_primary only when the execution gate passes, anti_chase_state=PREMARKET_BUILDING, and entry_viability_score >= 60.
+4. Route validated extended runners to second_leg_watch.
+5. Route unvalidated extreme-gap runners to no_trade_extended.
+6. Prefer same-style non-mega-cap backups behind a policy-theme leader; mega-cap defaults become lower-priority backups.
+
+Runtime execution priority:
+
+1. SUBMINUTE_OPENING_DRIVE_LONG: 09:30:00 ET through configured subminute cutoff, default 09:30:55.
+2. OPENING_DRIVE_LONG: 09:30:00 ET through configured opening-drive cutoff, default 09:34:59.
+3. SECOND_LEG_CONTINUATION_LONG after at least six regular-session bars and a five-bar opening range.
+4. Within second-leg continuation, emitted mode is VWAP_RECLAIM_LONG if VWAP reclaim is the fresh trigger; otherwise ORB_BREAK_LONG if opening-range break is the trigger; otherwise PREMARKET_HIGH_RECLAIM_LONG if premarket-high reclaim is the trigger.
+5. Submission remains separate from signal generation: dry-run/no-order mode can arm proposals without submission; live submission requires explicit live env plus broker/runtime guards green.
+
+
+7. EXACT LIFECYCLE STATES NOW SUPPORTED
+
+Research/pre-entry lifecycle:
+
+- EARLY_CATALYST_DISCOVERY
+- PREMARKET_BUILDING
+- SECOND_LEG_WATCH
+- EXTENDED_CHASE
+- NO_TRADE_EXTENDED
+- EXHAUSTED_OR_DISTRIBUTING
+
+Opening/replay lifecycle:
+
+- OPENING_DRIVE_ACTIVE
+- SECOND_LEG_WATCH
+- WAIT_FOR_SECOND_LEG
+- NO_TRADE_EXTENDED
+
+Live continuation lifecycle:
+
+- SECOND_LEG_CONTINUATION_ACTIVE
+
+Runtime status states:
+
+- disarm
+- watch
+- arm
+- submitted_live
+- submitted_paper
+- previewed_dry_run
+- force_flat
+
+
+8. INFQ REPLAY RESULTS BEFORE AND AFTER PATCH
+
+Before patch / live opening stream:
+
+- Run: reports/live_monitor/runs/opening_stream_2026-05-22_132548
+- Mode: live_order_submission
+- Captured: 182,085 raw quotes, 266,934 raw trades, 449,019 decisions
+- orders_allowed: true
+- orders_submitted: false
+- proposal_count: 0
+- blocked_proposal_count: 0
+- order_result_count: 0
+- fired_symbols: []
+- Result: no opening-burst proposal.
+- Main INFQ blockers inside opening-burst logic: opening_drive_score_ok and volume_burst_ok.
+- After 09:35 ET, the opening-burst strategy returned outside_opening_burst_window.
+
+After patch / corrected replay:
+
+- Run: reports/live_monitor/runs/replay_infq_2026-05-22_fixed
+- Status: NO_TRADE
+- orders_submitted: false
+- Final decision: NO_TRADE
+- Final reason: outside_opening_burst_window
+- Final failed predicate: inside_opening_burst_window
+- Corrected candidate fields:
+  - hyper_trade_score: 3.775
+  - opening_strategy_score: 7.146
+  - infq_archetype_score: 7.146
+  - premarket_dollar_volume: 119,981,670.8
+  - expected_opening_dollar_volume_60s: 380,246.8293
+  - premarket_high: 16.12
+  - entry_cap: 16.12
+- Best opening-burst actuals recorded in the forensic notes:
+  - opening_drive_score: 6.469
+  - volume_burst_score: 1.5466
+  - hyper_trade_score: 7.146
+- Result: corrected opening-burst replay still properly did not buy the first burst, but the patched continuation path has a separate no-order regression proving INFQ-style ORB/VWAP continuation can arm after 09:35 ET.
+
+
+9. WHETHER A 09:46-STYLE INFQ MOVE IS NOW CAUGHT
+
+Opening-burst answer:
+
+The opening-burst strategy still does not catch the 09:46-style move, by design, because its window is closed.
+
+The explicit opening-burst blocker is:
+
+- failed_predicates=["inside_opening_burst_window"]
+- reason="outside_opening_burst_window"
+
+Continuation answer:
+
+The post-patch continuation path is the intended catcher.
+
+Local no-order fixture:
+
+- Test: tests/test_live_monitor.py::test_no_order_continuation_monitor_arms_infq_orb_break_after_0935
+- Input time: 2026-05-22T13:46:00+00:00 / 09:46 ET
+- Result status: arm
+- Proposal ticker: INFQ
+- Proposal mode: ORB_BREAK_LONG
+- Proposal trigger: ORB_BREAK
+- Lifecycle: SECOND_LEG_CONTINUATION_ACTIVE
+- live_order_submission_enabled: false
+- No submission field on the proposal.
+
+Live-market proof boundary now satisfied:
+
+- Run: reports/live_monitor/runs/opening_stream_2026-05-26_145507/
+- The real stream and handoff stayed alive through 11:00 ET in no-order mode.
+- Continuation, ORB/VWAP, and second-leg monitors started.
+- orders_submitted=false.
+- proposals.jsonl had 0 lines.
+- order_results.jsonl had 0 lines.
+
+Caveat:
+The live-market proof used AAPL/AMD/TSLA because today's generated packet did not surface an INFQ-style hard-catalyst runner.
+
+
+10. COMPLETION AUDIT AGAINST THE USER'S REQUESTED ITEMS
+
+A. Research leader vs executable primary separation
+
+Status: implemented.
+
+Evidence:
+
+- research_leader exists.
+- executable_primary exists.
+- anti_chase_state exists.
+- opportunity_lifecycle_state exists.
+- entry_viability_score exists.
+- Validated extended runners can remain research leaders without becoming automatic executable primaries.
+- Immediate execution requires deterministic execution readiness and entry viability.
+
+B. INFQ-style hard-catalyst ranking against mega-cap defaults
+
+Status: implemented locally.
+
+Evidence:
+
+- Research ranking was patched so fresh hard-catalyst / policy-theme asymmetric setups can beat routine mega-cap filing/default names.
+- Same-style non-mega-cap backups are preferred behind a policy-theme leader.
+- Mega-cap defaults are demoted when they are indirect sympathy names or lack direct benefit.
+
+C. Anti-chase handling
+
+Status: implemented.
+
+Evidence:
+
+- Validated liquid extreme-gap runners stay in SECOND_LEG_WATCH.
+- Unvalidated extreme-gap runners remain NO_TRADE_EXTENDED.
+- SECOND_LEG_WATCH does not automatically execute.
+- A validated runner can wait for second-leg confirmation instead of getting chased.
+
+D. stream_skipped handling
+
+Status: implemented.
+
+Evidence:
+
+- The audit distinguishes skipped/failed stream capture from successful proof.
+- The 2026-05-26 proof package required stream_captured=true, raw_quote_count > 0, raw_trade_count > 0, decisions_count > 0, and orders_submitted=false.
+- The first 2026-05-26 attempt failed the data proof path because there were no stream symbols/watchlist; it was not treated as success.
+
+E. Scheduled no-order shadow streaming
+
+Status: implemented and proven.
+
+Proof run:
+
+- reports/live_monitor/runs/opening_stream_2026-05-26_145507/
+
+Required proof:
+
+- raw_quote_count > 0: yes, 60,199
+- raw_trade_count > 0: yes, 123,198
+- decisions_count > 0: yes, 183,397
+- orders_submitted=false: yes
+- no stream_skipped success: yes, stream_captured=true
+
+F. Continuation monitor through 11:00 ET
+
+Status: proven in no-order live-market mode.
+
+Evidence:
+
+- First quote: 2026-05-26 14:55:08.246878+00:00 / 10:55:08 ET
+- Last quote: 2026-05-26 15:10:04.521826+00:00 / 11:10:04 ET
+- Crossed 11:00 ET.
+- continuation_monitor_started=true.
+- orb_vwap_monitor_started=true.
+- second_leg_monitor_started=true.
+- handoff_completed=true.
+
+G. Zero-proposal final summary
+
+Status: implemented.
+
+Evidence from opening_stream_2026-05-26_145507:
+
+- zero_proposal_reason:
+  AAPL: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required;
+  AMD: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required;
+  TSLA: WAIT_FOR_SECOND_LEG because opening_burst_window_closed, continuation_handoff_required
+
+Per-symbol summaries include:
+
+- action_counts
+- best_action
+- best_decision
+- first_decision
+- last_decision
+- lifecycle_state
+- proposal_count
+- top_failed_predicates
+- windows_monitored
+
+H. Current live guard / broker state
+
+Status in this package: not re-inspected.
+
+Reason:
+The 2026-05-26 resume/audit-package instruction was to assemble the audit package and send it. The current ledger explicitly says not to inspect/place/replace/cancel live broker orders/account/position state, arm guards, or submit orders unless Charles gives fresh explicit authorization and deterministic guards require it.
+
+This package therefore reports the no-order stream and local artifact truth, not a new broker/account snapshot.
+
+I. Final truth table
+
+Implementation code patch complete: yes.
+Forensic report complete: yes.
+Local test suite complete: yes.
+Full local tests passed: yes, 144/144.
+INFQ first-burst no-trade predicate explained: yes.
+09:46-style continuation path implemented: yes.
+09:46-style continuation path proven locally: yes.
+Real no-order stream capture proven: yes.
+Real no-order stream crossed 11:00 ET: yes.
+Continuation/ORB/VWAP/second-leg monitors started in live-market no-order proof: yes.
+Orders submitted in proof: no.
+Broker/account/position inspected in resume/package pass: no.
+Guard files changed in resume/package pass: no.
+Remaining code blocker: no.
+Remaining live proof caveat: yes, today's live proof symbols were AAPL/AMD/TSLA rather than an INFQ-style hard-catalyst runner.
+
+
+11. FULL TEST COMMAND RESULTS
+
+Focused local suite from the 2026-05-22 forensic implementation report:
+
+Command:
+PYTHONPATH=. .venv/bin/pytest tests/test_live_monitor.py tests/test_opening_bell_readiness.py tests/test_opening_stream_supervisor.py tests/test_order_router.py tests/test_premarket_pipeline.py tests/test_research_pipeline.py tests/test_candidate_packets.py tests/test_research_ranking.py tests/test_market_overlay.py
+
+Result:
+
+- 56 passed
+- 1 warning: existing websockets.legacy deprecation warning
+
+Full local suite from the 2026-05-22 forensic implementation report:
+
+Command:
+PYTHONPATH=. .venv/bin/pytest tests
+
+Result:
+
+- 144 passed
+- 1 warning: existing websockets.legacy deprecation warning
+
+
+12. 2026-05-26 LIVE-MARKET NO-ORDER PROOF DETAILS
+
+Proof run:
+
+- reports/live_monitor/runs/opening_stream_2026-05-26_145507/
+
+Supervisor start:
+
+- mode: shadow_no_order_submission
+- max_seconds: 900
+- orders_allowed: false
+- orders_submitted: false
+- stream_capture_started: true
+- symbols: AAPL, AMD, TSLA
+
+Final summary:
+
+- ok: true
+- mode: shadow_no_order_submission
+- orders_allowed: false
+- orders_submitted: false
+- stream_captured: true
+- raw_quote_count: 60,199
+- raw_trade_count: 123,198
+- decision_count: 183,397
+- proposal_count: 0
+- blocked_proposal_count: 0
+- order_result_count: 0
+- fired_symbols: []
+- stopped_by_timer: true
+- last_error: null
+
+Artifact line counts:
+
+- raw_quotes.jsonl: 60,199
+- raw_trades.jsonl: 123,198
+- decisions.jsonl: 183,397
+- proposals.jsonl: 0
+- order_results.jsonl: 0
+
+First raw quote:
+
+- symbol: AAPL
+- feed: sip
+- bid: 311.12
+- ask: 311.14
+- timestamp: 2026-05-26 14:55:08.246878+00:00
+
+Last raw quote:
+
+- symbol: TSLA
+- feed: sip
+- bid: 432.99
+- ask: 433.09
+- timestamp: 2026-05-26 15:10:04.521826+00:00
+
+Per-symbol no-proposal state:
+
+- AAPL: WAIT_FOR_SECOND_LEG; failed predicates opening_burst_window_closed and continuation_handoff_required; lifecycle_state SECOND_LEG_WATCH; proposal_count 0.
+- AMD: WAIT_FOR_SECOND_LEG; failed predicates opening_burst_window_closed and continuation_handoff_required; lifecycle_state SECOND_LEG_WATCH; proposal_count 0.
+- TSLA: WAIT_FOR_SECOND_LEG; failed predicates opening_burst_window_closed and continuation_handoff_required; lifecycle_state SECOND_LEG_WATCH; proposal_count 0.
+
+
+13. CURRENT BLOCKERS AND RISKS
+
+No implementation/report/no-order stream-proof blocker remains.
+
+Remaining risk/caveat:
+
+- The final live-market no-order proof did not use an INFQ-style hard-catalyst runner because today's generated packet did not include one.
+- A future live-market proof on a true INFQ-style candidate would be cleaner evidence for the exact archetype, but it is not a code-completion blocker.
+
+Operational risk now mitigated:
+
+- Duplicate live data streams can hit Alpaca "connection limit exceeded."
+- Implemented after this audit package was first generated: `scripts/run_no_order_continuation_validation.sh` now checks for an existing `src.workflows.opening_stream_supervisor --live` process before starting a second no-order stream.
+- If a stream is already running, the wrapper exits before opening another Alpaca websocket and emits JSON with `status=blocked`, `reason=opening_stream_already_running`, `orders_allowed=false`, and `orders_submitted=false`.
+- Regression coverage: `tests/test_opening_bell_readiness.py::test_no_order_continuation_validation_wrapper_forces_brokerless_shadow_mode`.
+
+
+14. ANTI-CHASE RUNBOOK SAFETY
+
+The anti-chase runbook is safe to apply for no-order research/reporting and local shadow validation:
+
+- Validated liquid extreme-gap runners stay in SECOND_LEG_WATCH.
+- Unvalidated extreme-gap runners remain NO_TRADE_EXTENDED.
+- A SECOND_LEG_WATCH research leader is not promoted to executable_primary until live continuation predicates confirm.
+- Brokerless no-order validation can run without constructing broker position or order-router objects.
+
+It is not by itself live-trading authorization.
+Live order submission still requires explicit live order authorization plus deterministic broker/data/risk guards green.
+
+
+15. FINAL ANSWER
+
+The directive is implemented.
+The local forensic report is complete.
+The local tests passed.
+The 09:46-style continuation path is implemented and locally proven.
+The final no-order live-market stream proof through 11:00 ET is now complete.
+No orders were submitted in the proof.
+No live broker/account/position state was inspected or mutated in this resume/package pass.
+
+The only remaining caveat is evidentiary, not an implementation blocker:
+today's live proof ran on AAPL/AMD/TSLA because today's morning packet did not surface an INFQ-style hard-catalyst runner.
