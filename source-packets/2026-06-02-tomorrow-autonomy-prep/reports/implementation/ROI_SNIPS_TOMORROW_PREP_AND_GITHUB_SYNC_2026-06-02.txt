@@ -1,0 +1,113 @@
+ROI SNIPS TOMORROW PREP + GITHUB SYNC - 2026-06-02
+============================================================
+
+Status: PARTIAL
+Night-before readiness state: PENDING_MORNING_DEEP_MINI
+Target trade date: 2026-06-03
+Generated: 2026-06-03T05:15:41.011122+00:00 UTC
+
+Runtime Workspace Source Of Truth
+---------------------------------
+Runtime path: /Users/rogerclaw/.openclaw/workspace/roi-snips
+Runtime scheduler surface: local shell crontab under /usr/sbin/cron.
+Runtime source-control note: the runtime path is the cron execution mirror, not a clean standalone git checkout. The private repo checkout at /Users/rogerclaw/.openclaw/github/roi-snips is the GitHub source branch used for review/export.
+GitHub branch used for runtime sync: codex/hybrid-main-repo-sync
+Code commit before this report commit: 0984fce607ce1a88aa8516e0242387ca3f73b520
+PR #2 head before this report commit: 0984fce607ce1a88aa8516e0242387ca3f73b520
+Origin main: 7c18c3c09fa38017cfc1c19e0cf1eac5c379eb08
+Matches PR #2 head before report commit: True
+Matches origin/main: False
+Safe for tomorrow cron commands: True
+
+GitHub / PR Status
+------------------
+Main repo: rogerclaw/roi-snips
+PR #2: https://github.com/rogerclaw/roi-snips/pull/2
+PR state: OPEN
+PR mergeable: MERGEABLE
+PR remains open intentionally so ChatGPT can inspect and review the branch. Runtime cron is using this PR branch code, not stale origin/main.
+Status checks on observed PR head: 0; local tests below are the proof for this prep pass.
+
+Final Fixes Confirmed In Branch
+-------------------------------
+- Optional Grok failure nonfatal: True
+- Current hybrid Grok prompt names: True
+- Premarket wrapper trace/start/final artifacts: True
+- Final gate blocker for premarket_research_never_reached_deep_mini: True
+- OrderRouter blocks before preview/place: True
+- Ticket-only config flags restored: True
+- Premarket wrapper live submission env false: True
+- Deep-mini primary live selector: True
+- Grok research-only heat/challenger layer: True
+- Authorizer allow/block list: True
+- NVDA replay still blocks unauthorized NVDA: True
+
+Scheduler Verification
+----------------------
+Local shell crontab proven: True
+OpenClaw cron shell-proof: false
+OpenClaw cron role: notification_or_artifact_inspection_only
+OpenClaw cron jobs observed: 4; Roi Snips shell execution jobs observed there: 0
+Cron daemon: /usr/sbin/cron running
+Required 06:00 PT premarket/deep-mini attempt present: True
+
+Sanitized Roi Snips crontab lines:
+# ROI_SNIPS_LIVE_TRADE_READY_BEGIN
+45 4 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && SMOKE_SKIP_DEEP_MINI_NOT_FOR_LIVE_SELECTION=true scripts/roi_snips_morning_canary.sh >> reports/live_monitor/live_trade_ready/canary_cron.log 2>&1
+0 5 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=false ROI_SNIPS_ALLOW_PAPER_ORDER_SUBMISSION=false .venv/bin/python -m src.workflows.research_pipeline --discovery-only >> reports/live_monitor/live_trade_ready/source_discovery_cron.log 2>&1
+10 5 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=1800 ROI_SNIPS_DEEP_MINI_POLL_SECONDS=15 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1
+45 5 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=1500 ROI_SNIPS_DEEP_MINI_POLL_SECONDS=15 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1
+0 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=1200 ROI_SNIPS_DEEP_MINI_POLL_SECONDS=15 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1
+10 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_SKIP_DEEP_MINI=false ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false ROI_SNIPS_DEEP_MINI_TIMEOUT_SECONDS=900 ROI_SNIPS_DEEP_MINI_POLL_SECONDS=15 scripts/run_live_trade_ready_premarket.sh >> reports/live_monitor/live_trade_ready/premarket_cron.log 2>&1
+20 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false scripts/run_final_live_arming_gate.sh >> reports/live_monitor/live_trade_ready/final_arming_cron.log 2>&1
+25 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false scripts/run_final_live_arming_gate.sh >> reports/live_monitor/live_trade_ready/final_arming_retry_cron.log 2>&1
+28 6 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=true ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=false scripts/run_live_opening_trade_ready.sh >> reports/live_monitor/live_trade_ready/opening_cron.log 2>&1
+45 12 * * 1-5 cd /Users/rogerclaw/.openclaw/workspace/roi-snips && scripts/run_live_force_flat.sh >> reports/live_monitor/live_trade_ready/force_flat_cron.log 2>&1
+# ROI_SNIPS_LIVE_TRADE_READY_END
+
+OpenClaw cron summary, not shell proof:
+- Daily mileage ledger update | agent=None | status=ok | schedule={'kind': 'cron', 'expr': '30 23 * * *', 'tz': 'America/Los_Angeles'}
+- Memory Dreaming Promotion | agent=None | status=ok | schedule={'kind': 'cron', 'expr': '0 3 * * *', 'tz': 'America/Los_Angeles'}
+- STR Daily Field Brief v3 email - 7am PT | agent=main | status=error | schedule={'kind': 'cron', 'expr': '0 7 * * *', 'tz': 'America/Los_Angeles'}
+- Janice Amazon email routing review - 6pm PT | agent=janice | status=ok | schedule={'kind': 'cron', 'expr': '0 18 * * *', 'tz': 'America/Los_Angeles'}
+
+Validation
+----------
+Focused tests: 47 passed in 2.17s
+Full tests: 367 passed, 1 warning in 3.54s
+Shell syntax: bash -n scripts/*.sh passed with rc=0
+Broker-safe systems check: passed after adding the 06:00 cron needle and checking runtime guard files.
+Safe smoke: optional Grok canary failed by stub, wrapper continued to governed deep-mini stub and returned DEGRADED_OK_FOR_DEEP_MINI; orders_previewed=false; orders_submitted=false.
+Final arming dry-run: NO_GO with armed_live=False, orders_previewed_now=False, orders_submitted_now=False, ticket_status=MISSING, blockers=['bid_ask_missing_for_execution', 'broker_state_inspection_skipped', 'last_price_missing_for_execution', 'market_data_unhealthy', 'prior_close_missing_for_execution', 'no_valid_trade_authorization_ticket'].
+
+Guard State, Read Only
+----------------------
+DISABLE_NEW_ENTRIES present: True (final_live_arming_gate_blocked:2026-06-02)
+LIVE_ARMED present: False
+KILL_SWITCH present: False
+No live arming, order preview, order placement, cancellation, replacement, or guard-file mutation was performed during this prep pass.
+
+Broker/Data Readiness, Sanitized
+--------------------------------
+Read-only live readiness is not green tonight: broker=webull, broker_runtime={'base_url': 'https://api.webull.com', 'configured': False, 'environment': 'live', 'provider': 'webull'}, blockers=['live_armed_missing', 'disable_entries_active', 'market_data_unhealthy', 'missing_webull_trade_credentials', 'bid_ask_missing_for_execution', 'prior_close_missing_for_execution', 'last_price_missing_for_execution'].
+This is expected to remain fail-closed unless morning same-day ticket/readiness and broker credential checks pass.
+
+Blockers Before Tomorrow
+------------------------
+- missing_webull_trade_credentials
+- valid_same_day_openai_governed_deep_mini_trade_authorization_ticket_missing_until_morning
+
+Tomorrow Morning GO Conditions
+------------------------------
+- governed deep-mini/deep research completes
+- valid same-day OpenAI-authored trade_authorization_ticket.json exists
+- final_live_arming_gate returns GO with readiness GREEN
+- candidate-specific market data fresh
+- broker/order/position state clean
+- opening monitor watches only ticket-authorized ticker
+
+Generated Files
+---------------
+Report: reports/implementation/ROI_SNIPS_TOMORROW_PREP_AND_GITHUB_SYNC_2026-06-02.txt
+JSON: reports/implementation/ROI_SNIPS_TOMORROW_PREP_AND_GITHUB_SYNC_2026-06-02.json
+Readiness JSON: reports/readiness/tomorrow_autonomy_preflight_2026-06-02.json

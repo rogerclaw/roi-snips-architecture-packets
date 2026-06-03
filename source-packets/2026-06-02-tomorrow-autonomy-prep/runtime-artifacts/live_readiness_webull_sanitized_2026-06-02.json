@@ -1,0 +1,61 @@
+{
+  "broker_health": {
+    "ok": false,
+    "reason": "missing_webull_trade_credentials"
+  },
+  "broker_provider": "webull",
+  "broker_runtime": {
+    "base_url": "https://api.webull.com",
+    "configured": false,
+    "environment": "live",
+    "provider": "webull"
+  },
+  "execution_blockers": [
+    "live_armed_missing",
+    "disable_entries_active",
+    "market_data_unhealthy",
+    "missing_webull_trade_credentials",
+    "bid_ask_missing_for_execution",
+    "prior_close_missing_for_execution",
+    "last_price_missing_for_execution"
+  ],
+  "full_execution_ready": false,
+  "market_data_health": {
+    "bars": {
+      "feed": "sip",
+      "ok": false,
+      "reason": "alpaca_bars_unavailable:alpaca_credentials_missing"
+    },
+    "feed": "sip",
+    "ok": false,
+    "quote": {
+      "feed": "sip",
+      "ok": false,
+      "reason": "alpaca_quote_unavailable:alpaca_credentials_missing"
+    },
+    "requested_feed": "sip"
+  },
+  "market_data_provider": "alpaca",
+  "market_data_runtime": {
+    "allow_iex_fallback": true,
+    "configured": false,
+    "data_base_url": "https://data.alpaca.markets",
+    "feed": "sip",
+    "provider": "alpaca_market_data"
+  },
+  "ok": false,
+  "position_state": {
+    "ok": false,
+    "positions": [],
+    "positive_position_count": 0
+  },
+  "probe_symbol": "SPY",
+  "runtime_guards": {
+    "disable_entries": true,
+    "force_flat": false,
+    "in_entry_window": false,
+    "kill_switch": false,
+    "live_armed": false
+  },
+  "session_phase": "PRE_ENTRY"
+}

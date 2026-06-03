@@ -1,0 +1,133 @@
+{
+  "action": "dry_run",
+  "armed_live": false,
+  "authorized_strategy": null,
+  "authorized_ticker": null,
+  "blockers": [
+    "bid_ask_missing_for_execution",
+    "broker_state_inspection_skipped",
+    "last_price_missing_for_execution",
+    "market_data_unhealthy",
+    "prior_close_missing_for_execution",
+    "no_valid_trade_authorization_ticket"
+  ],
+  "candidate_specific_readiness": {
+    "ok": false,
+    "reason": "skipped_until_generic_readiness_green"
+  },
+  "execute": false,
+  "generated_at_utc": "2026-06-03T05:12:34.388974+00:00",
+  "guards_after": {
+    "disable_entries": true,
+    "force_flat": false,
+    "in_entry_window": false,
+    "kill_switch": false,
+    "live_armed": false
+  },
+  "ignored_arm_guard_blockers": [
+    "disable_entries_active",
+    "live_armed_missing"
+  ],
+  "live_order_env_enabled": true,
+  "orders_previewed_now": false,
+  "orders_submitted_now": false,
+  "paper_order_env_enabled": false,
+  "pre_open_standby_override": false,
+  "primary_candidate": null,
+  "readiness": {
+    "candidate_specific_readiness": {
+      "ok": false,
+      "reason": "skipped_until_generic_readiness_green"
+    },
+    "ignored_arm_guard_blockers": [
+      "disable_entries_active",
+      "live_armed_missing"
+    ],
+    "message": "hard block / no live order",
+    "opening_bell_blockers": [
+      "bid_ask_missing_for_execution",
+      "broker_state_inspection_skipped",
+      "last_price_missing_for_execution",
+      "market_data_unhealthy",
+      "prior_close_missing_for_execution"
+    ],
+    "opening_bell_enabled": true,
+    "primary_candidate": null,
+    "readiness": {
+      "broker_health": {
+        "ok": true,
+        "reason": "broker_state_inspection_skipped",
+        "skipped": true
+      },
+      "broker_provider": "webull",
+      "broker_runtime": {
+        "base_url": "https://api.webull.com",
+        "configured": false,
+        "environment": "live",
+        "provider": "webull"
+      },
+      "execution_blockers": [
+        "live_armed_missing",
+        "disable_entries_active",
+        "market_data_unhealthy",
+        "bid_ask_missing_for_execution",
+        "prior_close_missing_for_execution",
+        "last_price_missing_for_execution",
+        "broker_state_inspection_skipped"
+      ],
+      "full_execution_ready": false,
+      "market_data_health": {
+        "bars": {
+          "feed": "sip",
+          "ok": false,
+          "reason": "alpaca_bars_unavailable:alpaca_credentials_missing"
+        },
+        "feed": "sip",
+        "ok": false,
+        "quote": {
+          "feed": "sip",
+          "ok": false,
+          "reason": "alpaca_quote_unavailable:alpaca_credentials_missing"
+        },
+        "requested_feed": "sip"
+      },
+      "market_data_provider": "alpaca",
+      "market_data_runtime": {
+        "allow_iex_fallback": true,
+        "configured": false,
+        "data_base_url": "https://data.alpaca.markets",
+        "feed": "sip",
+        "provider": "alpaca_market_data"
+      },
+      "ok": false,
+      "position_state": {
+        "ok": true,
+        "positions": [],
+        "positive_position_count": 0
+      },
+      "probe_symbol": "SPY",
+      "runtime_guards": {
+        "disable_entries": true,
+        "force_flat": false,
+        "in_entry_window": false,
+        "kill_switch": false,
+        "live_armed": false
+      },
+      "session_phase": "PRE_ENTRY"
+    },
+    "status": "RED",
+    "ticket_blockers": [
+      "no_valid_trade_authorization_ticket"
+    ],
+    "ticket_status": "MISSING",
+    "ticket_valid": false
+  },
+  "readiness_status": "RED",
+  "ticket_blockers": [
+    "no_valid_trade_authorization_ticket"
+  ],
+  "ticket_status": "MISSING",
+  "ticket_valid": false,
+  "trade_date": "2026-06-03",
+  "verdict": "NO_GO"
+}

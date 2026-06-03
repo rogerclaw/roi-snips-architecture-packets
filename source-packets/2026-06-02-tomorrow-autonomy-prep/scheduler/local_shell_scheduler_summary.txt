@@ -1,0 +1,4 @@
+Executable surface: local shell crontab.
+Cron daemon: /usr/sbin/cron running.
+Runtime path: /Users/rogerclaw/.openclaw/workspace/roi-snips.
+OpenClaw cron is metadata/notification/artifact inspection only for this pass, not shell execution proof.

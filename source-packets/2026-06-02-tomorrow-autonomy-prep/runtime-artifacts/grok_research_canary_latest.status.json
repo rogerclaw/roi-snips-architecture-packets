@@ -1,0 +1,1 @@
+{"status":"PASS","step":"grok_research_readiness","exit_code":0,"trade_date":"2099-06-01","generated_at_utc":"2026-06-03T04:41:21Z","deep_mini_required":true,"deep_mini_reached":false,"note":"grok_canary_passed"}

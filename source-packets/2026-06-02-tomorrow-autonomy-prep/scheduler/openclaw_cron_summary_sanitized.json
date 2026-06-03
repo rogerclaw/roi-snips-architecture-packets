@@ -1,0 +1,52 @@
+{
+  "job_count": 4,
+  "jobs": [
+    {
+      "agentId": null,
+      "enabled": true,
+      "name": "Daily mileage ledger update",
+      "schedule": {
+        "expr": "30 23 * * *",
+        "kind": "cron",
+        "tz": "America/Los_Angeles"
+      },
+      "status": "ok"
+    },
+    {
+      "agentId": null,
+      "enabled": true,
+      "name": "Memory Dreaming Promotion",
+      "schedule": {
+        "expr": "0 3 * * *",
+        "kind": "cron",
+        "tz": "America/Los_Angeles"
+      },
+      "status": "ok"
+    },
+    {
+      "agentId": "main",
+      "enabled": true,
+      "name": "STR Daily Field Brief v3 email - 7am PT",
+      "schedule": {
+        "expr": "0 7 * * *",
+        "kind": "cron",
+        "tz": "America/Los_Angeles"
+      },
+      "status": "error"
+    },
+    {
+      "agentId": "janice",
+      "enabled": true,
+      "name": "Janice Amazon email routing review - 6pm PT",
+      "schedule": {
+        "expr": "0 18 * * *",
+        "kind": "cron",
+        "tz": "America/Los_Angeles"
+      },
+      "status": "ok"
+    }
+  ],
+  "openclaw_cron_shell_proven": false,
+  "role": "notification_or_artifact_inspection_only_not_shell_proof",
+  "shell_execution_surface": "local user crontab at /usr/sbin/cron"
+}

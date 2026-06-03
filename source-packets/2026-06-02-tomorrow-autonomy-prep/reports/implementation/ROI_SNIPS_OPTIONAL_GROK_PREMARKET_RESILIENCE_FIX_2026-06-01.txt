@@ -1,0 +1,39 @@
+ROI SNIPS OPTIONAL GROK PREMARKET RESILIENCE FIX - 2026-06-01
+======================================================================
+
+Status: PASS
+
+Summary
+-------
+Implemented the targeted resilience fix from Charles's runbook. Optional Grok readiness failures no longer abort the required governed deep-mini/deep research path. Required Grok failures still fail when Grok is explicitly required, and required deep-mini failures remain fatal for live readiness.
+
+Answers
+-------
+1. Did Grok failure abort deep-mini before this patch? Yes. The incident report showed the shell wrapper exited under set -e after check_grok_research_readiness.sh returned 1.
+2. Does optional Grok failure still abort deep-mini after this patch? No. Focused wrapper tests and shell smoke show WARN_CONTINUE / DEGRADED_OK_FOR_DEEP_MINI with deep_mini_reached=true.
+3. What happens if Grok is required and fails? The wrapper fails before deep-mini with grok_required_but_unavailable / FAIL_REQUIRED_GROK_UNAVAILABLE.
+4. What happens if deep-mini is required and fails? The wrapper fails with deep_mini_required_pipeline_failed.
+5. Were stale Grok-primary prompt expectations removed? Yes. The readiness canary now requires current hybrid prompt names and marks old Grok authorizer prompts as not required.
+6. Does final gate block when research_latest.status.json is absent/stale? Yes. It adds premarket_research_never_reached_deep_mini.
+7. Is OpenClaw cron still treated as shell execution proof? No. Added policy and tests requiring explicit OK plus updated artifacts.
+8. Does premarket wrapper write start/trace/final artifacts? Yes. It writes premarket_wrapper_start_<date>.json, premarket_start_latest.status.json, premarket_wrapper_trace_<date>.jsonl, per-step status files, and premarket_wrapper_final_<date>.json.
+9. Did any order preview/place/cancel/replace occur? No.
+10. Did live arming occur? No.
+
+Verification
+------------
+Private focused tests: PASS - 25 passed in 1.84s
+Private full tests: PASS - 349 passed, 1 warning in 2.41s
+Runtime focused tests: PASS - 25 passed in 6.78s
+Runtime full tests: PASS - 359 passed, 1 warning in 11.57s
+Shell syntax: PASS - bash -n scripts/*.sh
+Controlled shell smoke: PASS - DEGRADED_OK_FOR_DEEP_MINI, deep_mini_reached=true, no order env enabled
+Final gate dry-run: NO_GO - armed_live=false, orders_previewed_now=false, orders_submitted_now=false
+
+Safety attestation
+------------------
+Orders previewed: false
+Orders placed: false
+Orders canceled: false
+Orders replaced: false
+Live arming performed: false
