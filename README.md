@@ -1,61 +1,44 @@
 # Roi Snips Architecture Packets
 
-Sanitized architecture and validation packet for ChatGPT review.
+Sanitized Roi Snips architecture, implementation, and validation packets for ChatGPT/GitHub review.
 
-Generated: 2026-05-27 08:26 PT
+This repository is the review-friendly packet surface. The fuller sanitized code/config/test repository is private at `rogerclaw/roi-snips`.
 
-## Contents
+## ChatGPT Pro Start Point
 
-- `reports/implementation/ROI_SNIPS_SHELL_CAPABLE_SHADOW_VALIDATION_HARDENING_2026-05-27.txt`
-  - Follow-up implementation report for the shell-capable crontab/canary hardening.
-- `reports/implementation/ROI_SNIPS_MORNING_FAILURE_AUDIT_REPORT_2026-05-27.txt`
-  - Full incident audit for the failed 2026-05-27 morning validation handoff.
-- `reports/implementation/ROI_SNIPS_OPTIMIZED_RESEARCH_IMPLEMENTATION_REPORT_2026-05-26.txt`
-  - Implementation report for the optimized research runbook pass.
-- `ops/progress/ACTIVE.md`
-  - Sanitized current implementation ledger, including the remaining scheduled-proof caveat.
-- `source-packets/Roi_Snips_Optimized_Research_Implementation_Runbook_OpenClaw.txt`
-  - Source runbook that drove the implementation.
-- `scripts/run_next_open_shadow_validation.py`
-  - Sanitized copy of the no-order shadow validation wrapper patched during the incident response.
-- `scripts/run_shell_capable_shadow_validation.sh`
-  - Shell-capable canary + validation wrapper now scheduled from local crontab.
-- `tests/test_no_order_validation.py`
-  - Regression coverage for no-order / brokerless validation behavior.
-- `tests/test_post_audit_fix_directive.py`
-  - Post-audit regression coverage for source lanes, stream-required validation, and replay proof.
-- `ops/crontab/ROI_SNIPS_SHELL_SHADOW_VALIDATION.cron`
-  - Sanitized crontab block for the shell-capable 06:35 PT weekday proof.
-- `reports/live_monitor/next_open_shadow_validation_2026-05-27.json`
-  - Latest clean post-patch validation summary.
-- `reports/live_monitor/runs/opening_stream_2026-05-27_151215/final_summary.json`
-  - Fresh no-order stream proof.
-- `reports/live_monitor/runs/opening_stream_2026-05-27_163743/final_summary.json`
-  - Fresh shell-capable-wrapper no-order stream proof.
-- `reports/live_monitor/shell_capable_shadow/canary_20260527T163626Z.json`
-  - Shell-capable wrapper canary artifact.
-- `reports/live_monitor/shell_capable_shadow/validation_20260527T163626Z.log`
-  - Shell-capable wrapper validation log.
-- `reports/morning/json/2026-05-27.json`
-  - Same-day research packet used for validation.
-- `reports/morning/md/2026-05-27.md`
-  - Markdown rendering of the same-day research packet.
-- `reports/morning/json/2026-05-26_runbook_proof.json`
-  - Local runbook-proof morning packet generated during the implementation pass.
-- `reports/morning/md/2026-05-26_runbook_proof.md`
-  - Markdown rendering of the local runbook-proof morning packet.
-- `runs/2026-05-26-runbook-proof/meta/run_manifest.json`
-  - Runbook-proof artifact manifest.
-- `runs/2026-05-26-runbook-proof/normalized/source_lane_status.json`
-  - Source-lane status proof artifact.
-- `runs/2026-05-26-runbook-proof/normalized/daily_best_pick_packet.json`
-  - Final best-pick packet proof artifact.
-- `reports/live_monitor/runs/runbook_stream_replay_2026-05-26/final_summary.json`
-  - Captured-tape stream replay proof summary.
-- `reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/final_summary.json`
-  - Continuation replay proof summary.
-- `reports/live_monitor/runs/runbook_continuation_replay_2026-05-26/continuation_replay_summary.json`
-  - Continuation replay detail summary.
+Begin with:
+
+- `CHATGPT_PRO_ROI_SNIPS_START_HERE.md`
+- `source-packets/2026-05-31-hybrid-deep-mini-primary-restore/ROI_SNIPS_HYBRID_DEEP_MINI_PRIMARY_RESTORE_ACTION_PLAN_2026-05-31.md`
+- `source-packets/2026-05-31-hybrid-deep-mini-primary-restore/reports/implementation/ROI_SNIPS_HYBRID_GROK_HEAT_DEEP_MINI_PRIMARY_RESTORE_2026-05-31.txt`
+- `packets/chatgpt-review-20260529T193459Z/MANIFEST.md`
+
+If ChatGPT Pro has access to the private repo, also read `rogerclaw/roi-snips` branch `codex/hybrid-main-repo-sync`, especially `docs/CHATGPT_PRO_GITHUB_PLUGIN_START_HERE.md`.
+
+## Current Architecture Snapshot
+
+The current intended architecture is the May 31 hybrid restore:
+
+- Grok/X supplies social heat, velocity, thread context, quick web verification, and challenger notes.
+- Governed OpenAI deep-mini/deep research is the primary live stock picker.
+- Only governed OpenAI deep-mini/deep output may create a live-valid Trade Authorization Ticket.
+- Deterministic code may trade only the ticket-authorized ticker.
+- Final live arming must pass same-day ticket, freshness, market-data, risk, broker-state, and live guard checks.
+- Grok-only candidates, deterministic fallbacks, A/B/C watchlist rows, stale prior winners, and backups are research-only unless a valid ticket explicitly authorizes them.
+
+Older packets remain useful as incident history and regression evidence, but the May 31 hybrid restore packet is the current architecture source when documents conflict.
+
+## Latest Packets
+
+- `source-packets/2026-05-31-hybrid-deep-mini-primary-restore/`
+  - Current hybrid Grok heat plus deep-mini primary restore.
+  - Includes action plan, implementation report, config snapshots, script snapshots, and focused regression test snapshots.
+- `packets/chatgpt-review-20260529T193459Z/`
+  - ChatGPT review packet for ticket-gated architecture work.
+- `packets/roi-snips-nvda-live-failure-2026-05-29/`
+  - Sanitized failure packet for the NVDA live-path issue and ticket-boundary hardening.
+- Root May 26-27 reports and validation artifacts
+  - Historical morning-readiness and shell-capable validation work.
 
 ## Sanitization Boundary
 
@@ -63,33 +46,23 @@ This repo intentionally excludes:
 
 - OpenClaw workspace memory and user profile files.
 - `.env` files and credentials.
-- Broker/account/order/position raw payloads beyond the post-patch validation summary.
+- Broker account/order/position raw payloads.
 - STR, personal messages, calendar, email, and unrelated operational data.
 - Local logs and caches.
 - Raw JSONL tape dumps; only compact proof summaries are included.
 
-## Current Validation Snapshot
+Do not add live secrets, raw broker/account/order/position state, raw logs, raw transcripts, raw guest/homeowner PII, financial exports, or `.env` files to this repository.
 
-Latest shell-capable-wrapper no-order validation:
+## Validation Snapshot
 
-- `status=OK`
-- `orders_allowed=false`
-- `orders_submitted=false`
-- `broker_account_inspected=false`
-- `broker_orders_inspected=false`
-- `broker_positions_inspected=false`
-- streamed symbols: `INFQ`, `NVDA`, `TSLA`
-- `raw_quote_count=3992`
-- `raw_trade_count=5358`
-- `decision_count=9350`
-- `proposal_count=0`
+The May 31 hybrid restore packet records:
 
-Scheduled acceptance caveat:
+- focused hybrid suite: `33 passed, 1 warning`
+- full suite: `343 passed, 1 warning`
+- shell syntax: `bash -n scripts/*.sh` passed
+- final live arming dry-run for `2026-06-01`: `NO_GO`, no ticket, not armed
+- deliberate non-actions: no broker account/order/position inspection, no order preview/place/submit/replace/cancel, no manual arming
 
-- The shell-capable crontab block was installed after the 2026-05-27 06:35 PT slot.
-- The manual shell-capable proof passed.
-- The scheduled 06:35 PT weekday proof remains pending until the next eligible crontab run.
+## Review Notes
 
-## Notes For Review
-
-The audit report is the primary starting point. The key architectural lesson is that a scheduled job existing is not enough; future morning readiness needs a shell-capable canary and a produced validation artifact before being called ready.
+When reviewing with ChatGPT Pro, ask for file-path citations and a branch-sized patch plan. ChatGPT can analyze and draft. John/Codex should perform edits, validation, commits, pushes, and PR work.
