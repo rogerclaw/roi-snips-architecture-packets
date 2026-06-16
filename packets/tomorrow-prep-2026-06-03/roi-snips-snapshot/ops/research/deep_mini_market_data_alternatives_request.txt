@@ -1,0 +1,58 @@
+We are building Roi Snips, a strict, auditable intraday trading/research system for long-only U.S. equities and ETFs. Broker is Webull OpenAPI, but Webull OpenAPI market-data pricing appears too expensive for our needs (user saw OpenAPI non-display quote pricing around Nasdaq Basic $80/month and higher tiers above that).
+
+Need a deep-mini research pass to determine the best low-cost or free architecture for market data while keeping Webull as broker/account source if possible.
+
+Please use GPT-5.4 as the research architect and escalate to deep mini research.
+
+Research objective:
+Find the best practical low-cost alternative to Webull OpenAPI market data for Roi Snips v1, with emphasis on intraday U.S. stocks/ETFs, long-only, cash-account style operation, one-position max, and catalyst-driven morning trading.
+
+Hard requirements for data path:
+- U.S. equities and ETFs
+- Intraday quotes and 1-minute bars
+- Prefer premarket support (04:00-09:30 ET) and regular session support
+- Need enough data to compute: last price, prior close, bid/ask spread estimate if available, premarket volume, premarket dollar volume, recent 1-minute OHLCV, average dollar volume or a workable substitute, gap %, ORB/VWAP inputs
+- Suitable for an automated research/trading supervisor (check terms/licensing if possible)
+- Reasonable reliability for a small single-user/self-hosted system
+- Must not require margin/options/shorting features
+
+Nice-to-haves:
+- Real-time or near-real-time quotes
+- Easy Python integration
+- Documented REST APIs
+- Affordable starter tier for one user
+- Upgrade path if the system grows
+
+Compare at minimum, where applicable:
+- Polygon
+- Alpaca market data (even if not using Alpaca as broker)
+- Finnhub
+- Twelve Data
+- Alpha Vantage
+- Tiingo / IEX / other serious alternatives you find relevant
+- Any broker+data bundle that is materially better than Webull for this use case
+
+Deliverable:
+1. Ranked shortlist of best options for Roi Snips v1
+2. Exact recommendation for the cheapest sensible architecture
+3. Whether Webull should remain broker-only or be replaced entirely
+4. Pricing summary (monthly)
+5. Data coverage / latency caveats
+6. Premarket support status
+7. Licensing / non-display / commercial-use caveats if relevant
+8. Integration complexity estimate
+9. Concrete migration plan for our current codebase
+10. Clear final answer: what we should do next this week
+
+Budget sensitivity:
+- User thinks $80/month for Webull OpenAPI Nasdaq Basic non-display is too expensive
+- Favor the cheapest sufficient path, not the fanciest one
+- If there is a strong free + paid hybrid path, include it
+
+Current implementation context:
+- Webull account auth and account-state endpoints work
+- Webull market-data endpoints are blocked by subscription requirements
+- Current codebase already has Webull adapters in Python and can be refactored
+- Live order placement must remain disabled unless explicitly armed by human approval
+
+Please return an actionable recommendation, not just a vendor list.

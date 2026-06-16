@@ -1,0 +1,173 @@
+# Roi Snips INFQ-Style Rebuild Implementation - 2026-05-21
+
+## What changed
+
+Implemented the INFQ-style rebuild directive as local code, tests, config, and runbook evidence. The patch leaves live guard state unchanged and does not place orders.
+
+Research/discovery:
+- Added explicit INFQ-style archetype scoring for policy/government funding, CHIPS/Commerce/LOI language, quantum/sector-wave context, undercovered high-beta tickers, same-day events, premarket repricing, social attention, validation, and supply/exhaustion/mega-cap penalties.
+- Added quantum/CHIPS theme-basket discovery so INFQ-like undercovered names can surface before filtering.
+- Added SEC materiality classification so generic 8-K/routine filing presence does not become trade priority by itself.
+- Expanded government/newswire/IR language for CHIPS, Commerce, LOI, grants, funding, quantum, and same-day event catalysts.
+- Increased broad discovery cap to 75 raw candidates before filtering.
+- Added candidate packets to morning report output and candidate packet JSON.
+
+Ranking/gates:
+- Added `validation_status` in scorecards and downstream packets.
+- Added hard anti-blue-chip fallback audit: AMD/NVDA/AAPL/TSLA/META/MSFT/GOOGL/SPY/QQQ-style names are demoted unless catalyst/tape profile is exceptional.
+- Preserved social-only suppression. Social/X/Reddit can discover but cannot validate a trade alone.
+- Kept mechanical blockers separate from speculative penalties.
+
+Opening-bell execution:
+- Added Alpaca quote/trade stream adapter hooks using alpaca-py `StockDataStream`.
+- Added opening stream supervisor with run-specific raw quote/trade/features/decisions/proposals/final summary JSONL/JSON logs.
+- Fixed first-seconds tape freshness: `quote_age_ms=0.0` now counts as fresh.
+- Added `SOCIAL_TAPE_ROCKET`.
+- Changed `OPENING_BURST_HYPER_LONG` to emit `BUY_NOW`, `WAIT`, or `NO_TRADE` with exact predicates.
+- Replaced generic live-monitor `no_valid_mode_for_phase` with predicate diagnostics and action classification.
+- Added candidate-specific readiness for actual primary/backups.
+- Added opening exit-manager arming requirement before live opening order routes can submit.
+- Added `scripts/supervise_opening_bell_live_monitor.sh` for streaming supervisor launch after readiness preflight.
+
+## Files modified or created
+
+- `config/opening_bell.yaml`
+- `config/workflow.yaml`
+- `scripts/supervise_opening_bell_live_monitor.sh`
+- `src/adapters/alpaca_streams.py`
+- `src/execution/order_router.py`
+- `src/execution/proposal_builder.py`
+- `src/features/opening_tape.py`
+- `src/research/archetypes/__init__.py`
+- `src/research/archetypes/infq_style_runner.py`
+- `src/research/candidate_packets.py`
+- `src/research/cluster.py`
+- `src/research/gates.py`
+- `src/research/hyper_trade_score.py`
+- `src/research/models.py`
+- `src/research/ranking.py`
+- `src/research/scouts/government_scout.py`
+- `src/research/scouts/ir_scout.py`
+- `src/research/scouts/newswire_scout.py`
+- `src/research/scouts/theme_basket_scout.py`
+- `src/research/sec_materiality.py`
+- `src/research/universe.py`
+- `src/strategy/opening_burst_hyper_long.py`
+- `src/strategy/social_tape_rocket.py`
+- `src/workflows/deep_mini_bridge.py`
+- `src/workflows/live_monitor.py`
+- `src/workflows/opening_bell_monitor.py`
+- `src/workflows/opening_stream_supervisor.py`
+- `src/workflows/premarket_pipeline.py`
+- `src/workflows/research_pipeline.py`
+- `tests/fixtures/manual_winners/INFQ_2026_05_21_case.json`
+- `tests/test_candidate_packets.py`
+- `tests/test_fast_cancel.py`
+- `tests/test_keyword_scouts.py`
+- `tests/test_live_monitor.py`
+- `tests/test_opening_bell_readiness.py`
+- `tests/test_opening_burst_strategy.py`
+- `tests/test_opening_stream_supervisor.py`
+- `tests/test_order_router.py`
+- `tests/test_research_pipeline.py`
+- `tests/test_research_ranking.py`
+- `tests/test_social_tape_rocket.py`
+- `docs/ROI_SNIPS_RESEARCH_REPAIR_DEEP_MINI_2026-05-21.txt`
+- `docs/ROI_SNIPS_INFQ_STYLE_REBUILD_IMPLEMENTATION_2026-05-21.txt`
+- `ops/progress/ACTIVE.md`
+- `/Users/rogerclaw/.openclaw/workspace/memory/2026-05-21.md`
+
+## New strategy priority order
+
+1. `OPENING_BURST_HYPER_LONG`
+2. `SOCIAL_TAPE_ROCKET`
+3. `PREMARKET_SURGE_LONG`
+4. `STAGED_OPEN_EXPLOSION_LONG`
+5. `PREMARKET_HIGH_RECLAIM_LONG`
+6. `ORB_BREAK`
+7. `VWAP_RECLAIM`
+
+## New INFQ regression fixture
+
+Fixture path: `tests/fixtures/manual_winners/INFQ_2026_05_21_case.json`
+
+It defines:
+- ticker `INFQ`
+- catalyst type `government_contract`
+- CHIPS / Department of Commerce / LOI / government funding / quantum computing terms
+- sector basket: `QBTS`, `RGTI`, `QUBT`, `IONQ`, `IBM`, `GFS`, `INFQ`
+- undercovered/high-beta profile
+- premarket reference around `13.69`, prior close `11.18`, gap `22.45%`, volume `6000000`, dollar volume `82140000`
+- StockTwits/Reddit/X-Grok attention state
+- analyst/press validation requirement
+- risks: dilution/warrant supply, wide spread, opening reversal, catalyst already priced
+- expected ranking: INFQ outranks AMD/PLTR/SMCI/TSLA/NVDA/AAPL unless those have exceptional catalyst and tape
+
+## New opening-bell predicate list
+
+`OPENING_BURST_HYPER_LONG` evaluates:
+- `hyper_trade_score_ok`
+- `opening_drive_score_ok`
+- `volume_burst_ok`
+- `rug_pull_risk_ok`
+- `upper_wick_risk_ok`
+- `chase_risk_ok`
+- `open_break_reclaim_or_micro_vwap_hold`
+- hard blockers: `missing_bid_ask`, `stale_quote`, halt/no quote, spread exploded, stale data, drive failed, gap-and-crap, bid collapse
+- entry cap check: `ask_at_or_below_entry_cap`
+
+Live monitor mode diagnostics now also emit attempted mode predicates for:
+- `SUBMINUTE_OPENING_DRIVE_LONG`
+- `OPENING_DRIVE_LONG`
+- `ORB_OR_VWAP_FALLBACK`
+
+## How BUY_NOW proposals are generated
+
+1. Opening stream supervisor receives Alpaca quote/trade events.
+2. `OpeningTapeTracker` updates raw tape and computes 5s/10s/15s/30s/60s features.
+3. `evaluate_opening_burst_signal()` returns `BUY_NOW` only when hard blockers are absent and all opening-burst predicates pass.
+4. Supervisor builds a deterministic proposal with `OPENING_BURST_HYPER_LONG`, aggressive limit price, entry cap, stop/thesis break, targets, notional, and `opening_exit_manager_armed=true`.
+5. Order router still owns broker submission and checks guards, broker/account/data, duplicate/open-position state, risk validation, preview, and live/paper env arming.
+
+## Fast cancel behavior
+
+`should_fast_cancel()` cancels if:
+- tape state is `HALT_OR_NO_QUOTE`, `SPREAD_EXPLODED`, `STALE_DATA`, `DRIVE_FAILED`, or `GAP_AND_CRAP`
+- bid collapse flag fires
+- price moves above entry cap before fill
+- order remains unfilled while tape weakens
+- replace limit is exceeded
+
+`opening_position_action()` exits after fill on thesis break, bid collapse, stale/halt data, drive failure, gap-and-crap, time-stop with no continuation, or tightens/takes profit at target.
+
+## How mega-cap fallback is demoted
+
+`rank_clusters_for_research()` applies `mega_cap_fallback_audit` to common fallback names. Non-exceptional mega-caps receive:
+- lower `research_priority_score`
+- lower `hyper_trade_score`
+- note `megacap_fallback_audit=demoted_nonexceptional`
+
+A mega-cap passes only if catalyst strength, hyper score, attention, and exceptional lane tags are all present. Generic AMD-style filing noise is demoted and regression-tested against INFQ.
+
+## Tests run
+
+Focused acceptance suite:
+`PYTHONPATH=. .venv/bin/pytest tests/test_research_ranking.py tests/test_candidate_packets.py tests/test_social_tape_rocket.py tests/test_opening_stream_supervisor.py tests/test_live_monitor.py tests/test_opening_burst_strategy.py tests/test_opening_tape_features.py tests/test_fast_cancel.py tests/test_order_router.py tests/test_opening_bell_readiness.py`
+
+Result: 34 passed.
+
+Full suite:
+`PYTHONPATH=. .venv/bin/pytest tests`
+
+Result: 102 passed, 1 existing `websockets.legacy` deprecation warning.
+
+## Exact blocker / smallest next patch
+
+The architecture and local available-source path are implemented. Full parity with every requested external discovery source still needs real provider choices/credentials/API contracts for:
+- FMP movers
+- StockTwits
+- TradingView-style screener
+- SAM.gov / USAspending
+- ClinicalTrials / OpenFDA
+
+Smallest next patch: add concrete adapters for those sources, each emitting the existing `RawEvent` shape, then add replay fixtures proving they enrich INFQ-style candidates without creating social-only execution authority.

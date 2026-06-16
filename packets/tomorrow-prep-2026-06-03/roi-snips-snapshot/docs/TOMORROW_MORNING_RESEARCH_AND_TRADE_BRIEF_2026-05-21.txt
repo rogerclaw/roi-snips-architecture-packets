@@ -1,0 +1,1006 @@
+ROI SNIPS TOMORROW MORNING RESEARCH AND TRADE BRIEF
+Generated: 2026-05-20
+Target session: Thursday 2026-05-21 U.S. market open
+Owner: Charles
+System: Roi Snips
+
+================================================================================
+0. PURPOSE
+================================================================================
+
+This brief explains exactly how I will run Roi Snips tomorrow morning to find one
+stock/ETF candidate, decide whether it is worth buying, and what must be true
+before any real order can be placed.
+
+The desired behavior is:
+
+    find one high-risk, high-reward, long-only U.S. stock/ETF candidate
+    for a same-day to 1-3 day speculative trade
+    with fresh catalyst, violent repricing potential, social/tape acceleration,
+    and clear entry/exit logic.
+
+The system should not behave like a generic watchlist generator.
+The system should not default to safe blue-chip names.
+The system should not reject a volatile runner just because it is volatile.
+
+But the system also may not trade on broken infrastructure.
+
+Trade risk is allowed.
+Broken data, broken broker state, missing quote, duplicate order state, missing
+settled cash, active halt, or kill-switch state is not allowed.
+
+================================================================================
+1. CURRENT LIVE POSTURE
+================================================================================
+
+As of this brief:
+
+- Alpaca live broker/account checks are working.
+- Alpaca SIP market data is working.
+- Open orders are empty in latest readiness checks.
+- The test suite passed: 81 passed, 1 warning.
+- Hyper-speculative research/scoring/gating scaffolding is active in code/config.
+- Roi Snips is configured for long-only U.S. stocks/ETFs.
+- Options, shorting, and margin behavior are not allowed.
+- LLM direct order authority is false.
+- Deterministic engine order authority is true.
+
+Current guard state:
+
+- state/LIVE_ARMED is absent.
+- state/DISABLE_NEW_ENTRIES is present.
+- state/KILL_SWITCH is absent.
+
+Meaning:
+
+The system is ready to produce a live-ready buy/no-trade packet tomorrow morning.
+It is not currently allowed to send a live order.
+
+To send a live order, the following must be true:
+
+1. state/LIVE_ARMED exists.
+2. state/DISABLE_NEW_ENTRIES is absent.
+3. state/KILL_SWITCH is absent.
+4. ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true is set in the execution environment.
+5. Alpaca broker/account/data readiness is green.
+6. There is no open position and no open order.
+7. The selected ticker passes deterministic hard blockers.
+8. The opening tape confirms the setup.
+
+================================================================================
+2. TOMORROW MORNING SCHEDULE
+================================================================================
+
+There is a one-shot OpenClaw job scheduled:
+
+    job id: d3f02133-95f6-4733-bc77-1c94d90025ee
+    name: Roi Snips live-ready research packet - 2026-05-21 open
+    run time: 2026-05-21 06:00 PT / 09:00 ET
+
+That job is intentionally configured as:
+
+    research + premarket packet + readiness + Telegram report
+    no live order placement
+    no live arming
+    no removal of DISABLE_NEW_ENTRIES
+
+The job will run from:
+
+    /Users/rogerclaw/.openclaw/workspace/roi-snips
+
+Commands:
+
+    PYTHONPATH=. .venv/bin/python -m src.workflows.research_pipeline
+    PYTHONPATH=. .venv/bin/python -m src.workflows.premarket_pipeline
+    scripts/check_live_readiness.sh
+
+The job will then send Charles a Telegram packet with:
+
+- primary ticker or NO TRADE
+- catalyst
+- why the move may not be fully priced
+- evidence reviewed
+- social/attention/tape summary
+- buy zone / entry framework
+- same-day target
+- 1-3 day target
+- thesis-break level
+- profit-taking triggers
+- danger signals
+- execution gate status
+- live guard status
+- exact confirmation needed to arm
+
+================================================================================
+3. RESEARCH OBJECTIVE
+================================================================================
+
+The target is one decisive primary pick.
+
+Not:
+
+- a generic watchlist
+- a safe portfolio idea
+- a blue-chip default
+- an ETF because it is easy
+- a long-term investment thesis
+
+The target profile is:
+
+- fresh catalyst
+- meaningful premarket repricing
+- unusual volume / dollar volume
+- clear reason it can move today
+- not already fully exhausted
+- enough liquidity to enter/exit
+- bid/ask/spread usable for the intended notional
+- clear thesis-break level
+- clear sell triggers
+- asymmetric upside over same-day to 1-3 day horizon
+
+Preferred candidates:
+
+- volatile small/mid/micro-cap stocks
+- fresh biotech/FDA/trial names
+- fresh contract/award/policy names
+- earnings surprise + guidance names
+- M&A / strategic alternatives / asset-sale names
+- low-float or squeeze-like names when tape confirms
+- names suddenly accelerating on X/StockTwits/Reddit
+- top premarket gappers with a discoverable catalyst
+- obscure under-covered catalysts that are not yet broadly priced
+
+Large caps are allowed only if catalyst and tape are exceptional.
+
+================================================================================
+4. SOURCE ORDER
+================================================================================
+
+Tomorrow I will use source lanes in this order.
+
+--------------------------------------------------------------------------------
+4.1 Market and broker truth
+--------------------------------------------------------------------------------
+
+Alpaca SIP is the live market-data truth source.
+
+Use it for:
+
+- quote
+- bid
+- ask
+- last trade
+- spread
+- prior close
+- premarket bars
+- premarket volume
+- premarket dollar volume
+- gap percent
+- live tape readiness
+
+Alpaca broker/account is also checked for:
+
+- account status
+- cash / buying power
+- open orders
+- positions
+- live environment mismatch
+
+If Alpaca SIP recent quote/trade/bars fail tomorrow, Roi Snips does not have a
+live trading setup. Research may still run, but live entry must fail closed.
+
+--------------------------------------------------------------------------------
+4.2 Structured catalyst sources
+--------------------------------------------------------------------------------
+
+These sources provide proof and candidate discovery:
+
+- Alpaca News
+- Benzinga, when available
+- SEC EDGAR
+- Company IR / press-release pages
+- FDA / biotech keyword scout
+- Government / contract keyword scout
+- Exchange / mover scout
+
+These are used to answer:
+
+- What is the catalyst?
+- Is it fresh?
+- Is there official or structured confirmation?
+- Is there a dilution/offering/reverse-split trap?
+- Is this a stale recycled headline?
+- Is the move already exhausted?
+
+--------------------------------------------------------------------------------
+4.3 Social and attention sources
+--------------------------------------------------------------------------------
+
+Social sources are discovery and acceleration signals, not final authority.
+
+Current lanes:
+
+- Grok/X search when configured/working
+- optional X adapter
+- Reddit public JSON fallback
+- Reddit OAuth when credentials are eventually approved
+
+Still-needed/weak lanes:
+
+- StockTwits message velocity
+- FMP mover/most-active feed
+- TradingView-style screener
+- Tavily/Brave/Exa general web search
+- Firecrawl/Crawl4AI extraction
+- ClinicalTrials.gov
+- openFDA
+- SAM.gov / USAspending
+- Nasdaq halt feed
+
+Important Reddit status:
+
+Authenticated Reddit API credentials are not available yet. Reddit remains
+optional and non-blocking. Public JSON fallback can provide weak retail-attention
+signals, but it is not a dependable production source.
+
+--------------------------------------------------------------------------------
+4.4 OpenAI governed research
+--------------------------------------------------------------------------------
+
+OpenAI deep-research/deep-mini is a synthesis lane.
+
+It should:
+
+- compare finalists
+- identify why the primary candidate beats backups
+- surface source conflicts
+- write the trade packet
+- explain why the move may not be fully priced
+
+It should not:
+
+- directly place orders
+- bypass deterministic gates
+- override broker/account/data blockers
+- treat social hype as proof by itself
+
+Current code primarily runs governed deep-mini/deep-research after deterministic
+shortlisting. The architecture target is broader: add a pre-filter broad
+discovery pass so unusual volatile names are seen before conservative filters
+sanitize the universe. That full broad-discovery implementation is not complete
+yet; tomorrow's run uses the currently implemented pipeline plus the new
+hyper-speculative scoring/gating layer.
+
+================================================================================
+5. DISCOVERY PHASE
+================================================================================
+
+The discovery phase asks:
+
+    What can actually move today?
+
+It does not ask:
+
+    What is the safest company?
+
+Candidate sources produce raw events. Raw events may come from:
+
+- company press releases
+- SEC filings
+- newswire headlines
+- FDA / biotech references
+- government / contract references
+- exchange/mover scans
+- social mentions
+- obscure source mentions
+- manual configured symbols if present
+
+Each raw event is normalized into a ticker candidate with:
+
+- ticker
+- company name if known
+- catalyst claim
+- source name
+- source URL
+- timestamp
+- source category
+- social flag
+- official/structured flag
+- notes
+- credibility score
+
+Discovery should be broad enough to catch:
+
+- obvious gappers
+- small-cap fresh-catalyst names
+- strong premarket movers
+- unusual premarket volume
+- social acceleration names
+- sympathy runners
+- under-covered catalysts
+
+Discovery should not throw out a ticker merely because it is ugly, speculative,
+small, low float, or volatile.
+
+================================================================================
+6. EVIDENCE LEDGER PHASE
+================================================================================
+
+After discovery, evidence is gathered per ticker.
+
+For each candidate, Roi Snips builds a candidate cluster with:
+
+- primary ticker
+- company
+- catalyst type
+- claim summary
+- official sources
+- structured/news sources
+- social sources
+- obscure sources
+- official confirmation count
+- structured confirmation count
+- social confirmation count
+- freshness score
+- catalyst strength score
+- attention acceleration score
+- crowdedness / pump risk
+- story-stage score
+- asymmetry score
+- source-quality score
+- unresolved questions
+- elimination flags
+
+The evidence ledger separates:
+
+Proof weight:
+
+- SEC filing
+- company press release
+- company IR source
+- reputable structured news
+- broker/news data
+
+Attention weight:
+
+- X/Grok
+- Reddit
+- StockTwits once added
+- forums/blogs
+- retail chatter
+
+Market weight:
+
+- gap
+- premarket dollar volume
+- liquidity
+- spread
+- VWAP / opening levels where available
+- execution readiness
+
+The ledger's job is not to make every candidate clean.
+The ledger's job is to preserve enough evidence to compare candidates honestly.
+
+================================================================================
+7. THREE RESEARCH LANES
+================================================================================
+
+Every candidate is classified into one or more lanes.
+
+--------------------------------------------------------------------------------
+7.1 VERIFIED_CATALYST_RUNNER
+--------------------------------------------------------------------------------
+
+This lane is for catalyst-backed names.
+
+Typical evidence:
+
+- official source or structured source exists
+- catalyst strength is meaningful
+- catalyst is fresh
+- source quality is acceptable
+
+Examples:
+
+- FDA approval or clearance
+- trial data
+- earnings beat + guidance raise
+- merger / acquisition / asset sale
+- major partnership or licensing deal
+- contract award
+- regulatory/legal win
+- bankruptcy-risk removal
+
+This lane can receive larger size if the tape confirms and spreads/liquidity are
+usable.
+
+--------------------------------------------------------------------------------
+7.2 SOCIAL_TAPE_ROCKET
+--------------------------------------------------------------------------------
+
+This lane is for social/tape momentum runners.
+
+Social alone cannot trade.
+Social plus market repricing plus opening tape can be a momentum trade.
+
+The implemented exception requires:
+
+- SOCIAL_TAPE_ROCKET lane tag
+- hyper_trade_score >= configured threshold
+- attention acceleration >= configured threshold
+- premarket dollar volume >= configured threshold
+- market overlay present
+- no hard mechanical blockers
+
+Current configured thresholds:
+
+- social_tape_min_hyper_score: 7.0
+- social_tape_min_attention_score: 8.0
+- social_tape_min_premarket_dollar_volume: 1,000,000
+- hard_max_spread_pct: 2.0
+
+This lane is smaller size by default and requires fast exit if tape fails.
+
+--------------------------------------------------------------------------------
+7.3 MOVER_FIRST_EXPLAIN_LATER
+--------------------------------------------------------------------------------
+
+This lane starts from price/volume behavior:
+
+- big premarket gap
+- high premarket dollar volume
+- strong relative activity
+- top gainer behavior
+
+Then it asks:
+
+- Why is this moving?
+- Is the move early or exhausted?
+- Is there official/structured proof?
+- Is retail attention accelerating?
+- Can the opening tape confirm continuation?
+
+If a catalyst is confirmed, it can upgrade toward VERIFIED_CATALYST_RUNNER.
+If social/tape evidence is extreme, it can route through SOCIAL_TAPE_ROCKET.
+If no explanation and no tape confirmation, it is a no-trade or watch-only name.
+
+================================================================================
+8. HYPER TRADE SCORE
+================================================================================
+
+The ranking overlay is hyper_trade_score.
+
+The score is 0-10 and is designed to rank explosive short-term repricing
+potential, not company quality.
+
+Formula:
+
+    0.20 * premarket_repricing_energy
+  + 0.18 * catalyst_violence
+  + 0.17 * opening_drive_potential
+  + 0.15 * attention_velocity
+  + 0.10 * earlyness_score
+  + 0.08 * float_squeeze_factor
+  + 0.07 * level_clarity
+  + 0.05 * source_quality
+  - 0.10 * exhaustion_penalty
+  - 0.08 * dilution_or_offering_penalty
+  - 0.06 * fake_hype_penalty
+  - 0.05 * mega_cap_boring_penalty
+
+Component meanings:
+
+premarket_repricing_energy:
+    gap size, premarket dollar volume, spread quality, execution readiness
+
+catalyst_violence:
+    how capable the catalyst is of forcing immediate repricing
+
+opening_drive_potential:
+    asymmetry plus attention plus market overlay strength
+
+attention_velocity:
+    social/X/Reddit/StockTwits-style acceleration
+
+earlyness_score:
+    fresh story, fresh move, not already fully crowded/exhausted
+
+float_squeeze_factor:
+    low-float/squeeze/short-interest language plus attention
+
+level_clarity:
+    clear prior close/premarket price/spread/volume reference
+
+source_quality:
+    official/structured/credible source support
+
+exhaustion_penalty:
+    crowded/parabolic/late move, especially big gap with weak stage score
+
+dilution_or_offering_penalty:
+    offering, ATM, S-1/S-3, registered direct, reverse split, dilution
+
+fake_hype_penalty:
+    social-only hype without official/structured support
+
+mega_cap_boring_penalty:
+    AAPL/AMZN/AMD/GOOG/GOOGL/META/MSFT/NFLX/NVDA/PLTR/QQQ/SMCI/SPY/TSLA
+    are penalized unless catalyst and attention are exceptional.
+
+================================================================================
+9. RANKING AND SHORTLIST
+================================================================================
+
+The pipeline ranks candidates using:
+
+- hyper_trade_score
+- research priority
+- catalyst strength
+- freshness
+- asymmetry
+- source quality
+- attention acceleration
+- crowding/exhaustion penalties
+- megacap penalty
+
+The target shortlist is:
+
+- best primary candidate
+- maximum two backups
+- no generic watchlist
+
+The primary candidate should usually be:
+
+- highest hyper_trade_score among tradeable names
+- has a fresh catalyst or social/tape rocket setup
+- has usable market overlay
+- no hard blockers
+- better upside/earlyness than backups
+- has clear entry, thesis break, and sell triggers
+
+If the best research name has hard execution blockers, it can be named as
+research leader, but not as executable best pick.
+
+================================================================================
+10. EXECUTION GATES
+================================================================================
+
+The most important distinction:
+
+    hard blockers stop live entries
+    speculative penalties affect score, size, entry mode, and exit urgency
+
+--------------------------------------------------------------------------------
+10.1 Hard blockers
+--------------------------------------------------------------------------------
+
+These block live entry:
+
+- LIVE_ARMED missing
+- DISABLE_NEW_ENTRIES active
+- KILL_SWITCH active
+- outside entry window
+- force-flat phase
+- missing market overlay
+- missing live market data
+- stale quote
+- quote missing
+- missing bid/ask
+- no quote
+- active halt
+- spread mechanically too wide
+- broker/account unavailable
+- broker environment mismatch
+- duplicate order
+- existing open position
+- insufficient settled cash
+- ticker invalid/nonstandard
+- symbol not tradeable
+- unable to preview/validate order
+- unable to monitor exit path
+
+These are infrastructure or mechanical failures, not conservative filters.
+
+--------------------------------------------------------------------------------
+10.2 Speculative penalties
+--------------------------------------------------------------------------------
+
+These do not automatically block every trade:
+
+- low price / sub-$5 stock
+- low float
+- microcap
+- wide but tradeable spread
+- thin but active low-float condition
+- social hype
+- high gap percent
+- poor company quality
+- volatile sector
+- recent pump history
+- social/tape exception missing official confirmation
+- parabolic extension risk
+- low average volume, if live tape is strong enough for small size
+
+These become:
+
+- smaller notional
+- stricter entry cap
+- faster cancel
+- tighter thesis-break
+- faster profit-taking
+- lower confidence label
+
+================================================================================
+11. DECENT CONFIDENCE DEFINITION
+================================================================================
+
+For tomorrow morning, "decent confidence" means all of the following:
+
+1. There is one primary candidate, not a confused cluster of similar names.
+2. Hyper trade score is strong enough for the lane:
+   - verified catalyst: preferably 7.0+
+   - social/tape rocket: 7.0+ minimum and attention 8.0+
+3. No hard mechanical blockers.
+4. Live market overlay exists.
+5. Bid/ask is present.
+6. Quote is fresh.
+7. Spread is not mechanically absurd.
+8. Premarket dollar volume is real enough for the proposed notional.
+9. There is a clear entry cap.
+10. There is a clear thesis-break level.
+11. There are clear danger signals.
+12. It beats the backups for a specific reason.
+13. Opening tape confirms before entry if the entry is at/near open.
+
+If any of those fail, the output should be NO TRADE or WATCH ONLY.
+
+================================================================================
+12. BUY PLAN IF A CANDIDATE QUALIFIES
+================================================================================
+
+The intended entry style is not a naked market order.
+
+Order style:
+
+- aggressive limit / marketable limit
+- explicit price cap
+- no naked market order
+- fast cancel if the setup fails
+- one open position maximum
+- long-only stock/ETF
+
+Time logic:
+
+Regular entry window:
+
+- 09:30 to 11:00 ET
+
+Opening-drive logic:
+
+- 09:30:00-09:30:05 first print observation
+- 09:30:05-09:30:15 first drive
+- 09:30:15-09:30:30 confirmation
+- 09:30:30-09:31:30 continuation
+- 09:31:30-09:34:59 rescue/fallback/avoid-chase
+
+If opening tape confirms early, the system should not wait until 09:35 just
+because ORB/VWAP strategies are traditionally later. ORB/VWAP are fallback and
+confirmation modes, not the identity of this system.
+
+Entry confirmation examples:
+
+- price above open
+- bid is not collapsing
+- spread is not exploding
+- first demand appears real
+- volume/dollar volume is above expectation
+- premarket high breaks or reclaims with volume
+- price holds above key support
+- micro-VWAP holds or reclaims where available
+
+Stand-down examples:
+
+- instant dump below premarket support
+- bid disappears
+- spread blows past allowed regime
+- price rejects premarket high with large upper wick
+- quote becomes stale
+- broker/order state mismatch
+- halt/no quote
+- better candidate invalidates the thesis
+
+================================================================================
+13. POSITION SIZE
+================================================================================
+
+Actual size must be capped by settled cash, spread/liquidity, and lane.
+
+Current live proof-of-concept account assumption:
+
+- live POC bankroll: 1,000 USD
+- max total live exposure: 1,000 USD
+- max daily realized loss: 500 USD
+- max normal open risk: 80 USD
+- max aggressive open risk: 125 USD
+- max A+ open risk: 175 USD
+
+Practical sizing:
+
+- weak or watch-only: no live trade
+- social/tape-only qualifying trade: usually 100-300 USD notional
+- strong verified catalyst: 300-500 USD notional
+- exceptional A+ verified catalyst/tape setup: up to 1,000 USD notional only if
+  spread/liquidity/cash allow it
+
+The system should size down for:
+
+- wider spread
+- weaker source proof
+- social/tape-only lane
+- lower liquidity
+- high gap / exhaustion risk
+- less clear thesis break
+
+================================================================================
+14. EXIT PLAN
+================================================================================
+
+Every trade must have an exit plan before entry.
+
+Exit components:
+
+- thesis-break level
+- initial stop / fail level
+- same-day target
+- 1-3 day target
+- profit-taking triggers
+- danger signals
+- time-based stop
+- force-flat policy
+
+Current force-flat:
+
+- force flat at 15:45 ET unless deliberately held under an approved overnight plan
+
+No average down:
+
+- average_down_allowed: false
+
+Fast exit triggers:
+
+- price loses thesis-break level
+- opening drive fails after entry
+- spread explodes
+- bid collapses
+- catalyst disproven
+- offering/dilution headline appears
+- halt risk emerges
+- live data degrades
+- broker state mismatch
+- market-wide reversal invalidates momentum
+
+Profit-taking triggers:
+
+- same-day target hit
+- vertical move into liquidity
+- failure to hold breakout after target zone
+- large upper wick at target zone
+- volume climax and fade
+- thesis fulfilled faster than expected
+
+================================================================================
+15. LIVE ARMING PATH
+================================================================================
+
+The tomorrow 06:00 PT job will not arm live trading.
+
+To move from live-ready to live-firing, the arming path is:
+
+1. Charles explicitly confirms live arming.
+2. Create:
+
+       roi-snips/state/LIVE_ARMED
+
+3. Remove:
+
+       roi-snips/state/DISABLE_NEW_ENTRIES
+
+4. Confirm absent:
+
+       roi-snips/state/KILL_SWITCH
+
+5. Set live submission environment:
+
+       ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true
+
+6. Run readiness:
+
+       scripts/check_live_readiness.sh
+
+7. Accept only if there are no broker/data/cash/order/quote/halt/feed blockers.
+8. Run or start the deterministic live monitor/execution path.
+
+Important:
+
+The LLM does not place the order.
+The deterministic engine places the order only after plan validation, broker
+preview, runtime guard checks, market data checks, and risk checks.
+
+================================================================================
+16. WHAT WILL HAPPEN TOMORROW UNDER CURRENT GUARDS
+================================================================================
+
+With the current fail-closed guard state, tomorrow's job will:
+
+1. Run research pipeline.
+2. Run premarket report pipeline.
+3. Run live readiness.
+4. Produce one primary buy/no-trade packet.
+5. Tell Charles whether it is live-ready except for arming guards.
+6. Tell Charles exactly what needs to be confirmed if he wants the system armed.
+
+It will not:
+
+- create LIVE_ARMED
+- remove DISABLE_NEW_ENTRIES
+- set live order submission
+- place a live buy
+- cancel or replace live orders
+- alter broker state
+
+================================================================================
+17. IF CHARLES ARMS BEFORE THE OPEN
+================================================================================
+
+If Charles explicitly arms before the open and I verify the guard/file/env state,
+then the execution sequence becomes:
+
+1. Confirm `LIVE_ARMED` exists.
+2. Confirm `DISABLE_NEW_ENTRIES` absent.
+3. Confirm `KILL_SWITCH` absent.
+4. Confirm `ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true`.
+5. Confirm Alpaca account active.
+6. Confirm SIP quote/trade/bar health.
+7. Confirm no open orders.
+8. Confirm no open positions.
+9. Confirm selected symbol is tradeable.
+10. Confirm buy plan passes `risk.rules`.
+11. Preview order with broker adapter.
+12. If preview fails: no order.
+13. If preview passes and opening tape confirms: deterministic engine submits
+    aggressive limit order.
+14. If not filled quickly and setup weakens: cancel.
+15. If filled: monitor stop/target/thesis-break/force-flat.
+16. Send alerts for primary selected, order staged, entry placed, fill, exit
+    placed, exit fill, blocker, no-trade, kill-switch, and flat-all.
+
+================================================================================
+18. REASONS TOMORROW CAN BE NO TRADE
+================================================================================
+
+Roi Snips should say NO TRADE if:
+
+- no candidate has a fresh enough catalyst or social/tape acceleration
+- all strong candidates have hard blockers
+- Alpaca data is stale or incomplete
+- bid/ask missing
+- spread mechanically too wide
+- candidate is halted or no quote
+- candidate is already exhausted and fading
+- no clear entry cap
+- no clear thesis-break
+- no settled cash
+- existing position/order exists
+- broker/account readiness fails
+- deep-research/synthesis cannot resolve conflicting evidence
+- selected candidate is only hype and tape does not confirm
+
+No trade is better than trading broken or confused state.
+
+================================================================================
+19. CURRENT IMPLEMENTATION GAPS
+================================================================================
+
+The current system is safer and more aggressive than it was, but the full
+directive is not completely implemented yet.
+
+Implemented:
+
+- hyper_trade_score module
+- lane classifier
+- VERIFIED_CATALYST_RUNNER / SOCIAL_TAPE_ROCKET / MOVER_FIRST_EXPLAIN_LATER
+- ranking overlay uses hyper_trade_score
+- execution gate separates hard blockers from speculative penalties
+- social/tape exception path exists with strict thresholds
+- LIVE_ARMED file requirement exists in readiness/order-router/live-monitor path
+- DISABLE_NEW_ENTRIES still fail-closes entries
+- Reddit is optional/non-blocking
+- runbook/config updated for hyper-speculative posture
+- tests pass
+
+Still incomplete / weaker:
+
+- full broad OpenAI deep-research discovery before filtering
+- StockTwits scout
+- FMP mover scout
+- TradingView-style screener scout
+- Tavily/Brave/Exa general web scout
+- Firecrawl/Crawl4AI extraction lane in code
+- openFDA scout
+- ClinicalTrials.gov scout
+- SAM.gov / USAspending scout
+- Nasdaq halt feed module
+- dedicated opening-burst executor module
+- dedicated fast-cancel module
+- full first-5s/10s/30s/60s tape feature engine
+- full Webull execution integration if broker is changed from current Alpaca setup
+
+Therefore:
+
+Tomorrow is acceptable as a live-ready research/packet run with deterministic
+guards. It is not yet a complete implementation of every requested source and
+strategy module.
+
+================================================================================
+20. FINAL TOMORROW DECISION RULE
+================================================================================
+
+Tomorrow morning, Roi Snips should produce exactly one of these outcomes:
+
+Outcome A: PRIMARY TRADE, LIVE-READY EXCEPT ARMING
+
+Use when:
+
+- one primary candidate clearly wins
+- no hard mechanical blockers except current arming guards
+- buy zone and thesis-break are clear
+- same-day and 1-3 day targets are clear
+- opening-tape confirmation is specified
+- Charles can explicitly arm if he wants real execution
+
+Outcome B: PRIMARY TRADE, WATCH ONLY
+
+Use when:
+
+- candidate is attractive but has unresolved execution risk
+- candidate needs confirmation later in the open
+- social/tape is promising but not yet confirmed
+- spread/liquidity requires waiting
+
+Outcome C: NO TRADE
+
+Use when:
+
+- no candidate is good enough
+- hard blockers exist
+- evidence conflicts cannot be resolved
+- tape does not confirm
+- setup is too exhausted
+- broker/data state is not trustworthy
+
+================================================================================
+21. SHORT VERSION
+================================================================================
+
+Tomorrow I will:
+
+1. Run Roi Snips research pipeline.
+2. Build the candidate universe from catalysts, movers, social attention, and
+   market data.
+3. Score candidates with hyper_trade_score.
+4. Classify candidates into VERIFIED_CATALYST_RUNNER, SOCIAL_TAPE_ROCKET, and
+   MOVER_FIRST_EXPLAIN_LATER.
+5. Build Alpaca SIP market overlays.
+6. Separate true mechanical blockers from speculative penalties.
+7. Use governed OpenAI synthesis on the shortlist.
+8. Pick one primary trade or no-trade.
+9. Send Charles the complete trade packet.
+10. If explicitly armed and only if deterministic checks pass, the deterministic
+    engine can send a capped aggressive limit buy near the open.
+
+Current default:
+
+    live-ready packet tomorrow
+    no unattended live buy until explicit arming state is set
+
+END OF BRIEF

@@ -1,0 +1,89 @@
+risk:
+  account_mode:
+    cash_account: true
+    margin_enabled: false
+    shorting_enabled: false
+    options_enabled: false
+
+  bankroll:
+    live_poc_bankroll_usd: 900
+    max_total_live_exposure_usd: 900
+    max_daily_realized_loss_usd: 500
+    max_open_risk_usd_normal: 80
+    max_open_risk_usd_aggressive: 125
+    max_open_risk_usd_a_plus: 175
+
+  sizing:
+    initial_notional_min_usd: 50
+    initial_notional_max_usd: 900
+    max_risk_per_trade_usd: 80
+    max_daily_risk_usd: 500
+    max_open_positions: 1
+
+  entry_filters:
+    min_price: 2.0
+    max_price: 300.0
+    min_premarket_volume: 300000
+    min_relative_volume: 2.0
+    max_bid_ask_spread_bps: 60
+    opening_drive_max_bid_ask_spread_bps: 35
+    opening_drive_min_first_minute_volume: 150000
+    opening_drive_min_first_minute_dollar_volume: 750000
+    opening_drive_max_chase_pct: 1.0
+    opening_drive_min_close_in_range_pct: 0.6
+
+  slippage:
+    max_allowed_bps: 30
+    opening_drive_max_allowed_bps: 18
+
+  opening_drive:
+    enabled: true
+    risk_budget_usd: 40
+    notional_cap_usd: 500
+    time_stop_et: "09:45:00"
+    opening_burst_hyper_long_enabled: true
+    opening_burst_hyper_long_first_entry_et: "09:30:05"
+    opening_burst_hyper_long_last_primary_entry_et: "09:31:30"
+    subminute_enabled: true
+    subminute_entry_end_et: "09:30:55"
+    subminute_min_quote_samples: 3
+    subminute_min_elapsed_seconds: 10
+    subminute_min_projected_first_minute_volume: 150000
+    subminute_min_projected_first_minute_dollar_volume: 750000
+    subminute_min_close_in_range_pct: 0.75
+    subminute_max_pullback_from_high_pct: 0.35
+    subminute_min_push_from_first_sample_pct: 0.15
+    subminute_min_break_above_reference_bps: 5
+
+  stale_data:
+    max_quote_age_ms: 2000
+    max_bar_age_seconds: 90
+
+  session:
+    market_session: ALPACA_UNIFIED
+    first_entry_time_et: "04:05:00"
+    last_entry_time_et: "10:30:00"
+    opening_drive_entry_start_et: "09:30:00"
+    opening_drive_entry_end_et: "09:34:59"
+    force_flat_all_time_et: "15:45:00"
+
+  pdt_governor:
+    enabled: true
+    equity_threshold_usd: 25000
+    max_day_trades_rolling_5d_before_block: 3
+
+  execution:
+    no_naked_market_orders_extended_hours: true
+    allow_notional_orders: true
+    cancel_notional_instead_of_replace: true
+    max_replace_attempts: 1
+
+  exits:
+    require_initial_stop_before_entry: true
+    average_down_allowed: false
+    local_watchdog_required: true
+
+  kill_switch:
+    file: /Users/rogerclaw/.openclaw/workspace/roi-snips/state/KILL_SWITCH
+    disable_new_entries_file: /Users/rogerclaw/.openclaw/workspace/roi-snips/state/DISABLE_NEW_ENTRIES
+    default_state: OFF

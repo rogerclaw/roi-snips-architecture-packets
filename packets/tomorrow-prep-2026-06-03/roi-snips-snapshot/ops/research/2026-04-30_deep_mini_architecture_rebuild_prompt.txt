@@ -1,0 +1,96 @@
+You are doing a governed deep-mini research pass for Roi Snips.
+
+Objective:
+Redesign the Roi Snips stock-research and premarket-selection architecture so it reliably surfaces the single best high-risk, high-upside, catalyst-driven U.S. stock opportunity for same-day or 1-3 day trades entered just after the open, instead of defaulting to conservative mega-cap names.
+
+This is an architecture/prompt/research-workflow task, not an order request.
+
+Critical user preference to optimize for:
+- The user explicitly does NOT want conservative blue-chip defaults.
+- The user wants volatile, lesser-known, smaller-cap or mid-cap U.S. stocks that can explode upward on fresh catalysts.
+- The user is fine with maximum risk for a very small position.
+- The user wants one single best stock, not a generic watchlist.
+- The user wants exhaustive deep research using broad source coverage.
+- The user believes a deep-mini/deep-research style prompt produced materially better results than the current pipeline.
+
+Current implementation findings already established:
+- Current default universe is hard-coded to: NVDA, TSLA, AAPL, AMD, PLTR, SMCI, AMZN, META.
+- The obscure/small-cap scout currently returns nothing.
+- The morning pipeline only ranks the hard-coded list instead of discovering names dynamically.
+- Current gating and market-overlay logic penalize lower price, lower average dollar volume, unknown spreads, and imperfect tradeability early in the pipeline, which likely suppresses the exact explosive small/mid-cap names the user wants.
+- Deep-mini research has been used successfully as a side channel, but not integrated as the main production selector.
+- There is some broker/config drift in the codebase, but the primary failure appears to be research-universe and ranking bias.
+
+Use this user-style target prompt as a calibration anchor for the architecture:
+---
+I am looking to make a stock investment today just after market open, with the intention of selling the same day or within a couple of days. I want you to conduct an exhaustive, high-depth search across all relevant resources you can access, including financial news, company press releases, SEC filings, earnings materials, analyst commentary, trading blogs, market newsletters, Reddit threads, stock forums, X sentiment, Motley Fool, and any other credible or high-signal sources available to ChatGPT Pro. Treat this as if I am consulting one of the best stock pickers in the world for a high-conviction short-term trade.
+
+I do not want a generic watchlist. I want you to identify the single best short-term stock opportunity for today based on the strongest combination of catalyst, sentiment, technical setup, and probability of a sharp near-term move. Do deep research, think carefully, and synthesize both institutional-quality signals and retail sentiment to find something volatile that is expected to have a massive short-term uptick due to key progress, approval, product launch, merger, acquisition, partnership, contract award, earnings surprise, guidance revision, short squeeze potential, unusual volume, sector momentum, or another material catalyst.
+
+I am completely fine with high risk; this will be a very small investment, so I am able to tolerate maximum risk. I am not a professional day trader and use Webull.
+
+In your analysis, weigh:
+- current news flow and catalyst strength
+- sentiment across retail and professional channels
+- premarket or early-session trading behavior if available
+- unusual volume, momentum, float dynamics, and short-interest conditions if relevant
+- technical levels such as support, resistance, breakout levels, gap fills, and likely liquidity zones
+- whether the move is already overcrowded or still early
+- what could invalidate the trade quickly
+
+For the final answer, give me:
+- The single best stock to buy today
+- Ticker and company name
+- The exact reason it could move sharply in the next hours or days
+- The underlying catalyst and why the market may not have fully priced it in yet
+- Evidence from the research you reviewed, including sentiment and discussion trends
+- A suggested limit buy price or buy range
+- A realistic upside target for same-day and 1–3 day scenarios
+- A downside level or clear risk threshold where the thesis is broken
+- What timeframes I should monitor most closely after entry
+- Specific sell triggers, including both profit-taking and danger signals
+- A brief note on execution risk for someone using Robinhood with basic tools
+
+Prioritize asymmetric upside and high-conviction setups over safer, lower-volatility names. I care more about explosive short-term potential than stability. Be decisive, ranking quality of evidence over hype, but do not ignore hype if it is clearly becoming a market-moving force.
+---
+
+Hard strategy constraints for Roi Snips:
+- Long-only U.S. equities/ETFs only
+- No shorting, no options, no margin
+- Intraday-first system
+- One open position max
+- Entries only 09:35-11:00 ET
+- Flat by 15:45 ET
+- Research can be aggressive, but execution must remain deterministic and fail-closed
+
+Research/design questions to answer:
+1. What exact architecture should replace the current blue-chip-biased pipeline?
+2. What should the staged workflow be from overnight/pre-open discovery to final single-pick selection?
+3. How should source gathering be structured across official sources, structured news, exchange movers, social/retail sentiment, and browser/deep research?
+4. What should the dynamic candidate-universe generation logic be so MRAM-like names are discoverable by default?
+5. How should scoring be redesigned to favor fresh hard catalysts, attention acceleration, float scarcity, and asymmetric upside without admitting total junk?
+6. Where exactly should execution/tradeability filters be applied so they do not prematurely suppress volatile winners?
+7. When should the system use normal research vs governed deep-mini vs full deep research?
+8. What exact prompt stack should Roi Snips use for: architect stage, broad candidate discovery, shortlist synthesis, best-pick final memo, and live-supervisor conversion?
+9. What code-module changes are needed in the current repo to implement this?
+10. What should be changed this week first versus later?
+
+Deliverable:
+Produce an actionable architecture memo with these sections:
+1. Executive diagnosis of why the current system underperforms for this strategy
+2. Target architecture for a catalyst-driven “daily single best pick” engine
+3. Proposed staged workflow (overnight -> premarket -> post-09:35 confirmation -> selection)
+4. Dynamic universe/discovery design
+5. Source hierarchy and evidence policy
+6. Scoring/ranking framework, including concrete factor weights or pseudo-formula
+7. Prompt suite: exact recommended prompts/templates for each stage
+8. Integration plan for governed deep-mini/deep usage following the official routing policy
+9. Repo/module-level implementation plan referencing likely files/components to change
+10. Top failure modes / guardrails
+11. A concrete “do this next this week” checklist
+
+Decision style:
+Be concrete and opinionated. Do not just give general advice like “use smaller caps.” Design a system that could actually replace the current one.
+
+Budget discipline note:
+This is a deep-mini architecture pass, not an unconstrained literature review. Use enough browsing to produce a strong design, but prioritize actionable synthesis over exhaustive tangents.

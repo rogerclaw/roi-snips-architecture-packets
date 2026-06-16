@@ -1,0 +1,151 @@
+roi-snips-snapshot/src/approval/telegram_operator.py:17:        self.token = os.getenv("TELEGRAM_BOT_TOKEN", "")
+roi-snips-snapshot/src/common/telegram.py:13:        self.token = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
+roi-snips-snapshot/src/adapters/grok_search.py:34:        self.provider = provider or os.getenv("ROI_SNIPS_GROK_SEARCH_PROVIDER", "grok")
+roi-snips-snapshot/src/adapters/grok_search.py:36:        self.timeout_seconds = int(timeout_seconds or os.getenv("ROI_SNIPS_GROK_SEARCH_TIMEOUT_SECONDS", "45"))
+roi-snips-snapshot/src/adapters/grok_search.py:38:            enabled = os.getenv("ROI_SNIPS_ENABLE_GROK_X_SCOUT", "true").strip().lower() in {"1", "true", "yes", "on"}
+roi-snips-snapshot/src/adapters/webull_rest.py:47:            app_secret=os.getenv("WEBULL_APP_SECRET", ""),
+roi-snips-snapshot/src/adapters/webull_rest.py:51:            access_token=os.getenv("WEBULL_ACCESS_TOKEN", ""),
+roi-snips-snapshot/src/adapters/benzinga_news.py:13:        self.api_key = api_key or os.getenv("BENZINGA_API_KEY")
+roi-snips-snapshot/src/adapters/webull_md.py:31:            app_secret=os.getenv("WEBULL_APP_SECRET", ""),
+roi-snips-snapshot/src/adapters/webull_md.py:87:                "X-APP-SECRET": self.cfg.app_secret,
+roi-snips-snapshot/src/adapters/webull_md.py:122:            "X-APP-SECRET": self.cfg.app_secret,
+roi-snips-snapshot/src/adapters/webull_md.py:125:        bearer = os.getenv("WEBULL_ACCESS_TOKEN")
+roi-snips-snapshot/src/adapters/webull_md.py:146:            "X-APP-SECRET": self.cfg.app_secret,
+roi-snips-snapshot/src/adapters/webull_md.py:149:        bearer = os.getenv("WEBULL_ACCESS_TOKEN")
+roi-snips-snapshot/src/adapters/federal_sources.py:13:        self.api_key = api_key or os.getenv("SAM_GOV_API_KEY")
+roi-snips-snapshot/src/adapters/federal_sources.py:53:        self.api_key = api_key or os.getenv("OPENFDA_API_KEY")
+roi-snips-snapshot/src/adapters/xai_responses.py:32:        self.model = self.model or os.getenv("ROI_SNIPS_GROK_MODEL", "grok-4.3")
+roi-snips-snapshot/src/adapters/xai_responses.py:33:        self.api_key = self.api_key or os.getenv("XAI_API_KEY") or os.getenv("GROK_API_KEY")
+roi-snips-snapshot/src/adapters/xai_responses.py:36:        self.timeout_seconds = int(self.timeout_seconds or os.getenv("ROI_SNIPS_GROK_SEARCH_TIMEOUT_SECONDS", "45"))
+roi-snips-snapshot/src/adapters/xai_responses.py:45:        if os.getenv("ROI_SNIPS_GROK_USE_OPENCLAW_SEARCH", "true").strip().lower() in {"1", "true", "yes", "on"}:
+roi-snips-snapshot/src/adapters/fmp_market_data.py:13:        self.api_key = api_key or os.getenv("FMP_API_KEY")
+roi-snips-snapshot/src/adapters/alpaca_trade.py:40:        self.api_key = os.getenv("ALPACA_API_KEY_ID", "").strip()
+roi-snips-snapshot/src/adapters/alpaca_trade.py:41:        self.secret_key = os.getenv("ALPACA_SECRET_KEY", "").strip()
+roi-snips-snapshot/src/adapters/reddit_feed.py:23:        self.client_secret = os.getenv("REDDIT_CLIENT_SECRET")
+roi-snips-snapshot/src/adapters/alpaca_streams.py:31:        self.api_key = os.getenv("ALPACA_API_KEY_ID", "").strip()
+roi-snips-snapshot/src/adapters/alpaca_streams.py:32:        self.secret_key = os.getenv("ALPACA_SECRET_KEY", "").strip()
+roi-snips-snapshot/src/adapters/alpaca_market_data.py:62:        self.api_key = os.getenv("ALPACA_API_KEY_ID", "").strip()
+roi-snips-snapshot/src/adapters/alpaca_market_data.py:63:        self.secret_key = os.getenv("ALPACA_SECRET_KEY", "").strip()
+roi-snips-snapshot/src/adapters/alpaca_market_data.py:65:        self.allow_iex_fallback = _truthy_env("ALPACA_ALLOW_IEX_FALLBACK", default=True)
+roi-snips-snapshot/src/adapters/alpaca_news.py:14:        self.api_key = os.getenv("ALPACA_API_KEY_ID", "").strip()
+roi-snips-snapshot/src/adapters/alpaca_news.py:15:        self.secret_key = os.getenv("ALPACA_SECRET_KEY", "").strip()
+roi-snips-snapshot/src/adapters/alpaca_news.py:31:                headers={"APCA-API-KEY-ID": self.api_key, "APCA-API-SECRET-KEY": self.secret_key},
+roi-snips-snapshot/src/adapters/webull_trade.py:25:            app_secret=os.getenv("WEBULL_APP_SECRET", ""),
+roi-snips-snapshot/src/adapters/webull_trade.py:26:            account_id=os.getenv("WEBULL_ACCOUNT_ID", ""),
+roi-snips-snapshot/src/adapters/webull_trade.py:33:            "X-APP-SECRET": self.cfg.app_secret,
+roi-snips-snapshot/src/adapters/webull_trade.py:36:        bearer = os.getenv("WEBULL_ACCESS_TOKEN")
+roi-snips-snapshot/src/adapters/x_optional.py:13:        self.bearer = os.getenv("X_BEARER_TOKEN")
+roi-snips-snapshot/scripts/check_paper_readiness.sh:11:export ALPACA_PAPER=true
+roi-snips-snapshot/scripts/check_paper_readiness.sh:12:export ALPACA_BASE_URL="${ALPACA_BASE_URL:-https://paper-api.alpaca.markets}"
+roi-snips-snapshot/scripts/check_paper_readiness.sh:13:export ALPACA_MARKET_DATA_FEED="${ALPACA_MARKET_DATA_FEED:-iex}"
+roi-snips-snapshot/runbooks/OPERATOR_DAILY.md:25:  - Webull runtime cannot be selected as the active live path until real `WEBULL_APP_KEY` / `WEBULL_APP_SECRET` credentials are populated and trading endpoints are configured if signed REST coverage is insufficient
+roi-snips-snapshot/scripts/run_next_open_shadow_validation.py:164:    env.setdefault("ROI_SNIPS_GROK_SEARCH_TIMEOUT_SECONDS", "8")
+roi-snips-snapshot/runbooks/GROK_X_SEARCH_INTEGRATION.md:7:- `XAI_API_KEY` configured through John's governed secret path, not pasted into chat or committed to disk.
+roi-snips-snapshot/runbooks/GROK_X_SEARCH_INTEGRATION.md:80:1. Secret presence check only: confirm `XAI_API_KEY` is present without printing it.
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:26:export ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:30:export ROI_SNIPS_GROK_SEARCH_TIMEOUT_SECONDS="${ROI_SNIPS_GROK_SEARCH_TIMEOUT_SECONDS:-8}"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:96:  "$(env_bool "$ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH")" "$(env_bool "$ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH")" > "$START_FILE"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:104:GROK_REQUIRED="$(env_bool "$ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH")"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:106:if [ "$ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH" = "true" ]; then
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:119:GROK_READINESS_SCRIPT="${ROI_SNIPS_GROK_READINESS_SCRIPT:-scripts/check_grok_research_readiness.sh}"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:122:"$GROK_READINESS_SCRIPT" > "$LOG_DIR/grok_research_canary_latest.json" 2> "$LOG_DIR/grok_research_canary_latest.stderr"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:123:GROK_CANARY_RC=$?
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:124:GROK_READINESS_RC=$GROK_CANARY_RC
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:126:if [ "$GROK_CANARY_RC" -ne 0 ]; then
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:127:  if [ "$GROK_REQUIRED" = "true" ]; then
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:128:    write_step_status "$LOG_DIR/grok_research_canary_latest.status.json" "FAIL_REQUIRED_GROK_UNAVAILABLE" "grok_research_readiness" "$GROK_CANARY_RC" "grok_required_but_unavailable"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:129:    append_trace "grok_canary_done" "FAIL_REQUIRED_GROK_UNAVAILABLE" "$GROK_CANARY_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:130:    write_final_status "FAIL" "$GROK_CANARY_RC" "false" "false" "grok_required_but_unavailable"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:131:    append_trace "wrapper_final" "FAIL" "$GROK_CANARY_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:132:    exit "$GROK_CANARY_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:134:  write_step_status "$LOG_DIR/grok_research_canary_latest.status.json" "WARN_CONTINUE" "grok_research_readiness" "$GROK_CANARY_RC" "optional_grok_readiness_must_not_block_deep_mini_primary_selector"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:135:  append_trace "grok_canary_done" "WARN_CONTINUE" "$GROK_CANARY_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:143:if [ "${ROI_SNIPS_TEST_STUB_GROK_PIPELINE:-false}" = "true" ]; then
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:145:  GROK_RESEARCH_RC=0
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:148:  GROK_RESEARCH_RC=$?
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:151:if [ "$GROK_RESEARCH_RC" -ne 0 ] && [ "$GROK_REQUIRED" = "true" ]; then
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:152:  write_step_status "$LOG_DIR/grok_heat_latest.status.json" "FAIL" "grok_research_pipeline" "$GROK_RESEARCH_RC" "grok_required_pipeline_failed"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:153:  append_trace "grok_pipeline_done" "FAIL" "$GROK_RESEARCH_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:154:  write_final_status "FAIL" "$GROK_RESEARCH_RC" "false" "false" "grok_required_pipeline_failed"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:155:  append_trace "wrapper_final" "FAIL" "$GROK_RESEARCH_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:156:  exit "$GROK_RESEARCH_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:158:write_step_status "$LOG_DIR/grok_heat_latest.status.json" "recorded" "grok_research_pipeline" "$GROK_RESEARCH_RC" "grok_research_only_feeds_deep_mini;final_arming_gate_enforces_deep_mini_ticket"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:159:append_trace "grok_pipeline_done" "recorded" "$GROK_RESEARCH_RC"
+roi-snips-snapshot/scripts/run_live_trade_ready_premarket.sh:199:if [ "$GROK_CANARY_RC" -ne 0 ] || [ "$GROK_RESEARCH_RC" -ne 0 ]; then
+roi-snips-snapshot/runbooks/PRODUCTION_STOCK_HUNT_RUNBOOK.md:330:- OpenAI general model access works through OpenClaw, and the shared `tools/deep-research-runner` can now load the local OpenClaw OpenAI key when the shell does not export `OPENAI_API_KEY`.
+roi-snips-snapshot/scripts/run_paper_monitor.sh:6:export ALPACA_PAPER=true
+roi-snips-snapshot/scripts/run_paper_monitor.sh:7:export ALPACA_BASE_URL="${ALPACA_BASE_URL:-https://paper-api.alpaca.markets}"
+roi-snips-snapshot/scripts/run_paper_monitor.sh:8:export ALPACA_MARKET_DATA_FEED="${ALPACA_MARKET_DATA_FEED:-iex}"
+roi-snips-snapshot/ops/progress/broker_safe_systems_check.py:72:    "WEBULL_ENVIRONMENT=live",
+roi-snips-snapshot/scripts/run_live_opening_trade_ready.sh:14:export ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"
+roi-snips-snapshot/scripts/run_live_opening_trade_ready.sh:15:export WEBULL_ENVIRONMENT=live
+roi-snips-snapshot/scripts/run_final_live_arming_gate.sh:16:export ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"
+roi-snips-snapshot/scripts/run_final_live_arming_gate.sh:17:export WEBULL_ENVIRONMENT=live
+roi-snips-snapshot/scripts/run_research_pipeline.sh:10:if [ "${ROI_SNIPS_GROK_HEAT_ONLY:-false}" = "true" ]; then
+roi-snips-snapshot/docs/INFQ_RESEARCH_AND_OPENING_TAPE_FORENSIC_REPORT_2026-05-22.txt:3119:- FMP movers: ran=True; configured=FMP_API_KEY not visible in current env; produced_candidates=True; notes=external_movers_scout events=16; exact FMP vs fallback not explicit in artifact.
+roi-snips-snapshot/docs/INFQ_RESEARCH_AND_OPENING_TAPE_FORENSIC_REPORT_2026-05-22.txt:3128:- SAM.gov / USAspending: ran=True; configured=no SAM_GOV_API_KEY visible; may use fallback/news government scout; produced_candidates=True; notes=government_scout events=19
+roi-snips-snapshot/ops/progress/ROI_SNIPS_AUTONOMOUS_READINESS_2026-05-31.md:28:- Fixed: `scripts/run_final_live_arming_gate.sh` had been at risk of carrying legacy deep-mini-required env semantics into tomorrow's Grok-first arming path. It now defaults `ROI_SNIPS_REQUIRE_DEEP_MINI_FOR_LIVE_RESEARCH=false` and `ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH=true`.
+roi-snips-snapshot/scripts/run_live_force_flat.sh:15:export WEBULL_ENVIRONMENT=live
+roi-snips-snapshot/tests/test_deep_mini_not_skipped_in_live_wrapper.py:12:    assert "ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH" in body
+roi-snips-snapshot/tests/test_deep_mini_not_skipped_in_live_wrapper.py:14:    assert 'ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false' in body
+roi-snips-snapshot/tests/test_deep_mini_not_skipped_in_live_wrapper.py:21:    assert "GROK_READINESS_RC" in body
+roi-snips-snapshot/tests/test_deep_mini_not_skipped_in_live_wrapper.py:23:    assert 'ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH" = "true"' in body
+roi-snips-snapshot/tests/test_deep_mini_not_skipped_in_live_wrapper.py:26:    assert "GROK_RESEARCH_RC" in body
+roi-snips-snapshot/tests/test_deep_mini_not_skipped_in_live_wrapper.py:63:            "ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH": "false",
+roi-snips-snapshot/tests/test_deep_mini_not_skipped_in_live_wrapper.py:110:            "ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH": "true",
+roi-snips-snapshot/docs/UPDATED_ROI_SNIPS_ARCHITECTURE_AND_OPEN_ISSUES_2026-05-20.txt:259:- `REDDIT_CLIENT_SECRET` is not configured.
+roi-snips-snapshot/docs/UPDATED_ROI_SNIPS_ARCHITECTURE_AND_OPEN_ISSUES_2026-05-20.txt:281:- `REDDIT_CLIENT_SECRET`
+roi-snips-snapshot/ops/progress/ACTIVE.md:85:Next concrete step: BLOCKED until Webull live trade credentials/order endpoint configuration are supplied or discoverable in an authenticated secret store from this exec context. Exact next safe command after credentials are installed, before any arming or order path: `cd /Users/rogerclaw/.openclaw/workspace/roi-snips && WEBULL_ENVIRONMENT=live .venv/bin/python -m src.workflows.live_readiness --broker-provider webull --market-data-provider alpaca`
+roi-snips-snapshot/docs/ROI_SNIPS_RESEARCH_TOOL_ACCESS_AND_WORKFLOW_BRIEF_2026-05-26.txt:389:- Firecrawl live extraction may require FIRECRAWL_API_KEY.
+roi-snips-snapshot/scripts/run_shell_capable_shadow_validation.sh:43:export ROI_SNIPS_GROK_SEARCH_TIMEOUT_SECONDS="${ROI_SNIPS_GROK_SEARCH_TIMEOUT_SECONDS:-8}"
+roi-snips-snapshot/docs/CURRENT_RESEARCH_ARCHITECTURE_AND_STOCK_SELECTION_2026-05-20.txt:156:- The governed deep-research runner did not start today because `OPENAI_API_KEY` is missing in the current execution context.
+roi-snips-snapshot/docs/CURRENT_RESEARCH_ARCHITECTURE_AND_STOCK_SELECTION_2026-05-20.txt:157:- `XAI_API_KEY` is also not currently available in the checked environment, so Grok is not wired yet.
+roi-snips-snapshot/src/workflows/research_pipeline.py:44:    GROK_REQUIRED_BLOCKER,
+roi-snips-snapshot/src/workflows/research_pipeline.py:218:        if _env_truthy("ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH"):
+roi-snips-snapshot/src/workflows/research_pipeline.py:421:                    reason=GROK_REQUIRED_BLOCKER if live_grok_required else DEEP_MINI_REQUIRED_BLOCKER,
+roi-snips-snapshot/src/workflows/research_pipeline.py:441:                incomplete_reason=None if deep_mini_run and deep_mini_run.get("structured_packet") else (GROK_REQUIRED_BLOCKER if live_grok_required else DEEP_MINI_REQUIRED_BLOCKER),
+roi-snips-snapshot/tests/test_opening_bell_readiness.py:337:    assert 'ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"' in body
+roi-snips-snapshot/src/workflows/grok_research_readiness.py:34:    grok_required = _env_truthy("ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH")
+roi-snips-snapshot/src/workflows/grok_research_readiness.py:40:        "openclaw_grok_search_enabled": _env_truthy("ROI_SNIPS_GROK_USE_OPENCLAW_SEARCH", "true"),
+roi-snips-snapshot/src/workflows/grok_research_readiness.py:59:        and not _env_truthy("ROI_SNIPS_GROK_CANARY_ALLOW_OPENCLAW_AUTH")
+roi-snips-snapshot/src/workflows/grok_research_readiness.py:77:        status = "FAIL_REQUIRED_GROK_UNAVAILABLE" if grok_required else "FAIL"
+roi-snips-snapshot/src/workflows/grok_research_readiness.py:79:        status = "DEGRADED_OPTIONAL_GROK_UNAVAILABLE"
+roi-snips-snapshot/src/workflows/grok_d_research_bridge.py:19:GROK_REQUIRED_BLOCKER = "grok_d_research_required_for_live_research_not_completed"
+roi-snips-snapshot/src/workflows/grok_d_research_bridge.py:119:        "blockers": [] if packet.get("best_pick") and not packet.get("caveats") else list(packet.get("caveats") or [GROK_REQUIRED_BLOCKER]),
+roi-snips-snapshot/tests/test_external_source_adapters.py:8:    monkeypatch.delenv("FMP_API_KEY", raising=False)
+roi-snips-snapshot/tests/test_external_source_adapters.py:23:    monkeypatch.delenv("SAM_GOV_API_KEY", raising=False)
+roi-snips-snapshot/src/research/grok_prompt_pack.py:9:    "04_GROK_CANDIDATE_DISCOVERY_TOURNAMENT.md",
+roi-snips-snapshot/src/research/grok_prompt_pack.py:10:    "06_GROK_TICKET_INPUT_SUMMARY.md",
+roi-snips-snapshot/src/research/grok_prompt_pack.py:13:OBSOLETE_GROK_AUTHORIZER_PROMPT_FILENAMES = [
+roi-snips-snapshot/src/research/grok_prompt_pack.py:14:    "04_GROK_D_RESEARCH_TOURNAMENT.md",
+roi-snips-snapshot/src/research/grok_prompt_pack.py:15:    "06_GROK_TRADE_AUTHORIZATION_TICKET.md",
+roi-snips-snapshot/src/research/grok_prompt_pack.py:31:    obsolete_present = [name for name in OBSOLETE_GROK_AUTHORIZER_PROMPT_FILENAMES if (base / name).exists()]
+roi-snips-snapshot/src/research/grok_ticket_builder.py:9:GROK_RESEARCH_ONLY_BLOCKER = "grok_research_only_not_live_authorizer"
+roi-snips-snapshot/src/research/grok_ticket_builder.py:28:    blockers.append(GROK_RESEARCH_ONLY_BLOCKER)
+roi-snips-snapshot/tests/test_premarket_wrapper_optional_grok_nonfatal.py:37:            "ROI_SNIPS_GROK_READINESS_SCRIPT": str(fake_grok),
+roi-snips-snapshot/tests/test_premarket_wrapper_optional_grok_nonfatal.py:38:            "ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH": "true" if grok_required else "false",
+roi-snips-snapshot/tests/test_premarket_wrapper_optional_grok_nonfatal.py:42:            "ROI_SNIPS_TEST_STUB_GROK_PIPELINE": "true",
+roi-snips-snapshot/tests/test_premarket_wrapper_optional_grok_nonfatal.py:81:    assert _read_json(LOG_DIR / "grok_research_canary_latest.status.json")["status"] == "FAIL_REQUIRED_GROK_UNAVAILABLE"
+roi-snips-snapshot/tests/test_reddit_feed.py:7:    monkeypatch.delenv("REDDIT_CLIENT_SECRET", raising=False)
+roi-snips-snapshot/tests/test_reddit_feed.py:49:    monkeypatch.setenv("REDDIT_CLIENT_SECRET", "secret")
+roi-snips-snapshot/src/research/source_lane_status.py:63:    "FMP movers": ["FMP_API_KEY"],
+roi-snips-snapshot/src/research/source_lane_status.py:64:    "StockTwits": ["STOCKTWITS_ACCESS_TOKEN", "STOCKTWITS_BEARER_TOKEN"],
+roi-snips-snapshot/src/research/source_lane_status.py:66:    "Grok/X": ["XAI_API_KEY", "GROK_API_KEY"],
+roi-snips-snapshot/src/research/source_lane_status.py:67:    "Tavily/Brave/Exa": ["TAVILY_API_KEY", "BRAVE_API_KEY", "EXA_API_KEY"],
+roi-snips-snapshot/src/research/source_lane_status.py:68:    "Firecrawl/Crawl4AI": ["FIRECRAWL_API_KEY"],
+roi-snips-snapshot/src/research/source_lane_status.py:69:    "openFDA": ["OPENFDA_API_KEY"],
+roi-snips-snapshot/src/research/source_lane_status.py:70:    "SAM.gov/USAspending": ["SAM_GOV_API_KEY", "USASPENDING_API_KEY"],
+roi-snips-snapshot/tests/test_monday_schedule_deep_mini_primary.py:13:        assert 'ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"' in body
+roi-snips-snapshot/tests/test_monday_schedule_deep_mini_primary.py:24:    grok_prompt = (root / "docs" / "prompts" / "grok_first" / "04_GROK_CANDIDATE_DISCOVERY_TOURNAMENT.md").read_text()
+roi-snips-snapshot/tests/test_monday_schedule_deep_mini_primary.py:25:    ticket_summary = (root / "docs" / "prompts" / "grok_first" / "06_GROK_TICKET_INPUT_SUMMARY.md").read_text()
+roi-snips-snapshot/tests/test_monday_schedule_deep_mini_primary.py:37:    assert "04_GROK_CANDIDATE_DISCOVERY_TOURNAMENT.md" in status["required"]
+roi-snips-snapshot/tests/test_monday_schedule_deep_mini_primary.py:38:    assert "06_GROK_TICKET_INPUT_SUMMARY.md" in status["required"]
+roi-snips-snapshot/tests/test_monday_schedule_deep_mini_primary.py:39:    assert "04_GROK_D_RESEARCH_TOURNAMENT.md" not in status["required"]
+roi-snips-snapshot/tests/test_monday_schedule_deep_mini_primary.py:40:    assert "06_GROK_TRADE_AUTHORIZATION_TICKET.md" not in status["required"]
+roi-snips-snapshot/tests/test_premarket_wrapper_no_order_surface.py:12:    assert 'ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"' in body
+roi-snips-snapshot/tests/test_premarket_wrapper_no_order_surface.py:24:    assert 'ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"' in body
+roi-snips-snapshot/tests/test_deep_research_routing.py:46:    assert 'ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH="${ROI_SNIPS_REQUIRE_GROK_FOR_LIVE_RESEARCH:-false}"' in body
+roi-snips-snapshot/tests/test_grok_d_research_bridge.py:2:    GROK_REQUIRED_BLOCKER,
+roi-snips-snapshot/tests/test_grok_d_research_bridge.py:70:        adapter=FakeGrokAdapter({"ok": False, "reason": GROK_REQUIRED_BLOCKER}),
+roi-snips-snapshot/tests/test_grok_d_research_bridge.py:75:    assert result.error == GROK_REQUIRED_BLOCKER
+roi-snips-snapshot/tests/test_post_audit_fix_directive.py:90:    monkeypatch.delenv("FMP_API_KEY", raising=False)

@@ -1,0 +1,284 @@
+workflow:
+  runtime:
+    mode: HYPER_SPECULATIVE_AUTONOMOUS
+    human_approval_required: false
+    operator_expected_awake: false
+    llm_direct_order_authority: false
+    deterministic_engine_order_authority: true
+    requires_live_armed_state: true
+
+  lanes:
+    enabled:
+      - VERIFIED_CATALYST_RUNNER
+      - SOCIAL_TAPE_ROCKET
+      - PREMARKET_SURGE_LONG
+      - STAGED_OPEN_EXPLOSION_LONG
+      - PREMARKET_HIGH_RECLAIM_LONG
+      - MOVER_FIRST_EXPLAIN_LATER
+
+  strategy_priority_order:
+    - OPENING_BURST_HYPER_LONG
+    - SOCIAL_TAPE_ROCKET
+    - PREMARKET_SURGE_LONG
+    - STAGED_OPEN_EXPLOSION_LONG
+    - PREMARKET_HIGH_RECLAIM_LONG
+    - ORB_BREAK
+    - VWAP_RECLAIM
+
+  premarket_schedule_et:
+    - "06:15"
+    - "06:30"
+    - "07:00"
+    - "08:15"
+    - "09:00"
+    - "09:20"
+    - "09:28"
+    - "09:29"
+
+  research_passes_et:
+    post_close_collector:
+      start: "16:05"
+      end: "22:15"
+    official_sweep:
+      start: "04:05"
+      end: "04:25"
+    filing_refresh:
+      start: "06:05"
+      end: "06:20"
+    tradeability_gate:
+      start: "07:05"
+      end: "08:20"
+    shortlist_verification:
+      start: "08:20"
+      end: "09:00"
+    final_judge:
+      start: "09:05"
+      end: "09:20"
+    bell_readiness:
+      start: "09:20"
+      end: "09:29"
+
+  research_sources:
+    sec_edgar:
+      required: true
+      local_cache: true
+    benzinga:
+      required: true
+      normalize_events: true
+    alpaca_market_data:
+      required: true
+      require_liquidity_stats: true
+    alpaca_news:
+      required: true
+      normalize_events: true
+    reddit:
+      required: false
+      block_if_down: false
+      store_themes_and_acceleration: true
+      auth_mode: oauth_preferred_public_json_fallback
+    x_optional:
+      required: false
+      block_if_down: false
+    grok_x_search:
+      required: false
+      block_if_down: false
+      store_citations: true
+
+  watchlist:
+    tier_count:
+      A: 3
+      B: 5
+      C: 8
+    final_trade_focus: A
+    freeze_at_et: "09:29"
+
+  live_engine:
+    enabled: true
+    poll_seconds: 2
+    require_watchlist_eligibility: true
+    require_trade_authorization_ticket: true
+    authorized_ticket_only_execution: true
+    allow_watchlist_backup_execution: false
+    allow_triggers: [PREMARKET_SURGE, STAGED_OPEN_ORDER, OPENING_BURST_HYPER_LONG, OPENING_BURST, SOCIAL_TAPE_ROCKET, PREMARKET_HIGH_RECLAIM, ORB_BREAK, VWAP_RECLAIM]
+
+  thresholds:
+    research:
+      min_source_quality: 4.5
+      max_candidates_after_discovery: 75
+      max_candidates_for_verification: 15
+      max_candidates_for_deep_mini: 5
+      max_candidate_packets: 8
+    execution:
+      min_price: 3
+      min_avg_dollar_volume: 10000000
+      max_spread_pct: 0.75
+      hard_max_spread_pct: 2.0
+      min_execution_readiness_score: 65
+      require_official_or_structured: true
+      allow_social_tape_rocket_without_official: true
+      social_tape_min_hyper_score: 7.0
+      social_tape_min_attention_score: 8.0
+      social_tape_min_premarket_dollar_volume: 1000000
+
+  ranking:
+    primary_score: hyper_trade_score
+    avoid_blue_chip_safety_drift: true
+    prefer_volatile_small_mid_micro: true
+    backups_max: 2
+
+  research_llm:
+    primary_provider: openai
+    primary_route: governed_deep_research
+    primary_mode: deep_mini
+    primary_model: o4-mini-deep-research
+    primary_role: live_stock_picker
+    grok_role: social_heat_discovery_and_challenger
+    primary_tools:
+      - deep_research
+    structured_outputs_required: true
+    d_research_enabled: false
+    openai_deep_research_role: primary_live_selector
+    fallback_mode_for_live: none
+    fallback_without_grok: continue_deep_mini_without_social_layer
+    fallback_without_x_search: continue_deep_mini_without_social_layer
+    deterministic_fallback_executable_allowed: false
+    grok_fallback_executable_allowed: false
+    ticket_authorizer: governed_deep_research
+
+  grok_research:
+    enabled: true
+    role: x_social_heat_discovery_and_challenger
+    x_heat_radar_enabled: true
+    web_verification_enabled: true
+    can_discover_candidates: true
+    can_challenge_deep_mini: true
+    can_authorize_live_ticket: false
+    can_create_live_executable_primary: false
+    can_place_orders: false
+    can_override_deep_mini: false
+    red_team_enabled: true
+    post_miss_learning_enabled: true
+    require_x_search_for_live_research: false
+    require_web_search_for_live_research: false
+    required_for_live_research: false
+    if_unavailable: degrade_social_layer_but_continue_deep_mini
+    require_structured_output: true
+    max_runtime_minutes: 45
+    broad_candidate_target_min: 50
+    broad_candidate_target_max: 150
+    social_candidate_target_min: 25
+    social_velocity_required_for_live: false
+    hype_alone_can_authorize: false
+    artifact_dir: runs/{date}/grok/
+    required_artifacts:
+      - runs/{date}/grok/x_heat_radar.json
+      - runs/{date}/grok/web_verification.json
+      - runs/{date}/grok/candidate_discovery_tournament.json
+      - runs/{date}/grok/challenger_notes.json
+      - runs/{date}/grok/ticket_input_summary.json
+
+  deep_research:
+    enabled: true
+    auto_run: true
+    mode: deep_mini
+    role: primary_live_selector
+    fallback_mode: none_for_live
+    primary_provider: openai
+    primary_model_family: openai_deep_research
+    legacy_deep_mini_mode: deep_mini
+    top_n_for_deep_mini: 25
+    top_n_for_final_synthesis: 25
+    require_governed_route: true
+    require_for_live_research: true
+    require_grok_for_live_research: false
+    broad_discovery_enabled: true
+    shortlist_synthesis_enabled: true
+    red_team_enabled: true
+    poll_seconds: 15
+    timeout_seconds: 1800
+    timeout_seconds_broad: 1800
+    timeout_seconds_shortlist: 1500
+    latest_start_time_et: "08:45:00"
+    final_completion_deadline_et: "09:20:00"
+    freeze_time_et: "09:25:00"
+    allow_deterministic_fallback_for_live: false
+    allow_grok_fallback_for_live: false
+    allow_deterministic_fallback_for_research_only: true
+    required_artifacts:
+      - runs/{date}/deep_mini/broad_discovery_input.md
+      - runs/{date}/deep_mini/broad_discovery_summary.json
+      - runs/{date}/deep_mini/broad_discovery_raw_output.txt
+      - runs/{date}/deep_mini/shortlist_input.md
+      - runs/{date}/deep_mini/shortlist_synthesis_summary.json
+      - runs/{date}/deep_mini/shortlist_raw_output.txt
+      - runs/{date}/deep_mini/red_team_summary.json
+      - runs/{date}/deep_mini/final_packet.json
+    runner_path: /Users/rogerclaw/.openclaw/workspace/tools/deep-research-runner
+
+  trade_authorization:
+    required_for_live: true
+    authorizer_required: openai_deep_research
+    allowed_authorizers:
+      - openai_deep_mini
+      - openai_deep_research
+      - governed_deep_research
+    disallowed_authorizers:
+      - grok_d_research
+      - grok_x_heat_radar
+      - grok_web_verification
+      - deterministic_fallback
+      - internal_ranking
+      - social_only
+    one_ticker_only: true
+    backups_research_only: true
+
+  research:
+    raw_discovery:
+      enabled: true
+      target_raw_candidates_min: 50
+      target_raw_candidates_max: 150
+      preserve_top_raw_candidates: 25
+    broad_ai_discovery:
+      enabled: true
+      run_before_strict_filtering: true
+      target_candidates_min: 30
+      target_candidates_max: 75
+      final_pick_allowed: false
+    first_seen_tracking:
+      enabled: true
+      artifact_path: runs/{date}/normalized/first_seen_candidates.json
+    source_lane_status:
+      required: true
+      artifact_path: runs/{date}/normalized/source_lane_status.json
+    same_style_backups:
+      enabled: true
+      min_non_megacap_backups: 3
+      allow_mega_cap_fallback_only_if_no_same_style: true
+    no_trade_standard:
+      require_raw_discovery: true
+      require_source_lane_status: true
+      require_same_style_backup_attempt: true
+      require_rejection_reasons: true
+
+  market:
+    first_seen_price_tracking: true
+    move_since_first_seen_tracking: true
+
+  execution_state:
+    split_research_and_execution: true
+    require_executable_primary_separate_from_research_leader: true
+    allow_second_leg_watch: true
+    allow_no_trade_extended: true
+
+  opening_monitor:
+    opening_stream_start_et: "09:29:30"
+    continuation_monitor_start_et: "09:35:00"
+    continuation_monitor_end_et: "11:00:00"
+    require_concurrent_or_precise_handoff: true
+    stream_skipped_is_failure_when_required: true
+
+  outputs:
+    morning_json_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/json
+    morning_md_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/reports/morning/md
+    order_journal_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/reports/journal
+    research_runs_dir: /Users/rogerclaw/.openclaw/workspace/roi-snips/runs

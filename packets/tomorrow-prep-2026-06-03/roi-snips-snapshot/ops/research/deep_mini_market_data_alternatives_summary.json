@@ -1,0 +1,684 @@
+{
+  "started_at": "2026-04-22T02:56:14.131980+00:00",
+  "agent_id": null,
+  "user_request": "We are building Roi Snips, a strict, auditable intraday trading/research system for long-only U.S. equities and ETFs. Broker is Webull OpenAPI, but Webull OpenAPI market-data pricing appears too expensive for our needs (user saw OpenAPI non-display quote pricing around Nasdaq Basic $80/month and higher tiers above that).\n\nNeed a deep-mini research pass to determine the best low-cost or free architecture for market data while keeping Webull as broker/account source if possible.\n\nPlease use GPT-5.4 as the research architect and escalate to deep mini research.\n\nResearch objective:\nFind the best practical low-cost alternative to Webull OpenAPI market data for Roi Snips v1, with emphasis on intraday U.S. stocks/ETFs, long-only, cash-account style operation, one-position max, and catalyst-driven morning trading.\n\nHard requirements for data path:\n- U.S. equities and ETFs\n- Intraday quotes and 1-minute bars\n- Prefer premarket support (04:00-09:30 ET) and regular session support\n- Need enough data to compute: last price, prior close, bid/ask spread estimate if available, premarket volume, premarket dollar volume, recent 1-minute OHLCV, average dollar volume or a workable substitute, gap %, ORB/VWAP inputs\n- Suitable for an automated research/trading supervisor (check terms/licensing if possible)\n- Reasonable reliability for a small single-user/self-hosted system\n- Must not require margin/options/shorting features\n\nNice-to-haves:\n- Real-time or near-real-time quotes\n- Easy Python integration\n- Documented REST APIs\n- Affordable starter tier for one user\n- Upgrade path if the system grows\n\nCompare at minimum, where applicable:\n- Polygon\n- Alpaca market data (even if not using Alpaca as broker)\n- Finnhub\n- Twelve Data\n- Alpha Vantage\n- Tiingo / IEX / other serious alternatives you find relevant\n- Any broker+data bundle that is materially better than Webull for this use case\n\nDeliverable:\n1. Ranked shortlist of best options for Roi Snips v1\n2. Exact recommendation for the cheapest sensible architecture\n3. Whether Webull should remain broker-only or be replaced entirely\n4. Pricing summary (monthly)\n5. Data coverage / latency caveats\n6. Premarket support status\n7. Licensing / non-display / commercial-use caveats if relevant\n8. Integration complexity estimate\n9. Concrete migration plan for our current codebase\n10. Clear final answer: what we should do next this week\n\nBudget sensitivity:\n- User thinks $80/month for Webull OpenAPI Nasdaq Basic non-display is too expensive\n- Favor the cheapest sufficient path, not the fanciest one\n- If there is a strong free + paid hybrid path, include it\n\nCurrent implementation context:\n- Webull account auth and account-state endpoints work\n- Webull market-data endpoints are blocked by subscription requirements\n- Current codebase already has Webull adapters in Python and can be refactored\n- Live order placement must remain disabled unless explicitly armed by human approval\n\nPlease return an actionable recommendation, not just a vendor list.",
+  "route_chosen": "deep_mini",
+  "justification": "The user explicitly requests a deep-mini pass and the task requires meaningful external research across multiple vendors, pricing/licensing terms, premarket/intraday coverage, and architecture tradeoffs. It is moderately complex but bounded: U.S. equities/ETFs only, single-user system, v1 budget-sensitive decision. This does not require the broadest possible research footprint, so deep_mini is the cheapest sufficient route.",
+  "architect_model": "gpt-5.4",
+  "architect_request_id": "req_1097e016f4fa4584aa06a072481d0700",
+  "architect_response_id": "resp_0d53dee7b25a4d390069e838ce41f081979d21ccd579c73186",
+  "architect_usage": {
+    "input_tokens": 1054,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1187,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 2241
+  },
+  "brief": {
+    "Objective": "Determine the best practical low-cost or free market-data architecture for Roi Snips v1 while keeping Webull as broker/account source if viable, optimized for intraday U.S. equities/ETFs, premarket-aware catalyst trading, and strict/auditable automation constraints.",
+    "Primary question": "What is the cheapest sensible market-data stack that meets Roi Snips v1 functional needs better than paying for Webull OpenAPI market data, and should Webull remain broker-only or be replaced entirely?",
+    "Sub-questions to answer": "1. For each candidate provider, what starter-tier pricing applies monthly for a single-user/self-hosted system?\n2. Does it provide U.S. equities/ETFs intraday quotes and 1-minute bars, including premarket if applicable?\n3. What latency model applies: real-time, delayed, websocket/REST, snapshot only, rate limits, and reliability expectations?\n4. What exact fields can support Roi Snips metrics: last price, prior close, bid/ask or spread proxy, premarket volume, premarket dollar volume, 1-minute OHLCV, VWAP/ORB inputs, average dollar volume or substitute?\n5. Are there licensing/non-display/commercial/automated-use restrictions that would block an automated research/trading supervisor, even for a single user?\n6. How easy is Python integration and what migration effort from the current Webull-adapter codebase is required?\n7. Is a hybrid architecture better: broker-only Webull plus external data; free delayed data plus paid real-time bars; or broker+data replacement?\n8. Are there broker+data bundles materially better than Webull for this exact use case and budget?",
+    "Known context": "- Roi Snips is a strict, auditable intraday trading/research system.\n- Strategy scope: long-only U.S. equities and ETFs, cash-account style, one position max, catalyst-driven morning trading.\n- Webull account auth/account-state endpoints already work.\n- Webull market-data endpoints are blocked by subscription requirements and user views Webull OpenAPI non-display pricing around Nasdaq Basic $80/month as too expensive.\n- Current codebase is Python with Webull adapters and can be refactored.\n- Live order placement must stay disabled unless explicitly human-armed.",
+    "Scope boundaries": "- Focus on market data for U.S. listed equities and ETFs only.\n- Prioritize vendors explicitly requested: Polygon, Alpaca market data, Finnhub, Twelve Data, Alpha Vantage, Tiingo/IEX, plus any clearly relevant serious alternatives or broker+data bundles.\n- Evaluate only v1 practicality for a single-user/self-hosted system.\n- Include both free and low-cost paid paths, especially hybrid architectures.\n- Verify current pricing and terms from official sources where possible.",
+    "Out of scope": "- Futures, options, forex, crypto, international equities.\n- Full execution-quality comparison across many brokers beyond what affects the keep-Webull-vs-replace decision.\n- Building strategy logic or backtesting results.\n- Legal advice; only surface licensing/compliance caveats from provider terms/docs.",
+    "Source priorities": "1. Official pricing pages, API docs, market-data docs, exchange/entitlement/licensing pages, and terms of service from each provider.\n2. Official broker API docs and pricing for any broker+data bundle considered.\n3. Reputable secondary sources only to clarify gaps, never overrule primary docs.\n4. Prefer up-to-date pages with explicit timestamps/versioning if available.",
+    "Required deliverable": "Produce an actionable decision memo with:\n1. Ranked shortlist of best options for Roi Snips v1.\n2. Exact recommendation for the cheapest sensible architecture.\n3. Clear recommendation on whether Webull should remain broker-only or be replaced entirely.\n4. Monthly pricing summary table.\n5. Coverage/latency caveats table.\n6. Premarket support status by provider.\n7. Licensing/non-display/commercial-use caveats relevant to automated use.\n8. Integration complexity estimate for each shortlisted option.\n9. Concrete migration plan for the current Python codebase.\n10. Final next-step recommendation for this week.",
+    "Decision criteria": "- Meets hard requirements for U.S. equities/ETFs intraday monitoring and 1-minute bars.\n- Supports or reasonably approximates needed metrics for catalyst-driven morning trading.\n- Lowest monthly cost that is still operationally sensible.\n- Premarket usefulness is weighted heavily.\n- Automated-use/licensing risk must be acceptable or explicitly caveated.\n- Integration effort should be modest for a Python codebase with existing Webull adapters.\n- Reliability should be adequate for a single-user supervisor, not enterprise-grade overkill.",
+    "Stopping condition": "Stop when there is enough verified evidence from primary sources to rank the practical options, recommend one architecture, state whether to keep Webull as broker-only, and provide a concrete migration plan and next actions without material unresolved pricing/licensing ambiguities for the top candidates.",
+    "Budget discipline note": "Use the minimum amount of browsing/tool use necessary, avoid redundant searches, reuse gathered evidence across comparisons, and prefer narrowing the question to the few most plausible low-cost candidates over exploring tangents or premium enterprise options."
+  },
+  "model_invoked": "o4-mini-deep-research",
+  "tools_attached": {
+    "web_search": true,
+    "mcp": false,
+    "file_search": false,
+    "code_interpreter": false
+  },
+  "background_job_id": "resp_01d866b3723a77e10069e838e24d84819b9368a2001bd3091c",
+  "response_id": "resp_01d866b3723a77e10069e838e24d84819b9368a2001bd3091c",
+  "start_time": "2026-04-22T02:56:14.131980+00:00",
+  "end_time": "2026-04-22T03:11:41.268068+00:00",
+  "success": true,
+  "status": "completed",
+  "token_usage": {
+    "input_tokens": 76447,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 29395,
+    "output_tokens_details": {
+      "reasoning_tokens": 22720
+    },
+    "total_tokens": 105842
+  },
+  "error": null,
+  "tool_events": [
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    },
+    {
+      "type": "web_search_call",
+      "status": "completed",
+      "name": null
+    }
+  ],
+  "completion_time": 906.289,
+  "executor_output": "# Candidate Market-Data Options\n\n- **TD Ameritrade (TDA) API (broker+data):** Free (with trading account) access to real-time U.S. equity data. TDA’s REST API provides 1-minute bars, quotes (last price, bid/ask, open/high/low/close, volume) and supports extended-hours (premarket/postmarket) via a parameter ([aprueser.github.io](https://aprueser.github.io/TDAmeritradeAPI.jl/dev/priceHistory/#:~:text=Arguments)) ([aprueser.github.io](https://aprueser.github.io/TDAmeritradeAPI.jl/dev/priceHistory/#:~:text=,Default%20is%20true)).  WebSocket streaming (for live quotes/Level-II) is also available at no extra cost ([tda-api.readthedocs.io](https://tda-api.readthedocs.io/en/latest/streaming.html#:~:text=depth%20of%20book%20data,the%20relevant%20streams%2C%20although%20your)).  Rate limits are generous (~120 calls/min), and data delivery is reliable with sub-second latencies for quotes.  All U.S. stock exchanges are covered.  Licensing is straightforward – data comes through your brokerage account so internal non-display use is allowed.  Python integration is well-supported by the official `tda-api` library, but it requires writing new adapters (replacing Webull endpoints with TDA ones).  \n\n- **Finnhub Stock API (data-only):** Free tier offers real-time U.S. stock, ETF, forex and crypto data (with up to 60 calls/minute ([skills.sh](https://skills.sh/adaptationio/skrillz/finnhub-api#:~:text=Free%20%20,market%20pricing))) and basic global coverage. Provides quote endpoints (last price, bid/ask, prior close) and OHLCV “candle” endpoints (1-sec, 1-min, etc.), plus fundamentals and news.  The free plan has no daily cap (just the 60/min rate limit) and is explicitly provided for developer/trading use ([skills.sh](https://skills.sh/adaptationio/skrillz/finnhub-api#:~:text=Free%20%20,market%20pricing)) ([finnhubio.github.io](https://finnhubio.github.io/#:~:text=With%20the%20mission%20of%20democratizing,companies%20through%20our%20stock%20API)). It’s unclear if premarket trades are fully included, but any trades on U.S. exchanges (4am–8pm ET) appear in the data feed.  Integration via their Python client or simple REST calls is easy.  Licensing permits personal/commercial use (non-redistribution only, as with most free APIs).  \n\n- **Twelve Data (data-only, free plan):** Offers **real-time** U.S. stock/ETF data on the free “Basic” tier.  This includes 1-min OHLCV bars and last prices for all U.S. tickers ([support.twelvedata.com](https://support.twelvedata.com/en/articles/9935903-us-equities-market-data#:~:text=Every%20Twelve%20Data%20subscription%20plan,and%20every%20other%20US%20exchange)).  However, **extended hours** data (7am–8pm ET) requires the Pro plan ($229/mo) ([support.twelvedata.com](https://support.twelvedata.com/en/articles/5195429-pre-post-market-data#:~:text=,ET)); the free tier covers only normal trading hours.  The free plan allows up to ~800 calls per day ([twelvedata.com](https://twelvedata.com/pricing#:~:text=8%20API%20,8%C2%A0trial%C2%A0WS)) with no hidden fees, and usage is permitted for personal/commercial use ([support.twelvedata.com](https://support.twelvedata.com/en/articles/9935903-us-equities-market-data#:~:text=All%20Twelve%20Data%20paid%20plans,depending%20on%20your%20intended%20use)).  Data comes via REST JSON (also limited WebSocket trial), with latencies on par with any API.  All needed fields (open, high, low, close, volume) are provided; VWAP or dollar-volume can be computed from the bars.  Integration is straightforward (HTTP GETs or the official SDK).  \n\n- **Alpaca Market Data API (data-only)** – *Free vs Unlimited:*  Alpaca’s free plan provides delayed IEX exchange data only, with 15-minute delay on REST and only real-time via WebSocket ([alpaca.markets](https://alpaca.markets/data#:~:text=Real)) ([alpaca.markets](https://alpaca.markets/support/data-provider-alpaca#:~:text=Alpaca%20uses%20IEX%20and%20SIP,market%20data%20to%20its%20users)).  The free feed lacks trades on other exchanges, so coverage is incomplete.  The Unlimited plan ($99/mo, per account) provides full SIP real-time coverage (100% of U.S. volume) ([alpaca.markets](https://alpaca.markets/support/data-provider-alpaca#:~:text=For%20the%20Unlimited%20plan%2C%20we,market%20volume)).  Alpaca data includes 1-min bars, quotes, and extended-hours if on Unlimited.  Integration is easy via the Alpaca Python SDK.  Caveat: the free/IEX plan omits most premarket volume; the paid plan adds it.  \n\n- **Polygon.io (data-only):** Polygon has a free tier (end-of-day data only) and low-tier plans, but **real-time intraday** requires the $199/mo “Advanced” plan ([polygon.io](https://polygon.io/pricing#:~:text=%24199%2Fmonth)).  Starter ($29) only gives 15-min delayed bars ([polygon.io](https://polygon.io/pricing#:~:text=%2429%2Fmonth)).  Real-time data (trades/quotes) is 100% covered but cost-prohibitive at v1 scale.  Extended-hours (pre/after) **are available** in the data feed ([polygon.io](https://polygon.io/knowledge-base/article/does-polygon-offer-pre-market-and-after-hours-data/#:~:text=Yes%2C%20we%20provide%20data%20for,these%20extended%20hours%20as%20well)).  Integration via their WebSocket or REST APIs is robust, but given the cost, Polygon is not economical for a low-budget solution.  \n\n- **Alpha Vantage (data-only):** Free tier is extremely limited (25 requests/day) ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=Alpha%20Vantage%27s%20free%20tier%20is,calculus%20for%20anyone%20considering%20it)); premium plans start around ~$30–$150/month.  Intraday 1-min bars and quotes exist, but **real-time USA data is only in a paid tier** ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=Intraday%20data%20at%201%2F5%2F15%2F30%2F60,exchanges%2C%20FINRA%2C%20and%20the%20SEC)).  The free tier cannot support sophisticated intraday use.  Pricing is non-transparent and likely ≥$30/month for anything above trivial usage.  However, Alpha Vantage is NASDAQ-licensed ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=The%20platform%20covers%2020%2B%20global,risk%20from%20unlicensed%20data%20feeds)), so legal use is permitted; the main issue is rate-limiting.  Integration (REST) is easy but throttling is a deal-breaker.  \n\n- **Others (IEX Cloud, Tiingo, Yahoo, etc.):** IEX Cloud has a small free tier (500k messages/month) and paid plans from $9–$49 ([www.saasworthy.com](https://www.saasworthy.com/product/iex-cloud/pricing#:~:text=Launch%20%249)), with daily/real-time endpoints.  However, IEX Cloud uses IEX exchange data and does not provide consolidated premarket.  Tiingo and Yahoo unofficial sources can provide 1-min bars, but Tiingo’s intraday feed is paid (cheapest ~$10/mo) and Yahoo’s API is unofficial (unreliable/legal-risky).  We do not consider these superior to the above options for v1.  \n\n# Pricing Summary (monthly lowest plans)\n\n| Provider            | Free Tier?        | Low-Cost Paid Tier       | Notes                                 |\n|---------------------|-------------------|--------------------------|---------------------------------------|\n| TD Ameritrade       | ✓ (with account)  | N/A (free data)          | No extra data cost; requires brokerage. |\n| Finnhub             | ✓ 60 calls/min ([skills.sh](https://skills.sh/adaptationio/skrillz/finnhub-api#:~:text=Free%20%20,market%20pricing)) | $50/mo for more (per-market) ([sia.hackernoon.com](https://sia.hackernoon.com/12-must-have-financial-market-apis-for-real-time-insights-in-2026#:~:text=Finnhub%20offers%20multiple%20pricing%20tiers,data%20type%20and%20usage%20requirements)) | Free covers U.S. stocks/FX/crypto.  |\n| Twelve Data Basic   | ✓ (800 calls/day) ([twelvedata.com](https://twelvedata.com/pricing#:~:text=8%20API%20,8%C2%A0trial%C2%A0WS))  | $66/mo (Grow)           | Real-time US only; pre/post requires $229. |\n| Alpaca Market Data  | ✓ (IEX only) ([alpaca.markets](https://alpaca.markets/support/data-provider-alpaca#:~:text=The%20Free%20plan%20consists%20of,and%20not%20the%20exchange%20itself)) | $99/mo (Unlimited SIP) ([alpaca.markets](https://alpaca.markets/support/data-provider-alpaca#:~:text=For%20the%20Unlimited%20plan%2C%20we,market%20volume)) | Free is delayed IEX; Premium gives full SIP. |\n| Alpha Vantage       | ✓ (25 req/day) ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=Alpha%20Vantage%27s%20free%20tier%20is,calculus%20for%20anyone%20considering%20it)) | ~$30–150/mo (unclear)  | Free impractical; paid needed for intraday. |\n| Polygon.io Starter  | ✗ (only EOD)      | $29/mo (Starter) – delayed; $199 (Advanced) | Real-time at $199 (too high). Extended = yes ([polygon.io](https://polygon.io/knowledge-base/article/does-polygon-offer-pre-market-and-after-hours-data/#:~:text=Yes%2C%20we%20provide%20data%20for,these%20extended%20hours%20as%20well)). |\n| Webull OpenAPI data | ✗                | ~$80/mo (Nasdaq Basic) | *Current baseline (to avoid paying)*. |\n\n# Coverage and Latency\n\n| Provider         | Data Coverage (U.S. stocks/ETFs)    | Realtime vs Delayed         | Access Method           | Rate Limits             | Reliability      |\n|------------------|-------------------------------------|-----------------------------|-------------------------|-------------------------|------------------|\n| **TDA API**      | All US exchanges (100% by SIP)      | Real-time (with known delays for free accounts) ([tda-api.readthedocs.io](https://tda-api.readthedocs.io/en/latest/streaming.html#:~:text=depth%20of%20book%20data,the%20relevant%20streams%2C%20although%20your)); extended-hours supported ([aprueser.github.io](https://aprueser.github.io/TDAmeritradeAPI.jl/dev/priceHistory/#:~:text=,Default%20is%20true)) | REST (OHLC bars, quotes); WebSocket (streaming) | ~120 calls/minute         | High (exchange-grade) |\n| **Finnhub**      | US + global stocks, ETFs, crypto    | Real-time (free tier) ([skills.sh](https://skills.sh/adaptationio/skrillz/finnhub-api#:~:text=Free%20%20,market%20pricing)); historical OHLC also available | WebSocket & REST APIs   | 60 calls/min (free) ([skills.sh](https://skills.sh/adaptationio/skrillz/finnhub-api#:~:text=Free%20%20,market%20pricing))| Good (commercial service) |\n| **Twelve Data**  | US stocks/ETFs (real-time); others via paid plans | Real-time (free tier covers main hours) ([support.twelvedata.com](https://support.twelvedata.com/en/articles/9935903-us-equities-market-data#:~:text=Every%20Twelve%20Data%20subscription%20plan,and%20every%20other%20US%20exchange)); extended requires Pro | REST (JSON)            | ~800/day (free); unlimited with paid | Good (institutional-grade) |\n| **Alpaca Data**  | US stocks (free only IEX, SIP for paid) | Free: IEX real-time (partial); Paid: full SIP real-time | REST and WebSocket     | 200 calls/min (free) ([alpaca.markets](https://alpaca.markets/data#:~:text=Real))| Moderate (IEX-only free) |\n| **Alpha Vantage**| US stocks (major exchanges)         | Free: 15-min delayed for intraday (premium = real-time) ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=Intraday%20data%20at%201%2F5%2F15%2F30%2F60,exchanges%2C%20FINRA%2C%20and%20the%20SEC)) | REST only             | 5/min, 500/day (free) ([trading-strategies.academy](https://trading-strategies.academy/archives/46859#:~:text=The%20primary%20constraints%20for%20the,free%20tier%20are)) | Variable (free)  |\n| **Polygon**      | US stocks (all markets)            | Advanced plan: real-time ([polygon.io](https://polygon.io/pricing#:~:text=,Technical%20Indicators)); lower plans 15-min delayed | REST/WebSocket         | 5–unlimited (depending on plan) | Very high (paid) |\n\n*(TDA latency refers to HTTP updates; WebSocket is near zero delay. Twelve Data lists sub-second (<170ms) streaming latencies.)*\n\n# Premarket/Data-Session Support\n\n| Provider          | Premarket Data Available | Comments                                             |\n|-------------------|--------------------------|------------------------------------------------------|\n| **TDA API**       | Yes                      | Can include premarket/postmarket bars when `needExtendedHoursData=true` ([aprueser.github.io](https://aprueser.github.io/TDAmeritradeAPI.jl/dev/priceHistory/#:~:text=,Default%20is%20true)) (market hours 4am–8pm ET) |\n| **Finnhub**       | Likely Yes               | Free data claims “real-time” for stocks; extended trading likely included in intraday feeds (market hours 4am–8pm ET). |\n| **Twelve Data**   | **No** (Basic plan)      | Extended hours (7am–8pm ET) only on Pro or higher ([support.twelvedata.com](https://support.twelvedata.com/en/articles/5195429-pre-post-market-data#:~:text=,ET)); free plan covers 9:30–16:00 only. |\n| **Alpaca (free)** | No (IEX)                 | IEX exchange trades run normal hours (9:30–4) or limited after-hours; free plan does not include SIP extended bars. |\n| **Alpaca (paid)** | Yes                      | Unlimited plan (SIP data) covers 4am–8pm ET.         |\n| **Alpha Vantage** | No                       | Intraday feeds cover regular session only.           |\n| **Polygon**       | Yes                      | Includes trades from 4am–8pm ET ([polygon.io](https://polygon.io/knowledge-base/article/does-polygon-offer-pre-market-and-after-hours-data/#:~:text=Yes%2C%20we%20provide%20data%20for,these%20extended%20hours%20as%20well)), but only in real-time (Advanced) plan. |\n\n# Licensing / Commercial Use\n\n- **TDA API:** Data is delivered via your brokerage account, so it is licensed for trading research and execution. No extra exchange fees beyond any needed account agreements; internal non-display use is allowed.  \n- **Finnhub:** Free API is offered for developers and commercial apps (non-display usage). There’s no explicit prohibition on automated trading; just abide by their rate limits. (Paid tiers allow higher usage).  \n- **Twelve Data:** All paid plans permit personal/commercial use (including automated trading) ([support.twelvedata.com](https://support.twelvedata.com/en/articles/9935903-us-equities-market-data#:~:text=All%20Twelve%20Data%20paid%20plans,depending%20on%20your%20intended%20use)). The free Basic plan is similarly unrestricted for internal use. External redistribution or “white-label” use would require special licensing.  \n- **Alpaca Data:** Free (IEX) feed is based on SIP data permitted for personal use, but it is only for your own trading. Paid SIP feed allows commercial automation for that brokerage account.  \n- **Alpha Vantage:** Licensed by Nasdaq ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=The%20platform%20covers%2020%2B%20global,risk%20from%20unlicensed%20data%20feeds)), so its data is legal for commercial use. However, the free tier limits (25 calls/day) ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=Alpha%20Vantage%27s%20free%20tier%20is,calculus%20for%20anyone%20considering%20it)) effectively make it impractical for automation.  \n- **Polygon:** Requires paid subscription for non-experimental use; free tier data is generally for demo only.  \n- **Webull (current):** Webull’s own market data requires a paid subscription (Nasdaq Basic ~$80/mo), which we aim to avoid.  \n\n# Integration & Migration Effort\n\n- **TDA API:** Requires full adapter rewrite. The Python `tda-api` client handles all endpoints, but field names differ from Webull’s. We would reimplement data-fetch methods (e.g. use `client.get_price_history()` for bars and `client.get_quotes()` for last/bid/ask). However, TDA’s auth (OAuth with API key) and trade endpoints would also need wiring if switching broker. For data alone, one can use TDA’s REST in place of Webull’s. Effort: **moderate to high** (new code for each data type, new auth).  \n- **Finnhub:** Provides an official Python client. Integrating involves replacing Webull calls with Finnhub’s REST/WebSocket calls. Field mapping is straightforward (Finnhub’s quote/candle JSON is simple). Effort: **moderate**.  \n- **Twelve Data:** Very easy integration – simple HTTP GET requests with API key. The field names (columns “datetime, open, high…” etc.) can be mapped to existing structures. Minimal library overhead; official Python wrapper exists. Effort: **low**.  \n- **Alpaca Data:** Alpaca’s Python SDK (`alpaca-trade-api`) makes it easy. The pattern is somewhat like Webull’s (REST + streaming). However, remember free plan is incomplete data. Effort: **moderate** (if using Unlimited plan).  \n- **Alpha Vantage:** Integration (via `requests` or wrappers) is easy, but the severe rate-limit makes it unusable for live trading. Effort not justified for real-time use.  \n- **Polygon:** Official Python library available. Field mapping is moderate. But given the cost barrier, we would likely not implement it.  \n\n# Recommended Architecture\n\n**Top Choice:** **Keep Webull for execution**, but **use TDA API for market data**. This hybrid avoids Webull’s $80 data fee while retaining the existing order logic. TDA’s free data meets all technical needs (intraday + extended hours) at zero added cost ([tda-api.readthedocs.io](https://tda-api.readthedocs.io/en/latest/streaming.html#:~:text=depth%20of%20book%20data,the%20relevant%20streams%2C%20although%20your)) ([aprueser.github.io](https://aprueser.github.io/TDAmeritradeAPI.jl/dev/priceHistory/#:~:text=,Default%20is%20true)). We can simply disable Webull’s data calls and replace them with TDA REST calls in our Python code.  \n\n**Alternative:** Switch fully to TDA for both broker and data. This unifies accounts and code but requires reimplementing trade execution. TDA offers commission-free stock trading (cash account) similar to Webull. Given our objectives, it is viable if code refactoring is acceptable. \n\n**Lower-tier fallback:** If we want minimal code changes, Twelve Data’s free API could provide delayed bars (without extended hours). However, missing premarket data would degrade catalyst trading. Finnhub’s free API is also attractive and cheap (free) but less well-proven. \n\n**Other:** Pure paid market-data solutions (Polygon Advanced, Alpaca Unlimited, etc.) meet requirements easily but far exceed our budget. \n\n# Webull: Keep Broker-Only or Replace?\n\nWe **recommend keeping Webull as the broker** for order execution (and *only* using it for trades/account state). Its Python integration and existing code can remain largely unchanged for submitting orders. Market data will be sourced externally. *However*, if resources allow a full refactor, migrating execution to TDA’s broker API is also sensible – it further consolidates the architecture (one platform for both data and trading). In either case, we will **stop using Webull’s market-data endpoints** (to avoid the $80/mo subscription) and rely on a cheaper data feed. \n\n# Migrating the Python Code\n\n1. **Acquire new market-data keys/APIs:** Sign up for TDA Developer (obtain API key and callback for OAuth) or the chosen data providers (Twelve Data, Finnhub, etc.). \n2. **Implement new data adapters:** For each required data type (quotes, 1-min bars, etc.), write a module/class that calls the provider’s API and returns data in the format Roi Snips expects. For example, use `tda.get_price_history()` for historical bars and `tda.get_quotes()` for last/bid/ask. Ensure extended-hours flag is set where needed (e.g. `needExtendedHoursData=true` for premarket). \n3. **Compute derived metrics:** Continue computing VWAP, opening-range stats, average dollar volume, etc. using the new data fields. They should come naturally from OHLCV. \n4. **Disable Webull data calls:** Remove or bypass any code that fetches quotes/bars from Webull. Keep only the account/order endpoints for trade placement. \n5. **Test with historic/backfill:** Run the system on past data to validate that signals (catalyst detection, ORB, etc.) behave identically with the new data. Compare one or two symbols against known quotes to verify accuracy. \n6. **Paper-trade/Simulation:** With both accounts connected (Webull for orders, TDA or chosen provider for data), run the live model in “dry-run” mode to ensure stability and correctness. Log all data inputs to verify premarket coverage. \n7. **Go live:** Once validated, resume live alerts/orders with the new data feed, keeping all trading disabled until human arms the system. \n\n# Next Steps Recommendation\n\nFor immediate action, we advise **prototyping with TDA’s API**. This provides the required data for free and has official support. The very next steps are: (a) open a TD Ameritrade developer account and generate API credentials; (b) modify the Python code to fetch a few sample 1-min bars and quotes for test tickers via TDA; (c) verify that premarket data (e.g. 7–9:30am quotes) are returned correctly. Meanwhile, leave existing Webull trading code intact. If TDA proves reliable, complete the refactoring of all market-data calls this week. \n\nBy following this plan, we secure **the cheapest operational solution** for intraday U.S. equities data (effectively $0 extra cost) and eliminate the need for Webull’s paid data. The tables above summarize the costs, coverage, and caveats for each option to justify this recommendation. \n\n**Sources:** Primary API documentation and pricing pages were used wherever possible ([polygon.io](https://polygon.io/pricing#:~:text=Stocks%20Basic)) ([support.twelvedata.com](https://support.twelvedata.com/en/articles/9935903-us-equities-market-data#:~:text=Every%20Twelve%20Data%20subscription%20plan,and%20every%20other%20US%20exchange)) ([twelvedata.com](https://twelvedata.com/pricing#:~:text=8%20API%20,8%C2%A0trial%C2%A0WS)) ([alphalog.ai](https://alphalog.ai/blog/alphavantage-api-complete-guide#:~:text=Alpha%20Vantage%27s%20free%20tier%20is,calculus%20for%20anyone%20considering%20it)) ([skills.sh](https://skills.sh/adaptationio/skrillz/finnhub-api#:~:text=Free%20%20,market%20pricing)), supplemented by official knowledge-base articles ([polygon.io](https://polygon.io/knowledge-base/article/does-polygon-offer-pre-market-and-after-hours-data/#:~:text=Yes%2C%20we%20provide%20data%20for,these%20extended%20hours%20as%20well)) ([support.twelvedata.com](https://support.twelvedata.com/en/articles/5195429-pre-post-market-data#:~:text=,ET)) and community docs ([tda-api.readthedocs.io](https://tda-api.readthedocs.io/en/latest/streaming.html#:~:text=depth%20of%20book%20data,the%20relevant%20streams%2C%20although%20your)) ([alpaca.markets](https://alpaca.markets/support/data-provider-alpaca#:~:text=Alpaca%20uses%20IEX%20and%20SIP,market%20data%20to%20its%20users)) for clarifications.",
+  "request_id": "req_941a1a5d8b6748a9ac14836066902a0a"
+}

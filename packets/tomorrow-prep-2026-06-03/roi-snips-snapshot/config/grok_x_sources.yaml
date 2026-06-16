@@ -1,0 +1,33 @@
+high_signal_news_handles:
+  - Benzinga
+  - StockMKTNewz
+  - unusual_whales
+  - DeItaone
+  - FirstSquawk
+  - LiveSquawk
+  - zerohedge
+  - TradingView
+  - CNBCnow
+
+high_signal_trader_handles:
+  - configurable_by_charles
+
+excluded_handles:
+  - obvious_spam_accounts
+  - known_pump_ring_accounts
+
+query_families:
+  - premarket gappers
+  - small cap runner
+  - FDA approval
+  - contract award
+  - merger
+  - strategic review
+  - short squeeze
+  - low float
+  - offering
+  - warrants
+  - halt
+  - gap and go
+  - volume spike
+  - unusual volume

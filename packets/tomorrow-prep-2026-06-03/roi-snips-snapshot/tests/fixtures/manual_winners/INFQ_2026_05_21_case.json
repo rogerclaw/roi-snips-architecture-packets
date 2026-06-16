@@ -1,0 +1,48 @@
+{
+  "ticker": "INFQ",
+  "company": "Infleqtion",
+  "date": "2026-05-21",
+  "archetype": "INFQ_STYLE_GOVERNMENT_SECTOR_WAVE",
+  "catalyst": {
+    "type": "government_contract",
+    "summary": "Quantum company receives proposed CHIPS / Department of Commerce government funding LOI and has a same-day investor-event catalyst.",
+    "terms": [
+      "CHIPS",
+      "Department of Commerce",
+      "letter of intent",
+      "government funding",
+      "quantum computing",
+      "same-day investor event"
+    ]
+  },
+  "sector_basket": ["QBTS", "RGTI", "QUBT", "IONQ", "IBM", "GFS", "INFQ"],
+  "profile": {
+    "undercovered_or_newly_public": true,
+    "high_beta": true,
+    "preferred_over_blue_chip_fallback": true
+  },
+  "premarket": {
+    "reference_price": 13.69,
+    "prior_close": 11.18,
+    "gap_pct": 22.45,
+    "volume": 6000000,
+    "dollar_volume": 82140000,
+    "meaningful_relative_volume": true
+  },
+  "attention": {
+    "stocktwits": "active",
+    "reddit": "active",
+    "x_or_grok": "active",
+    "retail_attention_acceleration": true
+  },
+  "validation": {
+    "analyst_or_press_validation": true,
+    "primary_or_structured_source_required": true,
+    "social_only_cannot_trade": true
+  },
+  "risks": ["dilution_or_warrant_supply", "wide_spread", "opening_reversal", "catalyst_already_priced"],
+  "expected_ranking": {
+    "must_outrank": ["AMD", "PLTR", "SMCI", "TSLA", "NVDA", "AAPL"],
+    "unless_mega_cap_has": ["exceptional_fresh_catalyst", "exceptional_opening_drive", "explicit_small_mid_cap_comparison"]
+  }
+}

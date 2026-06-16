@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.roisnips.research-war-room</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/rogerclaw/.openclaw/workspace/roi-snips/scripts/run_research_war_room.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/rogerclaw/.openclaw/workspace/roi-snips</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION</key>
+    <string>false</string>
+    <key>ROI_SNIPS_ALLOW_PAPER_ORDER_SUBMISSION</key>
+    <string>false</string>
+    <key>ROI_SNIPS_SHADOW_SKIP_BROKER_PREFLIGHT</key>
+    <string>true</string>
+    <key>ROI_SNIPS_SKIP_BROKER_STATE_FOR_SHADOW</key>
+    <string>true</string>
+  </dict>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>6</integer>
+    <key>Minute</key>
+    <integer>25</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/rogerclaw/.openclaw/workspace/roi-snips/logs/launchd/research-war-room.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/rogerclaw/.openclaw/workspace/roi-snips/logs/launchd/research-war-room.err.log</string>
+</dict>
+</plist>

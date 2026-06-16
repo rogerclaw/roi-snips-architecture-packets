@@ -1,0 +1,339 @@
+REVIEW OF HYPER-SPECULATIVE AUTONOMY PATCH
+Generated: 2026-05-20
+
+Input reviewed:
+`Roi_Snips_Claw_Hyper_Speculative_Search_And_Autonomy_Patch---f1dc5326-a4d4-4ab4-8418-78ad1ae1a1ab.txt`
+
+Summary
+=======
+
+The attached patch is directionally useful as a research-discovery expansion
+plan, but it is not safe to apply wholesale as a live-trading autonomy patch.
+
+The strongest parts are:
+
+- move broader discovery earlier, before conservative filtering narrows the
+  candidate pool too much
+- explicitly support mover-first discovery
+- add StockTwits, FMP, broader web search/extraction, FDA/clinical-trial, and
+  government-award lanes
+- improve Grok/X from raw social mentions into a richer social narrative lane
+- distinguish "research risk" from "mechanical failure"
+- keep final output focused on one primary trade, not a generic watchlist
+
+The risky parts are:
+
+- enabling autonomous live entries by default
+- clearing `state/DISABLE_NEW_ENTRIES`
+- allowing social/tape-only candidates to become executable without official or
+  structured confirmation
+- treating wide spreads, sub-$5 names, high gaps, low float, and hype as mostly
+  sizing issues instead of potential hard blockers
+- adding pre-09:35 opening-burst execution before the current live engine has
+  proven first-seconds tape handling, broker reconciliation, and exit protection
+
+Recommended posture:
+
+Adopt the patch as a dry-research and simulation architecture first. Do not use
+it as live-arming authorization.
+
+
+Accepted Now: Research/Discovery Direction
+==========================================
+
+1. Three parallel research lanes
+--------------------------------
+
+The proposed three-lane model is good:
+
+- `VERIFIED_CATALYST_RUNNER`
+- `SOCIAL_TAPE_ROCKET`
+- `MOVER_FIRST_EXPLAIN_LATER`
+
+This should be implemented first as research classification, not as live
+execution permission.
+
+Each candidate can carry one or more lane tags. The lane tags should influence
+ranking, final packet language, and what additional evidence is required.
+
+2. Broad discovery before filtering
+-----------------------------------
+
+This is the most important research improvement.
+
+Current risk:
+
+If deterministic scouts filter too early, deep research and Grok only see the
+names that already survived conservative filters. That can miss exactly the
+volatile small-cap runner Charles is looking for.
+
+Recommended patch:
+
+- add a broad pre-filter discovery pass
+- let mover/social/web/deep-research discovery contribute raw candidates
+- delay hard elimination until after evidence/tape enrichment
+- keep mechanical live-entry gates separate
+
+3. Hyper-speculative ranking as a research score
+------------------------------------------------
+
+The proposed `hyper_trade_score` is useful, but it should be a research score,
+not an order trigger.
+
+Add it alongside current research priority scoring:
+
+- premarket repricing energy
+- catalyst violence
+- opening-drive potential
+- attention velocity
+- earlyness
+- float/squeeze factor
+- level clarity
+- source quality
+- exhaustion penalty
+- dilution/offering penalty
+- fake-hype penalty
+- mega-cap boring penalty
+
+The final packet can use this score to explain why a volatile name is the best
+research candidate.
+
+4. New source lanes
+-------------------
+
+Highest-value source additions from the patch:
+
+- StockTwits scout
+- FMP mover scout
+- broader web-search scout using Tavily/Brave/Exa-style discovery when available
+- Firecrawl/Crawl4AI extraction for messy source pages
+- ClinicalTrials.gov scout
+- openFDA scout
+- government-award scout
+- Nasdaq halt feed
+
+These are good additions because they expand the raw opportunity universe
+without changing live-trading posture.
+
+5. Grok/X narrative engine
+--------------------------
+
+The patch is right that Grok should become more structured.
+
+Current implemented state:
+
+- Grok/X search works through OpenClaw
+- Roi Snips has `src/adapters/grok_search.py`
+- `SocialScout` emits `grok_x_search` events
+- those events are social-only and cannot by themselves bypass execution gates
+
+Recommended next step:
+
+Add richer Grok fields:
+
+- attention velocity
+- narrative summary
+- key X threads/citations
+- influencer concentration
+- market-moving hype score
+- pump-language score
+- rumor-vs-catalyst flag
+
+
+Not Accepted For Live Mode Yet
+==============================
+
+1. Do not clear `state/DISABLE_NEW_ENTRIES`
+-------------------------------------------
+
+The attached patch repeatedly assumes autonomous live entries should be enabled.
+That should not be treated as authorization.
+
+Current live guard remains correct:
+
+- `state/DISABLE_NEW_ENTRIES` is active
+- full execution readiness is false because that guard is active
+- Alpaca broker and SIP data work
+- open orders are zero
+
+2. Do not change `human_approval_required` / arming semantics as a side effect
+-----------------------------------------------------------------------------
+
+The patch says not to add human approval and to allow Charles to be asleep.
+That may match the intended future operating model only after explicit live
+arming, but it should not be applied as a silent config change.
+
+Keep current rule:
+
+Live entries require explicit arming by Charles. API keys, funding, SIP data,
+Grok access, or research success do not imply arming.
+
+3. Do not let social-only candidates become live-executable yet
+---------------------------------------------------------------
+
+The attached patch proposes `SOCIAL_TAPE_ROCKET` trades without official
+confirmation when social/tape evidence is extreme.
+
+That may be a valid future strategy, but it needs a separate simulation and
+acceptance-test path first.
+
+Minimum requirements before considering live social/tape-only execution:
+
+- market-data freshness proof at first-seconds resolution
+- spread/slippage guard under fast tape
+- halt detection
+- broker order reconciliation
+- fast cancel/replace behavior
+- protective exit behavior
+- replay tests using historical runner examples
+- paper/dry-run results showing the strategy does not chase obvious pumps
+
+Until then:
+
+Social-only names can be research candidates, watchlist names, or simulated
+strategy candidates. They should not be live-executable.
+
+4. Do not weaken spread/liquidity gates too far
+-----------------------------------------------
+
+The patch says wide-but-tradeable spreads, sub-$5 names, high gap percent, and
+thin low-float names should be penalties, not blockers.
+
+That is directionally compatible with Charles's risk appetite, but only if the
+order engine can size down and cancel fast enough. In the current system, spread
+and liquidity are still mechanical safety checks, not just research preferences.
+
+Recommended compromise:
+
+- keep strict hard blockers for missing/stale bid/ask, no quote, active halt,
+  broker mismatch, duplicate orders, and insufficient cash
+- allow more aggressive research ranking for sub-$5, high-gap, low-float names
+- only relax spread/liquidity in simulation first
+- make any future live relaxation size-dependent and strategy-specific
+
+5. Do not add pre-09:35 opening-burst live execution before proving the engine
+------------------------------------------------------------------------------
+
+The patch wants entries in the first 10s/30s/60s after the open.
+
+This is plausible for the target strategy but dangerous without a dedicated
+opening-burst engine and no-order replay validation.
+
+Recommended phase order:
+
+1. implement first-10s/30s/60s tape metrics
+2. generate simulated entry/exit decisions only
+3. review slippage/spread behavior
+4. paper/dry-run
+5. then consider live arming separately
+
+
+Implementation Plan
+===================
+
+Phase 1: Safe research expansion
+--------------------------------
+
+- Add lane tags to candidate/evidence records:
+  - `VERIFIED_CATALYST_RUNNER`
+  - `SOCIAL_TAPE_ROCKET`
+  - `MOVER_FIRST_EXPLAIN_LATER`
+- Add `hyper_trade_score` as a research ranking overlay.
+- Add broad candidate discovery before strict filtering.
+- Add richer Grok/X narrative fields.
+- Add StockTwits and FMP scouts if credentials/terms allow.
+- Keep all live trading blocked.
+
+Phase 2: Online research route
+------------------------------
+
+- Generate a 5-15 candidate shortlist brief after broad discovery.
+- Run `tools/deep-research-runner` on that shortlist.
+- Use `deep_mini` for normal morning synthesis.
+- Use full `deep` only for unusually broad/source-conflicted cases.
+- Require citations and one decisive best-pick/no-trade packet.
+- Keep deep research below deterministic execution gates.
+
+Phase 3: Tape and simulation
+----------------------------
+
+- Add first-5s/10s/30s/60s tape metrics.
+- Add premarket high/reclaim and opening-drive metrics.
+- Simulate `SOCIAL_TAPE_ROCKET`, `OPENING_DRIVE_HYPER_LONG`, and
+  `MOVER_FIRST_EXPLAIN_LATER` entries.
+- Capture hypothetical entry, max entry, stop/thesis break, exit triggers,
+  slippage estimate, and reason for no-trade.
+- Do not place live orders.
+
+Phase 4: Live-readiness review
+------------------------------
+
+Only after dry/sim passes:
+
+- verify broker/account/order state
+- verify SIP tape quality
+- verify halt source
+- verify order reconciliation
+- verify protective exit path
+- verify no duplicate order path
+- verify full tests
+- then ask Charles explicitly whether to arm live entries
+
+
+Files The Patch Suggests Touching
+=================================
+
+Reasonable near-term files:
+
+- `src/research/models.py`
+- `src/research/ranking.py`
+- `src/research/gates.py`
+- `src/research/cluster.py`
+- `src/research/market_overlay.py`
+- `src/research/scouts/social_scout.py`
+- `src/adapters/grok_search.py`
+- `config/workflow.yaml`
+- `runbooks/PRODUCTION_STOCK_HUNT_RUNBOOK.md`
+- tests for ranking, gates, social scout, research pipeline
+
+Possible new files:
+
+- `src/research/scouts/stocktwits_scout.py`
+- `src/research/scouts/fmp_mover_scout.py`
+- `src/research/scouts/broad_deep_research_scout.py`
+- `src/research/scouts/web_search_scout.py`
+- `src/research/scouts/clinicaltrials_scout.py`
+- `src/research/scouts/openfda_scout.py`
+- `src/research/scouts/government_awards_scout.py`
+- `src/research/scouts/nasdaq_halt_scout.py`
+
+Live-execution files should wait:
+
+- `configs/live.yaml`
+- live order submission defaults
+- `state/DISABLE_NEW_ENTRIES`
+- opening-burst executor
+- broker live-entry paths
+
+
+Current Bottom Line
+===================
+
+This patch should be accepted as:
+
+- a stronger research architecture
+- a source-expansion plan
+- a dry-run/simulation roadmap
+- a useful correction against blue-chip/conservative drift
+
+This patch should not be accepted as:
+
+- authorization to clear live-entry guards
+- authorization to loosen live execution gates immediately
+- proof that social/tape-only live execution is safe
+- proof that first-10s/30s open execution is ready
+
+The right next action is a safe implementation pass focused on broad discovery,
+lane tagging, hyper-speculative research scoring, richer Grok output, and a real
+dry research pass. Live entries stay disabled.
+

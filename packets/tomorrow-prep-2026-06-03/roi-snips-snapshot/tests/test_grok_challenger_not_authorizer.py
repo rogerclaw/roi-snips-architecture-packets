@@ -1,0 +1,5 @@
+from tests.test_grok_challenger import test_grok_challenger_cannot_authorize_or_switch_ticker
+
+
+def test_grok_challenger_alias():
+    test_grok_challenger_cannot_authorize_or_switch_ticker()

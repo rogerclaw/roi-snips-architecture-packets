@@ -1,0 +1,140 @@
+ROI SNIPS NEXT-LEVEL LEARNING AND STREAMING SUPERVISOR PLAN
+Generated: 2026-05-20 22:02 PT
+
+================================================================================
+PURPOSE
+================================================================================
+
+Charles approved the current live-armed opening-bell path for 2026-05-21 and
+then asked to develop the next level and learn from what happens tomorrow.
+
+The next level should not be guessed tonight. The correct sequence is:
+
+1. Run tomorrow's armed research/opening-bell system.
+2. Preserve logs, proposals, order/submission results, and readiness state.
+3. Analyze what actually happened.
+4. Build the next execution architecture from evidence.
+
+================================================================================
+CURRENT PRODUCTION PATH FOR 2026-05-21
+================================================================================
+
+Current live path:
+
+- 06:00 PT OpenClaw job runs research, premarket, live readiness, and opening
+  readiness.
+- 06:29:30 PT OpenClaw job runs:
+
+  ROI_SNIPS_ALLOW_LIVE_ORDER_SUBMISSION=true scripts/run_opening_bell_live_monitor.sh
+
+- The runner performs preflight checks, then runs the polling
+  `src.workflows.live_monitor` loop.
+- The loop can submit a live order through the deterministic order router if
+  research, tape, data, broker, cash, guard, and order-state checks clear.
+
+Known limitation:
+
+- This is a hardened polling live monitor, not a true Alpaca quote/trade stream
+  supervisor.
+
+================================================================================
+TOMORROW'S LEARNING OBJECTIVES
+================================================================================
+
+Capture and evaluate:
+
+1. Did the 06:00 research job start and complete?
+2. Did it produce a clear primary and backups?
+3. Did it produce actionable buy zone, entry cap, thesis break, targets, and
+   danger signals?
+4. Did live and opening readiness remain green before 06:29:30 PT?
+5. Did the 06:29:30 live monitor job start on time?
+6. Did preflight pass inside the runner?
+7. Did the monitor loop see a watchlist?
+8. Did it see fresh quotes and bars for the primary/backups?
+9. Did it create a proposal?
+10. Did the order router submit, block, or stand down?
+11. If no trade occurred, was the no-trade decision correct?
+12. If a trade occurred, was the entry timing, cap, fill, cancel/exit behavior,
+    and post-fill management acceptable?
+13. Did any OpenClaw cron/session/runtime fragility appear?
+14. Did any stale-data or polling delay issue appear?
+15. What would a streaming supervisor have improved?
+
+================================================================================
+ARTIFACTS TO REVIEW AFTER TOMORROW'S RUN
+================================================================================
+
+Primary:
+
+- `reports/morning/json/2026-05-21.json`
+- `reports/morning/md/2026-05-21.md`
+- `reports/live_monitor/opening_bell_live_2026-05-21.jsonl`
+- `reports/journal/2026-05-21.jsonl`
+- `state/proposals/`
+- Alpaca open orders / positions / account status from readiness output
+- OpenClaw cron status for:
+  - `d3f02133-95f6-4733-bc77-1c94d90025ee`
+  - `f112f794-a79f-418c-9aaa-d0af8c737097`
+  - `d3ad7443-fc5e-49b1-9564-36ded5b5cbee`
+
+Secondary:
+
+- `memory/2026-05-21.md`
+- `ops/progress/ACTIVE.md`
+- Any Telegram status messages sent by the cron jobs
+
+================================================================================
+NEXT-LEVEL BUILD TARGET
+================================================================================
+
+Build a true opening-bell streaming supervisor after tomorrow's run.
+
+Target module shape:
+
+- `src/streams/alpaca_opening_stream.py`
+- `src/workflows/opening_bell_streaming_supervisor.py`
+- `tests/test_opening_stream_replay.py`
+- `tests/fixtures/opening_bell_replay/*.jsonl`
+
+Core behavior:
+
+1. Connect to Alpaca SIP quote/trade/bar streams before open.
+2. Subscribe to primary + backups.
+3. Feed real quote/trade events into `OpeningTapeTracker`.
+4. Evaluate `OPENING_BURST_HYPER_LONG` on first-print / 5s / 10s / 30s / 60s
+   windows.
+5. Use `OpeningBurstExecutor` for capped aggressive limit orders.
+6. Use `fast_cancel` continuously while order is open.
+7. Use `opening_position_manager` immediately after fill.
+8. Persist every event, signal, cancel, fill, and exit decision to replayable
+   JSONL.
+9. Support offline replay tests against real tomorrow logs.
+10. Fail closed on stream disconnect, stale quote, missing bid/ask, halt/no
+    quote, order-state ambiguity, or exit-monitor failure.
+
+================================================================================
+POST-RUN REPORT SHAPE
+================================================================================
+
+After tomorrow's run, produce:
+
+1. What happened.
+2. Whether any order was submitted.
+3. If no order, exact reason and whether it was correct.
+4. If order, entry/fill/exit timeline and risk result.
+5. Runtime reliability assessment.
+6. Polling-path weaknesses observed.
+7. Concrete streaming-supervisor requirements learned from real logs.
+8. Prioritized implementation plan.
+9. Any immediate safety patches before the next armed run.
+
+================================================================================
+CURRENT RECOMMENDATION
+================================================================================
+
+Do not rewrite the live path before tomorrow's open.
+
+Do use tomorrow's real logs to build the streaming supervisor. The system is now
+set up to learn from reality instead of speculation.
+

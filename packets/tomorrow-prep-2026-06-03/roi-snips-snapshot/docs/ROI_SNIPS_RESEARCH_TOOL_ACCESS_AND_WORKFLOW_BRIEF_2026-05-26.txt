@@ -1,0 +1,424 @@
+ROI SNIPS RESEARCH TOOL ACCESS AND WORKFLOW BRIEF
+Prepared for Charles
+Prepared by Strops
+Timestamp: 2026-05-26 18:55 PT
+
+Purpose
+-------
+This brief explains exactly what research tools I currently have access to, what each lane is for, how I will use them for Roi Snips stock research, and where the hard boundaries are between research, validation, and execution.
+
+Bottom line
+-----------
+I now have a layered research stack:
+
+1. Normal current-source discovery and page reading.
+2. Browser lanes for interactive or authenticated pages.
+3. Deterministic browser automation for repeatable workflows.
+4. Bulk crawl/extraction lanes for docs and multi-page source collection.
+5. Roi Snips local research adapters, candidate scoring, packet generation, and execution gate code.
+6. A governed deep-research runner that must go through an architect first and can escalate only to approved deep-research models when justified.
+
+For Roi Snips stock selection, I will use the normal and deterministic research stack first. Deep research is not a replacement for discovery. It is an escalation layer used only after the deterministic pipeline has produced a bounded shortlist, or when you explicitly ask for deep/deep-mini/strongest research.
+
+Current morning-readiness status
+--------------------------------
+As of this brief, the one-shot brokerless no-order validation job is scheduled:
+
+- Job ID: 39263300-c944-4311-9074-f106e70ac7e3
+- Name: Roi Snips brokerless no-order validation 2026-05-27
+- Scheduled time: 2026-05-27 06:35 PT / 13:35 UTC
+- Mode: isolated Roi Snips agent job
+- Command: scripts/run_no_order_continuation_validation.sh
+- Purpose: prove the no-order opening stream path after the duplicate-stream guard fix
+- Explicit prohibitions: no broker account inspection, no broker order inspection, no broker position inspection, no guard arming, no live orders, no paper orders, no order preview, no order cancel/replace
+
+This scheduled validation is not a live-buying job. It is a brokerless market-data/orchestration proof pass.
+
+
+1. Current web and source discovery access
+------------------------------------------
+Primary use:
+- Find current news, filings, press releases, official company pages, FDA/regulatory updates, contract awards, sector movement, and market discussion sources.
+
+Available lanes:
+- Built-in web search/open capability in this runtime for live discovery and page inspection.
+- OpenClaw Brave Search route documented as the default discovery layer.
+- Firecrawl search/scrape/crawl skills are available when a site needs robust extraction.
+
+How I will use it:
+- Start broad enough to avoid missing a small or mid-cap catalyst.
+- Prioritize primary sources first:
+  - company investor relations pages
+  - official press releases
+  - SEC EDGAR filings
+  - FDA/regulatory pages
+  - government contract/procurement sources
+  - exchange or company halt/status pages where relevant
+- Use structured and secondary sources second:
+  - financial news
+  - earnings calendars/materials
+  - analyst/commentary summaries when available
+  - Benzinga/FMP/Alpaca-type structured feeds when configured
+- Use retail/social sentiment last as an overlay:
+  - Reddit
+  - Stocktwits
+  - X, when configured/available
+  - forums/newsletters/blogs when they are high-signal
+
+What I will not do:
+- I will not treat hype as source validation.
+- I will not let generic mega-cap news crowd out harder catalysts unless the mega-cap catalyst is unusually strong.
+- I will not claim deep research was used unless the governed runner actually escalated and completed.
+
+
+2. Browser lanes
+----------------
+Primary use:
+- Inspect pages that search results point to.
+- Work through dynamic sites.
+- Take screenshots or snapshots when evidence needs visual confirmation.
+- Access isolated browser profiles without mixing unrelated cookies or auth state.
+
+Available lanes from the shared browser/research stack:
+- agent-browser
+- STR browser lane
+- ChatGPT browser lane
+- Travel browser lane
+- Personal-agent browser lane
+- Playwright deterministic lane
+- Stagehand adaptive lane
+- Crawl4AI bulk extraction lane
+- Firecrawl optional extraction lane
+
+Key local paths:
+- agent-browser binary: /opt/homebrew/bin/agent-browser
+- STR launcher: /Users/rogerclaw/.openclaw/workspace/launch-str-ops-browser.sh
+- ChatGPT launcher: /Users/rogerclaw/.openclaw/workspace/launch-chatgpt-browser.sh
+- Playwright wrapper: /Users/rogerclaw/.openclaw/workspace/browser-lanes/playwright-general/run-playwright-lane.sh
+- Stagehand wrapper: /Users/rogerclaw/.openclaw/workspace/browser-lanes/stagehand-general/run-stagehand-lane.sh
+- Crawl4AI wrapper: /Users/rogerclaw/.openclaw/workspace/browser-lanes/crawl4ai-general/run-crawl4ai-lane.sh
+- Firecrawl wrapper: /Users/rogerclaw/.openclaw/workspace/browser-lanes/firecrawl-general/run-firecrawl-lane.sh
+
+Routing order:
+1. Search first for source discovery.
+2. agent-browser for one-off interactive browsing.
+3. Playwright for repeatable/auth-sensitive workflows.
+4. Stagehand only if normal browser automation is brittle.
+5. Crawl4AI for bulk extraction.
+6. Firecrawl when explicitly useful or when a JS-heavy extraction needs it and the key is configured.
+
+How I will use it for Roi Snips:
+- Browser lanes are evidence collection and validation tools.
+- They help confirm the source behind a catalyst.
+- They do not authorize any broker action.
+- Screenshots/snapshots can be saved as evidence when needed, but final trading packets should cite concise evidence rather than dump raw browsing artifacts.
+
+
+3. Roi Snips local research code and adapters
+---------------------------------------------
+Primary use:
+- Convert raw sources into normalized candidates.
+- Score and rank candidates.
+- Separate research leadership from executable trade readiness.
+- Produce the final candidate packet and opening framework.
+
+Relevant local code areas:
+- Research models: roi-snips/src/research/models.py
+- Candidate packets: roi-snips/src/research/candidate_packets.py
+- Ranking: roi-snips/src/research/ranking.py
+- Hyper-trade scoring: roi-snips/src/research/hyper_trade_score.py
+- Market overlay: roi-snips/src/research/market_overlay.py
+- Source lane status: roi-snips/src/research/source_lane_status.py
+- Gates: roi-snips/src/research/gates.py
+- SEC materiality: roi-snips/src/research/sec_materiality.py
+- Universe/candidate handling: roi-snips/src/research/universe.py
+- Research pipeline: roi-snips/src/workflows/research_pipeline.py
+- Premarket pipeline: roi-snips/src/workflows/premarket_pipeline.py
+- Deep-mini bridge: roi-snips/src/workflows/deep_mini_bridge.py
+
+Relevant adapters present in the repo:
+- SEC EDGAR: roi-snips/src/adapters/sec_edgar.py
+- Federal sources: roi-snips/src/adapters/federal_sources.py
+- Alpaca news: roi-snips/src/adapters/alpaca_news.py
+- Alpaca market data: roi-snips/src/adapters/alpaca_market_data.py
+- Alpaca streams: roi-snips/src/adapters/alpaca_streams.py
+- Alpaca clock/health: roi-snips/src/adapters/alpaca_clock.py and alpaca_health.py
+- Benzinga news: roi-snips/src/adapters/benzinga_news.py
+- FMP market data: roi-snips/src/adapters/fmp_market_data.py
+- TradingView screener: roi-snips/src/adapters/tradingview_screener.py
+- Webull market data/rest/trade adapters: roi-snips/src/adapters/webull_md.py, webull_rest.py, webull_trade.py
+- Reddit feed: roi-snips/src/adapters/reddit_feed.py
+- Stocktwits stream: roi-snips/src/adapters/stocktwits_stream.py
+- X optional adapter: roi-snips/src/adapters/x_optional.py
+- Grok search adapter: roi-snips/src/adapters/grok_search.py
+
+Important clarification:
+The presence of an adapter means the repo has a lane for that source. Whether the source is authenticated/configured at runtime must be checked by the pipeline and treated as a fail-closed input. I will not invent access or silently pretend unavailable feeds are live.
+
+
+4. Governed deep-research access
+--------------------------------
+Primary use:
+- High-depth synthesis after deterministic discovery has produced a bounded shortlist.
+- Explicit deep/deep-mini/strongest-research requests from you.
+- Expensive research decisions where the architect says escalation is justified.
+
+Canonical runner:
+- /Users/rogerclaw/.openclaw/workspace/tools/deep-research-runner
+
+Verified status:
+- Runner exists and is executable.
+- Help output exposes:
+  - --mode {deep,deep_mini}
+  - --input
+  - --input-file
+  - --agent-id
+  - --workspace
+  - --poll-seconds
+  - --timeout-seconds
+  - --summary-json
+- Architect model source:
+  - /Users/rogerclaw/.openclaw/workspace/tools/deep-research-architect-model.txt
+  - current value: gpt-5.5
+
+Allowed deep executor routes:
+- no_escalation: stay on normal research/browser/crawl path
+- deep_mini: executor is o4-mini-deep-research
+- deep: executor is o3-deep-research
+
+Required command shape for Roi Snips shortlist escalation:
+
+/Users/rogerclaw/.openclaw/workspace/tools/deep-research-runner \
+  --agent-id roi-snips \
+  --workspace /Users/rogerclaw/.openclaw/workspace/roi-snips \
+  --input-file <structured-request-or-shortlist-brief.md> \
+  --summary-json <roi-snips-output-summary.json> \
+  --timeout-seconds 1200
+
+Rules I must follow:
+- I must not use raw /model deep or /model deep-mini as a substitute.
+- I must not spawn a child model override and call that "deep research."
+- The runner must call the architect first.
+- If escalated, the runner must build/optimize the required 15-section structured brief before the deep model runs.
+- I should leave --mode unset unless you explicitly requested a tier or governance approved forcing it.
+- If the lane fails, I must fail closed and report the exact failure. I must not silently fall back while claiming deep research happened.
+
+Logging paths:
+- roi-snips/ops/logs/research-architecture.jsonl
+- roi-snips/ops/logs/deep-research.jsonl
+- shared workspace ops/logs may contain older cross-agent runs
+
+Deep research is research support only. It never authorizes:
+- live orders
+- paper orders
+- broker account inspection
+- broker order inspection
+- broker position inspection
+- order replacement/cancel
+- guard bypasses
+- violating long-only / one-position / cash-account constraints
+- ignoring spread/chase/opening-drive/ORB/VWAP gates
+
+
+5. Research workflow I will run for stock selection
+---------------------------------------------------
+This is the intended operational sequence for a serious Roi Snips morning research pass.
+
+Step 1: Preflight and state check
+- Read Roi Snips active ledger.
+- Check whether the day is market-open, weekend, holiday, or practice mode.
+- Check runtime/config status without exposing secrets.
+- Confirm whether the task is research-only, brokerless validation, paper, or live-armed.
+- Fail closed if authorization/state is ambiguous.
+
+Step 2: Broad catalyst discovery
+- Search for same-day and recent catalysts across official and structured sources.
+- Focus on catalysts that can move a stock over hours to 1-3 trading days.
+- Prioritize:
+  - FDA/medical approvals or trial updates
+  - regulatory wins
+  - government/contract awards
+  - M&A, strategic reviews, takeover speculation with evidence
+  - partnerships/licensing
+  - product launches
+  - tech breakthroughs
+  - earnings surprises
+  - guidance revisions
+  - unusual volume/RVOL
+  - short-squeeze/float dynamics
+  - sector momentum
+  - policy-theme runners
+
+Step 3: Source validation
+- Map each candidate to source lanes:
+  - official/primary
+  - structured financial/news
+  - social/retail overlay
+- Preserve validation status instead of flattening all evidence into one score.
+- Penalize unverified hype, stale catalysts, fake/rehashed news, weak liquidity, and names that are already fully crowded.
+
+Step 4: Candidate normalization
+- Normalize ticker, company, catalyst type, timestamp/freshness, source URLs, evidence quality, price/liquidity notes, and social overlay.
+- De-duplicate repeated references to the same catalyst.
+- Identify whether the setup is the actual research leader or just a tradable fallback.
+
+Step 5: Scoring
+- Apply INFQ-style hard-catalyst scoring.
+- Apply hyper-trade score.
+- Apply liquidity and marketability checks.
+- Apply speculative risk penalties.
+- Apply anti-chase and lifecycle state:
+  - premarket building
+  - opening drive
+  - already extended
+  - second-leg watch
+  - no-trade extended
+- Score same-style backups separately from boring mega-cap defaults.
+
+Step 6: Research leader vs executable primary
+- The best research candidate can remain research_leader even if it is not immediately buyable.
+- executable_primary should be promoted only when execution-readiness passes.
+- A candidate can be "best story, not buyable here" if it is already too extended.
+- This distinction is central to avoiding the old failure mode where a routine default name displaced the actual asymmetric catalyst.
+
+Step 7: Optional governed deep-research escalation
+- Use only after there is a bounded shortlist.
+- Build a structured shortlist brief with the candidate tickers, catalysts, evidence, unresolved questions, decision criteria, and requested output.
+- Run the governed deep-research runner.
+- Let the architect choose no_escalation, deep_mini, or deep.
+- Include response/request IDs if escalated and completed.
+- Treat deep output as another evidence layer, not as permission to trade.
+
+Step 8: Final ranking and packet generation
+- Produce one decisive best pick or explicitly say no high-quality long.
+- Include ranked backups, not a generic watchlist.
+- Required final packet fields:
+  - chosen ticker and company
+  - exact catalyst
+  - why it can move sharply
+  - why the market may not have fully priced it
+  - evidence reviewed
+  - official-vs-structured-vs-social evidence split
+  - sentiment/discussion trend
+  - catalyst classification
+  - buy zone or no-chase range
+  - same-day upside target
+  - 1-3 day upside target
+  - thesis-break/downside level
+  - monitoring window
+  - profit-taking triggers
+  - danger signals
+  - tradeability/liquidity notes
+  - opening-drive vs post-09:35 framework
+  - ORB/VWAP observation levels when data permits
+  - no-trade alternatives and why they are rejected
+  - execution-risk notes for basic brokerage tools
+  - deep research route/result IDs when used
+
+Step 9: Opening-market observation
+- For research-only or no-order validation, observe and report only.
+- For any future armed mode, deterministic gates still control execution.
+- Opening frameworks include:
+  - opening drive
+  - opening burst
+  - ORB break
+  - VWAP reclaim
+  - premarket-high reclaim
+  - second-leg continuation
+- The system must keep order/risk gates separate from research enthusiasm.
+
+Step 10: Artifact capture
+- Save reports under Roi Snips report directories.
+- Keep logs for research architecture and deep-research decisions.
+- Preserve final summary metrics for validation runs.
+- If a run is brokerless/no-order, report that explicitly.
+
+
+6. Guardrails and fail-closed rules
+-----------------------------------
+These are hard boundaries:
+
+- I will not place, modify, cancel, preview, or replace live or paper orders unless the system is explicitly armed and deterministic guards allow it.
+- I will not inspect broker account/order/position state during brokerless no-order validation.
+- I will not let deep research bypass execution gates.
+- I will not treat social hype as sufficient evidence.
+- I will not use deep/deep-mini for ordinary browsing, coding, docs lookup, validation, or summaries.
+- I will not silently use a weaker path while claiming deep research was used.
+- I will not push Roi Snips architecture to GitHub without a separate curated export step, because the workspace contains private operational data and local artifacts.
+
+
+7. What "all set for morning" means
+-----------------------------------
+For the currently scheduled morning run, "all set" means:
+
+- The brokerless no-order validation is scheduled.
+- The duplicate-stream guard is in place.
+- The scheduled job is configured to run isolated.
+- It is configured to report to Charles.
+- The job explicitly prohibits broker/account/order/position inspection and live/paper orders.
+- The deep-research protocol is recorded, but deep research is not automatically run just because it exists.
+
+It does not mean:
+
+- live buying is armed
+- a broker order can be placed
+- the system has permission to bypass deterministic gates
+- tomorrow will necessarily produce a valid INFQ-style hard-catalyst candidate
+- the architecture has been uploaded to GitHub
+
+
+8. Practical research plan for the next real stock-selection pass
+-----------------------------------------------------------------
+When you ask for the next stock-selection pass, I will run this sequence:
+
+1. Confirm mode: research-only, paper, brokerless validation, or live-armed.
+2. Run deterministic discovery and normalization first.
+3. Build a bounded shortlist of high-catalyst names.
+4. Reject weak/default names early unless their fresh catalyst is exceptional.
+5. Score candidates using Roi Snips research fields and market overlays.
+6. Mark one research_leader.
+7. Mark executable_primary only if execution-readiness passes.
+8. If you explicitly ask for deep research, or if the architect-approved path is justified, run the governed deep-research runner on the shortlist.
+9. Produce the final packet with one decisive best pick, ranked backups, and no-trade rejects.
+10. Preserve all artifacts and IDs so the decision can be audited afterward.
+
+
+9. Known remaining limitations
+------------------------------
+- Some adapters may require live credentials or configured API keys at runtime; availability must be checked when used.
+- Firecrawl live extraction may require FIRECRAWL_API_KEY.
+- Some browser auth-state files may be absent until a lane is refreshed.
+- The current scheduled 2026-05-27 run is validation, not a full live-trading authorization.
+- A valid hard-catalyst setup depends on market reality that morning; if no good candidate exists, the correct output is no high-quality long, not a forced trade.
+
+
+10. Exact answer to "what do you have access to?"
+------------------------------------------------
+I have access to:
+
+- Current web discovery/page reading in this runtime.
+- OpenClaw's Brave-search-first research routing policy.
+- Firecrawl search/scrape/crawl/interact skills and wrappers, when needed.
+- agent-browser lanes for interactive browsing.
+- Playwright for repeatable deterministic browser automation.
+- Stagehand for brittle browser flows.
+- Crawl4AI for bulk site/document extraction.
+- Optional Firecrawl cloud extraction if configured.
+- The Roi Snips local research pipeline, candidate packet models, scoring/gating code, and adapters.
+- The governed deep-research runner at /Users/rogerclaw/.openclaw/workspace/tools/deep-research-runner.
+- The centralized architect model config currently set to gpt-5.5.
+- Approved escalation targets through the runner only: o4-mini-deep-research and o3-deep-research.
+- Logs for research architecture and deep-research observability.
+- The scheduled 2026-05-27 brokerless no-order validation job.
+
+I will use them in this order:
+
+1. Deterministic source discovery and local feed/adapters.
+2. Source validation and candidate normalization.
+3. Ranking/scoring/gating.
+4. Browser/crawl lanes for evidence gaps.
+5. Governed deep research only for a bounded shortlist or explicit deep-research request.
+6. Final packet generation with research leader, executable primary status, buy zone, targets, invalidation, monitoring window, and no-trade rejects.
+7. Separate validation/reporting from any broker action.
+
+That is the current research operating plan.

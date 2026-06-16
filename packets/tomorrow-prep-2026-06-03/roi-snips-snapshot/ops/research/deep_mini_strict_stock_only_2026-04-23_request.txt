@@ -1,0 +1,121 @@
+You are doing a deep-mini, high-conviction short-term U.S. stock hunt for Roi Snips.
+
+Mission:
+Find the SINGLE best long-only U.S.-listed COMMON STOCK to buy today just after the open, with intended hold time of same-day to 1-3 trading days. This is a research task, not an order request.
+
+Core objective:
+Do not give me boring blue chips, generic mega-cap quality names, or broad ETFs unless there is truly no better candidate. I want a volatile, catalyst-driven stock with real explosive upside potential.
+
+Hard constraints:
+- U.S.-listed common stocks only
+- Long only
+- No options, no shorting, no margin
+- No ETFs
+- No OTC / Pink / bulletin-board names
+- No illiquid junk unless there is still clearly tradeable liquidity and a realistic execution path
+- Avoid defaulting to mega-cap blue chips unless the catalyst is so dominant that they clearly beat all smaller, more explosive candidates
+
+Strong preferences:
+- Prefer small-cap and mid-cap names first
+- Prefer high-RVOL, high-attention, catalyst-driven setups
+- Prefer names that can realistically move sharply today or within 1-3 days
+- Prefer names with fresh catalysts, expanding attention, and room left in the move
+- Prefer asymmetric upside over stability
+
+Candidate profile to prioritize:
+- Market cap roughly below mega-cap territory; strongly prefer small/mid caps unless evidence overwhelmingly favors larger
+- Fresh hard catalyst or rapidly strengthening hype + sentiment + flow
+- Tradeable common stock with enough liquidity for retail execution
+- Potential for follow-through from premarket into regular hours
+- Possibility of squeeze dynamics, sympathy momentum, or underpriced catalyst interpretation
+
+Search as broadly and deeply as possible across:
+- company press releases / investor relations
+- SEC filings
+- earnings releases / guidance / transcripts
+- FDA / regulatory / court / government announcements
+- credible financial news wires
+- analyst commentary where relevant
+- market newsletters / trading blogs / sector commentary
+- Reddit / StockTwits / stock forums
+- X sentiment / discussion velocity
+- unusual volume / breakout chatter
+- any other high-signal source available
+
+You must aggressively search BEYOND large-cap household names.
+Specifically look for:
+- earnings surprise + raised guidance
+- FDA / regulatory approvals
+- contract wins / government awards
+- mergers, acquisitions, spinouts, strategic reviews
+- partnerships / licensing / product launches
+- activist involvement
+- sector sympathy runners
+- short-squeeze candidates
+- unusual volume / float rotation / breakout conditions
+- turnaround / restructuring / legal overhang removal
+- anything that can create a sharp repricing in hours or days
+
+Explicitly deprioritize:
+- safe blue-chip “quality” names
+- low-volatility mega caps
+- names whose catalyst is already fully obvious and likely fully priced
+- moves that already look completely exhausted or overcrowded
+- stories driven only by vague hype with no evidence of actual market traction
+
+Weight these factors heavily:
+1. Freshness and materiality of the catalyst
+2. Probability of a sharp near-term upside move
+3. Evidence quality: official first, then structured news, then retail/social
+4. Premarket or early-session tradeability if available
+5. Relative volume, momentum, float dynamics, and short-interest / squeeze potential
+6. Whether the move still looks early enough
+7. Technical structure: breakout levels, support/resistance, gap-fill zones, liquidity zones
+8. Clear invalidation point if wrong
+9. Retail execution practicality for a small account using a basic broker
+10. Whether this is the kind of stock traders will actually chase today
+
+Output requirements:
+Return:
+1. The SINGLE best stock to buy today
+2. 3-5 ranked backup stocks
+
+For each final candidate include:
+- ticker and company name
+- why it could move sharply in the next hours or days
+- exact catalyst
+- why the catalyst may not be fully priced in yet
+- evidence reviewed
+- sentiment / discussion trend summary
+- catalyst classification:
+  - hard catalyst
+  - earnings
+  - FDA/regulatory
+  - M&A
+  - squeeze
+  - hype-ignition
+  - sector sympathy
+  - contract / partnership
+  - other
+- suggested buy zone or entry framework
+- same-day upside target
+- 1-3 day upside target
+- downside / thesis-break level
+- best monitoring timeframe after entry
+- specific profit-taking triggers
+- specific danger signals
+- execution/liquidity risks
+
+Decision style:
+Be decisive and ruthless.
+I care more about explosive short-term upside than safety.
+Do not give me a respectable watchlist.
+Do not hide behind generic risk language.
+Find the stock most likely to attract aggressive buying interest today.
+
+Final format:
+- Executive summary
+- Best pick
+- Ranked backups
+- Why the best pick beat the others
+- What would make it a no-trade
